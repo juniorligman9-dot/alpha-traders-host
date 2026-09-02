@@ -1,265 +1,824 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Alpha Traders Host Dashboard</title>
+    <title>Trading Dashboard | Alpha Traders Host</title>
 
-<style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
-  font-family: Arial, sans-serif;
-  background: #0b0f19;
-  color: white;
-}
+        body {
+            font-family: Arial, sans-serif;
+            background: #0e1420;
+            color: #f1f3f7;
+            min-height: 100vh;
+        }
 
-header {
-  padding: 20px;
-  border-bottom: 1px solid #202637;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+        /* =========================
+           HEADER
+        ========================= */
 
-.logo {
-  font-weight: bold;
-  font-size: 20px;
-}
+        header {
+            width: 100%;
+            padding: 25px 38px;
+            border-bottom: 1px solid #283246;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #0e1420;
+        }
 
-.logo span {
-  color: #00d084;
-}
+        .logo {
+            font-size: 27px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #f4f4f4;
+        }
 
-.logout {
-  border: 1px solid #394154;
-  padding: 9px 15px;
-  border-radius: 8px;
-  color: white;
-  text-decoration: none;
-}
+        .logo span {
+            color: #20c997;
+        }
 
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 30px 20px;
-}
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-h1 {
-  margin-bottom: 8px;
-}
+        .home-btn,
+        .logout-btn {
+            padding: 15px 28px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-size: 17px;
+            cursor: pointer;
+        }
 
-.subtitle {
-  color: #929bad;
-  margin-bottom: 30px;
-}
+        .home-btn {
+            border: 1px solid #344158;
+            color: #f1f3f7;
+            background: transparent;
+        }
 
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-}
+        .logout-btn {
+            border: 1px solid #344158;
+            color: #ffb4b4;
+            background: transparent;
+        }
 
-.stat {
-  background: #121827;
-  border: 1px solid #20283a;
-  padding: 22px;
-  border-radius: 12px;
-}
+        /* =========================
+           MAIN
+        ========================= */
 
-.stat h3 {
-  color: #8f99ad;
-  font-size: 14px;
-  margin-bottom: 12px;
-}
+        .container {
+            width: 100%;
+            max-width: 1250px;
+            margin: auto;
+            padding: 60px 38px;
+        }
 
-.stat strong {
-  font-size: 26px;
-}
+        .dashboard-title {
+            font-size: 55px;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
 
-.section {
-  margin-top: 35px;
-}
+        .dashboard-subtitle {
+            font-size: 27px;
+            color: #aeb7c9;
+            margin-bottom: 55px;
+            line-height: 1.4;
+        }
 
-.section-title {
-  margin-bottom: 15px;
-}
+        /* =========================
+           STATISTICS
+        ========================= */
 
-.card {
-  background: #121827;
-  border: 1px solid #20283a;
-  border-radius: 12px;
-  padding: 22px;
-  margin-bottom: 15px;
-}
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+            margin-bottom: 65px;
+        }
 
-.row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-}
+        .stat-card {
+            background: #192233;
+            border: 1px solid #2c3950;
+            border-radius: 25px;
+            padding: 42px;
+            min-height: 220px;
+        }
 
-.status {
-  color: #00d084;
-  font-weight: bold;
-}
+        .stat-card h3 {
+            color: #aeb7c9;
+            font-size: 25px;
+            text-transform: uppercase;
+            line-height: 1.3;
+            margin-bottom: 25px;
+        }
 
-.button {
-  background: #00d084;
-  border: none;
-  color: #06100b;
-  padding: 10px 17px;
-  border-radius: 7px;
-  font-weight: bold;
-}
+        .stat-number {
+            font-size: 55px;
+            font-weight: 800;
+            color: #f4f4f4;
+        }
 
-.secondary {
-  background: #20283a;
-  color: white;
-}
+        /* =========================
+           SECTION TITLES
+        ========================= */
 
-.add {
-  width: 100%;
-  margin-top: 10px;
-  cursor: pointer;
-}
+        .section-title {
+            font-size: 42px;
+            margin-bottom: 30px;
+            font-weight: 800;
+        }
 
-@media(max-width: 750px) {
-  .stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
+        /* =========================
+           META TRADER ACCOUNTS
+        ========================= */
 
-  .row {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-</style>
+        .account-card {
+            background: #192233;
+            border: 1px solid #2c3950;
+            border-radius: 25px;
+            padding: 42px;
+            margin-bottom: 50px;
+        }
+
+        .account-card h3 {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .account-card p {
+            color: #aeb7c9;
+            font-size: 22px;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        .connect-btn {
+            display: inline-block;
+            background: #19bd8b;
+            color: #08131d;
+            text-decoration: none;
+            padding: 17px 30px;
+            border-radius: 13px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           EA BUILDER
+        ========================= */
+
+        .ea-builder-section {
+            margin-top: 40px;
+            margin-bottom: 50px;
+        }
+
+        .ea-builder-card {
+            background: linear-gradient(
+                135deg,
+                #192233,
+                #172d35
+            );
+            border: 1px solid #2c5360;
+            border-radius: 25px;
+            padding: 45px;
+        }
+
+        .ea-label {
+            display: inline-block;
+            color: #20c997;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            margin-bottom: 18px;
+        }
+
+        .ea-builder-card h2 {
+            font-size: 38px;
+            margin-bottom: 18px;
+        }
+
+        .ea-builder-card p {
+            color: #aeb7c9;
+            font-size: 21px;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-bottom: 30px;
+        }
+
+        .ea-builder-btn {
+            display: inline-block;
+            background: #19bd8b;
+            color: #08131d;
+            text-decoration: none;
+            font-size: 19px;
+            font-weight: bold;
+            padding: 18px 32px;
+            border-radius: 14px;
+        }
+
+        .ea-builder-btn:hover,
+        .connect-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* =========================
+           MESSAGE
+        ========================= */
+
+        #message {
+            text-align: center;
+            color: #aeb7c9;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 25px 38px;
+            }
+
+            .logo {
+                font-size: 26px;
+            }
+
+            .logout-btn {
+                display: none;
+            }
+
+            .home-btn {
+                padding: 17px 28px;
+                font-size: 16px;
+            }
+
+            .container {
+                padding: 60px 38px;
+            }
+
+            .dashboard-title {
+                font-size: 55px;
+                line-height: 1.1;
+            }
+
+            .dashboard-subtitle {
+                font-size: 25px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 28px;
+            }
+
+            .stat-card {
+                padding: 40px;
+                min-height: 220px;
+            }
+
+            .stat-card h3 {
+                font-size: 24px;
+            }
+
+            .stat-number {
+                font-size: 54px;
+            }
+
+            .section-title {
+                font-size: 40px;
+            }
+
+            .account-card,
+            .ea-builder-card {
+                padding: 40px;
+            }
+
+            .ea-builder-card h2 {
+                font-size: 34px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            header {
+                padding: 22px 20px;
+            }
+
+            .container {
+                padding: 45px 20px;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .dashboard-title {
+                font-size: 42px;
+            }
+
+            .dashboard-subtitle {
+                font-size: 21px;
+            }
+
+            .stats-grid {
+                gap: 15px;
+            }
+
+            .stat-card {
+                padding: 25px;
+                min-height: 170px;
+            }
+
+            .stat-card h3 {
+                font-size: 18px;
+            }
+
+            .stat-number {
+                font-size: 45px;
+            }
+
+            .section-title {
+                font-size: 34px;
+            }
+
+            .account-card,
+            .ea-builder-card {
+                padding: 28px;
+            }
+
+            .account-card h3 {
+                font-size: 25px;
+            }
+
+            .account-card p,
+            .ea-builder-card p {
+                font-size: 18px;
+            }
+
+            .ea-builder-card h2 {
+                font-size: 29px;
+            }
+
+            .ea-builder-btn,
+            .connect-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+    </style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">
-    ALPHA <span>TRADERS HOST</span>
-  </div>
+    <!-- HEADER -->
+    <header>
 
-  <a href="index.html" class="logout">
-    Home
-  </a>
-</header>
-
-<div class="container">
-
-  <h1>Trading Dashboard</h1>
-
-  <p class="subtitle">
-    Manage your MT4 and MT5 Expert Advisors.
-  </p>
-
-  <div class="stats">
-
-    <div class="stat">
-      <h3>MT4 ACCOUNTS</h3>
-      <strong>0</strong>
-    </div>
-
-    <div class="stat">
-      <h3>MT5 ACCOUNTS</h3>
-      <strong>0</strong>
-    </div>
-
-    <div class="stat">
-      <h3>RUNNING EAs</h3>
-      <strong>0</strong>
-    </div>
-
-    <div class="stat">
-      <h3>HOSTING SERVERS</h3>
-      <strong>0</strong>
-    </div>
-
-  </div>
-
-  <div class="section">
-
-    <h2 class="section-title">
-      MetaTrader Accounts
-    </h2>
-
-    <div class="card">
-
-      <div class="row">
-
-        <div>
-          <h3>No trading accounts connected</h3>
-
-          <p style="color:#929bad;margin-top:7px;">
-            Connect your MT4 or MT5 account to begin.
-          </p>
+        <div class="logo">
+            ALPHA <span>TRADERS HOST</span>
         </div>
 
-        <button class="button" onclick="connectAccount()">
-          + Connect Account
-        </button>
+        <div class="header-right">
+            <a href="index.html" class="home-btn">
+                Home
+            </a>
 
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="section">
-
-    <h2 class="section-title">
-      Expert Advisors
-    </h2>
-
-    <div class="card">
-
-      <div class="row">
-
-        <div>
-          <h3>No EAs installed</h3>
-
-          <p style="color:#929bad;margin-top:7px;">
-            Upload an EA after connecting a trading account.
-          </p>
+            <button
+                class="logout-btn"
+                id="logoutBtn"
+                type="button">
+                Sign Out
+            </button>
         </div>
 
-        <button class="button secondary" onclick="uploadEA()">
-          Upload EA
-        </button>
+    </header>
 
-      </div>
 
-    </div>
+    <!-- MAIN DASHBOARD -->
+    <main class="container">
 
-  </div>
+        <h1 class="dashboard-title">
+            Trading Dashboard
+        </h1>
 
-</div>
+        <p class="dashboard-subtitle">
+            Manage your MT4 and MT5 Expert Advisors.
+        </p>
 
-<script>
 
-function connectAccount() {
-  alert(
-    "MT4/MT5 account connection will be enabled after the secure backend is connected."
-  );
-}
+        <!-- STATISTICS -->
 
-function uploadEA() {
-  alert(
-    "EA uploading will be enabled after the hosting server is connected."
-  );
-}
+        <div class="stats-grid">
 
-</script>
+            <!-- MT4 -->
+            <div class="stat-card">
+                <h3>
+                    MT4<br>
+                    Accounts
+                </h3>
+
+                <div
+                    class="stat-number"
+                    id="mt4Count">
+                    0
+                </div>
+            </div>
+
+
+            <!-- MT5 -->
+            <div class="stat-card">
+                <h3>
+                    MT5<br>
+                    Accounts
+                </h3>
+
+                <div
+                    class="stat-number"
+                    id="mt5Count">
+                    0
+                </div>
+            </div>
+
+
+            <!-- RUNNING EAS -->
+            <div class="stat-card">
+                <h3>
+                    Running EAs
+                </h3>
+
+                <div
+                    class="stat-number"
+                    id="eaCount">
+                    0
+                </div>
+            </div>
+
+
+            <!-- HOSTING -->
+            <div class="stat-card">
+                <h3>
+                    Hosting<br>
+                    Servers
+                </h3>
+
+                <div
+                    class="stat-number"
+                    id="hostingCount">
+                    0
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- META TRADER ACCOUNTS -->
+
+        <h2 class="section-title">
+            MetaTrader Accounts
+        </h2>
+
+
+        <div class="account-card">
+
+            <h3>
+                No trading accounts connected
+            </h3>
+
+            <p>
+                Connect your MT4 or MT5 account to begin managing
+                your trading environment.
+            </p>
+
+            <!-- Change this link later when you create
+                 your connect-account page -->
+
+            <a
+                href="#"
+                class="connect-btn"
+                id="connectAccountBtn">
+
+                + Connect Trading Account
+
+            </a>
+
+        </div>
+
+
+        <!-- EA BUILDER -->
+
+        <section class="ea-builder-section">
+
+            <div class="ea-builder-card">
+
+                <span class="ea-label">
+                    EXPERT ADVISOR BUILDER
+                </span>
+
+
+                <h2>
+                    Build Your Trading EA
+                </h2>
+
+
+                <p>
+                    Create and manage automated trading strategies
+                    for MetaTrader 4 and MetaTrader 5. Configure
+                    your strategy and save your Expert Advisor
+                    directly to your account.
+                </p>
+
+
+                <!-- THIS OPENS YOUR EXISTING FILE -->
+
+                <a
+                    href="create-ea.html"
+                    class="ea-builder-btn">
+
+                    + Create New EA
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <p id="message"></p>
+
+    </main>
+
+
+    <!-- SUPABASE LIBRARY -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <!-- YOUR SUPABASE CONFIG -->
+
+    <script src="supabase-config.js"></script>
+
+
+    <script>
+
+        /*
+        ======================================
+        GET SUPABASE CLIENT
+        ======================================
+        */
+
+        const supabaseClient =
+            window.supabaseClient ||
+            window.supabase;
+
+
+        /*
+        ======================================
+        PAGE ELEMENTS
+        ======================================
+        */
+
+        const mt4Count =
+            document.getElementById("mt4Count");
+
+        const mt5Count =
+            document.getElementById("mt5Count");
+
+        const eaCount =
+            document.getElementById("eaCount");
+
+        const hostingCount =
+            document.getElementById("hostingCount");
+
+        const logoutBtn =
+            document.getElementById("logoutBtn");
+
+        const message =
+            document.getElementById("message");
+
+
+        /*
+        ======================================
+        CHECK LOGIN
+        ======================================
+        */
+
+        async function checkUser() {
+
+            if (!supabaseClient) {
+
+                console.error(
+                    "Supabase client was not found."
+                );
+
+                message.textContent =
+                    "Supabase connection not found.";
+
+                return;
+            }
+
+
+            const {
+                data,
+                error
+            } =
+            await supabaseClient.auth.getSession();
+
+
+            if (error) {
+
+                console.error(error);
+
+                return;
+            }
+
+
+            /*
+            If user is not logged in,
+            send them to login page.
+            */
+
+            if (!data.session) {
+
+                window.location.href =
+                    "login.html";
+
+                return;
+            }
+
+
+            /*
+            Load dashboard data
+            */
+
+            loadDashboard(
+                data.session.user.id
+            );
+
+        }
+
+
+        /*
+        ======================================
+        LOAD DASHBOARD DATA
+        ======================================
+        */
+
+        async function loadDashboard(userId) {
+
+            if (!supabaseClient) {
+                return;
+            }
+
+
+            /*
+            LOAD EA COUNT
+            */
+
+            try {
+
+                const {
+                    count,
+                    error
+                } =
+                await supabaseClient
+                    .from("ea_robots")
+                    .select(
+                        "*",
+                        {
+                            count: "exact",
+                            head: true
+                        }
+                    )
+                    .eq(
+                        "mentor_id",
+                        userId
+                    );
+
+
+                if (error) {
+
+                    console.error(
+                        "EA count error:",
+                        error.message
+                    );
+
+                } else {
+
+                    eaCount.textContent =
+                        count || 0;
+
+                }
+
+            } catch (err) {
+
+                console.error(err);
+
+            }
+
+
+            /*
+            MT4 AND MT5 COUNTS
+
+            These will remain 0 until we create
+            your trading accounts table.
+            */
+
+            mt4Count.textContent = "0";
+
+            mt5Count.textContent = "0";
+
+            hostingCount.textContent = "0";
+
+        }
+
+
+        /*
+        ======================================
+        LOG OUT
+        ======================================
+        */
+
+        if (logoutBtn) {
+
+            logoutBtn.addEventListener(
+                "click",
+                async function () {
+
+                    if (!supabaseClient) {
+
+                        window.location.href =
+                            "login.html";
+
+                        return;
+                    }
+
+
+                    await supabaseClient
+                        .auth
+                        .signOut();
+
+
+                    window.location.href =
+                        "login.html";
+
+                }
+            );
+
+        }
+
+
+        /*
+        ======================================
+        CONNECT ACCOUNT BUTTON
+        ======================================
+        */
+
+        const connectAccountBtn =
+            document.getElementById(
+                "connectAccountBtn"
+            );
+
+
+        if (connectAccountBtn) {
+
+            connectAccountBtn.addEventListener(
+                "click",
+                function (event) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Trading account connection will be added next."
+                    );
+
+                }
+            );
+
+        }
+
+
+        /*
+        ======================================
+        START DASHBOARD
+        ======================================
+        */
+
+        checkUser();
+
+    </script>
 
 </body>
 </html>
