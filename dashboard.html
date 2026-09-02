@@ -6,61 +6,73 @@
 
   <title>Dashboard | Alpha Traders Host</title>
 
-  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
 
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
 
     :root {
-      --bg: #101827;
-      --bg-secondary: #182233;
-      --card: #222d40;
-      --card-dark: #172132;
-      --border: #34445c;
-      --text: #e8ebf0;
-      --muted: #b5bdcb;
-      --accent: #43c5ad;
-      --accent-dark: #2fae98;
-      --danger: #ef6464;
-      --blue: #5b8fd1;
-      --warning: #e8b65d;
+      --bg: #111a29;
+      --bg-secondary: #1a2536;
+      --card: #2a374a;
+      --card-dark: #1b2738;
+      --border: #3b4d66;
+      --text: #e7e9ee;
+      --muted: #b6bfce;
+      --accent: #55c5b5;
+      --accent-dark: #36a999;
+      --danger: #ef6666;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
     }
 
     body {
-      font-family: Arial, Helvetica, sans-serif;
       background: var(--bg);
       color: var(--text);
-      min-height: 100vh;
+      font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      line-height: 1.5;
     }
 
-    /* HEADER */
+    /* =========================
+       HEADER
+    ========================== */
 
     header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: #121b2b;
+      width: 100%;
       border-bottom: 1px solid var(--border);
+      background: #131d2d;
     }
 
-    .navbar {
+    .nav-container {
+      width: 100%;
       max-width: 1200px;
-      margin: auto;
-      min-height: 120px;
-      padding: 20px 30px;
+      margin: 0 auto;
+      padding: 26px 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 25px;
+      gap: 24px;
     }
 
     .logo {
+      text-decoration: none;
+      color: var(--text);
       font-size: 28px;
       font-weight: 800;
       letter-spacing: 2px;
@@ -73,388 +85,400 @@
 
     nav {
       display: flex;
-      gap: 12px;
       align-items: center;
+      gap: 14px;
     }
 
-    nav a {
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 58px;
+      padding: 0 28px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
       color: var(--text);
       text-decoration: none;
-      padding: 16px 24px;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      font-size: 17px;
-      transition: 0.2s;
+      font-size: 18px;
+      transition: 0.2s ease;
     }
 
-    nav a:hover,
-    nav a.active {
+    .nav-link:hover {
       border-color: var(--accent);
       color: var(--accent);
     }
 
-    /* MAIN */
+    .nav-link.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(85, 197, 181, 0.06);
+    }
+
+    /* =========================
+       MAIN
+    ========================== */
 
     main {
+      width: 100%;
+    }
+
+    .container {
+      width: 100%;
       max-width: 1200px;
-      margin: auto;
-      padding: 55px 30px 80px;
+      margin: 0 auto;
+      padding: 48px 32px 80px;
     }
 
-    .page-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 25px;
-      margin-bottom: 35px;
+    .hero {
+      margin-bottom: 34px;
     }
 
-    h1 {
-      font-size: clamp(36px, 5vw, 58px);
-      margin-bottom: 15px;
+    .hero h1 {
+      font-size: clamp(42px, 6vw, 64px);
+      line-height: 1.1;
+      margin-bottom: 18px;
     }
 
-    .subtitle {
+    .hero p {
       color: var(--muted);
-      font-size: 20px;
-      line-height: 1.6;
+      font-size: clamp(19px, 2.5vw, 26px);
+      max-width: 650px;
     }
 
     .create-button {
-      background: var(--accent);
-      color: #102019;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 30px;
+      min-height: 66px;
+      padding: 0 34px;
       border: none;
-      border-radius: 14px;
-      padding: 16px 24px;
-      font-size: 17px;
+      border-radius: 18px;
+      background: linear-gradient(
+        135deg,
+        var(--accent),
+        #4db6aa
+      );
+      color: #10201f;
+      font-size: 20px;
       font-weight: 800;
       text-decoration: none;
-      white-space: nowrap;
       cursor: pointer;
+      transition: transform 0.2s ease;
     }
 
     .create-button:hover {
-      background: var(--accent-dark);
+      transform: translateY(-2px);
     }
 
-    /* STATUS */
-
-    .status-box {
-      display: none;
-      padding: 18px 20px;
-      border-radius: 14px;
-      margin-bottom: 25px;
-      font-size: 16px;
-      line-height: 1.5;
-    }
-
-    .status-box.info {
-      display: block;
-      background: rgba(91, 143, 209, 0.12);
-      border: 1px solid var(--blue);
-      color: #c7dcff;
-    }
-
-    .status-box.success {
-      display: block;
-      background: rgba(67, 197, 173, 0.12);
-      border: 1px solid var(--accent);
-      color: #bff4e9;
-    }
-
-    .status-box.error {
-      display: block;
-      background: rgba(239, 100, 100, 0.1);
-      border: 1px solid var(--danger);
-      color: #ffd1d1;
-    }
-
-    /* STATS */
+    /* =========================
+       STATS
+    ========================== */
 
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-bottom: 35px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      margin-bottom: 42px;
     }
 
     .stat-card {
+      width: 100%;
+      min-height: 175px;
+      padding: 32px;
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 25px;
+      border-radius: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .stat-number {
-      font-size: 38px;
-      font-weight: 800;
       color: var(--accent);
-      margin-bottom: 8px;
+      font-size: 50px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 16px;
     }
 
     .stat-label {
       color: var(--muted);
-      font-size: 16px;
+      font-size: 20px;
     }
 
-    /* SECTION */
+    /* =========================
+       SAVED EAS
+    ========================== */
 
-    .section-card {
+    .saved-section {
+      width: 100%;
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 28px;
-      padding: 35px;
+      border-radius: 30px;
+      padding: 30px;
     }
 
-    .section-top {
+    .saved-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 20px;
-      margin-bottom: 28px;
+      margin-bottom: 26px;
     }
 
-    .section-top h2 {
-      font-size: 30px;
+    .saved-header h2 {
+      font-size: 36px;
+      line-height: 1.2;
     }
 
     .refresh-button {
+      min-height: 54px;
+      padding: 0 24px;
+      border: 1px solid var(--accent);
+      border-radius: 16px;
       background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 12px 18px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 15px;
+      color: var(--accent);
+      font-size: 17px;
       font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
     }
 
     .refresh-button:hover {
-      border-color: var(--accent);
-      color: var(--accent);
+      background: rgba(85, 197, 181, 0.08);
     }
 
-    /* EA GRID */
+    .status-message {
+      width: 100%;
+      padding: 22px;
+      border-radius: 18px;
+      color: var(--muted);
+      background: var(--card-dark);
+      border: 1px solid var(--border);
+      font-size: 18px;
+    }
 
-    .ea-grid {
+    .error-message {
+      border-color: var(--danger);
+      color: #ffc3c3;
+      background: rgba(239, 102, 102, 0.08);
+    }
+
+    .ea-list {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 22px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
     }
 
     .ea-card {
+      width: 100%;
+      padding: 26px;
       background: var(--card-dark);
       border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 25px;
-      transition: transform 0.2s, border-color 0.2s;
+      border-radius: 24px;
     }
 
-    .ea-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--accent);
-    }
-
-    .ea-card-top {
+    .ea-top {
       display: flex;
-      justify-content: space-between;
       align-items: flex-start;
-      gap: 15px;
-      margin-bottom: 18px;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
     }
 
     .ea-name {
-      font-size: 25px;
+      font-size: 26px;
       font-weight: 800;
-      word-break: break-word;
+      overflow-wrap: anywhere;
     }
 
     .platform-badge {
-      color: var(--accent);
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 14px;
       border: 1px solid var(--accent);
-      padding: 7px 12px;
-      border-radius: 20px;
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 14px;
       font-weight: 800;
-      font-size: 13px;
-      white-space: nowrap;
+    }
+
+    .ea-meta {
+      color: var(--muted);
+      font-size: 17px;
+      margin-bottom: 12px;
     }
 
     .ea-description {
       color: var(--muted);
-      line-height: 1.6;
+      font-size: 16px;
       margin-bottom: 20px;
-      min-height: 50px;
-    }
-
-    .ea-details {
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 18px;
-      margin-bottom: 22px;
-    }
-
-    .detail-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      padding: 7px 0;
-      font-size: 14px;
-    }
-
-    .detail-label {
-      color: #8994a6;
-    }
-
-    .detail-value {
-      color: var(--text);
-      text-align: right;
-      font-weight: 600;
-    }
-
-    .status-badge {
-      display: inline-block;
-      padding: 5px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: capitalize;
-      background: rgba(67, 197, 173, 0.12);
-      color: var(--accent);
-      border: 1px solid rgba(67, 197, 173, 0.4);
+      overflow-wrap: anywhere;
     }
 
     .ea-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
+      flex-wrap: wrap;
       gap: 12px;
     }
 
-    .action-button {
-      border: none;
-      padding: 14px 12px;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 800;
+    .edit-button,
+    .view-button {
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
       cursor: pointer;
-      transition: 0.2s;
+      text-decoration: none;
     }
 
     .edit-button {
-      background: var(--blue);
-      color: white;
+      border: none;
+      background: var(--accent);
+      color: #10201f;
     }
 
-    .edit-button:hover {
-      opacity: 0.9;
-    }
-
-    .delete-button {
+    .view-button {
+      border: 1px solid var(--border);
       background: transparent;
-      color: #ff9b9b;
-      border: 1px solid var(--danger);
+      color: var(--text);
     }
-
-    .delete-button:hover {
-      background: rgba(239, 100, 100, 0.12);
-    }
-
-    /* EMPTY */
 
     .empty-state {
+      width: 100%;
+      padding: 45px 20px;
       text-align: center;
-      padding: 70px 20px;
       color: var(--muted);
-    }
-
-    .empty-icon {
-      font-size: 55px;
-      margin-bottom: 20px;
+      background: var(--card-dark);
+      border: 1px dashed var(--border);
+      border-radius: 22px;
     }
 
     .empty-state h3 {
       color: var(--text);
-      font-size: 25px;
-      margin-bottom: 12px;
+      font-size: 24px;
+      margin-bottom: 10px;
     }
 
-    .empty-state p {
-      margin-bottom: 25px;
-      line-height: 1.6;
-    }
+    /* =========================
+       MOBILE
+    ========================== */
 
-    /* LOADING */
-
-    .loading {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--muted);
-      font-size: 18px;
-    }
-
-    .spinner {
-      width: 38px;
-      height: 38px;
-      border: 4px solid rgba(255,255,255,0.12);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 18px;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    /* MOBILE */
-
-    @media (max-width: 700px) {
-      .navbar {
-        min-height: auto;
-        padding: 25px 28px;
+    @media (max-width: 800px) {
+      .nav-container {
+        padding: 28px 28px;
+        flex-wrap: wrap;
+        align-items: center;
       }
 
       .logo {
-        font-size: 22px;
-      }
-
-      nav a {
-        padding: 13px 17px;
-        font-size: 15px;
-      }
-
-      main {
-        padding: 45px 26px 60px;
-      }
-
-      .page-header {
-        flex-direction: column;
-      }
-
-      .create-button {
         width: 100%;
-        text-align: center;
+        font-size: 28px;
+      }
+
+      nav {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .nav-link {
+        width: 100%;
+        min-height: 58px;
+        padding: 0 12px;
+      }
+
+      .container {
+        padding: 46px 28px 70px;
+      }
+
+      .hero {
+        margin-bottom: 32px;
       }
 
       .stats-grid {
         grid-template-columns: 1fr;
+        gap: 18px;
       }
 
-      .section-card {
-        padding: 25px 20px;
+      .stat-card {
+        min-height: 155px;
       }
 
-      .section-top {
-        align-items: flex-start;
+      .ea-list {
+        grid-template-columns: 1fr;
+      }
+
+      .saved-section {
+        padding: 24px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .nav-container {
+        padding: 26px 20px;
+      }
+
+      .logo {
+        font-size: 25px;
+        letter-spacing: 1.5px;
+      }
+
+      .container {
+        padding: 38px 20px 60px;
+      }
+
+      .hero h1 {
+        font-size: 46px;
+      }
+
+      .hero p {
+        font-size: 22px;
+      }
+
+      .create-button {
+        width: 100%;
+        min-height: 66px;
+      }
+
+      .stat-card {
+        padding: 28px;
+        border-radius: 25px;
+      }
+
+      .stat-number {
+        font-size: 48px;
+      }
+
+      .saved-section {
+        padding: 22px;
+        border-radius: 26px;
+      }
+
+      .saved-header {
         flex-direction: column;
+        align-items: stretch;
+      }
+
+      .saved-header h2 {
+        font-size: 34px;
       }
 
       .refresh-button {
         width: 100%;
       }
 
-      .ea-grid {
-        grid-template-columns: 1fr;
+      .ea-card {
+        padding: 22px;
+      }
+
+      .ea-name {
+        font-size: 23px;
       }
     }
   </style>
@@ -462,168 +486,205 @@
 
 <body>
 
-  <!-- NAVIGATION -->
-  <header>
-    <div class="navbar">
+  <!-- =========================
+       HEADER
+  ========================== -->
 
-      <div class="logo">
+  <header>
+    <div class="nav-container">
+
+      <a href="index.html" class="logo">
         ALPHA <span>TRADERS HOST</span>
-      </div>
+      </a>
 
       <nav>
-        <a href="index.html">Home</a>
-        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="index.html" class="nav-link">
+          Home
+        </a>
+
+        <a href="dashboard.html" class="nav-link active">
+          Dashboard
+        </a>
       </nav>
 
     </div>
   </header>
 
 
-  <!-- MAIN CONTENT -->
+  <!-- =========================
+       MAIN CONTENT
+  ========================== -->
+
   <main>
+    <div class="container">
 
-    <div class="page-header">
-
-      <div>
+      <section class="hero">
         <h1>Dashboard</h1>
-        <p class="subtitle">
+
+        <p>
           Manage your Expert Advisors and view your saved EA configurations.
         </p>
-      </div>
 
-      <a href="create-ea.html" class="create-button">
-        + Create New EA
-      </a>
-
-    </div>
+        <a href="create-ea.html" class="create-button">
+          + Create New EA
+        </a>
+      </section>
 
 
-    <!-- MESSAGE -->
-    <div id="statusMessage" class="status-box"></div>
+      <!-- =========================
+           STATISTICS
+      ========================== -->
+
+      <section class="stats-grid">
+
+        <div class="stat-card">
+          <div class="stat-number" id="totalEAs">
+            0
+          </div>
+
+          <div class="stat-label">
+            Total EAs
+          </div>
+        </div>
 
 
-    <!-- STATS -->
-    <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="mt4EAs">
+            0
+          </div>
 
-      <div class="stat-card">
-        <div class="stat-number" id="totalEAs">0</div>
-        <div class="stat-label">Total EAs</div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-number" id="mt4Count">0</div>
-        <div class="stat-label">MT4 EAs</div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-number" id="mt5Count">0</div>
-        <div class="stat-label">MT5 EAs</div>
-      </div>
-
-    </div>
+          <div class="stat-label">
+            MT4 EAs
+          </div>
+        </div>
 
 
-    <!-- SAVED EAS -->
-    <section class="section-card">
+        <div class="stat-card">
+          <div class="stat-number" id="mt5EAs">
+            0
+          </div>
 
-      <div class="section-top">
-        <h2>My Saved EAs</h2>
+          <div class="stat-label">
+            MT5 EAs
+          </div>
+        </div>
 
-        <button
-          class="refresh-button"
-          id="refreshButton"
-          type="button"
+      </section>
+
+
+      <!-- =========================
+           SAVED EAS
+      ========================== -->
+
+      <section class="saved-section">
+
+        <div class="saved-header">
+
+          <h2>My Saved EAs</h2>
+
+          <button
+            type="button"
+            class="refresh-button"
+            id="refreshButton"
+          >
+            ↻ Refresh
+          </button>
+
+        </div>
+
+
+        <div
+          id="eaContent"
+          class="status-message"
         >
-          ↻ Refresh
-        </button>
-      </div>
-
-
-      <div id="eaContainer">
-
-        <div class="loading">
-          <div class="spinner"></div>
           Loading your saved EAs...
         </div>
 
-      </div>
+      </section>
 
-    </section>
-
+    </div>
   </main>
 
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
 
   <script>
 
     /*
     ==================================================
-    DASHBOARD FOR EXACT ea_robots TABLE
 
-    Columns:
+      ALPHA TRADERS HOST
+      DASHBOARD
 
-    id           uuid
-    mentor_id    uuid
-    name         text
-    description  text
-    platform     text
-    strategy     text
-    risk_level   text
-    version      text
-    status       text
-    created_at   timestamptz
-    updated_at   timestamptz
-    features     jsonb
+      EXACT ea_robots TABLE COLUMNS:
+
+      id
+      mentor_id
+      name
+      description
+      platform
+      strategy
+      risk_level
+      version
+      status
+      created_at
+      updated_at
+      features
+
     ==================================================
     */
 
 
-    const supabaseClient = window.supabaseClient;
+    const totalEAsElement =
+      document.getElementById("totalEAs");
 
-    const eaContainer = document.getElementById("eaContainer");
-    const statusMessage = document.getElementById("statusMessage");
+    const mt4EAsElement =
+      document.getElementById("mt4EAs");
 
-    const totalEAsElement = document.getElementById("totalEAs");
-    const mt4CountElement = document.getElementById("mt4Count");
-    const mt5CountElement = document.getElementById("mt5Count");
+    const mt5EAsElement =
+      document.getElementById("mt5EAs");
 
-    const refreshButton = document.getElementById("refreshButton");
+    const eaContent =
+      document.getElementById("eaContent");
+
+    const refreshButton =
+      document.getElementById("refreshButton");
 
 
     /*
     ==================================================
-    SHOW MESSAGE
+      CHECK SUPABASE CLIENT
     ==================================================
     */
 
-    function showMessage(message, type = "info") {
+    function getSupabaseClient() {
 
-      statusMessage.textContent = message;
-
-      statusMessage.className = "status-box " + type;
-
-      if (type === "success") {
-
-        setTimeout(() => {
-
-          statusMessage.className = "status-box";
-          statusMessage.textContent = "";
-
-        }, 4000);
-
+      if (
+        typeof window.supabaseClient !== "undefined"
+      ) {
+        return window.supabaseClient;
       }
+
+      return null;
 
     }
 
 
     /*
     ==================================================
-    ESCAPE HTML
+      ESCAPE HTML
+      Prevents database text from breaking the page
     ==================================================
     */
 
     function escapeHTML(value) {
 
-      if (value === null || value === undefined) {
+      if (
+        value === null ||
+        value === undefined
+      ) {
         return "";
       }
 
@@ -639,29 +700,263 @@
 
     /*
     ==================================================
-    FORMAT DATE
+      FORMAT PLATFORM
     ==================================================
     */
 
-    function formatDate(dateValue) {
+    function formatPlatform(platform) {
 
-      if (!dateValue) {
-        return "—";
+      if (!platform) {
+        return "MT5";
       }
+
+      return String(platform)
+        .toUpperCase();
+
+    }
+
+
+    /*
+    ==================================================
+      LOAD DASHBOARD
+    ==================================================
+    */
+
+    async function loadDashboard() {
+
+      const supabaseClient =
+        getSupabaseClient();
+
+
+      /*
+      ----------------------------------------------
+        SUPABASE CONFIG ERROR
+      ----------------------------------------------
+      */
+
+      if (!supabaseClient) {
+
+        eaContent.className =
+          "status-message error-message";
+
+        eaContent.innerHTML = `
+          Supabase is not connected.
+
+          <br><br>
+
+          Make sure your
+          <strong>supabase-config.js</strong>
+          file is in the same folder as
+          <strong>dashboard.html</strong>.
+        `;
+
+        return;
+
+      }
+
+
+      /*
+      ----------------------------------------------
+        SHOW LOADING
+      ----------------------------------------------
+      */
+
+      eaContent.className =
+        "status-message";
+
+      eaContent.textContent =
+        "Loading your saved EAs...";
+
+
+      refreshButton.disabled = true;
+
+      refreshButton.textContent =
+        "Loading...";
+
 
       try {
 
-        const date = new Date(dateValue);
+        /*
+        --------------------------------------------
+          GET CURRENT AUTHENTICATED USER
+        --------------------------------------------
+        */
 
-        return date.toLocaleDateString(undefined, {
-          year: "numeric",
-          month: "short",
-          day: "numeric"
-        });
+        const {
+          data: userData,
+          error: userError
+        } =
+          await supabaseClient.auth.getUser();
 
-      } catch (error) {
 
-        return "—";
+        if (userError) {
+          throw userError;
+        }
+
+
+        const user =
+          userData?.user;
+
+
+        /*
+        --------------------------------------------
+          USER NOT LOGGED IN
+
+          We still try to load visible EAs.
+          This helps if your current RLS policy
+          allows reading records.
+        --------------------------------------------
+        */
+
+
+        let query =
+          supabaseClient
+            .from("ea_robots")
+            .select(`
+              id,
+              mentor_id,
+              name,
+              description,
+              platform,
+              strategy,
+              risk_level,
+              version,
+              status,
+              created_at,
+              updated_at,
+              features
+            `)
+            .order(
+              "created_at",
+              {
+                ascending: false
+              }
+            );
+
+
+        /*
+        --------------------------------------------
+          FILTER BY mentor_id
+
+          Your table uses mentor_id.
+          Only filter when a logged-in user exists.
+        --------------------------------------------
+        */
+
+        if (user && user.id) {
+
+          query =
+            query.eq(
+              "mentor_id",
+              user.id
+            );
+
+        }
+
+
+        /*
+        --------------------------------------------
+          RUN QUERY
+        --------------------------------------------
+        */
+
+        const {
+          data: eas,
+          error
+        } =
+          await query;
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        /*
+        --------------------------------------------
+          ENSURE ARRAY
+        --------------------------------------------
+        */
+
+        const robots =
+          Array.isArray(eas)
+            ? eas
+            : [];
+
+
+        /*
+        --------------------------------------------
+          UPDATE STATISTICS
+        --------------------------------------------
+        */
+
+        updateStatistics(robots);
+
+
+        /*
+        --------------------------------------------
+          RENDER EAS
+        --------------------------------------------
+        */
+
+        renderEAs(robots);
+
+
+      }
+      catch (error) {
+
+        console.error(
+          "Dashboard loading error:",
+          error
+        );
+
+
+        totalEAsElement.textContent =
+          "0";
+
+        mt4EAsElement.textContent =
+          "0";
+
+        mt5EAsElement.textContent =
+          "0";
+
+
+        eaContent.className =
+          "status-message error-message";
+
+
+        eaContent.innerHTML = `
+          <strong>Could not load your EAs.</strong>
+
+          <br><br>
+
+          ${escapeHTML(
+            error.message ||
+            "Unknown error"
+          )}
+
+          <br><br>
+
+          Check that:
+
+          <br>
+          • <strong>ea_robots</strong> exists
+          <br>
+          • The column names match your table
+          <br>
+          • Your Supabase RLS policies allow access
+          <br>
+          • <strong>supabase-config.js</strong> is correct
+        `;
+
+      }
+      finally {
+
+        refreshButton.disabled =
+          false;
+
+        refreshButton.textContent =
+          "↻ Refresh";
 
       }
 
@@ -670,61 +965,100 @@
 
     /*
     ==================================================
-    UPDATE STATISTICS
+      UPDATE STATISTICS
     ==================================================
     */
 
-    function updateStats(eas) {
+    function updateStatistics(eas) {
 
-      const total = eas.length;
-
-      const mt4 = eas.filter(function(ea) {
-        return String(ea.platform || "").toUpperCase() === "MT4";
-      }).length;
-
-      const mt5 = eas.filter(function(ea) {
-        return String(ea.platform || "").toUpperCase() === "MT5";
-      }).length;
+      const total =
+        eas.length;
 
 
-      totalEAsElement.textContent = total;
-      mt4CountElement.textContent = mt4;
-      mt5CountElement.textContent = mt5;
+      const mt4 =
+        eas.filter(function (ea) {
+
+          return (
+            String(
+              ea.platform || ""
+            )
+            .toUpperCase() === "MT4"
+          );
+
+        })
+        .length;
+
+
+      const mt5 =
+        eas.filter(function (ea) {
+
+          return (
+            String(
+              ea.platform || "MT5"
+            )
+            .toUpperCase() === "MT5"
+          );
+
+        })
+        .length;
+
+
+      totalEAsElement.textContent =
+        total;
+
+      mt4EAsElement.textContent =
+        mt4;
+
+      mt5EAsElement.textContent =
+        mt5;
 
     }
 
 
     /*
     ==================================================
-    RENDER EAS
+      RENDER EAS
     ==================================================
     */
 
     function renderEAs(eas) {
 
-      updateStats(eas);
-
+      /*
+      ----------------------------------------------
+        NO EAS
+      ----------------------------------------------
+      */
 
       if (!eas || eas.length === 0) {
 
-        eaContainer.innerHTML = `
+        eaContent.className = "";
+
+
+        eaContent.innerHTML = `
 
           <div class="empty-state">
 
-            <div class="empty-icon">🤖</div>
-
-            <h3>No EAs yet</h3>
+            <h3>
+              No saved EAs yet
+            </h3>
 
             <p>
-              You have not created any Expert Advisors yet.
-              Create your first EA to get started.
+              Create your first Expert Advisor
+              to see it here.
             </p>
+
+            <br>
 
             <a
               href="create-ea.html"
               class="create-button"
+              style="
+                margin-top: 0;
+                min-height: 54px;
+                font-size: 17px;
+              "
             >
-              + Create Your First EA
+              + Create New EA
             </a>
 
           </div>
@@ -736,527 +1070,11 @@
       }
 
 
-      let html = `<div class="ea-grid">`;
-
-
-      eas.forEach(function(ea) {
-
-        const id = escapeHTML(ea.id);
-        const name = escapeHTML(ea.name || "Untitled EA");
-
-        const description = escapeHTML(
-          ea.description || "No description provided."
-        );
-
-        const platform = escapeHTML(
-          ea.platform || "MT5"
-        );
-
-        const strategy = escapeHTML(
-          ea.strategy || "—"
-        );
-
-        const riskLevel = escapeHTML(
-          ea.risk_level || "—"
-        );
-
-        const version = escapeHTML(
-          ea.version || "1.0"
-        );
-
-        const status = escapeHTML(
-          ea.status || "draft"
-        );
-
-        const createdDate = formatDate(ea.created_at);
-
-
-        html += `
-
-          <article class="ea-card">
-
-            <div class="ea-card-top">
-
-              <h3 class="ea-name">
-                ${name}
-              </h3>
-
-              <span class="platform-badge">
-                ${platform}
-              </span>
-
-            </div>
-
-
-            <p class="ea-description">
-              ${description}
-            </p>
-
-
-            <div class="ea-details">
-
-              <div class="detail-row">
-                <span class="detail-label">Strategy</span>
-                <span class="detail-value">${strategy}</span>
-              </div>
-
-
-              <div class="detail-row">
-                <span class="detail-label">Risk Level</span>
-                <span class="detail-value">${riskLevel}</span>
-              </div>
-
-
-              <div class="detail-row">
-                <span class="detail-label">Version</span>
-                <span class="detail-value">${version}</span>
-              </div>
-
-
-              <div class="detail-row">
-                <span class="detail-label">Status</span>
-
-                <span class="status-badge">
-                  ${status}
-                </span>
-
-              </div>
-
-
-              <div class="detail-row">
-                <span class="detail-label">Created</span>
-                <span class="detail-value">${createdDate}</span>
-              </div>
-
-            </div>
-
-
-            <div class="ea-actions">
-
-              <button
-                type="button"
-                class="action-button edit-button"
-                onclick="editEA('${id}')"
-              >
-                ✏️ Edit EA
-              </button>
-
-
-              <button
-                type="button"
-                class="action-button delete-button"
-                onclick="deleteEA('${id}', '${name.replace(/'/g, "\\'")}')"
-              >
-                🗑 Delete
-              </button>
-
-            </div>
-
-          </article>
-
-        `;
-
-      });
-
-
-      html += `</div>`;
-
-      eaContainer.innerHTML = html;
-
-    }
-
-
-    /*
-    ==================================================
-    LOAD SAVED EAS
-    ==================================================
-    */
-
-    async function loadEAs() {
-
-      try {
-
-        if (!supabaseClient) {
-
-          throw new Error(
-            "Supabase client was not found. Check supabase-config.js."
-          );
-
-        }
-
-
-        eaContainer.innerHTML = `
-
-          <div class="loading">
-            <div class="spinner"></div>
-            Loading your saved EAs...
-          </div>
-
-        `;
-
-
-        /*
-        ----------------------------------------------
-        GET LOGGED-IN USER
-        ----------------------------------------------
-        */
-
-        const {
-          data: {
-            user
-          },
-          error: userError
-        } = await supabaseClient.auth.getUser();
-
-
-        if (userError) {
-          throw userError;
-        }
-
-
-        if (!user) {
-
-          showMessage(
-            "You are not logged in. Please log in to view your saved EAs.",
-            "error"
-          );
-
-
-          eaContainer.innerHTML = `
-
-            <div class="empty-state">
-
-              <div class="empty-icon">🔒</div>
-
-              <h3>Please log in</h3>
-
-              <p>
-                Log in to view and manage your saved Expert Advisors.
-              </p>
-
-              <a
-                href="login.html"
-                class="create-button"
-              >
-                Log In
-              </a>
-
-            </div>
-
-          `;
-
-          updateStats([]);
-
-          return;
-
-        }
-
-
-        /*
-        ----------------------------------------------
-        LOAD ONLY THIS USER'S EAS
-
-        Exact column:
-        mentor_id
-        ----------------------------------------------
-        */
-
-        const {
-          data: eas,
-          error: eaError
-        } = await supabaseClient
-          .from("ea_robots")
-          .select(`
-            id,
-            mentor_id,
-            name,
-            description,
-            platform,
-            strategy,
-            risk_level,
-            version,
-            status,
-            created_at,
-            updated_at,
-            features
-          `)
-          .eq("mentor_id", user.id)
-          .order("updated_at", {
-            ascending: false
-          });
-
-
-        if (eaError) {
-
-          console.error("Supabase error:", eaError);
-
-          throw eaError;
-
-        }
-
-
-        renderEAs(eas || []);
-
-
-      } catch (error) {
-
-        console.error("Error loading EAs:", error);
-
-
-        updateStats([]);
-
-
-        showMessage(
-          "Error loading your EAs: " +
-          (error.message || "Unknown error"),
-          "error"
-        );
-
-
-        eaContainer.innerHTML = `
-
-          <div class="empty-state">
-
-            <div class="empty-icon">⚠️</div>
-
-            <h3>Could not load your EAs</h3>
-
-            <p>
-              ${escapeHTML(
-                error.message ||
-                "Please check your Supabase connection."
-              )}
-            </p>
-
-            <button
-              class="refresh-button"
-              type="button"
-              onclick="loadEAs()"
-            >
-              Try Again
-            </button>
-
-          </div>
-
-        `;
-
-      }
-
-    }
-
-
-    /*
-    ==================================================
-    EDIT EA
-
-    Saves ID in localStorage AND sends ID in URL.
-
-    This gives create-ea.html two ways to identify
-    the EA being edited.
-    ==================================================
-    */
-
-    function editEA(eaId) {
-
-      if (!eaId) {
-
-        showMessage(
-          "Could not find the EA ID.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
       /*
-      Store EA ID for create-ea.html
+      ----------------------------------------------
+        CREATE LIST
+      ----------------------------------------------
       */
 
-      localStorage.setItem(
-        "alpha_edit_ea_id",
-        eaId
-      );
-
-
-      /*
-      Go to Create EA in edit mode
-      */
-
-      window.location.href =
-        "create-ea.html?edit=" +
-        encodeURIComponent(eaId);
-
-    }
-
-
-    /*
-    ==================================================
-    DELETE EA
-    ==================================================
-    */
-
-    async function deleteEA(eaId, eaName) {
-
-      try {
-
-        if (!eaId) {
-
-          throw new Error(
-            "Could not find the EA ID."
-          );
-
-        }
-
-
-        const confirmed = confirm(
-          `Are you sure you want to delete "${eaName}"?\n\n` +
-          `This action cannot be undone.`
-        );
-
-
-        if (!confirmed) {
-          return;
-        }
-
-
-        showMessage(
-          "Deleting EA...",
-          "info"
-        );
-
-
-        /*
-        ----------------------------------------------
-        CHECK USER
-        ----------------------------------------------
-        */
-
-        const {
-          data: {
-            user
-          },
-          error: userError
-        } = await supabaseClient.auth.getUser();
-
-
-        if (userError) {
-          throw userError;
-        }
-
-
-        if (!user) {
-
-          throw new Error(
-            "You must be logged in to delete an EA."
-          );
-
-        }
-
-
-        /*
-        ----------------------------------------------
-        DELETE
-
-        Extra mentor_id check ensures the user only
-        deletes their own EA.
-        ----------------------------------------------
-        */
-
-        const {
-          error: deleteError
-        } = await supabaseClient
-          .from("ea_robots")
-          .delete()
-          .eq("id", eaId)
-          .eq("mentor_id", user.id);
-
-
-        if (deleteError) {
-
-          console.error(
-            "Delete error:",
-            deleteError
-          );
-
-          throw deleteError;
-
-        }
-
-
-        showMessage(
-          `"${eaName}" was deleted successfully.`,
-          "success"
-        );
-
-
-        await loadEAs();
-
-
-      } catch (error) {
-
-        console.error(
-          "Error deleting EA:",
-          error
-        );
-
-
-        showMessage(
-          "Error deleting EA: " +
-          (error.message || "Unknown error"),
-          "error"
-        );
-
-      }
-
-    }
-
-
-    /*
-    ==================================================
-    REFRESH BUTTON
-    ==================================================
-    */
-
-    refreshButton.addEventListener(
-      "click",
-      async function() {
-
-        refreshButton.disabled = true;
-
-        refreshButton.textContent =
-          "Refreshing...";
-
-
-        await loadEAs();
-
-
-        refreshButton.disabled = false;
-
-        refreshButton.textContent =
-          "↻ Refresh";
-
-      }
-    );
-
-
-    /*
-    ==================================================
-    PAGE LOAD
-    ==================================================
-    */
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      async function() {
-
-        await loadEAs();
-
-      }
-    );
-
-  </script>
-
-</body>
-</html>
+      let html =
+        `<div class="ea-list
