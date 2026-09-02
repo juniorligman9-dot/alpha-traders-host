@@ -185,7 +185,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
     message.textContent = "Creating your account...";
 
     try {
-        const { data, error } = await supabase.auth.signUp({
+        const { data, error } = await window.supabaseClient.auth.signUp({
             email: email,
             password: password,
             options: {
