@@ -89,12 +89,10 @@
       font-size: 20px;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.2s;
     }
 
     button:hover {
       opacity: 0.9;
-      transform: translateY(-1px);
     }
 
     button:disabled {
@@ -108,6 +106,10 @@
       color: #bfc7d5;
       font-size: 17px;
       min-height: 24px;
+    }
+
+    .message.error {
+      color: #ff8b8b;
     }
 
     .links {
@@ -150,7 +152,7 @@
     </div>
 
     <p class="subtitle">
-      Sign in to your hosting dashboard
+      Sign in to your account
     </p>
 
     <form id="loginForm">
@@ -183,13 +185,16 @@
 
     <div class="links">
       <p>Don't have an account?</p>
-      <a href="register.html">Create Account</a>
+
+      <a href="register.html">
+        Create Account
+      </a>
     </div>
 
   </div>
 
 
-  <!-- Supabase Library -->
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <!-- Your Supabase Configuration -->
@@ -198,72 +203,419 @@
 
   <script>
 
-    const loginForm = document.getElementById("loginForm");
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-    const message = document.getElementById("message");
-    const loginButton = document.getElementById("loginButton");
+    const loginForm =
+      document.getElementById("loginForm");
+
+    const emailInput =
+      document.getElementById("email");
+
+    const passwordInput =
+      document.getElementById("password");
+
+    const message =
+      document.getElementById("message");
+
+    const loginButton =
+      document.getElementById("loginButton");
 
 
-    loginForm.addEventListener("submit", async function (e) {
+    /*
+    ==========================================
+    SHOW MESSAGE
+    ==========================================
+    */
 
-      e.preventDefault();
+    function showMessage(text, isError = false) {
 
-      const email = emailInput.value.trim();
-      const password = passwordInput.value;
+      message.textContent = text;
 
-      message.textContent = "";
-      loginButton.disabled = true;
-      loginButton.textContent = "Signing In...";
+      if (isError) {
+        message.classList.add("error");
+      } else {
+        message.classList.remove("error");
+      }
 
+    }
+
+
+    /*
+    ==========================================
+    GET USER ROLE
+    ==========================================
+    */
+
+    async function getUserRole(userId) {
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("profiles")
+          .select("role")
+          .eq("id", userId)
+          .single();
+
+
+      if (error) {
+
+        console.error(
+          "Profile error:",
+          error
+        );
+
+        return null;
+
+      }
+
+
+      return data?.role || null;
+
+    }
+
+
+    /*
+    ==========================================
+    LOGIN
+    ==========================================
+    */
+
+    loginForm.addEventListener(
+      "submit",
+      async function (e) {
+
+        e.preventDefault();
+
+
+        const email =
+          emailInput.value.trim();
+
+        const password =
+          passwordInput.value;
+
+
+        showMessage("");
+
+        loginButton.disabled = true;
+
+        loginButton.textContent =
+          "Signing In...";
+
+
+        try {
+
+          /*
+          ----------------------------------------
+          CHECK SUPABASE
+          ----------------------------------------
+          */
+
+          if (
+            typeof supabaseClient ===
+            "undefined"
+          ) {
+
+            throw new Error(
+              "Supabase is not connected. Check supabase-config.js"
+            );
+
+          }
+
+
+          /*
+          ----------------------------------------
+          SIGN IN
+          ----------------------------------------
+          */
+
+          const {
+            data,
+            error
+          } =
+            await supabaseClient
+              .auth
+              .signInWithPassword({
+
+                email: email,
+
+                password: password
+
+              });
+
+
+          if (error) {
+
+            showMessage(
+              "Error: " +
+              error.message,
+              true
+            );
+
+            return;
+
+          }
+
+
+          const user =
+            data?.user;
+
+
+          if (!user) {
+
+            showMessage(
+              "Unable to sign in. Please try again.",
+              true
+            );
+
+            return;
+
+          }
+
+
+          /*
+          ----------------------------------------
+          GET USER ROLE
+          ----------------------------------------
+          */
+
+          showMessage(
+            "Checking your account..."
+          );
+
+
+          const role =
+            await getUserRole(
+              user.id
+            );
+
+
+          /*
+          ----------------------------------------
+          NO PROFILE FOUND
+          ----------------------------------------
+          */
+
+          if (!role) {
+
+            showMessage(
+              "Your account does not have a profile yet. Please contact the administrator.",
+              true
+            );
+
+            await supabaseClient
+              .auth
+              .signOut();
+
+            return;
+
+          }
+
+
+          /*
+          ----------------------------------------
+          MENTOR LOGIN
+          ----------------------------------------
+          */
+
+          if (
+            String(role)
+              .toLowerCase() ===
+            "mentor"
+          ) {
+
+            showMessage(
+              "Mentor login successful! Redirecting..."
+            );
+
+
+            setTimeout(
+              function () {
+
+                window.location.href =
+                  "dashboard.html";
+
+              },
+              700
+            );
+
+            return;
+
+          }
+
+
+          /*
+          ----------------------------------------
+          CLIENT LOGIN
+          ----------------------------------------
+          */
+
+          if (
+            String(role)
+              .toLowerCase() ===
+            "client"
+          ) {
+
+            showMessage(
+              "Client login successful! Redirecting..."
+            );
+
+
+            setTimeout(
+              function () {
+
+                window.location.href =
+                  "client-dashboard.html";
+
+              },
+              700
+            );
+
+            return;
+
+          }
+
+
+          /*
+          ----------------------------------------
+          UNKNOWN ROLE
+          ----------------------------------------
+          */
+
+          showMessage(
+            "Your account has an invalid role: " +
+            role,
+            true
+          );
+
+
+          await supabaseClient
+            .auth
+            .signOut();
+
+
+        }
+        catch (err) {
+
+          console.error(
+            "Login error:",
+            err
+          );
+
+
+          showMessage(
+            "Connection error: " +
+            (
+              err.message ||
+              "Please try again."
+            ),
+            true
+          );
+
+        }
+        finally {
+
+          loginButton.disabled =
+            false;
+
+          loginButton.textContent =
+            "Sign In";
+
+        }
+
+      }
+    );
+
+
+    /*
+    ==========================================
+    CHECK EXISTING SESSION
+
+    If already logged in,
+    send user to correct dashboard.
+    ==========================================
+    */
+
+    async function checkExistingSession() {
 
       try {
 
-        const { data, error } = await supabaseClient.auth.signInWithPassword({
-          email: email,
-          password: password
-        });
-
-
-        if (error) {
-          message.textContent = "Error: " + error.message;
-          loginButton.disabled = false;
-          loginButton.textContent = "Sign In";
+        if (
+          typeof supabaseClient ===
+          "undefined"
+        ) {
           return;
         }
 
 
-        if (data.user) {
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .auth
+            .getUser();
 
-          message.textContent = "Login successful! Redirecting...";
 
-          setTimeout(function () {
-
-            window.location.href = "dashboard.html";
-
-          }, 1000);
-
-        } else {
-
-          message.textContent = "Unable to sign in. Please try again.";
-
-          loginButton.disabled = false;
-          loginButton.textContent = "Sign In";
-
+        if (error) {
+          return;
         }
 
 
-      } catch (err) {
+        const user =
+          data?.user;
 
-        message.textContent =
-          "Connection error: " + err.message;
 
-        loginButton.disabled = false;
-        loginButton.textContent = "Sign In";
+        if (!user) {
+          return;
+        }
+
+
+        const role =
+          await getUserRole(
+            user.id
+          );
+
+
+        if (role === "mentor") {
+
+          window.location.href =
+            "dashboard.html";
+
+        }
+        else if (role === "client") {
+
+          window.location.href =
+            "client-dashboard.html";
+
+        }
+
+      }
+      catch (error) {
+
+        console.error(
+          "Session check error:",
+          error
+        );
 
       }
 
-    });
+    }
+
+
+    /*
+    ==========================================
+    LOAD
+    ==========================================
+    */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
+
+        checkExistingSession();
+
+      }
+    );
 
   </script>
 
