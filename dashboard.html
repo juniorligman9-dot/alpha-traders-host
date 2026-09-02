@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
@@ -9,41 +10,59 @@
 
   <title>Mentor Dashboard | Alpha Traders Host</title>
 
+
+  <!-- SUPABASE -->
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script src="supabase-config.js"></script>
 
+
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
+
     :root {
+
       --bg: #111a29;
       --bg-secondary: #1a2536;
       --card: #2a374a;
       --card-dark: #1b2738;
       --border: #3b4d66;
+
       --text: #e7e9ee;
       --muted: #b6bfce;
+
       --accent: #55c5b5;
       --accent-dark: #36a999;
+
       --danger: #ef6666;
       --warning: #f5b942;
       --success: #55c5b5;
+
     }
+
 
     html,
     body {
+
       width: 100%;
       min-height: 100%;
       overflow-x: hidden;
+
     }
 
+
     body {
+
       background: var(--bg);
       color: var(--text);
+
       font-family:
         Inter,
         system-ui,
@@ -51,434 +70,992 @@
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
+
       line-height: 1.5;
+
     }
+
 
     /* =========================
        HEADER
     ========================== */
 
     header {
+
       width: 100%;
-      border-bottom: 1px solid var(--border);
-      background: #131d2d;
+
+      border-bottom:
+        1px solid var(--border);
+
+      background:
+        #131d2d;
+
     }
+
 
     .nav-container {
+
       width: 100%;
       max-width: 1200px;
+
       margin: 0 auto;
-      padding: 22px 32px;
+
+      padding:
+        22px 32px;
+
       display: flex;
+
       align-items: center;
-      justify-content: space-between;
+
+      justify-content:
+        space-between;
+
       gap: 24px;
+
     }
+
 
     .logo {
+
       text-decoration: none;
-      color: var(--text);
-      font-size: 26px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      white-space: nowrap;
+
+      color:
+        var(--text);
+
+      font-size:
+        26px;
+
+      font-weight:
+        800;
+
+      letter-spacing:
+        1.5px;
+
+      white-space:
+        nowrap;
+
     }
+
 
     .logo span {
-      color: var(--accent);
+
+      color:
+        var(--accent);
+
     }
 
+
     nav {
+
       display: flex;
+
       align-items: center;
+
       gap: 12px;
+
     }
+
 
     .nav-link,
     .logout-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      padding: 0 20px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      color: var(--text);
-      background: transparent;
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      min-height:
+        48px;
+
+      padding:
+        0 20px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        14px;
+
+      color:
+        var(--text);
+
+      background:
+        transparent;
+
+      text-decoration:
+        none;
+
+      font-size:
+        15px;
+
+      font-weight:
+        700;
+
+      cursor:
+        pointer;
+
     }
+
 
     .nav-link:hover {
-      border-color: var(--accent);
-      color: var(--accent);
+
+      border-color:
+        var(--accent);
+
+      color:
+        var(--accent);
+
     }
+
 
     .nav-link.active {
-      border-color: var(--accent);
-      color: var(--accent);
+
+      border-color:
+        var(--accent);
+
+      color:
+        var(--accent);
+
     }
 
+
     .logout-button:hover {
-      border-color: var(--danger);
-      color: var(--danger);
+
+      border-color:
+        var(--danger);
+
+      color:
+        var(--danger);
+
     }
+
 
     /* =========================
        MAIN
     ========================== */
 
     .container {
+
       width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 48px 32px 80px;
+
+      max-width:
+        1200px;
+
+      margin:
+        0 auto;
+
+      padding:
+        48px 32px 80px;
+
     }
+
 
     .hero {
-      margin-bottom: 34px;
+
+      margin-bottom:
+        34px;
+
     }
+
 
     .hero h1 {
-      font-size: clamp(40px, 6vw, 62px);
-      line-height: 1.1;
-      margin-bottom: 15px;
+
+      font-size:
+        clamp(40px, 6vw, 62px);
+
+      line-height:
+        1.1;
+
+      margin-bottom:
+        15px;
+
     }
+
 
     .hero p {
-      color: var(--muted);
-      font-size: clamp(17px, 2.5vw, 22px);
-      max-width: 700px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        clamp(17px, 2.5vw, 22px);
+
+      max-width:
+        700px;
+
     }
+
 
     .create-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 28px;
-      min-height: 60px;
-      padding: 0 30px;
-      border: none;
-      border-radius: 16px;
-      background: var(--accent);
-      color: #10201f;
-      font-size: 18px;
-      font-weight: 800;
-      text-decoration: none;
-      cursor: pointer;
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      margin-top:
+        28px;
+
+      min-height:
+        60px;
+
+      padding:
+        0 30px;
+
+      border:
+        none;
+
+      border-radius:
+        16px;
+
+      background:
+        var(--accent);
+
+      color:
+        #10201f;
+
+      font-size:
+        18px;
+
+      font-weight:
+        800;
+
+      text-decoration:
+        none;
+
+      cursor:
+        pointer;
+
     }
 
+
     .create-button:hover {
-      background: var(--accent-dark);
+
+      background:
+        var(--accent-dark);
+
     }
+
 
     /* =========================
        STATS
     ========================== */
 
     .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 20px;
-      margin-bottom: 35px;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+      gap:
+        20px;
+
+      margin-bottom:
+        35px;
+
     }
+
 
     .stat-card {
-      min-height: 155px;
-      padding: 28px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+
+      min-height:
+        155px;
+
+      padding:
+        28px;
+
+      background:
+        var(--card);
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        24px;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      justify-content:
+        center;
+
     }
+
 
     .stat-number {
-      color: var(--accent);
-      font-size: 46px;
-      font-weight: 800;
-      line-height: 1;
-      margin-bottom: 14px;
+
+      color:
+        var(--accent);
+
+      font-size:
+        46px;
+
+      font-weight:
+        800;
+
+      line-height:
+        1;
+
+      margin-bottom:
+        14px;
+
     }
 
+
     .stat-label {
-      color: var(--muted);
-      font-size: 18px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        18px;
+
     }
+
 
     /* =========================
        SECTIONS
     ========================== */
 
     .dashboard-section {
-      width: 100%;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      padding: 28px;
-      margin-bottom: 30px;
+
+      width:
+        100%;
+
+      background:
+        var(--card);
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        28px;
+
+      padding:
+        28px;
+
+      margin-bottom:
+        30px;
+
     }
+
 
     .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      margin-bottom: 24px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        18px;
+
+      margin-bottom:
+        24px;
+
     }
+
 
     .section-header h2 {
-      font-size: 32px;
-      line-height: 1.2;
+
+      font-size:
+        32px;
+
+      line-height:
+        1.2;
+
     }
+
 
     .refresh-button {
-      min-height: 48px;
-      padding: 0 20px;
-      border: 1px solid var(--accent);
-      border-radius: 14px;
-      background: transparent;
-      color: var(--accent);
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
+
+      min-height:
+        48px;
+
+      padding:
+        0 20px;
+
+      border:
+        1px solid var(--accent);
+
+      border-radius:
+        14px;
+
+      background:
+        transparent;
+
+      color:
+        var(--accent);
+
+      font-size:
+        15px;
+
+      font-weight:
+        700;
+
+      cursor:
+        pointer;
+
+      white-space:
+        nowrap;
+
     }
+
 
     .refresh-button:hover {
-      background: rgba(85, 197, 181, 0.08);
+
+      background:
+        rgba(85, 197, 181, 0.08);
+
     }
+
 
     .refresh-button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
+
+      opacity:
+        0.6;
+
+      cursor:
+        not-allowed;
+
     }
 
+
     /* =========================
-       STATUS / EMPTY
+       STATUS
     ========================== */
 
     .status-message {
-      width: 100%;
-      padding: 22px;
-      border-radius: 18px;
-      color: var(--muted);
-      background: var(--card-dark);
-      border: 1px solid var(--border);
-      font-size: 17px;
+
+      width:
+        100%;
+
+      padding:
+        22px;
+
+      border-radius:
+        18px;
+
+      color:
+        var(--muted);
+
+      background:
+        var(--card-dark);
+
+      border:
+        1px solid var(--border);
+
+      font-size:
+        17px;
+
     }
+
 
     .error-message {
-      border-color: var(--danger);
-      color: #ffc3c3;
-      background: rgba(239, 102, 102, 0.08);
+
+      border-color:
+        var(--danger);
+
+      color:
+        #ffc3c3;
+
+      background:
+        rgba(239, 102, 102, 0.08);
+
     }
+
 
     .empty-state {
-      width: 100%;
-      padding: 42px 20px;
-      text-align: center;
-      color: var(--muted);
-      background: var(--card-dark);
-      border: 1px dashed var(--border);
-      border-radius: 20px;
+
+      width:
+        100%;
+
+      padding:
+        42px 20px;
+
+      text-align:
+        center;
+
+      color:
+        var(--muted);
+
+      background:
+        var(--card-dark);
+
+      border:
+        1px dashed var(--border);
+
+      border-radius:
+        20px;
+
     }
+
 
     .empty-state h3 {
-      color: var(--text);
-      font-size: 23px;
-      margin-bottom: 10px;
+
+      color:
+        var(--text);
+
+      font-size:
+        23px;
+
+      margin-bottom:
+        10px;
+
     }
 
+
     /* =========================
-       MENTOR REQUESTS
+       CLIENT REQUESTS
     ========================== */
 
     .request-list {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap:
+        18px;
+
     }
+
 
     .request-card {
-      background: var(--card-dark);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 24px;
+
+      background:
+        var(--card-dark);
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        22px;
+
+      padding:
+        24px;
+
     }
+
 
     .request-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 14px;
+
+      display:
+        flex;
+
+      align-items:
+        flex-start;
+
+      justify-content:
+        space-between;
+
+      gap:
+        14px;
+
+      margin-bottom:
+        14px;
+
     }
+
 
     .client-name {
-      font-size: 23px;
-      font-weight: 800;
-      overflow-wrap: anywhere;
+
+      font-size:
+        23px;
+
+      font-weight:
+        800;
+
+      overflow-wrap:
+        anywhere;
+
     }
+
 
     .client-email {
-      color: var(--muted);
-      font-size: 15px;
-      margin-bottom: 14px;
-      overflow-wrap: anywhere;
+
+      color:
+        var(--muted);
+
+      font-size:
+        15px;
+
+      margin-bottom:
+        14px;
+
+      overflow-wrap:
+        anywhere;
+
     }
+
 
     .request-date {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 18px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        14px;
+
+      margin-bottom:
+        18px;
+
     }
+
 
     .status-badge {
-      flex-shrink: 0;
-      display: inline-flex;
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 800;
-      text-transform: uppercase;
+
+      flex-shrink:
+        0;
+
+      display:
+        inline-flex;
+
+      padding:
+        6px 12px;
+
+      border-radius:
+        999px;
+
+      font-size:
+        13px;
+
+      font-weight:
+        800;
+
+      text-transform:
+        uppercase;
+
     }
+
 
     .status-pending {
-      border: 1px solid var(--warning);
-      color: var(--warning);
+
+      border:
+        1px solid var(--warning);
+
+      color:
+        var(--warning);
+
     }
+
 
     .status-approved {
-      border: 1px solid var(--success);
-      color: var(--success);
+
+      border:
+        1px solid var(--success);
+
+      color:
+        var(--success);
+
     }
+
 
     .status-rejected {
-      border: 1px solid var(--danger);
-      color: var(--danger);
+
+      border:
+        1px solid var(--danger);
+
+      color:
+        var(--danger);
+
     }
 
+
     .request-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+
+      display:
+        flex;
+
+      flex-wrap:
+        wrap;
+
+      gap:
+        10px;
+
     }
+
 
     .approve-button,
     .reject-button {
-      min-height: 46px;
-      padding: 0 18px;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
+
+      min-height:
+        46px;
+
+      padding:
+        0 18px;
+
+      border-radius:
+        12px;
+
+      font-size:
+        15px;
+
+      font-weight:
+        800;
+
+      cursor:
+        pointer;
+
     }
+
 
     .approve-button {
-      border: none;
-      background: var(--accent);
-      color: #10201f;
+
+      border:
+        none;
+
+      background:
+        var(--accent);
+
+      color:
+        #10201f;
+
     }
 
+
     .reject-button {
-      border: 1px solid var(--danger);
-      background: transparent;
-      color: var(--danger);
+
+      border:
+        1px solid var(--danger);
+
+      background:
+        transparent;
+
+      color:
+        var(--danger);
+
     }
+
 
     .approve-button:disabled,
     .reject-button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
+
+      opacity:
+        0.6;
+
+      cursor:
+        not-allowed;
+
     }
+
 
     /* =========================
        EAs
     ========================== */
 
     .ea-list {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap:
+        20px;
+
     }
+
 
     .ea-card {
-      width: 100%;
-      padding: 25px;
-      background: var(--card-dark);
-      border: 1px solid var(--border);
-      border-radius: 22px;
+
+      width:
+        100%;
+
+      padding:
+        25px;
+
+      background:
+        var(--card-dark);
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        22px;
+
     }
+
 
     .ea-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 14px;
+
+      display:
+        flex;
+
+      align-items:
+        flex-start;
+
+      justify-content:
+        space-between;
+
+      gap:
+        15px;
+
+      margin-bottom:
+        14px;
+
     }
+
 
     .ea-name {
-      font-size: 24px;
-      font-weight: 800;
-      overflow-wrap: anywhere;
+
+      font-size:
+        24px;
+
+      font-weight:
+        800;
+
+      overflow-wrap:
+        anywhere;
+
     }
+
 
     .platform-badge {
-      flex-shrink: 0;
-      padding: 6px 12px;
-      border: 1px solid var(--accent);
-      border-radius: 999px;
-      color: var(--accent);
-      font-size: 13px;
-      font-weight: 800;
+
+      flex-shrink:
+        0;
+
+      padding:
+        6px 12px;
+
+      border:
+        1px solid var(--accent);
+
+      border-radius:
+        999px;
+
+      color:
+        var(--accent);
+
+      font-size:
+        13px;
+
+      font-weight:
+        800;
+
     }
+
 
     .ea-meta {
-      color: var(--muted);
-      font-size: 16px;
-      margin-bottom: 12px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        16px;
+
+      margin-bottom:
+        12px;
+
     }
+
 
     .ea-description {
-      color: var(--muted);
-      font-size: 15px;
-      margin-bottom: 18px;
-      overflow-wrap: anywhere;
+
+      color:
+        var(--muted);
+
+      font-size:
+        15px;
+
+      margin-bottom:
+        18px;
+
+      overflow-wrap:
+        anywhere;
+
     }
 
+
     .ea-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+
+      display:
+        flex;
+
+      flex-wrap:
+        wrap;
+
+      gap:
+        10px;
+
     }
+
 
     .edit-button,
     .view-button {
-      min-height: 46px;
-      padding: 0 18px;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: none;
+
+      min-height:
+        46px;
+
+      padding:
+        0 18px;
+
+      border-radius:
+        12px;
+
+      font-size:
+        15px;
+
+      font-weight:
+        700;
+
+      cursor:
+        pointer;
+
+      text-decoration:
+        none;
+
     }
+
 
     .edit-button {
-      border: none;
-      background: var(--accent);
-      color: #10201f;
+
+      border:
+        none;
+
+      background:
+        var(--accent);
+
+      color:
+        #10201f;
+
     }
 
+
     .view-button {
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text);
+
+      border:
+        1px solid var(--border);
+
+      background:
+        transparent;
+
+      color:
+        var(--text);
+
     }
+
 
     /* =========================
        MOBILE
@@ -487,104 +1064,196 @@
     @media (max-width: 800px) {
 
       .nav-container {
-        padding: 22px 24px;
-        flex-direction: column;
-        align-items: stretch;
+
+        padding:
+          22px 24px;
+
+        flex-direction:
+          column;
+
+        align-items:
+          stretch;
+
       }
+
 
       .logo {
-        text-align: center;
+
+        text-align:
+          center;
+
       }
 
+
       nav {
-        width: 100%;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+
+        width:
+          100%;
+
+        display:
+          grid;
+
+        grid-template-columns:
+          1fr 1fr;
+
       }
+
 
       .nav-link,
       .logout-button {
-        width: 100%;
+
+        width:
+          100%;
+
       }
+
 
       .container {
-        padding: 40px 24px 65px;
+
+        padding:
+          40px 24px 65px;
+
       }
 
+
       .stats-grid {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+          1fr;
+
       }
+
 
       .request-list,
       .ea-list {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+          1fr;
+
       }
 
     }
+
 
     @media (max-width: 520px) {
 
       .nav-container {
-        padding: 20px;
+
+        padding:
+          20px;
+
       }
+
 
       .container {
-        padding: 34px 18px 55px;
+
+        padding:
+          34px 18px 55px;
+
       }
+
 
       .hero h1 {
-        font-size: 42px;
+
+        font-size:
+          42px;
+
       }
+
 
       .dashboard-section {
-        padding: 20px;
-        border-radius: 24px;
+
+        padding:
+          20px;
+
+        border-radius:
+          24px;
+
       }
+
 
       .section-header {
-        flex-direction: column;
-        align-items: stretch;
+
+        flex-direction:
+          column;
+
+        align-items:
+          stretch;
+
       }
 
+
       .refresh-button {
-        width: 100%;
+
+        width:
+          100%;
+
       }
+
 
       .request-card,
       .ea-card {
-        padding: 20px;
+
+        padding:
+          20px;
+
       }
+
 
       .request-top,
       .ea-top {
-        flex-direction: column;
+
+        flex-direction:
+          column;
+
       }
 
     }
+
   </style>
+
 </head>
+
 
 <body>
 
-  <!-- HEADER -->
+
+  <!-- =========================
+       HEADER
+  ========================== -->
 
   <header>
 
     <div class="nav-container">
 
-      <a href="index.html" class="logo">
-        ALPHA <span>TRADERS HOST</span>
+      <a
+        href="index.html"
+        class="logo"
+      >
+        ALPHA
+        <span>TRADERS HOST</span>
       </a>
+
 
       <nav>
 
-        <a href="index.html" class="nav-link">
+        <a
+          href="index.html"
+          class="nav-link"
+        >
           Home
         </a>
 
-        <a href="dashboard.html" class="nav-link active">
+
+        <!-- FIXED DASHBOARD LINK -->
+
+        <a
+          href="mentor-dashboard.html"
+          class="nav-link active"
+        >
           Dashboard
         </a>
+
 
         <button
           type="button"
@@ -601,11 +1270,14 @@
   </header>
 
 
-  <!-- MAIN -->
+  <!-- =========================
+       MAIN
+  ========================== -->
 
   <main>
 
     <div class="container">
+
 
       <!-- HERO -->
 
@@ -615,9 +1287,11 @@
           Mentor Dashboard
         </h1>
 
+
         <p>
           Manage your Expert Advisors and client mentorship requests.
         </p>
+
 
         <a
           href="create-ea.html"
@@ -634,6 +1308,7 @@
       <section class="stats-grid">
 
         <div class="stat-card">
+
           <div
             class="stat-number"
             id="totalEAs"
@@ -641,13 +1316,16 @@
             0
           </div>
 
+
           <div class="stat-label">
             Total EAs
           </div>
+
         </div>
 
 
         <div class="stat-card">
+
           <div
             class="stat-number"
             id="mt4EAs"
@@ -655,13 +1333,16 @@
             0
           </div>
 
+
           <div class="stat-label">
             MT4 EAs
           </div>
+
         </div>
 
 
         <div class="stat-card">
+
           <div
             class="stat-number"
             id="mt5EAs"
@@ -669,15 +1350,17 @@
             0
           </div>
 
+
           <div class="stat-label">
             MT5 EAs
           </div>
+
         </div>
 
       </section>
 
 
-      <!-- MENTOR REQUESTS -->
+      <!-- CLIENT REQUESTS -->
 
       <section class="dashboard-section">
 
@@ -686,6 +1369,7 @@
           <h2>
             Client Requests
           </h2>
+
 
           <button
             type="button"
@@ -696,6 +1380,7 @@
           </button>
 
         </div>
+
 
         <div id="requestsContent">
 
@@ -708,7 +1393,7 @@
       </section>
 
 
-      <!-- SAVED EAS -->
+      <!-- SAVED EAs -->
 
       <section class="dashboard-section">
 
@@ -717,6 +1402,7 @@
           <h2>
             My Saved EAs
           </h2>
+
 
           <button
             type="button"
@@ -728,6 +1414,7 @@
 
         </div>
 
+
         <div
           id="eaContent"
           class="status-message"
@@ -737,12 +1424,19 @@
 
       </section>
 
+
     </div>
 
   </main>
 
 
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
+
   <script>
+
 
     /*
     ==============================================
@@ -751,43 +1445,60 @@
     */
 
     let currentUser = null;
+
     let currentProfile = null;
 
+
+
+    /*
+    ==============================================
+      DOM ELEMENTS
+    ==============================================
+    */
 
     const totalEAsElement =
       document.getElementById("totalEAs");
 
+
     const mt4EAsElement =
       document.getElementById("mt4EAs");
+
 
     const mt5EAsElement =
       document.getElementById("mt5EAs");
 
+
     const eaContent =
       document.getElementById("eaContent");
 
+
     const requestsContent =
       document.getElementById("requestsContent");
+
 
     const refreshEAsButton =
       document.getElementById(
         "refreshEAsButton"
       );
 
+
     const refreshRequestsButton =
       document.getElementById(
         "refreshRequestsButton"
       );
+
 
     const logoutButton =
       document.getElementById(
         "logoutButton"
       );
 
+
     const welcomeTitle =
       document.getElementById(
         "welcomeTitle"
       );
+
 
 
     /*
@@ -802,12 +1513,16 @@
         typeof window.supabaseClient !==
         "undefined"
       ) {
+
         return window.supabaseClient;
+
       }
+
 
       return null;
 
     }
+
 
 
     /*
@@ -822,17 +1537,41 @@
         value === null ||
         value === undefined
       ) {
+
         return "";
+
       }
 
+
       return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+
+        .replace(
+          /</g,
+          "&lt;"
+        )
+
+        .replace(
+          />/g,
+          "&gt;"
+        )
+
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+
+        .replace(
+          /'/g,
+          "&#039;"
+        );
 
     }
+
 
 
     /*
@@ -843,6 +1582,7 @@
 
     async function checkMentorAccess() {
 
+
       const supabaseClient =
         getSupabaseClient();
 
@@ -850,23 +1590,33 @@
       if (!supabaseClient) {
 
         throw new Error(
-          "Supabase is not connected."
+          "Supabase is not connected. Check supabase-config.js."
         );
 
       }
 
 
+
+      /*
+        GET AUTHENTICATED USER
+      */
+
       const {
+
         data: userData,
+
         error: userError
+
       } =
         await supabaseClient
           .auth
           .getUser();
 
 
+
       if (
         userError ||
+        !userData ||
         !userData.user
       ) {
 
@@ -878,24 +1628,38 @@
       }
 
 
+
       currentUser =
         userData.user;
 
 
+
+      /*
+        GET USER PROFILE
+      */
+
       const {
+
         data: profile,
+
         error: profileError
+
       } =
         await supabaseClient
+
           .from("profiles")
+
           .select(
             "id, full_name, email, role, approval_status"
           )
+
           .eq(
             "id",
             currentUser.id
           )
+
           .single();
+
 
 
       if (
@@ -904,8 +1668,10 @@
       ) {
 
         console.error(
+          "Profile error:",
           profileError
         );
+
 
         await supabaseClient
           .auth
@@ -920,33 +1686,55 @@
       }
 
 
+
       currentProfile =
         profile;
+
 
 
       const role =
         String(
           profile.role || ""
         )
-        .toLowerCase()
-        .trim();
+          .toLowerCase()
+          .trim();
+
 
 
       const approvalStatus =
         String(
           profile.approval_status || ""
         )
-        .toLowerCase()
-        .trim();
+          .toLowerCase()
+          .trim();
+
 
 
       /*
-        CLIENT → CLIENT DASHBOARD
+        CLIENT ACCESS
       */
 
       if (
         role === "client"
       ) {
+
+
+        if (
+          approvalStatus !== "approved"
+        ) {
+
+          await supabaseClient
+            .auth
+            .signOut();
+
+
+          window.location.href =
+            "login.html";
+
+          return false;
+
+        }
+
 
         window.location.href =
           "client-dashboard.html";
@@ -956,14 +1744,16 @@
       }
 
 
+
       /*
-        MENTOR MUST BE APPROVED
+        MENTOR ACCESS
       */
 
       if (
         role !== "mentor" ||
         approvalStatus !== "approved"
       ) {
+
 
         await supabaseClient
           .auth
@@ -983,12 +1773,23 @@
       }
 
 
-      const firstName =
+
+      /*
+        DISPLAY FIRST NAME
+      */
+
+      const fullName =
         String(
           profile.full_name || ""
-        )
-        .trim()
-        .split(" ")[0];
+        ).trim();
+
+
+
+      const firstName =
+        fullName
+          ? fullName.split(" ")[0]
+          : "";
+
 
 
       if (firstName) {
@@ -1005,6 +1806,7 @@
     }
 
 
+
     /*
     ==============================================
       LOAD CLIENT REQUESTS
@@ -1013,8 +1815,20 @@
 
     async function loadMentorRequests() {
 
+
       const supabaseClient =
         getSupabaseClient();
+
+
+      if (
+        !supabaseClient ||
+        !currentUser
+      ) {
+
+        return;
+
+      }
+
 
 
       requestsContent.innerHTML =
@@ -1025,39 +1839,48 @@
         `;
 
 
+
       refreshRequestsButton.disabled =
         true;
+
 
       refreshRequestsButton.textContent =
         "Loading...";
 
 
+
       try {
 
+
         /*
-          GET REQUESTS FOR CURRENT MENTOR
+          GET REQUESTS
         */
 
         const {
+
           data: requests,
+
           error
+
         } =
           await supabaseClient
+
             .from("mentor_requests")
-            .select(
-              `
-                id,
-                client_id,
-                mentor_id,
-                status,
-                created_at,
-                updated_at
-              `
-            )
+
+            .select(`
+              id,
+              client_id,
+              mentor_id,
+              status,
+              created_at,
+              updated_at
+            `)
+
             .eq(
               "mentor_id",
               currentUser.id
             )
+
             .order(
               "created_at",
               {
@@ -1066,9 +1889,13 @@
             );
 
 
+
         if (error) {
+
           throw error;
+
         }
+
 
 
         const requestList =
@@ -1077,69 +1904,92 @@
             : [];
 
 
+
         /*
-          GET CLIENT IDS
+          GET UNIQUE CLIENT IDS
         */
 
         const clientIds =
           [
             ...new Set(
+
               requestList
+
                 .map(
                   function(request) {
+
                     return request.client_id;
+
                   }
                 )
+
                 .filter(Boolean)
+
             )
           ];
+
 
 
         let clients = [];
 
 
+
         /*
-          LOAD CLIENT PROFILES SEPARATELY
+          LOAD CLIENT PROFILES
         */
 
         if (
           clientIds.length > 0
         ) {
 
+
           const {
+
             data: clientProfiles,
+
             error: clientsError
+
           } =
             await supabaseClient
+
               .from("profiles")
+
               .select(
                 "id, full_name, email"
               )
+
               .in(
                 "id",
                 clientIds
               );
 
 
+
           if (clientsError) {
+
             throw clientsError;
+
           }
 
 
+
           clients =
-            Array.isArray(clientProfiles)
+            Array.isArray(
+              clientProfiles
+            )
               ? clientProfiles
               : [];
 
         }
 
 
+
         /*
           CREATE CLIENT MAP
         */
 
-        const clientMap =
-          {};
+        const clientMap = {};
+
 
 
         clients.forEach(
@@ -1154,8 +2004,9 @@
         );
 
 
+
         /*
-          ATTACH CLIENT DETAILS
+          ATTACH CLIENT DATA
         */
 
         const requestsWithClients =
@@ -1167,9 +2018,13 @@
                 ...request,
 
                 client:
+
                   clientMap[
                     request.client_id
-                  ] ||
+                  ]
+
+                  ||
+
                   null
 
               };
@@ -1178,18 +2033,23 @@
           );
 
 
+
         renderMentorRequests(
           requestsWithClients
         );
 
 
       }
+
+
       catch (error) {
+
 
         console.error(
           "Mentor request error:",
           error
         );
+
 
 
         requestsContent.innerHTML =
@@ -1211,10 +2071,14 @@
           `;
 
       }
+
+
       finally {
+
 
         refreshRequestsButton.disabled =
           false;
+
 
         refreshRequestsButton.textContent =
           "↻ Refresh Requests";
@@ -1224,9 +2088,10 @@
     }
 
 
+
     /*
     ==============================================
-      RENDER MENTOR REQUESTS
+      RENDER CLIENT REQUESTS
     ==============================================
     */
 
@@ -1234,10 +2099,12 @@
       requests
     ) {
 
+
       if (
         !requests ||
         requests.length === 0
       ) {
+
 
         requestsContent.innerHTML =
           `
@@ -1255,21 +2122,26 @@
             </div>
           `;
 
+
         return;
 
       }
+
 
 
       let html =
         `<div class="request-list">`;
 
 
+
       requests.forEach(
         function(request) {
+
 
           const client =
             request.client ||
             {};
+
 
 
           const status =
@@ -1277,11 +2149,14 @@
               request.status ||
               "pending"
             )
-            .toLowerCase();
+              .toLowerCase()
+              .trim();
+
 
 
           let statusClass =
             "status-pending";
+
 
 
           if (
@@ -1294,7 +2169,7 @@
           }
 
 
-          if (
+          else if (
             status === "rejected"
           ) {
 
@@ -1304,12 +2179,36 @@
           }
 
 
-          const requestDate =
+
+          let requestDate =
+            "Date unavailable";
+
+
+
+          if (
             request.created_at
-              ? new Date(
-                  request.created_at
-                ).toLocaleDateString()
-              : "";
+          ) {
+
+
+            const date =
+              new Date(
+                request.created_at
+              );
+
+
+            if (
+              !isNaN(
+                date.getTime()
+              )
+            ) {
+
+              requestDate =
+                date.toLocaleDateString();
+
+            }
+
+          }
+
 
 
           html +=
@@ -1317,14 +2216,20 @@
 
               <article class="request-card">
 
+
                 <div class="request-top">
 
+
                   <div class="client-name">
+
                     ${escapeHTML(
                       client.full_name ||
                       "Client"
                     )}
+
                   </div>
+
+
 
                   <span
                     class="
@@ -1332,35 +2237,50 @@
                       ${statusClass}
                     "
                   >
+
                     ${escapeHTML(
                       status
                     )}
+
                   </span>
+
 
                 </div>
 
 
+
                 <div class="client-email">
+
                   ${escapeHTML(
                     client.email ||
                     "Email unavailable"
                   )}
+
                 </div>
+
 
 
                 <div class="request-date">
+
                   Requested:
+
                   ${escapeHTML(
                     requestDate
                   )}
+
                 </div>
+
 
 
                 ${
                   status === "pending"
-                    ? `
+
+                    ?
+
+                    `
 
                       <div class="request-actions">
+
 
                         <button
                           type="button"
@@ -1372,8 +2292,11 @@
                             )
                           "
                         >
+
                           ✓ Accept
+
                         </button>
+
 
 
                         <button
@@ -1386,21 +2309,32 @@
                             )
                           "
                         >
+
                           ✕ Reject
+
                         </button>
+
 
                       </div>
 
                     `
-                    : `
+
+
+                    :
+
+                    `
+
                       <div class="request-date">
 
                         This request has already been
                         ${escapeHTML(status)}.
 
                       </div>
+
                     `
+
                 }
+
 
               </article>
 
@@ -1410,14 +2344,17 @@
       );
 
 
+
       html +=
         `</div>`;
+
 
 
       requestsContent.innerHTML =
         html;
 
     }
+
 
 
     /*
@@ -1431,17 +2368,38 @@
       newStatus
     ) {
 
+
       if (
-        !requestId
+        !requestId ||
+        !currentUser
       ) {
+
         return;
+
       }
+
+
+
+      if (
+        newStatus !== "approved" &&
+        newStatus !== "rejected"
+      ) {
+
+        alert(
+          "Invalid request status."
+        );
+
+        return;
+
+      }
+
 
 
       const action =
         newStatus === "approved"
           ? "accept"
           : "reject";
+
 
 
       const confirmed =
@@ -1452,22 +2410,46 @@
         );
 
 
+
       if (!confirmed) {
+
         return;
+
       }
+
 
 
       const supabaseClient =
         getSupabaseClient();
 
 
+
+      if (!supabaseClient) {
+
+        alert(
+          "Supabase is not connected."
+        );
+
+        return;
+
+      }
+
+
+
       try {
 
+
         const {
+
+          data,
+
           error
+
         } =
           await supabaseClient
+
             .from("mentor_requests")
+
             .update({
 
               status:
@@ -1478,33 +2460,70 @@
                   .toISOString()
 
             })
+
             .eq(
               "id",
               requestId
             )
+
             .eq(
               "mentor_id",
               currentUser.id
-            );
+            )
+
+            .select();
+
 
 
         if (error) {
+
           throw error;
+
         }
 
 
+
+        /*
+          CHECK THAT A ROW WAS ACTUALLY UPDATED
+        */
+
+        if (
+          !data ||
+          data.length === 0
+        ) {
+
+          throw new Error(
+            "Request was not updated. You may not have permission."
+          );
+
+        }
+
+
+
         alert(
+
           newStatus === "approved"
-            ? "Client request accepted!"
-            : "Client request rejected!"
+
+            ?
+
+            "Client request accepted!"
+
+            :
+
+            "Client request rejected!"
+
         );
+
 
 
         await loadMentorRequests();
 
 
       }
+
+
       catch (error) {
+
 
         console.error(
           "Request update error:",
@@ -1512,14 +2531,22 @@
         );
 
 
+
         alert(
+
           "Could not update request: " +
-          error.message
+
+          (
+            error.message ||
+            "Unknown error"
+          )
+
         );
 
       }
 
     }
+
 
 
     /*
@@ -1530,29 +2557,55 @@
 
     async function loadEAs() {
 
+
       const supabaseClient =
         getSupabaseClient();
+
+
+
+      if (
+        !supabaseClient ||
+        !currentUser
+      ) {
+
+        return;
+
+      }
+
 
 
       eaContent.className =
         "status-message";
 
+
       eaContent.textContent =
         "Loading your saved EAs...";
+
 
 
       refreshEAsButton.disabled =
         true;
 
+
       refreshEAsButton.textContent =
         "Loading...";
 
 
+
       try {
 
-        let query =
-          supabaseClient
+
+        const {
+
+          data: eas,
+
+          error
+
+        } =
+          await supabaseClient
+
             .from("ea_robots")
+
             .select(`
               id,
               mentor_id,
@@ -1567,10 +2620,12 @@
               updated_at,
               features
             `)
+
             .eq(
               "mentor_id",
               currentUser.id
             )
+
             .order(
               "created_at",
               {
@@ -1579,16 +2634,13 @@
             );
 
 
-        const {
-          data: eas,
-          error
-        } =
-          await query;
-
 
         if (error) {
+
           throw error;
+
         }
+
 
 
         const robots =
@@ -1597,9 +2649,11 @@
             : [];
 
 
+
         updateStatistics(
           robots
         );
+
 
 
         renderEAs(
@@ -1608,7 +2662,10 @@
 
 
       }
+
+
       catch (error) {
+
 
         console.error(
           "EA loading error:",
@@ -1616,18 +2673,23 @@
         );
 
 
+
         totalEAsElement.textContent =
           "0";
 
+
         mt4EAsElement.textContent =
           "0";
+
 
         mt5EAsElement.textContent =
           "0";
 
 
+
         eaContent.className =
           "status-message error-message";
+
 
 
         eaContent.innerHTML =
@@ -1647,10 +2709,14 @@
           `;
 
       }
+
+
       finally {
+
 
         refreshEAsButton.disabled =
           false;
+
 
         refreshEAsButton.textContent =
           "↻ Refresh EAs";
@@ -1658,6 +2724,7 @@
       }
 
     }
+
 
 
     /*
@@ -1670,8 +2737,10 @@
       eas
     ) {
 
+
       const total =
         eas.length;
+
 
 
       const mt4 =
@@ -1681,11 +2750,14 @@
             return String(
               ea.platform || ""
             )
-            .toUpperCase() ===
-            "MT4";
+              .toUpperCase()
+              .trim()
+              ===
+              "MT4";
 
           }
         ).length;
+
 
 
       const mt5 =
@@ -1695,23 +2767,29 @@
             return String(
               ea.platform || ""
             )
-            .toUpperCase() ===
-            "MT5";
+              .toUpperCase()
+              .trim()
+              ===
+              "MT5";
 
           }
         ).length;
 
 
+
       totalEAsElement.textContent =
         total;
 
+
       mt4EAsElement.textContent =
         mt4;
+
 
       mt5EAsElement.textContent =
         mt5;
 
     }
+
 
 
     /*
@@ -1724,15 +2802,22 @@
       platform
     ) {
 
+
       if (!platform) {
-        return "MT5";
+
+        return "Not specified";
+
       }
+
 
       return String(
         platform
-      ).toUpperCase();
+      )
+        .toUpperCase()
+        .trim();
 
     }
+
 
 
     /*
@@ -1745,13 +2830,16 @@
       eas
     ) {
 
+
       if (
         !eas ||
         eas.length === 0
       ) {
 
+
         eaContent.className =
           "";
+
 
 
         eaContent.innerHTML =
@@ -1763,12 +2851,15 @@
                 No saved EAs yet
               </h3>
 
+
               <p>
                 Create your first Expert Advisor
                 to see it here.
               </p>
 
+
               <br>
+
 
               <a
                 href="create-ea.html"
@@ -1786,20 +2877,25 @@
 
           `;
 
+
         return;
 
       }
+
 
 
       let html =
         `<div class="ea-list">`;
 
 
+
       eas.forEach(
         function(ea) {
 
+
           const id =
             ea.id || "";
+
 
 
           const name =
@@ -1807,6 +2903,7 @@
               ea.name ||
               "Unnamed EA"
             );
+
 
 
           const platform =
@@ -1817,11 +2914,13 @@
             );
 
 
+
           const strategy =
             escapeHTML(
               ea.strategy ||
               "Not specified"
             );
+
 
 
           const riskLevel =
@@ -1831,11 +2930,13 @@
             );
 
 
+
           const version =
             escapeHTML(
               ea.version ||
               "1.0"
             );
+
 
 
           const description =
@@ -1845,67 +2946,107 @@
             );
 
 
+
           html +=
             `
 
               <article class="ea-card">
 
+
                 <div class="ea-top">
 
+
                   <div class="ea-name">
+
                     ${name}
+
                   </div>
+
+
 
                   <div class="platform-badge">
+
                     ${platform}
+
                   </div>
 
+
                 </div>
+
 
 
                 <div class="ea-meta">
 
+
                   Strategy:
+
                   ${strategy}
 
+
                   <br>
+
 
                   Risk:
+
                   ${riskLevel}
+
 
                   <br>
 
+
                   Version:
+
                   ${version}
+
 
                 </div>
 
 
+
                 <p class="ea-description">
+
                   ${description}
+
                 </p>
+
 
 
                 <div class="ea-actions">
 
+
                   <button
                     type="button"
                     class="edit-button"
-                    onclick="editEA('${id}')"
+                    onclick="
+                      editEA(
+                        '${id}'
+                      )
+                    "
                   >
+
                     ✏ Edit EA
+
                   </button>
+
 
 
                   <button
                     type="button"
                     class="view-button"
-                    onclick="viewEA('${id}')"
+                    onclick="
+                      viewEA(
+                        '${id}'
+                      )
+                    "
                   >
+
                     View Details
+
                   </button>
 
+
                 </div>
+
 
               </article>
 
@@ -1915,8 +3056,10 @@
       );
 
 
+
       html +=
         `</div>`;
+
 
 
       eaContent.className =
@@ -1929,6 +3072,7 @@
     }
 
 
+
     /*
     ==============================================
       EDIT EA
@@ -1938,6 +3082,7 @@
     function editEA(
       id
     ) {
+
 
       if (!id) {
 
@@ -1950,11 +3095,13 @@
       }
 
 
+
       window.location.href =
         "create-ea.html?id=" +
         encodeURIComponent(id);
 
     }
+
 
 
     /*
@@ -1967,18 +3114,50 @@
       id
     ) {
 
+
+      if (!id) {
+
+        alert(
+          "EA ID could not be found."
+        );
+
+        return;
+
+      }
+
+
+
       const supabaseClient =
         getSupabaseClient();
 
 
+
+      if (!supabaseClient) {
+
+        alert(
+          "Supabase is not connected."
+        );
+
+        return;
+
+      }
+
+
+
       try {
 
+
         const {
+
           data,
+
           error
+
         } =
           await supabaseClient
+
             .from("ea_robots")
+
             .select(`
               name,
               description,
@@ -1990,30 +3169,44 @@
               features,
               created_at
             `)
+
             .eq(
               "id",
               id
             )
+
             .eq(
               "mentor_id",
               currentUser.id
             )
+
             .single();
 
 
+
         if (error) {
+
           throw error;
+
         }
+
 
 
         const features =
           data.features
-            ? JSON.stringify(
-                data.features,
-                null,
-                2
-              )
-            : "No features configured";
+
+            ?
+
+            JSON.stringify(
+              data.features,
+              null,
+              2
+            )
+
+            :
+
+            "No features configured";
+
 
 
         alert(
@@ -2021,50 +3214,94 @@
           "EA DETAILS\n\n" +
 
           "Name: " +
-          (data.name ||
-            "Unnamed EA") +
+
+          (
+            data.name ||
+            "Unnamed EA"
+          ) +
+
 
           "\n\nPlatform: " +
+
           formatPlatform(
             data.platform
           ) +
 
+
           "\nStrategy: " +
-          (data.strategy ||
-            "Not specified") +
+
+          (
+            data.strategy ||
+            "Not specified"
+          ) +
+
 
           "\nRisk Level: " +
-          (data.risk_level ||
-            "Not specified") +
+
+          (
+            data.risk_level ||
+            "Not specified"
+          ) +
+
 
           "\nVersion: " +
-          (data.version ||
-            "1.0") +
+
+          (
+            data.version ||
+            "1.0"
+          ) +
+
 
           "\nStatus: " +
-          (data.status ||
-            "draft") +
+
+          (
+            data.status ||
+            "draft"
+          ) +
+
 
           "\n\nDescription:\n" +
-          (data.description ||
-            "No description") +
+
+          (
+            data.description ||
+            "No description"
+          ) +
+
 
           "\n\nFeatures:\n" +
+
           features
 
         );
 
+
       }
+
+
       catch (error) {
 
+
+        console.error(
+          "EA details error:",
+          error
+        );
+
+
         alert(
+
           "Could not load EA details: " +
-          error.message
+
+          (
+            error.message ||
+            "Unknown error"
+          )
+
         );
 
       }
 
     }
+
 
 
     /*
@@ -2077,15 +3314,34 @@
       "click",
       async function() {
 
+
         const supabaseClient =
           getSupabaseClient();
 
 
-        if (supabaseClient) {
 
-          await supabaseClient
-            .auth
-            .signOut();
+        try {
+
+
+          if (supabaseClient) {
+
+            await supabaseClient
+              .auth
+              .signOut();
+
+          }
+
+
+        }
+
+
+        catch (error) {
+
+
+          console.error(
+            "Logout error:",
+            error
+          );
 
         }
 
@@ -2093,13 +3349,15 @@
         window.location.href =
           "login.html";
 
+
       }
     );
 
 
+
     /*
     ==============================================
-      REFRESH BUTTONS
+      REFRESH EAs
     ==============================================
     */
 
@@ -2113,6 +3371,13 @@
     );
 
 
+
+    /*
+    ==============================================
+      REFRESH REQUESTS
+    ==============================================
+    */
+
     refreshRequestsButton.addEventListener(
       "click",
       function() {
@@ -2123,33 +3388,46 @@
     );
 
 
+
     /*
     ==============================================
-      INITIALIZE
+      INITIALIZE DASHBOARD
     ==============================================
     */
 
     async function initializeDashboard() {
 
+
       try {
+
 
         const allowed =
           await checkMentorAccess();
 
 
+
         if (!allowed) {
+
           return;
+
         }
 
 
+
         await Promise.all([
+
           loadEAs(),
+
           loadMentorRequests()
+
         ]);
 
 
       }
+
+
       catch (error) {
+
 
         console.error(
           "Dashboard initialization error:",
@@ -2157,24 +3435,57 @@
         );
 
 
+
         eaContent.className =
           "status-message error-message";
 
+
+
         eaContent.textContent =
           "Dashboard error: " +
-          error.message;
+
+          (
+            error.message ||
+            "Unknown error"
+          );
+
+
+        requestsContent.innerHTML =
+          `
+
+            <div class="status-message error-message">
+
+              Dashboard error:
+
+              ${escapeHTML(
+                error.message ||
+                "Unknown error"
+              )}
+
+            </div>
+
+          `;
 
       }
 
     }
 
 
+
+    /*
+    ==============================================
+      START DASHBOARD
+    ==============================================
+    */
+
     document.addEventListener(
       "DOMContentLoaded",
       initializeDashboard
     );
 
+
   </script>
+
 
 </body>
 </html>
