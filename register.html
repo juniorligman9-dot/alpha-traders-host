@@ -13,46 +13,62 @@
   padding: 0;
 }
 
+:root {
+  --bg: #0b0f19;
+  --card: #121827;
+  --border: #30394d;
+  --text: #ffffff;
+  --muted: #929bad;
+  --accent: #00d084;
+  --accent-dark: #00a86b;
+  --error: #ff6b6b;
+}
+
 body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #0b0f19;
-  color: white;
+  background: var(--bg);
+  color: var(--text);
   font-family: Arial, sans-serif;
   padding: 20px;
 }
 
 .box {
   width: 100%;
-  max-width: 430px;
-  background: #121827;
+  max-width: 480px;
+  background: var(--card);
   border: 1px solid #20283a;
-  border-radius: 16px;
+  border-radius: 20px;
   padding: 35px;
 }
 
 .logo {
   text-align: center;
-  font-size: 24px;
+  font-size: 26px;
   font-weight: bold;
+  letter-spacing: 1px;
   margin-bottom: 10px;
 }
 
 .logo span {
-  color: #00d084;
+  color: var(--accent);
 }
 
 .subtitle {
   text-align: center;
-  color: #929bad;
+  color: var(--muted);
   margin-bottom: 30px;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 label {
   display: block;
   margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 input,
@@ -60,42 +76,60 @@ select {
   width: 100%;
   padding: 14px;
   margin-bottom: 18px;
-  background: #0b0f19;
-  border: 1px solid #30394d;
-  border-radius: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
   color: white;
   font-size: 16px;
+  outline: none;
 }
 
 input:focus,
 select:focus {
-  outline: none;
-  border-color: #00d084;
+  border-color: var(--accent);
 }
 
 select {
   cursor: pointer;
 }
 
-option {
+select option {
   background: #121827;
   color: white;
 }
 
-button {
-  width: 100%;
+.role-info {
+  background: #0d1422;
+  border: 1px solid #263249;
+  border-radius: 10px;
   padding: 14px;
-  background: #00d084;
-  color: #07110f;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
+  margin-top: -5px;
+  margin-bottom: 20px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-button:hover {
-  opacity: 0.9;
+.role-info strong {
+  color: var(--accent);
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  background: var(--accent);
+  color: #07110f;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 17px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover:not(:disabled) {
+  background: var(--accent-dark);
+  transform: translateY(-1px);
 }
 
 button:disabled {
@@ -103,40 +137,59 @@ button:disabled {
   cursor: not-allowed;
 }
 
+.links {
+  text-align: center;
+  margin-top: 25px;
+  color: var(--muted);
+}
+
+.links p {
+  margin-bottom: 10px;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 .message {
   text-align: center;
   margin-top: 18px;
+  color: var(--muted);
   min-height: 24px;
-  color: #929bad;
   line-height: 1.5;
 }
 
 .message.error {
-  color: #ff8080;
+  color: var(--error);
 }
 
 .message.success {
-  color: #00d084;
-}
-
-.links {
-  text-align: center;
-  margin-top: 22px;
-}
-
-.links a {
-  color: #00d084;
-  text-decoration: none;
-}
-
-.links a:hover {
-  text-decoration: underline;
+  color: var(--accent);
 }
 
 @media (max-width: 500px) {
-  .box {
-    padding: 28px 22px;
+
+  body {
+    padding: 15px;
+    align-items: flex-start;
   }
+
+  .box {
+    margin-top: 20px;
+    padding: 30px 22px;
+    border-radius: 16px;
+  }
+
+  .logo {
+    font-size: 23px;
+  }
+
 }
 </style>
 </head>
@@ -150,21 +203,27 @@ button:disabled {
   </div>
 
   <p class="subtitle">
-    Create your account
+    Create your account and choose how you want to use the platform.
   </p>
 
 
   <form id="registerForm">
 
-    <label for="name">Full Name</label>
+    <!-- FULL NAME -->
+
+    <label for="name">
+      Full Name
+    </label>
 
     <input
       type="text"
       id="name"
-      placeholder="Your name"
+      placeholder="Your full name"
       required
     >
 
+
+    <!-- ACCOUNT TYPE -->
 
     <label for="role">
       Account Type
@@ -174,10 +233,6 @@ button:disabled {
       id="role"
       required
     >
-      <option value="" selected disabled>
-        Select account type
-      </option>
-
       <option value="client">
         Client
       </option>
@@ -188,6 +243,19 @@ button:disabled {
     </select>
 
 
+    <!-- ROLE INFORMATION -->
+
+    <div
+      class="role-info"
+      id="roleInfo"
+    >
+      <strong>Client Account:</strong>
+      You can access available services and features immediately after registration.
+    </div>
+
+
+    <!-- EMAIL -->
+
     <label for="email">
       Email
     </label>
@@ -196,9 +264,12 @@ button:disabled {
       type="email"
       id="email"
       placeholder="you@example.com"
+      autocomplete="email"
       required
     >
 
+
+    <!-- PASSWORD -->
 
     <label for="password">
       Password
@@ -208,10 +279,13 @@ button:disabled {
       type="password"
       id="password"
       placeholder="Create a password"
+      autocomplete="new-password"
       minlength="8"
       required
     >
 
+
+    <!-- CONFIRM PASSWORD -->
 
     <label for="confirm">
       Confirm Password
@@ -220,11 +294,14 @@ button:disabled {
     <input
       type="password"
       id="confirm"
-      placeholder="Confirm password"
+      placeholder="Confirm your password"
+      autocomplete="new-password"
       minlength="8"
       required
     >
 
+
+    <!-- SUBMIT -->
 
     <button
       type="submit"
@@ -236,19 +313,21 @@ button:disabled {
   </form>
 
 
+  <!-- MESSAGE -->
+
   <div
     id="message"
     class="message"
   ></div>
 
 
+  <!-- LOGIN LINK -->
+
   <div class="links">
 
     <p>
       Already have an account?
     </p>
-
-    <br>
 
     <a href="login.html">
       Sign In
@@ -260,6 +339,7 @@ button:disabled {
 
 
 <!-- SUPABASE -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script src="supabase-config.js"></script>
@@ -267,25 +347,71 @@ button:disabled {
 
 <script>
 
+/*
+==========================================
+ELEMENTS
+==========================================
+*/
+
 const registerForm =
   document.getElementById("registerForm");
 
-const registerButton =
-  document.getElementById("registerButton");
+const nameInput =
+  document.getElementById("name");
+
+const roleInput =
+  document.getElementById("role");
+
+const emailInput =
+  document.getElementById("email");
+
+const passwordInput =
+  document.getElementById("password");
+
+const confirmInput =
+  document.getElementById("confirm");
 
 const message =
   document.getElementById("message");
 
+const registerButton =
+  document.getElementById("registerButton");
 
-function showMessage(text, type = "") {
+const roleInfo =
+  document.getElementById("roleInfo");
 
-  message.textContent =
-    text;
 
-  message.className =
-    "message " + type;
+/*
+==========================================
+UPDATE ROLE INFORMATION
+==========================================
+*/
 
-}
+roleInput.addEventListener(
+  "change",
+  function () {
+
+    if (
+      roleInput.value === "mentor"
+    ) {
+
+      roleInfo.innerHTML = `
+        <strong>Mentor Account:</strong>
+        Your account will be submitted for approval.
+        You will only receive full mentor access after an administrator approves you.
+      `;
+
+    } else {
+
+      roleInfo.innerHTML = `
+        <strong>Client Account:</strong>
+        You can access available services and features immediately after registration.
+      `;
+
+    }
+
+  }
+);
 
 
 /*
@@ -296,47 +422,49 @@ REGISTER ACCOUNT
 
 registerForm.addEventListener(
   "submit",
-  async function (event) {
+  async function (e) {
 
-    event.preventDefault();
-
-
-    const fullName =
-      document
-        .getElementById("name")
-        .value
-        .trim();
-
-
-    const role =
-      document
-        .getElementById("role")
-        .value;
-
-
-    const email =
-      document
-        .getElementById("email")
-        .value
-        .trim();
-
-
-    const password =
-      document
-        .getElementById("password")
-        .value;
-
-
-    const confirm =
-      document
-        .getElementById("confirm")
-        .value;
+    e.preventDefault();
 
 
     /*
-    ======================================
+    --------------------------------------
+    GET VALUES
+    --------------------------------------
+    */
+
+    const fullName =
+      nameInput.value.trim();
+
+    const role =
+      roleInput.value;
+
+    const email =
+      emailInput.value.trim();
+
+    const password =
+      passwordInput.value;
+
+    const confirm =
+      confirmInput.value;
+
+
+    /*
+    --------------------------------------
+    RESET MESSAGE
+    --------------------------------------
+    */
+
+    message.textContent = "";
+
+    message.className =
+      "message";
+
+
+    /*
+    --------------------------------------
     VALIDATE ROLE
-    ======================================
+    --------------------------------------
     */
 
     if (
@@ -344,8 +472,10 @@ registerForm.addEventListener(
       role !== "mentor"
     ) {
 
-      showMessage(
-        "Please select Client or Mentor.",
+      message.textContent =
+        "Please select a valid account type.";
+
+      message.classList.add(
         "error"
       );
 
@@ -355,36 +485,19 @@ registerForm.addEventListener(
 
 
     /*
-    ======================================
+    --------------------------------------
     VALIDATE PASSWORD
-    ======================================
-    */
-
-    if (password !== confirm) {
-
-      showMessage(
-        "Passwords do not match.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    /*
-    ======================================
-    CHECK SUPABASE
-    ======================================
+    --------------------------------------
     */
 
     if (
-      typeof window.supabaseClient ===
-      "undefined"
+      password !== confirm
     ) {
 
-      showMessage(
-        "Supabase is not connected.",
+      message.textContent =
+        "Passwords do not match.";
+
+      message.classList.add(
         "error"
       );
 
@@ -392,6 +505,50 @@ registerForm.addEventListener(
 
     }
 
+
+    if (
+      password.length < 8
+    ) {
+
+      message.textContent =
+        "Password must be at least 8 characters.";
+
+      message.classList.add(
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    /*
+    --------------------------------------
+    CHECK SUPABASE
+    --------------------------------------
+    */
+
+    if (
+      !window.supabaseClient
+    ) {
+
+      message.textContent =
+        "Supabase is not connected. Please check supabase-config.js.";
+
+      message.classList.add(
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    /*
+    --------------------------------------
+    LOADING STATE
+    --------------------------------------
+    */
 
     registerButton.disabled =
       true;
@@ -399,24 +556,16 @@ registerForm.addEventListener(
     registerButton.textContent =
       "Creating Account...";
 
-
-    showMessage(
-      "Creating your account..."
-    );
+    message.textContent =
+      "Creating your account...";
 
 
     try {
 
       /*
-      ======================================
-      CREATE AUTH ACCOUNT
-
-      The database trigger will automatically
-      create the profile.
-
-      Client → approved
-      Mentor → pending
-      ======================================
+      ====================================
+      CREATE USER
+      ====================================
       */
 
       const {
@@ -448,6 +597,12 @@ registerForm.addEventListener(
           });
 
 
+      /*
+      ====================================
+      HANDLE ERROR
+      ====================================
+      */
+
       if (error) {
 
         throw error;
@@ -455,62 +610,109 @@ registerForm.addEventListener(
       }
 
 
-      if (!data?.user) {
-
-        throw new Error(
-          "Account could not be created."
-        );
-
-      }
-
-
       /*
-      ======================================
-      SUCCESS MESSAGE
-      ======================================
+      ====================================
+      SUCCESS
+      ====================================
       */
 
-      if (role === "mentor") {
+      if (
+        data.user
+      ) {
 
-        showMessage(
-          "Mentor application submitted successfully! Please check your email to confirm your account. Your mentor account will be available after administrator approval.",
-          "success"
+        message.className =
+          "message success";
+
+
+        /*
+        ----------------------------------
+        MENTOR
+        ----------------------------------
+        */
+
+        if (
+          role === "mentor"
+        ) {
+
+          message.textContent =
+            "Mentor account created successfully! Your account is now pending administrator approval. Please check your email if confirmation is required.";
+
+        }
+
+
+        /*
+        ----------------------------------
+        CLIENT
+        ----------------------------------
+        */
+
+        else {
+
+          message.textContent =
+            "Client account created successfully! Please check your email if confirmation is required.";
+
+        }
+
+
+        /*
+        ----------------------------------
+        RESET FORM
+        ----------------------------------
+        */
+
+        registerForm.reset();
+
+
+        /*
+        ----------------------------------
+        REDIRECT TO LOGIN
+        ----------------------------------
+        */
+
+        setTimeout(
+          function () {
+
+            window.location.href =
+              "login.html";
+
+          },
+          3500
         );
 
+
       }
+
       else {
 
-        showMessage(
-          "Client account created successfully! Please check your email to confirm your account.",
-          "success"
+        throw new Error(
+          "Unable to create the account."
         );
 
       }
-
-
-      registerForm.reset();
 
 
     }
-    catch (error) {
+
+
+    catch (err) {
 
       console.error(
         "Registration error:",
-        error
+        err
       );
 
 
-      showMessage(
+      message.className =
+        "message error";
+
+
+      message.textContent =
         "Error: " +
         (
-          error.message ||
-          "Please try again."
-        ),
-        "error"
-      );
+          err.message ||
+          "Something went wrong. Please try again."
+        );
 
-    }
-    finally {
 
       registerButton.disabled =
         false;
