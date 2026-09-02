@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Create EA | Alpha Traders Host</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #0d1422;
+      color: #f1f1f1;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #101827;
+      border-bottom: 1px solid #293449;
+      padding: 22px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: #20c997;
+    }
+
+    nav a {
+      color: #20c997;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 800px;
+      margin: 50px auto;
+    }
+
+    .card {
+      background: #182233;
+      border: 1px solid #2c3a52;
+      border-radius: 20px;
+      padding: 35px;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #aeb8c8;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    label {
+      display: block;
+      font-size: 17px;
+      margin-top: 22px;
+      margin-bottom: 9px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      background: #0e1624;
+      color: white;
+      border: 2px solid #34435c;
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #20c997;
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    select option {
+      background: #182233;
+      color: white;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 30px;
+      padding: 18px;
+      border: none;
+      border-radius: 12px;
+      background: #20c997;
+      color: #07110f;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 20px;
+      color: #aeb8c8;
+      line-height: 1.5;
+    }
+
+    .robots-section {
+      margin-top: 40px;
+    }
+
+    .robots-section h2 {
+      margin-bottom: 20px;
+    }
+
+    .robot-card {
+      background: #182233;
+      border: 1px solid #2c3a52;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 15px;
+    }
+
+    .robot-card h3 {
+      color: #20c997;
+      margin-bottom: 10px;
+    }
+
+    .robot-info {
+      color: #b8c1d1;
+      margin: 6px 0;
+    }
+
+    .status {
+      display: inline-block;
+      margin-top: 10px;
+      background: #243a39;
+      color: #20c997;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+    }
+
+    .empty {
+      color: #aeb8c8;
+      text-align: center;
+      padding: 25px;
+      background: #182233;
+      border-radius: 12px;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 18px 5%;
+      }
+
+      .container {
+        width: 92%;
+        margin: 30px auto;
+      }
+
+      .card {
+        padding: 25px 20px;
+      }
+
+      h1 {
+        font-size: 27px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+      ALPHA <span>TRADERS HOST</span>
+    </div>
+
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+    </nav>
+  </header>
+
+
+  <main class="container">
+
+    <div class="card">
+
+      <h1>🤖 Create Your EA Robot</h1>
+
+      <p class="subtitle">
+        Create and save your Expert Advisor details.
+        Your EA will be connected to your mentor account.
+      </p>
+
+
+      <form id="eaForm">
+
+        <label for="name">
+          EA Robot Name
+        </label>
+
+        <input
+          type="text"
+          id="name"
+          placeholder="Example: Alpha Gold Scalper"
+          required
+        >
+
+
+        <label for="platform">
+          Trading Platform
+        </label>
+
+        <select id="platform" required>
+          <option value="MT5">MT5</option>
+          <option value="MT4">MT4</option>
+        </select>
+
+
+        <label for="strategy">
+          Trading Strategy
+        </label>
+
+        <textarea
+          id="strategy"
+          placeholder="Describe how your EA trades. Example: Uses moving averages, RSI confirmation and risk management..."
+        ></textarea>
+
+
+        <label for="risk">
+          Risk Level
+        </label>
+
+        <select id="risk">
+          <option value="Low">Low Risk</option>
+          <option value="Medium" selected>Medium Risk</option>
+          <option value="High">High Risk</option>
+        </select>
+
+
+        <label for="version">
+          EA Version
+        </label>
+
+        <input
+          type="text"
+          id="version"
+          placeholder="Example: v1.0"
+        >
+
+
+        <label for="description">
+          Additional Description
+        </label>
+
+        <textarea
+          id="description"
+          placeholder="Add additional information about this EA..."
+        ></textarea>
+
+
+        <button type="submit" id="saveButton">
+          Save EA Robot
+        </button>
+
+      </form>
+
+
+      <div
+        id="message"
+        class="message"
+      ></div>
+
+    </div>
+
+
+    <section class="robots-section">
+
+      <h2>My EA Robots</h2>
+
+      <div id="robotsList">
+        <p class="empty">
+          Loading your EA robots...
+        </p>
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- Supabase Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Your Supabase Configuration -->
+  <script src="supabase-config.js"></script>
+
+
+  <script>
+
+    const eaForm = document.getElementById("eaForm");
+
+    const message =
+      document.getElementById("message");
+
+    const saveButton =
+      document.getElementById("saveButton");
+
+    const robotsList =
+      document.getElementById("robotsList");
+
+
+    /*
+      Check that Supabase is available
+    */
+
+    if (!window.supabaseClient) {
+
+      message.textContent =
+        "Supabase connection is not configured. Please check supabase-config.js.";
+
+    }
+
+
+    /*
+      Check if user is logged in
+    */
+
+    async function getCurrentUser() {
+
+      const {
+        data,
+        error
+      } = await window.supabaseClient.auth.getUser();
+
+      if (error || !data.user) {
+
+        window.location.href = "login.html";
+
+        return null;
+
+      }
+
+      return data.user;
+
+    }
+
+
+    /*
+      Load mentor's EA robots
+    */
+
+    async function loadRobots() {
+
+      try {
+
+        const user =
+          await getCurrentUser();
+
+        if (!user) return;
+
+
+        const {
+          data,
+          error
+        } = await window.supabaseClient
+          .from("ea_robots")
+          .select("*")
+          .eq("mentor_id", user.id)
+          .order("created_at", {
+            ascending: false
+          });
+
+
+        if (error) {
+
+          robotsList.innerHTML =
+            '<p class="empty">Error loading EA robots: '
+            + error.message +
+            '</p>';
+
+          return;
+
+        }
+
+
+        if (!data || data.length === 0) {
+
+          robotsList.innerHTML =
+            '<p class="empty">You have not created any EA robots yet.</p>';
+
+          return;
+
+        }
+
+
+        robotsList.innerHTML = "";
+
+
+        data.forEach(function(robot) {
+
+          const robotCard =
+            document.createElement("div");
+
+          robotCard.className =
+            "robot-card";
+
+
+          const safeName =
+            escapeHtml(robot.name || "Unnamed EA");
+
+          const safePlatform =
+            escapeHtml(robot.platform || "");
+
+          const safeRisk =
+            escapeHtml(robot.risk_level || "");
+
+          const safeVersion =
+            escapeHtml(robot.version || "");
+
+          const safeStrategy =
+            escapeHtml(robot.strategy || "No strategy description provided.");
+
+
+          robotCard.innerHTML = `
+
+            <h3>${safeName}</h3>
+
+            <p class="robot-info">
+              <strong>Platform:</strong>
+              ${safePlatform}
+            </p>
+
+            <p class="robot-info">
+              <strong>Risk:</strong>
+              ${safeRisk}
+            </p>
+
+            <p class="robot-info">
+              <strong>Version:</strong>
+              ${safeVersion}
+            </p>
+
+            <p class="robot-info">
+              <strong>Strategy:</strong>
+              ${safeStrategy}
+            </p>
+
+            <span class="status">
+              ${escapeHtml(robot.status || "draft")}
+            </span>
+
+          `;
+
+
+          robotsList.appendChild(robotCard);
+
+        });
+
+
+      } catch (err) {
+
+        robotsList.innerHTML =
+          '<p class="empty">Connection error: '
+          + err.message +
+          '</p>';
+
+      }
+
+    }
+
+
+    /*
+      Prevent unsafe text from being inserted as HTML
+    */
+
+    function escapeHtml(text) {
+
+      const div =
+        document.createElement("div");
+
+      div.textContent =
+        String(text);
+
+      return div.innerHTML;
+
+    }
+
+
+    /*
+      Save a new EA Robot
+    */
+
+    eaForm.addEventListener(
+      "submit",
+
+      async function(event) {
+
+        event.preventDefault();
+
+
+        try {
+
+          const user =
+            await getCurrentUser();
+
+          if (!user) return;
+
+
+          const name =
+            document.getElementById("name").value.trim();
+
+          const platform =
+            document.getElementById("platform").value;
+
+          const strategy =
+            document.getElementById("strategy").value.trim();
+
+          const risk =
+            document.getElementById("risk").value;
+
+          const version =
+            document.getElementById("version").value.trim();
+
+          const description =
+            document.getElementById("description").value.trim();
+
+
+          message.textContent = "";
+
+          saveButton.disabled = true;
+
+          saveButton.textContent =
+            "Saving EA...";
+
+
+          const {
+            data,
+            error
+          } = await window.supabaseClient
+            .from("ea_robots")
+            .insert([
+
+              {
+                mentor_id: user.id,
+
+                name: name,
+
+                platform: platform,
+
+                strategy: strategy || null,
+
+                risk_level: risk,
+
+                version: version || null,
+
+                description: description || null,
+
+                status: "draft"
+
+              }
+
+            ])
+            .select();
+
+
+          if (error) {
+
+            message.textContent =
+              "Error: " + error.message;
+
+            return;
+
+          }
+
+
+          message.textContent =
+            "✅ EA Robot created successfully!";
+
+
+          eaForm.reset();
+
+
+          document.getElementById("platform").value =
+            "MT5";
+
+
+          document.getElementById("risk").value =
+            "Medium";
+
+
+          await loadRobots();
+
+
+        } catch (err) {
+
+          message.textContent =
+            "Connection error: " + err.message;
+
+        } finally {
+
+          saveButton.disabled = false;
+
+          saveButton.textContent =
+            "Save EA Robot";
+
+        }
+
+      }
+
+    );
+
+
+    /*
+      Load robots when page opens
+    */
+
+    loadRobots();
+
+  </script>
+
+</body>
+</html>
