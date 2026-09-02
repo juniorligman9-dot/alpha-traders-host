@@ -1,1143 +1,839 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
-
-<title>Login | Alpha Traders Host</title>
-
-
-<style>
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-
-:root {
-  --bg: #0d1422;
-  --card: #171f30;
-  --border: #34415a;
-  --text: #f4f4f4;
-  --muted: #aeb7c7;
-  --accent: #20c997;
-  --error: #ff6b6b;
-}
-
-
-body {
-  font-family:
-    Arial,
-    sans-serif;
-
-  background:
-    var(--bg);
-
-  color:
-    var(--text);
-
-  min-height:
-    100vh;
-
-  display:
-    flex;
-
-  justify-content:
-    center;
-
-  align-items:
-    center;
-
-  padding:
-    20px;
-}
-
-
-.login-box {
-
-  width:
-    100%;
-
-  max-width:
-    600px;
-
-  background:
-    var(--card);
-
-  border:
-    1px solid #2c3850;
-
-  border-radius:
-    25px;
-
-  padding:
-    45px 35px;
-
-}
-
-
-.logo {
-
-  text-align:
-    center;
-
-  font-size:
-    32px;
-
-  font-weight:
-    bold;
-
-  letter-spacing:
-    1px;
-
-  margin-bottom:
-    20px;
-
-}
-
-
-.logo span {
-
-  color:
-    var(--accent);
-
-}
-
-
-.subtitle {
-
-  text-align:
-    center;
-
-  color:
-    var(--muted);
-
-  font-size:
-    18px;
-
-  margin-bottom:
-    40px;
-
-}
-
-
-form {
-
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-}
-
-
-label {
-
-  font-size:
-    18px;
-
-  margin-bottom:
-    10px;
-
-  color:
-    var(--text);
-
-}
-
-
-input {
-
-  width:
-    100%;
-
-  padding:
-    18px;
-
-  margin-bottom:
-    25px;
-
-  border-radius:
-    15px;
-
-  border:
-    2px solid var(--border);
-
-  background:
-    var(--bg);
-
-  color:
-    white;
-
-  font-size:
-    18px;
-
-  outline:
-    none;
-
-}
-
-
-input:focus {
-
-  border-color:
-    var(--accent);
-
-}
-
-
-button {
-
-  width:
-    100%;
-
-  padding:
-    18px;
-
-  background:
-    var(--accent);
-
-  color:
-    #07110f;
-
-  border:
-    none;
-
-  border-radius:
-    15px;
-
-  font-size:
-    20px;
-
-  font-weight:
-    bold;
-
-  cursor:
-    pointer;
-
-  transition:
-    0.2s;
-
-}
-
-
-button:hover:not(:disabled) {
-
-  opacity:
-    0.9;
-
-  transform:
-    translateY(-1px);
-
-}
-
-
-button:disabled {
-
-  opacity:
-    0.6;
-
-  cursor:
-    not-allowed;
-
-}
-
-
-.message {
-
-  margin-top:
-    20px;
-
-  text-align:
-    center;
-
-  color:
-    var(--muted);
-
-  font-size:
-    17px;
-
-  min-height:
-    24px;
-
-  line-height:
-    1.5;
-
-}
-
-
-.message.error {
-
-  color:
-    var(--error);
-
-}
-
-
-.message.success {
-
-  color:
-    var(--accent);
-
-}
-
-
-.links {
-
-  text-align:
-    center;
-
-  margin-top:
-    25px;
-
-  color:
-    #e5e5e5;
-
-  font-size:
-    18px;
-
-}
-
-
-.links a {
-
-  display:
-    inline-block;
-
-  margin-top:
-    12px;
-
-  color:
-    var(--accent);
-
-  text-decoration:
-    none;
-
-  font-size:
-    20px;
-
-}
-
-
-.links a:hover {
-
-  text-decoration:
-    underline;
-
-}
-
-
-@media (
-  max-width: 500px
-) {
-
-  body {
-
-    align-items:
-      flex-start;
-
-    padding:
-      15px;
-
-  }
-
-
-  .login-box {
-
-    margin-top:
-      25px;
-
-    padding:
-      38px 24px;
-
-  }
-
-
-  .logo {
-
-    font-size:
-      26px;
-
-  }
-
-
-  .subtitle {
-
-    font-size:
-      16px;
-
-  }
-
-
-  input {
-
-    padding:
-      16px;
-
-  }
-
-}
-
-</style>
-
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Login | Alpha Traders Host</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0d1422;
+      --card: #171f30;
+      --border: #2c3850;
+      --input-border: #34415a;
+      --text: #f4f4f4;
+      --muted: #aeb7c7;
+      --accent: #20c997;
+      --danger: #ff7b7b;
+      --warning: #f5b942;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 600px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 25px;
+      padding: 45px 35px;
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .subtitle {
+      text-align: center;
+      color: var(--muted);
+      font-size: 18px;
+      margin-bottom: 40px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    input {
+      width: 100%;
+      padding: 18px;
+      margin-bottom: 25px;
+      border-radius: 15px;
+      border: 2px solid var(--input-border);
+      background: var(--bg);
+      color: white;
+      font-size: 18px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+    }
+
+    button {
+      width: 100%;
+      padding: 18px;
+      background: var(--accent);
+      color: #07110f;
+      border: none;
+      border-radius: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .message {
+      margin-top: 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 17px;
+      min-height: 24px;
+      line-height: 1.5;
+    }
+
+    .message.error {
+      color: var(--danger);
+    }
+
+    .message.success {
+      color: var(--accent);
+    }
+
+    .message.warning {
+      color: var(--warning);
+    }
+
+    .links {
+      text-align: center;
+      margin-top: 25px;
+      color: var(--text);
+      font-size: 18px;
+    }
+
+    .links a {
+      display: inline-block;
+      margin-top: 12px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 20px;
+    }
+
+    .links a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 500px) {
+
+      body {
+        align-items: flex-start;
+      }
+
+      .login-box {
+        padding: 38px 24px;
+        margin-top: 20px;
+      }
+
+      .logo {
+        font-size: 27px;
+      }
+
+      .subtitle {
+        margin-bottom: 30px;
+      }
+
+    }
+
+  </style>
 </head>
-
 
 <body>
 
+  <div class="login-box">
 
-<div
-  class="login-box"
->
+    <div class="logo">
+      ALPHA <span>TRADERS HOST</span>
+    </div>
 
-
-  <!-- LOGO -->
-
-  <div
-    class="logo"
-  >
-
-    ALPHA
-
-    <span>
-      TRADERS HOST
-    </span>
-
-  </div>
-
-
-  <!-- SUBTITLE -->
-
-  <p
-    class="subtitle"
-  >
-
-    Sign in to your account
-
-  </p>
-
-
-  <!-- LOGIN FORM -->
-
-  <form
-    id="loginForm"
-  >
-
-
-    <!-- EMAIL -->
-
-    <label
-      for="email"
-    >
-
-      Email
-
-    </label>
-
-
-    <input
-      type="email"
-      id="email"
-      placeholder="you@example.com"
-      autocomplete="email"
-      required
-    >
-
-
-
-    <!-- PASSWORD -->
-
-    <label
-      for="password"
-    >
-
-      Password
-
-    </label>
-
-
-    <input
-      type="password"
-      id="password"
-      placeholder="Your password"
-      autocomplete="current-password"
-      required
-    >
-
-
-
-    <!-- BUTTON -->
-
-    <button
-      type="submit"
-      id="loginButton"
-    >
-
-      Sign In
-
-    </button>
-
-
-  </form>
-
-
-
-  <!-- MESSAGE -->
-
-  <div
-    id="message"
-    class="message"
-  ></div>
-
-
-
-  <!-- REGISTER LINK -->
-
-  <div
-    class="links"
-  >
-
-    <p>
-      Don't have an account?
+    <p class="subtitle">
+      Sign in to your account
     </p>
 
 
-    <a
-      href="register.html"
-    >
+    <form id="loginForm">
 
-      Create Account
+      <label for="email">
+        Email
+      </label>
 
-    </a>
+      <input
+        type="email"
+        id="email"
+        placeholder="you@example.com"
+        required
+      >
+
+
+      <label for="password">
+        Password
+      </label>
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Your password"
+        required
+      >
+
+
+      <button
+        type="submit"
+        id="loginButton"
+      >
+        Sign In
+      </button>
+
+    </form>
+
+
+    <div
+      id="message"
+      class="message"
+    ></div>
+
+
+    <div class="links">
+
+      <p>
+        Don't have an account?
+      </p>
+
+      <a href="register.html">
+        Create Account
+      </a>
+
+    </div>
 
   </div>
 
 
-</div>
+  <!-- SUPABASE -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="supabase-config.js"></script>
 
 
+  <script>
 
-<!-- =====================================
-     SUPABASE
-===================================== -->
+    /* ==========================================
+       ELEMENTS
+    ========================================== */
 
-<script
-  src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-></script>
-
-
-<script
-  src="supabase-config.js"
-></script>
-
-
-
-<script>
-
-
-/*
-==========================================
-ELEMENTS
-==========================================
-*/
-
-
-const loginForm =
-  document.getElementById(
-    "loginForm"
-  );
-
-
-const emailInput =
-  document.getElementById(
-    "email"
-  );
-
-
-const passwordInput =
-  document.getElementById(
-    "password"
-  );
-
-
-const message =
-  document.getElementById(
-    "message"
-  );
-
-
-const loginButton =
-  document.getElementById(
-    "loginButton"
-  );
-
-
-
-/*
-==========================================
-SHOW MESSAGE
-==========================================
-*/
-
-
-function showMessage(
-  text,
-  type
-) {
-
-  message.textContent =
-    text;
-
-
-  message.className =
-    "message";
-
-
-  if (
-    type
-  ) {
-
-    message.classList.add(
-      type
-    );
-
-  }
-
-}
-
-
-
-/*
-==========================================
-LOGIN
-==========================================
-*/
-
-
-loginForm.addEventListener(
-
-  "submit",
-
-  async function (
-    e
-  ) {
-
-
-    e.preventDefault();
-
-
-
-    /*
-    ----------------------------------------
-    CHECK SUPABASE
-    ----------------------------------------
-    */
-
-
-    if (
-      !window.supabaseClient
-    ) {
-
-      showMessage(
-        "Supabase is not connected. Please check supabase-config.js.",
-        "error"
+    const loginForm =
+      document.getElementById(
+        "loginForm"
       );
 
-      return;
+    const emailInput =
+      document.getElementById(
+        "email"
+      );
+
+    const passwordInput =
+      document.getElementById(
+        "password"
+      );
+
+    const message =
+      document.getElementById(
+        "message"
+      );
+
+    const loginButton =
+      document.getElementById(
+        "loginButton"
+      );
+
+
+    /* ==========================================
+       SHOW MESSAGE
+    ========================================== */
+
+    function showMessage(
+      text,
+      type
+    ) {
+
+      message.textContent =
+        text;
+
+      message.className =
+        "message";
+
+      if (
+        type
+      ) {
+
+        message.classList.add(
+          type
+        );
+
+      }
 
     }
 
 
+    /* ==========================================
+       LOGIN
+    ========================================== */
 
-    /*
-    ----------------------------------------
-    GET FORM VALUES
-    ----------------------------------------
-    */
+    loginForm.addEventListener(
+      "submit",
+      async function (e) {
 
+        e.preventDefault();
 
-    const email =
-      emailInput.value.trim();
 
+        const email =
+          emailInput.value.trim();
 
-    const password =
-      passwordInput.value;
+        const password =
+          passwordInput.value;
 
-
-
-    /*
-    ----------------------------------------
-    LOADING
-    ----------------------------------------
-    */
-
-
-    showMessage(
-      "Signing in..."
-    );
-
-
-    loginButton.disabled =
-      true;
-
-
-    loginButton.textContent =
-      "Signing In...";
-
-
-
-    try {
-
-
-      /*
-      ======================================
-      SIGN IN
-      ======================================
-      */
-
-
-      const {
-        data,
-        error
-      } =
-        await window.supabaseClient
-          .auth
-          .signInWithPassword({
-
-            email:
-              email,
-
-            password:
-              password
-
-          });
-
-
-
-      /*
-      ======================================
-      LOGIN ERROR
-      ======================================
-      */
-
-
-      if (
-        error
-      ) {
-
-        throw error;
-
-      }
-
-
-
-      /*
-      ======================================
-      GET USER
-      ======================================
-      */
-
-
-      const user =
-        data?.user;
-
-
-      if (
-        !user
-      ) {
-
-        throw new Error(
-          "Unable to find your account."
-        );
-
-      }
-
-
-
-      /*
-      ======================================
-      GET PROFILE
-      ======================================
-      */
-
-
-      showMessage(
-        "Checking account access..."
-      );
-
-
-      const {
-        data:
-          profile,
-
-        error:
-          profileError
-
-      } =
-        await window.supabaseClient
-
-          .from(
-            "profiles"
-          )
-
-          .select(
-            `
-              id,
-              full_name,
-              role,
-              approval_status
-            `
-          )
-
-          .eq(
-            "id",
-            user.id
-          )
-
-          .single();
-
-
-
-      /*
-      ======================================
-      PROFILE ERROR
-      ======================================
-      */
-
-
-      if (
-        profileError
-      ) {
-
-        console.error(
-          "Profile error:",
-          profileError
-        );
-
-
-        /*
-        ------------------------------------
-        SIGN OUT
-
-        We do not leave the user logged in
-        if we cannot determine access.
-        ------------------------------------
-        */
-
-
-        await window.supabaseClient
-          .auth
-          .signOut();
-
-
-        throw new Error(
-          "Your account profile could not be loaded. Please contact support."
-        );
-
-      }
-
-
-
-      /*
-      ======================================
-      CHECK ROLE
-      ======================================
-      */
-
-
-      const role =
-        String(
-          profile.role ||
-          ""
-        )
-        .toLowerCase();
-
-
-      const approvalStatus =
-        String(
-          profile.approval_status ||
-          ""
-        )
-        .toLowerCase();
-
-
-
-      /*
-      ======================================
-      CLIENT
-      ======================================
-      */
-
-
-      if (
-        role === "client"
-      ) {
 
         showMessage(
-          "Login successful! Opening your dashboard...",
-          "success"
+          "",
+          ""
         );
 
 
-        setTimeout(
-
-          function () {
-
-            window.location.href =
-              "client-dashboard.html";
-
-          },
-
-          800
-
-        );
-
-
-        return;
-
-      }
-
-
-
-      /*
-      ======================================
-      MENTOR
-      ======================================
-      */
-
-
-      if (
-        role === "mentor"
-      ) {
-
-
-        /*
-        ------------------------------------
-        APPROVED MENTOR
-        ------------------------------------
-        */
-
+        /* CHECK SUPABASE */
 
         if (
-          approvalStatus ===
-          "approved"
+          !window.supabaseClient
         ) {
 
           showMessage(
-            "Login successful! Opening your mentor dashboard...",
-            "success"
+            "Supabase is not connected. Check supabase-config.js.",
+            "error"
           );
-
-
-          setTimeout(
-
-            function () {
-
-              window.location.href =
-                "dashboard.html";
-
-            },
-
-            800
-
-          );
-
 
           return;
 
         }
 
 
+        loginButton.disabled =
+          true;
 
-        /*
-        ------------------------------------
-        PENDING MENTOR
-        ------------------------------------
-        */
+        loginButton.textContent =
+          "Signing In...";
 
 
-        if (
-          approvalStatus ===
-          "pending"
-        ) {
+        try {
+
+          /* ======================================
+             SIGN IN
+          ====================================== */
+
+          const {
+            data: loginData,
+            error: loginError
+          } =
+            await window.supabaseClient
+              .auth
+              .signInWithPassword({
+
+                email:
+                  email,
+
+                password:
+                  password
+
+              });
+
+
+          if (
+            loginError
+          ) {
+
+            throw loginError;
+
+          }
+
+
+          const user =
+            loginData?.user;
+
+
+          if (
+            !user
+          ) {
+
+            throw new Error(
+              "Unable to sign in. Please try again."
+            );
+
+          }
+
+
+          /* ======================================
+             LOAD USER PROFILE
+          ====================================== */
 
           showMessage(
-            "Your mentor account is waiting for administrator approval.",
-            "error"
+            "Checking your account...",
+            ""
           );
 
 
-          /*
-          ----------------------------------
-          SIGN OUT
+          const {
+            data: profile,
+            error: profileError
+          } =
+            await window.supabaseClient
+              .from("profiles")
+              .select(
+                "id, full_name, email, role, approval_status"
+              )
+              .eq(
+                "id",
+                user.id
+              )
+              .single();
 
-          Pending mentors cannot access
-          the mentor dashboard.
-          ----------------------------------
-          */
 
+          if (
+            profileError
+          ) {
+
+            /*
+              The user is signed in successfully,
+              but the profile could not be found.
+            */
+
+            console.error(
+              "Profile error:",
+              profileError
+            );
+
+
+            await window.supabaseClient
+              .auth
+              .signOut();
+
+
+            throw new Error(
+              "Your account profile could not be found. Please contact support."
+            );
+
+          }
+
+
+          /* ======================================
+             NORMALIZE VALUES
+          ====================================== */
+
+          const role =
+            String(
+              profile.role ||
+              "client"
+            )
+            .toLowerCase()
+            .trim();
+
+
+          const approvalStatus =
+            String(
+              profile.approval_status ||
+              ""
+            )
+            .toLowerCase()
+            .trim();
+
+
+          /* ======================================
+             ADMIN LOGIN
+          ====================================== */
+
+          if (
+            role === "admin"
+          ) {
+
+            showMessage(
+              "Admin login successful! Redirecting...",
+              "success"
+            );
+
+
+            setTimeout(
+              function () {
+
+                window.location.href =
+                  "admin-dashboard.html";
+
+              },
+              700
+            );
+
+
+            return;
+
+          }
+
+
+          /* ======================================
+             CLIENT LOGIN
+          ====================================== */
+
+          if (
+            role === "client"
+          ) {
+
+            showMessage(
+              "Login successful! Redirecting...",
+              "success"
+            );
+
+
+            setTimeout(
+              function () {
+
+                window.location.href =
+                  "client-dashboard.html";
+
+              },
+              700
+            );
+
+
+            return;
+
+          }
+
+
+          /* ======================================
+             MENTOR LOGIN
+          ====================================== */
+
+          if (
+            role === "mentor"
+          ) {
+
+            /* ------------------------------
+               APPROVED
+            ------------------------------ */
+
+            if (
+              approvalStatus ===
+              "approved"
+            ) {
+
+              showMessage(
+                "Mentor account approved! Redirecting...",
+                "success"
+              );
+
+
+              setTimeout(
+                function () {
+
+                  window.location.href =
+                    "dashboard.html";
+
+                },
+                700
+              );
+
+
+              return;
+
+            }
+
+
+            /* ------------------------------
+               PENDING
+            ------------------------------ */
+
+            if (
+              approvalStatus ===
+              "pending"
+            ) {
+
+              await window.supabaseClient
+                .auth
+                .signOut();
+
+
+              showMessage(
+                "Your mentor account is waiting for administrator approval.",
+                "warning"
+              );
+
+
+              return;
+
+            }
+
+
+            /* ------------------------------
+               REJECTED
+            ------------------------------ */
+
+            if (
+              approvalStatus ===
+              "rejected"
+            ) {
+
+              await window.supabaseClient
+                .auth
+                .signOut();
+
+
+              showMessage(
+                "Your mentor application was not approved. Please contact support for more information.",
+                "error"
+              );
+
+
+              return;
+
+            }
+
+
+            /* ------------------------------
+               UNKNOWN STATUS
+            ------------------------------ */
+
+            await window.supabaseClient
+              .auth
+              .signOut();
+
+
+            showMessage(
+              "Your mentor account has an unknown approval status. Please contact support.",
+              "error"
+            );
+
+
+            return;
+
+          }
+
+
+          /* ======================================
+             UNKNOWN ROLE
+          ====================================== */
 
           await window.supabaseClient
             .auth
             .signOut();
 
 
+          showMessage(
+            "Your account has an unknown role. Please contact support.",
+            "error"
+          );
+
+
+        }
+        catch (
+          error
+        ) {
+
+          console.error(
+            "Login error:",
+            error
+          );
+
+
+          showMessage(
+            error.message ||
+            "Unable to sign in. Please try again.",
+            "error"
+          );
+
+        }
+        finally {
+
           loginButton.disabled =
             false;
-
 
           loginButton.textContent =
             "Sign In";
 
+        }
 
+      }
+    );
+
+
+    /* ==========================================
+       CHECK EXISTING SESSION
+
+       If already logged in, send the user
+       to the correct dashboard.
+    ========================================== */
+
+    async function checkExistingSession() {
+
+      if (
+        !window.supabaseClient
+      ) {
+        return;
+      }
+
+
+      try {
+
+        const {
+          data
+        } =
+          await window.supabaseClient
+            .auth
+            .getUser();
+
+
+        if (
+          !data?.user
+        ) {
           return;
-
         }
 
 
-
-        /*
-        ------------------------------------
-        REJECTED / OTHER STATUS
-        ------------------------------------
-        */
-
-
-        showMessage(
-          "Your mentor account is not approved for access. Please contact support.",
-          "error"
-        );
-
-
-        await window.supabaseClient
-          .auth
-          .signOut();
+        const {
+          data: profile,
+          error
+        } =
+          await window.supabaseClient
+            .from("profiles")
+            .select(
+              "role, approval_status"
+            )
+            .eq(
+              "id",
+              data.user.id
+            )
+            .single();
 
 
-        loginButton.disabled =
-          false;
+        if (
+          error ||
+          !profile
+        ) {
+          return;
+        }
 
 
-        loginButton.textContent =
-          "Sign In";
+        const role =
+          String(
+            profile.role || ""
+          )
+          .toLowerCase();
 
 
-        return;
+        const status =
+          String(
+            profile.approval_status || ""
+          )
+          .toLowerCase();
+
+
+        if (
+          role === "admin"
+        ) {
+
+          window.location.href =
+            "admin-dashboard.html";
+
+        }
+
+        else if (
+          role === "client"
+        ) {
+
+          window.location.href =
+            "client-dashboard.html";
+
+        }
+
+        else if (
+          role === "mentor" &&
+          status === "approved"
+        ) {
+
+          window.location.href =
+            "dashboard.html";
+
+        }
 
       }
-
-
-
-      /*
-      ======================================
-      ADMIN
-
-      Admin accounts should only be created
-      manually by the system administrator.
-      ======================================
-      */
-
-
-      if (
-        role === "admin"
+      catch (
+        error
       ) {
 
-        showMessage(
-          "Login successful! Opening admin dashboard...",
-          "success"
+        console.error(
+          "Session check error:",
+          error
         );
-
-
-        setTimeout(
-
-          function () {
-
-            window.location.href =
-              "admin-dashboard.html";
-
-          },
-
-          800
-
-        );
-
-
-        return;
 
       }
 
-
-
-      /*
-      ======================================
-      UNKNOWN ROLE
-      ======================================
-      */
-
-
-      await window.supabaseClient
-        .auth
-        .signOut();
-
-
-      throw new Error(
-        "Your account has an invalid role."
-      );
-
-
     }
 
 
-    catch (
-      err
-    ) {
+    /* ==========================================
+       LOAD
+    ========================================== */
 
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
 
-      console.error(
-        "Login error:",
-        err
-      );
+        checkExistingSession();
 
+      }
+    );
 
-      showMessage(
-
-        "Error: " +
-
-        (
-          err.message ||
-          "Unable to sign in."
-        ),
-
-        "error"
-
-      );
-
-
-      loginButton.disabled =
-        false;
-
-
-      loginButton.textContent =
-        "Sign In";
-
-
-    }
-
-
-  }
-
-);
-
-
-</script>
-
+  </script>
 
 </body>
 </html>
