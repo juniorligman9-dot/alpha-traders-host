@@ -92,7 +92,7 @@
       transition: 0.2s;
     }
 
-    button:hover {
+    button:hover:not(:disabled) {
       opacity: 0.9;
       transform: translateY(-1px);
     }
@@ -170,6 +170,7 @@
         type="email"
         id="email"
         placeholder="you@example.com"
+        autocomplete="email"
         required
       >
 
@@ -179,6 +180,7 @@
         type="password"
         id="password"
         placeholder="Your password"
+        autocomplete="current-password"
         required
       >
 
@@ -214,15 +216,32 @@
     const loginButton = document.getElementById("loginButton");
 
 
+    function showMessage(text, type = "") {
+      message.textContent = text;
+      message.className = "message";
+
+      if (type) {
+        message.classList.add(type);
+      }
+    }
+
+
+    function resetButton() {
+      loginButton.disabled = false;
+      loginButton.textContent = "Sign In";
+    }
+
+
     loginForm.addEventListener("submit", async function (e) {
 
       e.preventDefault();
 
-      const email = emailInput.value.trim();
+
+      const email = emailInput.value.trim().toLowerCase();
       const password = passwordInput.value;
 
-      message.textContent = "";
-      message.className = "message";
+
+      showMessage("");
 
       loginButton.disabled = true;
       loginButton.textContent = "Signing In...";
@@ -231,11 +250,26 @@
       try {
 
         /* =========================
+           CHECK SUPABASE
+        ========================= */
+
+        if (!window.supabaseClient) {
+          throw new Error(
+            "Supabase connection is not configured."
+          );
+        }
+
+
+        /* =========================
            SIGN IN USER
         ========================= */
 
-        const { data, error } =
-          await window.supabaseClient.auth.signInWithPassword({
+        const {
+          data,
+          error
+        } = await window.supabaseClient
+          .auth
+          .signInWithPassword({
             email: email,
             password: password
           });
@@ -243,29 +277,25 @@
 
         if (error) {
 
-          message.textContent =
-            "Error: " + error.message;
+          showMessage(
+            "Error: " + error.message,
+            "error"
+          );
 
-          message.className = "message error";
-
-          loginButton.disabled = false;
-          loginButton.textContent = "Sign In";
-
+          resetButton();
           return;
 
         }
 
 
-        if (!data.user) {
+        if (!data || !data.user) {
 
-          message.textContent =
-            "Unable to sign in. Please try again.";
+          showMessage(
+            "Unable to sign in. Please try again.",
+            "error"
+          );
 
-          message.className = "message error";
-
-          loginButton.disabled = false;
-          loginButton.textContent = "Sign In";
-
+          resetButton();
           return;
 
         }
@@ -273,29 +303,87 @@
 
         /* =========================
            GET USER PROFILE
+
+           profiles table columns:
+           id
+           username
+           full_name
+           created_at
+           approval_status
+           role
+           email
         ========================= */
 
-        const { data: profile, error: profileError } =
+        const {
+          data: profile,
+          error: profileError
+        } = await window.supabaseClient
+          .from("profiles")
+          .select(`
+            id,
+            username,
+            full_name,
+            email,
+            role,
+            approval_status
+          `)
+          .eq("id", data.user.id)
+          .maybeSingle();
+
+
+        if (profileError) {
+
+          console.error(
+            "Profile error:",
+            profileError
+          );
+
+          showMessage(
+            "Your account profile could not be loaded. Please contact support.",
+            "error"
+          );
+
           await window.supabaseClient
-            .from("profiles")
-            .select("id, role, approval_status")
-            .eq("id", data.user.id)
-            .single();
+            .auth
+            .signOut();
 
-
-        if (profileError || !profile) {
-
-          message.textContent =
-            "Your account profile could not be found. Please contact support.";
-
-          message.className = "message error";
-
-          loginButton.disabled = false;
-          loginButton.textContent = "Sign In";
-
+          resetButton();
           return;
 
         }
+
+
+        if (!profile) {
+
+          showMessage(
+            "Your account profile could not be found. Please contact support.",
+            "error"
+          );
+
+          await window.supabaseClient
+            .auth
+            .signOut();
+
+          resetButton();
+          return;
+
+        }
+
+
+        /* =========================
+           NORMALIZE VALUES
+        ========================= */
+
+        const role =
+          (profile.role || "")
+          .trim()
+          .toLowerCase();
+
+
+        const approvalStatus =
+          (profile.approval_status || "")
+          .trim()
+          .toLowerCase();
 
 
         /* =========================
@@ -303,21 +391,22 @@
         ========================= */
 
         if (
-          profile.role === "client" &&
-          profile.approval_status === "approved"
+          role === "client" &&
+          approvalStatus === "approved"
         ) {
 
-          message.textContent =
-            "Login successful! Redirecting...";
+          showMessage(
+            "Login successful! Redirecting...",
+            "success"
+          );
 
-          message.className = "message success";
 
           setTimeout(function () {
 
             window.location.href =
               "dashboard.html";
 
-          }, 1000);
+          }, 800);
 
           return;
 
@@ -329,20 +418,22 @@
         ========================= */
 
         if (
-          profile.role === "mentor" &&
-          profile.approval_status === "pending"
+          role === "mentor" &&
+          approvalStatus === "pending"
         ) {
 
-          message.textContent =
-            "Your mentor account is waiting for admin approval.";
+          showMessage(
+            "Your mentor account is waiting for administrator approval.",
+            "error"
+          );
 
-          message.className = "message error";
 
-          await window.supabaseClient.auth.signOut();
+          await window.supabaseClient
+            .auth
+            .signOut();
 
-          loginButton.disabled = false;
-          loginButton.textContent = "Sign In";
 
+          resetButton();
           return;
 
         }
@@ -353,21 +444,22 @@
         ========================= */
 
         if (
-          profile.role === "mentor" &&
-          profile.approval_status === "approved"
+          role === "mentor" &&
+          approvalStatus === "approved"
         ) {
 
-          message.textContent =
-            "Login successful! Redirecting to mentor dashboard...";
+          showMessage(
+            "Login successful! Redirecting to mentor dashboard...",
+            "success"
+          );
 
-          message.className = "message success";
 
           setTimeout(function () {
 
             window.location.href =
               "mentor-dashboard.html";
 
-          }, 1000);
+          }, 800);
 
           return;
 
@@ -379,50 +471,60 @@
         ========================= */
 
         if (
-          profile.approval_status === "rejected"
+          approvalStatus === "rejected"
         ) {
 
-          message.textContent =
-            "Your account application has been rejected. Please contact support.";
+          showMessage(
+            "Your account application has been rejected. Please contact support.",
+            "error"
+          );
 
-          message.className = "message error";
 
-          await window.supabaseClient.auth.signOut();
+          await window.supabaseClient
+            .auth
+            .signOut();
 
-          loginButton.disabled = false;
-          loginButton.textContent = "Sign In";
 
+          resetButton();
           return;
 
         }
 
 
         /* =========================
-           UNKNOWN STATUS
+           UNAPPROVED / UNKNOWN
         ========================= */
 
-        message.textContent =
-          "Your account is not currently approved. Please contact support.";
+        showMessage(
+          "Your account is not currently approved. Please contact support.",
+          "error"
+        );
 
-        message.className = "message error";
 
-        await window.supabaseClient.auth.signOut();
+        await window.supabaseClient
+          .auth
+          .signOut();
 
-        loginButton.disabled = false;
-        loginButton.textContent = "Sign In";
+
+        resetButton();
 
 
       } catch (err) {
 
-        console.error(err);
+        console.error(
+          "Login error:",
+          err
+        );
 
-        message.textContent =
-          "Connection error: " + err.message;
 
-        message.className = "message error";
+        showMessage(
+          "Connection error: " +
+          (err.message || "Please try again."),
+          "error"
+        );
 
-        loginButton.disabled = false;
-        loginButton.textContent = "Sign In";
+
+        resetButton();
 
       }
 
