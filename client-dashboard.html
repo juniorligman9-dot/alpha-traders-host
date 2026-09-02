@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Client Dashboard | Alpha Traders Host</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #111a29;
+      --bg-secondary: #131d2d;
+      --card: #2a374a;
+      --card-dark: #1b2738;
+      --border: #3b4d66;
+      --text: #e7e9ee;
+      --muted: #b6bfce;
+      --accent: #55c5b5;
+      --danger: #ef6666;
+      --warning: #f5b942;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 22px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 26px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .logout-button,
+    .refresh-button {
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .logout-button:hover {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .refresh-button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 45px 30px 70px;
+    }
+
+    .hero {
+      margin-bottom: 35px;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 60px);
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 19px;
+    }
+
+    .section {
+      margin-top: 30px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 30px;
+    }
+
+    .mentor-grid,
+    .request-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 25px;
+    }
+
+    .mentor-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .mentor-email {
+      color: var(--muted);
+      margin-bottom: 15px;
+      word-break: break-word;
+    }
+
+    .mentor-role {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .request-button {
+      width: 100%;
+      border: none;
+      background: var(--accent);
+      color: #10201f;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .request-button:hover {
+      opacity: 0.9;
+    }
+
+    .request-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .status.pending {
+      color: var(--warning);
+      border: 1px solid var(--warning);
+    }
+
+    .status.approved {
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+
+    .status.rejected {
+      color: var(--danger);
+      border: 1px solid var(--danger);
+    }
+
+    .message {
+      padding: 22px;
+      border-radius: 16px;
+      background: var(--card-dark);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .error {
+      color: #ffc3c3;
+      border-color: var(--danger);
+    }
+
+    .request-info {
+      color: var(--muted);
+      margin-top: 10px;
+      font-size: 15px;
+    }
+
+    @media (max-width: 750px) {
+
+      .nav-container {
+        padding: 20px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .logo {
+        text-align: center;
+      }
+
+      .logout-button {
+        width: 100%;
+      }
+
+      .container {
+        padding: 35px 20px 60px;
+      }
+
+      .mentor-grid,
+      .request-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .refresh-button {
+        width: 100%;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="nav-container">
+
+    <a href="index.html" class="logo">
+      ALPHA <span>TRADERS HOST</span>
+    </a>
+
+    <button
+      type="button"
+      id="logoutButton"
+      class="logout-button"
+    >
+      Logout
+    </button>
+
+  </div>
+
+</header>
+
+
+<main>
+
+  <div class="container">
+
+    <section class="hero">
+
+      <h1 id="welcomeTitle">
+        Client Dashboard
+      </h1>
+
+      <p>
+        Find an approved mentor and send a mentorship request.
+      </p>
+
+    </section>
+
+
+    <!-- MY REQUESTS -->
+
+    <section class="section">
+
+      <div class="section-header">
+
+        <h2 class="section-title">
+          My Mentor Requests
+        </h2>
+
+        <button
+          type="button"
+          id="refreshButton"
+          class="refresh-button"
+        >
+          ↻ Refresh
+        </button>
+
+      </div>
+
+      <div id="requestsContent">
+
+        <div class="message">
+          Loading your requests...
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- AVAILABLE MENTORS -->
+
+    <section class="section">
+
+      <div class="section-header">
+
+        <h2 class="section-title">
+          Available Mentors
+        </h2>
+
+      </div>
+
+      <div id="mentorsContent">
+
+        <div class="message">
+          Loading approved mentors...
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</main>
+
+
+<script>
+
+  let currentUser = null;
+  let currentProfile = null;
+
+  let mentorRequests = [];
+
+
+  const welcomeTitle =
+    document.getElementById("welcomeTitle");
+
+  const requestsContent =
+    document.getElementById("requestsContent");
+
+  const mentorsContent =
+    document.getElementById("mentorsContent");
+
+  const refreshButton =
+    document.getElementById("refreshButton");
+
+  const logoutButton =
+    document.getElementById("logoutButton");
+
+
+  /* ==========================================
+     ESCAPE HTML
+  ========================================== */
+
+  function escapeHTML(value) {
+
+    if (
+      value === null ||
+      value === undefined
+    ) {
+      return "";
+    }
+
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+
+  /* ==========================================
+     GET SUPABASE CLIENT
+  ========================================== */
+
+  function getSupabaseClient() {
+
+    if (
+      window.supabaseClient
+    ) {
+      return window.supabaseClient;
+    }
+
+    return null;
+
+  }
+
+
+  /* ==========================================
+     CHECK LOGIN AND CLIENT ROLE
+  ========================================== */
+
+  async function checkClientAccess() {
+
+    const supabaseClient =
+      getSupabaseClient();
+
+
+    if (!supabaseClient) {
+
+      document.body.innerHTML =
+        "<div style='padding:30px;color:white'>Supabase is not connected.</div>";
+
+      return false;
+
+    }
+
+
+    const {
+      data: userData,
+      error: userError
+    } =
+      await supabaseClient
+        .auth
+        .getUser();
+
+
+    if (
+      userError ||
+      !userData.user
+    ) {
+
+      window.location.href =
+        "login.html";
+
+      return false;
+
+    }
+
+
+    currentUser =
+      userData.user;
+
+
+    const {
+      data: profile,
+      error: profileError
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select(
+          "id, full_name, email, role, approval_status"
+        )
+        .eq(
+          "id",
+          currentUser.id
+        )
+        .single();
+
+
+    if (
+      profileError ||
+      !profile
+    ) {
+
+      console.error(
+        profileError
+      );
+
+
+      await supabaseClient
+        .auth
+        .signOut();
+
+
+      window.location.href =
+        "login.html";
+
+      return false;
+
+    }
+
+
+    currentProfile =
+      profile;
+
+
+    const role =
+      String(
+        profile.role || ""
+      )
+      .toLowerCase()
+      .trim();
+
+
+    if (
+      role !== "client"
+    ) {
+
+      if (
+        role === "admin"
+      ) {
+
+        window.location.href =
+          "admin-dashboard.html";
+
+      }
+
+      else if (
+        role === "mentor" &&
+        String(
+          profile.approval_status || ""
+        )
+        .toLowerCase() ===
+        "approved"
+      ) {
+
+        window.location.href =
+          "dashboard.html";
+
+      }
+
+      else {
+
+        window.location.href =
+          "login.html";
+
+      }
+
+
+      return false;
+
+    }
+
+
+    const firstName =
+      String(
+        profile.full_name ||
+        ""
+      )
+      .trim()
+      .split(" ")[0];
+
+
+    if (
+      firstName
+    ) {
+
+      welcomeTitle.textContent =
+        "Welcome, " +
+        firstName;
+
+    }
+
+
+    return true;
+
+  }
+
+
+  /* ==========================================
+     LOAD CLIENT REQUESTS
+  ========================================== */
+
+  async function loadRequests() {
+
+    const supabaseClient =
+      getSupabaseClient();
+
+
+    requestsContent.innerHTML =
+      `
+        <div class="message">
+          Loading your requests...
+        </div>
+      `;
+
+
+    try {
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("mentor_requests")
+          .select(`
+            id,
+            mentor_id,
+            status,
+            created_at,
+            profiles!mentor_requests_mentor_id_fkey (
+              id,
+              full_name,
+              email
+            )
+          `)
+          .eq(
+            "client_id",
+            currentUser.id
+          )
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          );
+
+
+      if (
+        error
+      ) {
+        throw error;
+      }
+
+
+      mentorRequests =
+        Array.isArray(data)
+          ? data
+          : [];
+
+
+      renderRequests();
+
+
+    }
+    catch (
+      error
+    ) {
+
+      console.error(
+        "Request loading error:",
+        error
+      );
+
+
+      requestsContent.innerHTML =
+        `
+          <div class="message error">
+            Could not load your mentor requests.
+
+            <br><br>
+
+            ${escapeHTML(
+              error.message
+            )}
+          </div>
+        `;
+
+    }
+
+  }
+
+
+  /* ==========================================
+     RENDER REQUESTS
+  ========================================== */
+
+  function renderRequests() {
+
+    if (
+      mentorRequests.length === 0
+    ) {
+
+      requestsContent.innerHTML =
+        `
+          <div class="message">
+            You have not sent any mentor requests yet.
+          </div>
+        `;
+
+      return;
+
+    }
+
+
+    let html =
+      `<div class="request-grid">`;
+
+
+    mentorRequests.forEach(
+      function (request) {
+
+        const mentor =
+          request.profiles ||
+          {};
+
+
+        const status =
+          String(
+            request.status ||
+            "pending"
+          )
+          .toLowerCase();
+
+
+        html +=
+          `
+            <article class="card">
+
+              <div class="mentor-name">
+                ${escapeHTML(
+                  mentor.full_name ||
+                  "Mentor"
+                )}
+              </div>
+
+              <div class="mentor-email">
+                ${escapeHTML(
+                  mentor.email ||
+                  ""
+                )}
+              </div>
+
+              <span
+                class="status ${escapeHTML(status)}"
+              >
+                ${escapeHTML(status)}
+              </span>
+
+              <div class="request-info">
+                Your mentorship request is currently
+                <strong>
+                  ${escapeHTML(status)}
+                </strong>.
+              </div>
+
+            </article>
+          `;
+
+      }
+    );
+
+
+    html +=
+      `</div>`;
+
+
+    requestsContent.innerHTML =
+      html;
+
+  }
+
+
+  /* ==========================================
+     LOAD APPROVED MENTORS
+  ========================================== */
+
+  async function loadMentors() {
+
+    const supabaseClient =
+      getSupabaseClient();
+
+
+    mentorsContent.innerHTML =
+      `
+        <div class="message">
+          Loading approved mentors...
+        </div>
+      `;
+
+
+    try {
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("profiles")
+          .select(
+            "id, full_name, email, role, approval_status"
+          )
+          .eq(
+            "role",
+            "mentor"
+          )
+          .eq(
+            "approval_status",
+            "approved"
+          )
+          .order(
+            "full_name",
+            {
+              ascending: true
+            }
+          );
+
+
+      if (
+        error
+      ) {
+
+        throw error;
+
+      }
+
+
+      renderMentors(
+        Array.isArray(data)
+          ? data
+          : []
+      );
+
+
+    }
+    catch (
+      error
+    ) {
+
+      console.error(
+        "Mentor loading error:",
+        error
+      );
+
+
+      mentorsContent.innerHTML =
+        `
+          <div class="message error">
+            Could not load approved mentors.
+
+            <br><br>
+
+            ${escapeHTML(
+              error.message
+            )}
+          </div>
+        `;
+
+    }
+
+  }
+
+
+  /* ==========================================
+     RENDER MENTORS
+  ========================================== */
+
+  function renderMentors(mentors) {
+
+    if (
+      mentors.length === 0
+    ) {
+
+      mentorsContent.innerHTML =
+        `
+          <div class="message">
+            No approved mentors are available yet.
+          </div>
+        `;
+
+      return;
+
+    }
+
+
+    let html =
+      `<div class="mentor-grid">`;
+
+
+    mentors.forEach(
+      function (mentor) {
+
+        const existingRequest =
+          mentorRequests.find(
+            function (request) {
+
+              return (
+                request.mentor_id ===
+                mentor.id
+              );
+
+            }
+          );
+
+
+        let buttonText =
+          "Request Mentor";
+
+        let disabled =
+          false;
+
+
+        if (
+          existingRequest
+        ) {
+
+          const requestStatus =
+            String(
+              existingRequest.status ||
+              ""
+            )
+            .toLowerCase();
+
+
+          if (
+            requestStatus ===
+            "pending"
+          ) {
+
+            buttonText =
+              "Request Pending";
+
+            disabled =
+              true;
+
+          }
+
+          else if (
+            requestStatus ===
+            "approved"
+          ) {
+
+            buttonText =
+              "Mentor Request Approved";
+
+            disabled =
+              true;
+
+          }
+
+        }
+
+
+        html +=
+          `
+            <article class="card">
+
+              <div class="mentor-name">
+                ${escapeHTML(
+                  mentor.full_name ||
+                  "Unnamed Mentor"
+                )}
+              </div>
+
+              <div class="mentor-email">
+                ${escapeHTML(
+                  mentor.email ||
+                  ""
+                )}
+              </div>
+
+              <div class="mentor-role">
+                APPROVED MENTOR
+              </div>
+
+              <button
+                class="request-button"
+                type="button"
+                ${disabled ? "disabled" : ""}
+                onclick="requestMentor('${mentor.id}')"
+              >
+                ${buttonText}
+              </button>
+
+            </article>
+          `;
+
+      }
+    );
+
+
+    html +=
+      `</div>`;
+
+
+    mentorsContent.innerHTML =
+      html;
+
+  }
+
+
+  /* ==========================================
+     REQUEST MENTOR
+  ========================================== */
+
+  async function requestMentor(
+    mentorId
+  ) {
+
+    if (
+      !mentorId ||
+      !currentUser
+    ) {
+      return;
+    }
+
+
+    const confirmed =
+      confirm(
+        "Do you want to send a mentorship request?"
+      );
+
+
+    if (
+      !confirmed
+    ) {
+      return;
+    }
+
+
+    const supabaseClient =
+      getSupabaseClient();
+
+
+    try {
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("mentor_requests")
+          .insert({
+
+            client_id:
+              currentUser.id,
+
+            mentor_id:
+              mentorId,
+
+            status:
+              "pending"
+
+          });
+
+
+      if (
+        error
+      ) {
+
+        if (
+          error.code ===
+          "23505"
+        ) {
+
+          alert(
+            "You have already sent a request to this mentor."
+          );
+
+          return;
+
+        }
+
+
+        throw error;
+
+      }
+
+
+      alert(
+        "Mentor request sent successfully!"
+      );
+
+
+      await loadRequests();
+
+      await loadMentors();
+
+
+    }
+    catch (
+      error
+    ) {
+
+      console.error(
+        "Mentor request error:",
+        error
+      );
+
+
+      alert(
+        "Could not send request: " +
+        error.message
+      );
+
+    }
+
+  }
+
+
+  /* ==========================================
+     REFRESH
+  ========================================== */
+
+  async function refreshDashboard() {
+
+    refreshButton.disabled =
+      true;
+
+    refreshButton.textContent =
+      "Loading...";
+
+
+    await loadRequests();
+
+    await loadMentors();
+
+
+    refreshButton.disabled =
+      false;
+
+    refreshButton.textContent =
+      "↻ Refresh";
+
+  }
+
+
+  /* ==========================================
+     LOGOUT
+  ========================================== */
+
+  logoutButton.addEventListener(
+    "click",
+    async function () {
+
+      const supabaseClient =
+        getSupabaseClient();
+
+
+      if (
+        supabaseClient
+      ) {
+
+        await supabaseClient
+          .auth
+          .signOut();
+
+      }
+
+
+      window.location.href =
+        "login.html";
+
+    }
+  );
+
+
+  /* ==========================================
+     EVENTS
+  ========================================== */
+
+  refreshButton.addEventListener(
+    "click",
+    function () {
+
+      refreshDashboard();
+
+    }
+  );
+
+
+  /* ==========================================
+     INITIALIZE
+  ========================================== */
+
+  async function initializeDashboard() {
+
+    try {
+
+      const allowed =
+        await checkClientAccess();
+
+
+      if (
+        !allowed
+      ) {
+        return;
+      }
+
+
+      await loadRequests();
+
+      await loadMentors();
+
+
+    }
+    catch (
+      error
+    ) {
+
+      console.error(
+        "Dashboard error:",
+        error
+      );
+
+
+      requestsContent.innerHTML =
+        `
+          <div class="message error">
+            Dashboard error:
+            ${escapeHTML(
+              error.message
+            )}
+          </div>
+        `;
+
+    }
+
+  }
+
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    initializeDashboard
+  );
+
+</script>
+
+</body>
+</html>
