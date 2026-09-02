@@ -1,165 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login - Alpha Traders Host</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+  <title>Login | Alpha Traders Host</title>
 
-body {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #0b0f19;
-  color: white;
-  font-family: Arial, sans-serif;
-  padding: 20px;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-.login-box {
-  width: 100%;
-  max-width: 420px;
-  background: #121827;
-  border: 1px solid #20283a;
-  border-radius: 16px;
-  padding: 35px;
-}
+    body {
+      font-family: Arial, sans-serif;
+      background: #0d1422;
+      color: #f4f4f4;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
 
-.logo {
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
+    .login-box {
+      width: 100%;
+      max-width: 600px;
+      background: #171f30;
+      border: 1px solid #2c3850;
+      border-radius: 25px;
+      padding: 45px 35px;
+    }
 
-.logo span {
-  color: #00d084;
-}
+    .logo {
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
 
-.subtitle {
-  text-align: center;
-  color: #929bad;
-  margin-bottom: 30px;
-}
+    .logo span {
+      color: #20c997;
+    }
 
-label {
-  display: block;
-  margin-bottom: 8px;
-  color: #cbd2df;
-}
+    .subtitle {
+      text-align: center;
+      color: #aeb7c7;
+      font-size: 18px;
+      margin-bottom: 40px;
+    }
 
-input {
-  width: 100%;
-  padding: 14px;
-  margin-bottom: 20px;
-  background: #0b0f19;
-  border: 1px solid #30394d;
-  border-radius: 8px;
-  color: white;
-  font-size: 16px;
-}
+    form {
+      display: flex;
+      flex-direction: column;
+    }
 
-input:focus {
-  outline: none;
-  border-color: #00d084;
-}
+    label {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #f1f1f1;
+    }
 
-button {
-  width: 100%;
-  padding: 14px;
-  background: #00d084;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-}
+    input {
+      width: 100%;
+      padding: 18px;
+      margin-bottom: 25px;
+      border-radius: 15px;
+      border: 2px solid #34415a;
+      background: #0d1422;
+      color: white;
+      font-size: 18px;
+      outline: none;
+    }
 
-.links {
-  text-align: center;
-  margin-top: 20px;
-}
+    input:focus {
+      border-color: #20c997;
+    }
 
-.links a {
-  color: #00d084;
-  text-decoration: none;
-}
+    button {
+      width: 100%;
+      padding: 18px;
+      background: #20c997;
+      color: #07110f;
+      border: none;
+      border-radius: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
 
-.message {
-  margin-top: 15px;
-  text-align: center;
-  color: #ffb4b4;
-}
-</style>
+    button:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .message {
+      margin-top: 20px;
+      text-align: center;
+      color: #bfc7d5;
+      font-size: 17px;
+      min-height: 24px;
+    }
+
+    .links {
+      text-align: center;
+      margin-top: 25px;
+      color: #e5e5e5;
+      font-size: 18px;
+    }
+
+    .links a {
+      display: inline-block;
+      margin-top: 12px;
+      color: #20c997;
+      text-decoration: none;
+      font-size: 20px;
+    }
+
+    .links a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 500px) {
+      .login-box {
+        padding: 40px 25px;
+      }
+
+      .logo {
+        font-size: 28px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="login-box">
+  <div class="login-box">
 
-  <div class="logo">
-    ALPHA <span>TRADERS HOST</span>
+    <div class="logo">
+      ALPHA <span>TRADERS HOST</span>
+    </div>
+
+    <p class="subtitle">
+      Sign in to your hosting dashboard
+    </p>
+
+    <form id="loginForm">
+
+      <label for="email">Email</label>
+
+      <input
+        type="email"
+        id="email"
+        placeholder="you@example.com"
+        required
+      >
+
+      <label for="password">Password</label>
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Your password"
+        required
+      >
+
+      <button type="submit" id="loginButton">
+        Sign In
+      </button>
+
+    </form>
+
+    <div id="message" class="message"></div>
+
+    <div class="links">
+      <p>Don't have an account?</p>
+      <a href="register.html">Create Account</a>
+    </div>
+
   </div>
 
-  <p class="subtitle">
-    Sign in to your hosting dashboard
-  </p>
 
-  <form id="loginForm">
+  <!-- Supabase Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <label>Email</label>
+  <!-- Your Supabase Configuration -->
+  <script src="supabase-config.js"></script>
 
-    <input
-      type="email"
-      id="email"
-      placeholder="you@example.com"
-      required
-    >
 
-    <label>Password</label>
+  <script>
 
-    <input
-      type="password"
-      id="password"
-      placeholder="Your password"
-      required
-    >
+    const loginForm = document.getElementById("loginForm");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const message = document.getElementById("message");
+    const loginButton = document.getElementById("loginButton");
 
-    <button type="submit">
-      Sign In
-    </button>
 
-  </form>
+    loginForm.addEventListener("submit", async function (e) {
 
-  <div class="links">
-    <p>Don't have an account?</p>
-    <br>
-    <a href="register.html">Create Account</a>
-  </div>
+      e.preventDefault();
 
-  <div id="message" class="message"></div>
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
 
-</div>
+      message.textContent = "";
+      loginButton.disabled = true;
+      loginButton.textContent = "Signing In...";
 
-<script>
 
-document.getElementById("loginForm").addEventListener("submit", function(e) {
+      try {
 
-  e.preventDefault();
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
 
-  document.getElementById("message").textContent =
-    "The secure login backend will be connected next.";
 
-});
+        if (error) {
+          message.textContent = "Error: " + error.message;
+          loginButton.disabled = false;
+          loginButton.textContent = "Sign In";
+          return;
+        }
 
-</script>
+
+        if (data.user) {
+
+          message.textContent = "Login successful! Redirecting...";
+
+          setTimeout(function () {
+
+            window.location.href = "dashboard.html";
+
+          }, 1000);
+
+        } else {
+
+          message.textContent = "Unable to sign in. Please try again.";
+
+          loginButton.disabled = false;
+          loginButton.textContent = "Sign In";
+
+        }
+
+
+      } catch (err) {
+
+        message.textContent =
+          "Connection error: " + err.message;
+
+        loginButton.disabled = false;
+        loginButton.textContent = "Sign In";
+
+      }
+
+    });
+
+  </script>
 
 </body>
 </html>
