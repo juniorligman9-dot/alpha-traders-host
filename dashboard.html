@@ -6,6 +6,7 @@
 
   <title>Dashboard | Alpha Traders Host</title>
 
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
 
@@ -49,9 +50,7 @@
       line-height: 1.5;
     }
 
-    /* =========================
-       HEADER
-    ========================== */
+    /* HEADER */
 
     header {
       width: 100%;
@@ -63,7 +62,7 @@
       width: 100%;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 26px 32px;
+      padding: 22px 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -93,19 +92,13 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 58px;
-      padding: 0 28px;
+      min-height: 54px;
+      padding: 0 26px;
       border: 1px solid var(--border);
-      border-radius: 20px;
+      border-radius: 18px;
       color: var(--text);
       text-decoration: none;
-      font-size: 18px;
-      transition: 0.2s ease;
-    }
-
-    .nav-link:hover {
-      border-color: var(--accent);
-      color: var(--accent);
+      font-size: 17px;
     }
 
     .nav-link.active {
@@ -114,9 +107,7 @@
       background: rgba(85, 197, 181, 0.06);
     }
 
-    /* =========================
-       MAIN
-    ========================== */
+    /* MAIN */
 
     main {
       width: 100%;
@@ -150,7 +141,7 @@
       align-items: center;
       justify-content: center;
       margin-top: 30px;
-      min-height: 66px;
+      min-height: 64px;
       padding: 0 34px;
       border: none;
       border-radius: 18px;
@@ -160,20 +151,12 @@
         #4db6aa
       );
       color: #10201f;
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 800;
       text-decoration: none;
-      cursor: pointer;
-      transition: transform 0.2s ease;
     }
 
-    .create-button:hover {
-      transform: translateY(-2px);
-    }
-
-    /* =========================
-       STATS
-    ========================== */
+    /* STATS */
 
     .stats-grid {
       display: grid;
@@ -207,9 +190,7 @@
       font-size: 20px;
     }
 
-    /* =========================
-       SAVED EAS
-    ========================== */
+    /* SAVED EAS */
 
     .saved-section {
       width: 100%;
@@ -242,11 +223,11 @@
       font-size: 17px;
       font-weight: 700;
       cursor: pointer;
-      white-space: nowrap;
     }
 
-    .refresh-button:hover {
-      background: rgba(85, 197, 181, 0.08);
+    .refresh-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
     .status-message {
@@ -308,8 +289,9 @@
 
     .ea-meta {
       color: var(--muted);
-      font-size: 17px;
-      margin-bottom: 12px;
+      font-size: 16px;
+      margin-bottom: 14px;
+      line-height: 1.7;
     }
 
     .ea-description {
@@ -333,7 +315,6 @@
       font-size: 16px;
       font-weight: 700;
       cursor: pointer;
-      text-decoration: none;
     }
 
     .edit-button {
@@ -364,20 +345,19 @@
       margin-bottom: 10px;
     }
 
-    /* =========================
-       MOBILE
-    ========================== */
+    /* MOBILE */
 
     @media (max-width: 800px) {
+
       .nav-container {
-        padding: 28px 28px;
-        flex-wrap: wrap;
-        align-items: center;
+        padding: 22px 20px;
+        flex-direction: column;
+        align-items: stretch;
       }
 
       .logo {
-        width: 100%;
-        font-size: 28px;
+        font-size: 25px;
+        text-align: center;
       }
 
       nav {
@@ -389,16 +369,12 @@
 
       .nav-link {
         width: 100%;
-        min-height: 58px;
-        padding: 0 12px;
+        min-height: 54px;
+        padding: 0 10px;
       }
 
       .container {
-        padding: 46px 28px 70px;
-      }
-
-      .hero {
-        margin-bottom: 32px;
+        padding: 38px 20px 60px;
       }
 
       .stats-grid {
@@ -407,7 +383,7 @@
       }
 
       .stat-card {
-        min-height: 155px;
+        min-height: 150px;
       }
 
       .ea-list {
@@ -415,49 +391,35 @@
       }
 
       .saved-section {
-        padding: 24px;
+        padding: 22px;
       }
     }
 
     @media (max-width: 520px) {
-      .nav-container {
-        padding: 26px 20px;
-      }
-
-      .logo {
-        font-size: 25px;
-        letter-spacing: 1.5px;
-      }
 
       .container {
-        padding: 38px 20px 60px;
+        padding: 32px 16px 55px;
       }
 
       .hero h1 {
-        font-size: 46px;
+        font-size: 44px;
       }
 
       .hero p {
-        font-size: 22px;
+        font-size: 20px;
       }
 
       .create-button {
         width: 100%;
-        min-height: 66px;
       }
 
       .stat-card {
         padding: 28px;
-        border-radius: 25px;
-      }
-
-      .stat-number {
-        font-size: 48px;
       }
 
       .saved-section {
-        padding: 22px;
-        border-radius: 26px;
+        padding: 18px;
+        border-radius: 24px;
       }
 
       .saved-header {
@@ -466,7 +428,7 @@
       }
 
       .saved-header h2 {
-        font-size: 34px;
+        font-size: 30px;
       }
 
       .refresh-button {
@@ -474,21 +436,25 @@
       }
 
       .ea-card {
-        padding: 22px;
+        padding: 20px;
       }
 
       .ea-name {
-        font-size: 23px;
+        font-size: 22px;
+      }
+
+      .ea-top {
+        flex-direction: column;
+      }
+
+      .platform-badge {
+        align-self: flex-start;
       }
     }
   </style>
 </head>
 
 <body>
-
-  <!-- =========================
-       HEADER
-  ========================== -->
 
   <header>
     <div class="nav-container">
@@ -511,14 +477,11 @@
   </header>
 
 
-  <!-- =========================
-       MAIN CONTENT
-  ========================== -->
-
   <main>
     <div class="container">
 
       <section class="hero">
+
         <h1>Dashboard</h1>
 
         <p>
@@ -528,53 +491,29 @@
         <a href="create-ea.html" class="create-button">
           + Create New EA
         </a>
+
       </section>
 
-
-      <!-- =========================
-           STATISTICS
-      ========================== -->
 
       <section class="stats-grid">
 
         <div class="stat-card">
-          <div class="stat-number" id="totalEAs">
-            0
-          </div>
-
-          <div class="stat-label">
-            Total EAs
-          </div>
+          <div class="stat-number" id="totalEAs">0</div>
+          <div class="stat-label">Total EAs</div>
         </div>
 
-
         <div class="stat-card">
-          <div class="stat-number" id="mt4EAs">
-            0
-          </div>
-
-          <div class="stat-label">
-            MT4 EAs
-          </div>
+          <div class="stat-number" id="mt4EAs">0</div>
+          <div class="stat-label">MT4 EAs</div>
         </div>
 
-
         <div class="stat-card">
-          <div class="stat-number" id="mt5EAs">
-            0
-          </div>
-
-          <div class="stat-label">
-            MT5 EAs
-          </div>
+          <div class="stat-number" id="mt5EAs">0</div>
+          <div class="stat-label">MT5 EAs</div>
         </div>
 
       </section>
 
-
-      <!-- =========================
-           SAVED EAS
-      ========================== -->
 
       <section class="saved-section">
 
@@ -606,10 +545,6 @@
   </main>
 
 
-  <!-- =========================
-       JAVASCRIPT
-  ========================== -->
-
   <script>
 
     /*
@@ -618,7 +553,7 @@
       ALPHA TRADERS HOST
       DASHBOARD
 
-      EXACT ea_robots TABLE COLUMNS:
+      EXACT ea_robots TABLE:
 
       id
       mentor_id
@@ -655,17 +590,54 @@
 
     /*
     ==================================================
-      CHECK SUPABASE CLIENT
+      GET SUPABASE CLIENT
     ==================================================
     */
 
     function getSupabaseClient() {
 
+      /*
+        Recommended version from supabase-config.js:
+
+        window.supabaseClient =
+          window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY
+          );
+      */
+
       if (
-        typeof window.supabaseClient !== "undefined"
+        window.supabaseClient &&
+        typeof window.supabaseClient
+          .from === "function"
       ) {
         return window.supabaseClient;
       }
+
+
+      /*
+        Also supports a global client called
+        supabaseClient.
+      */
+
+      try {
+
+        if (
+          typeof supabaseClient !== "undefined" &&
+          supabaseClient &&
+          typeof supabaseClient.from === "function"
+        ) {
+          return supabaseClient;
+        }
+
+      }
+      catch (error) {
+        console.error(
+          "Supabase client check error:",
+          error
+        );
+      }
+
 
       return null;
 
@@ -675,7 +647,6 @@
     /*
     ==================================================
       ESCAPE HTML
-      Prevents database text from breaking the page
     ==================================================
     */
 
@@ -707,11 +678,77 @@
     function formatPlatform(platform) {
 
       if (!platform) {
-        return "MT5";
+        return "Not specified";
       }
 
       return String(platform)
+        .trim()
         .toUpperCase();
+
+    }
+
+
+    /*
+    ==================================================
+      RESET STATISTICS
+    ==================================================
+    */
+
+    function resetStatistics() {
+
+      totalEAsElement.textContent = "0";
+      mt4EAsElement.textContent = "0";
+      mt5EAsElement.textContent = "0";
+
+    }
+
+
+    /*
+    ==================================================
+      UPDATE STATISTICS
+    ==================================================
+    */
+
+    function updateStatistics(eas) {
+
+      const robots =
+        Array.isArray(eas)
+          ? eas
+          : [];
+
+
+      const total =
+        robots.length;
+
+
+      const mt4 =
+        robots.filter(function (ea) {
+
+          return formatPlatform(
+            ea.platform
+          ) === "MT4";
+
+        }).length;
+
+
+      const mt5 =
+        robots.filter(function (ea) {
+
+          return formatPlatform(
+            ea.platform
+          ) === "MT5";
+
+        }).length;
+
+
+      totalEAsElement.textContent =
+        total;
+
+      mt4EAsElement.textContent =
+        mt4;
+
+      mt5EAsElement.textContent =
+        mt5;
 
     }
 
@@ -724,30 +761,32 @@
 
     async function loadDashboard() {
 
-      const supabaseClient =
+      const client =
         getSupabaseClient();
 
 
       /*
       ----------------------------------------------
-        SUPABASE CONFIG ERROR
+        SUPABASE NOT CONNECTED
       ----------------------------------------------
       */
 
-      if (!supabaseClient) {
+      if (!client) {
+
+        resetStatistics();
 
         eaContent.className =
           "status-message error-message";
 
         eaContent.innerHTML = `
-          Supabase is not connected.
+          <strong>Supabase is not connected.</strong>
 
           <br><br>
 
-          Make sure your
+          Check that
           <strong>supabase-config.js</strong>
-          file is in the same folder as
-          <strong>dashboard.html</strong>.
+          is in the same folder and creates
+          <strong>window.supabaseClient</strong>.
         `;
 
         return;
@@ -757,7 +796,7 @@
 
       /*
       ----------------------------------------------
-        SHOW LOADING
+        LOADING STATE
       ----------------------------------------------
       */
 
@@ -777,40 +816,102 @@
       try {
 
         /*
-        --------------------------------------------
-          GET CURRENT AUTHENTICATED USER
-        --------------------------------------------
+        ==================================================
+          GET CURRENT SESSION
+
+          This must be the SAME logged-in user
+          who created the EA.
+        ==================================================
         */
 
         const {
-          data: userData,
-          error: userError
+          data: sessionData,
+          error: sessionError
         } =
-          await supabaseClient.auth.getUser();
+          await client.auth.getSession();
 
 
-        if (userError) {
-          throw userError;
+        if (sessionError) {
+          throw sessionError;
+        }
+
+
+        const session =
+          sessionData?.session;
+
+
+        /*
+        ----------------------------------------------
+          NO LOGGED-IN USER
+        ----------------------------------------------
+        */
+
+        if (!session || !session.user) {
+
+          resetStatistics();
+
+          eaContent.className =
+            "status-message error-message";
+
+          eaContent.innerHTML = `
+            <strong>You are not logged in.</strong>
+
+            <br><br>
+
+            Please log in with the same account
+            you used to create your Expert Advisors.
+
+            <br><br>
+
+            <a
+              href="login.html"
+              class="create-button"
+              style="
+                margin-top:0;
+                min-height:54px;
+                font-size:17px;
+              "
+            >
+              Go to Login
+            </a>
+          `;
+
+          return;
+
         }
 
 
         const user =
-          userData?.user;
+          session.user;
+
+
+        console.log(
+          "Dashboard logged-in user:",
+          user.id
+        );
 
 
         /*
-        --------------------------------------------
-          USER NOT LOGGED IN
+        ==================================================
+          LOAD EAS
 
-          We still try to load visible EAs.
-          This helps if your current RLS policy
-          allows reading records.
-        --------------------------------------------
+          IMPORTANT:
+
+          create-ea.html saves:
+
+          mentor_id: currentUser.id
+
+          Therefore the dashboard MUST use:
+
+          mentor_id = session.user.id
+        ==================================================
         */
 
-
-        let query =
-          supabaseClient
+        const {
+          data: eas,
+          error
+        } =
+          await client
             .from("ea_robots")
             .select(`
               id,
@@ -826,6 +927,10 @@
               updated_at,
               features
             `)
+            .eq(
+              "mentor_id",
+              user.id
+            )
             .order(
               "created_at",
               {
@@ -834,49 +939,17 @@
             );
 
 
-        /*
-        --------------------------------------------
-          FILTER BY mentor_id
-
-          Your table uses mentor_id.
-          Only filter when a logged-in user exists.
-        --------------------------------------------
-        */
-
-        if (user && user.id) {
-
-          query =
-            query.eq(
-              "mentor_id",
-              user.id
-            );
-
-        }
-
-
-        /*
-        --------------------------------------------
-          RUN QUERY
-        --------------------------------------------
-        */
-
-        const {
-          data: eas,
-          error
-        } =
-          await query;
-
-
         if (error) {
+
+          console.error(
+            "Supabase ea_robots error:",
+            error
+          );
+
           throw error;
+
         }
 
-
-        /*
-        --------------------------------------------
-          ENSURE ARRAY
-        --------------------------------------------
-        */
 
         const robots =
           Array.isArray(eas)
@@ -884,22 +957,20 @@
             : [];
 
 
-        /*
-        --------------------------------------------
-          UPDATE STATISTICS
-        --------------------------------------------
-        */
-
-        updateStatistics(robots);
+        console.log(
+          "Loaded EAs:",
+          robots
+        );
 
 
-        /*
-        --------------------------------------------
-          RENDER EAS
-        --------------------------------------------
-        */
+        updateStatistics(
+          robots
+        );
 
-        renderEAs(robots);
+
+        renderEAs(
+          robots
+        );
 
 
       }
@@ -911,14 +982,7 @@
         );
 
 
-        totalEAsElement.textContent =
-          "0";
-
-        mt4EAsElement.textContent =
-          "0";
-
-        mt5EAsElement.textContent =
-          "0";
+        resetStatistics();
 
 
         eaContent.className =
@@ -926,27 +990,27 @@
 
 
         eaContent.innerHTML = `
-          <strong>Could not load your EAs.</strong>
+          <strong>Could not load your saved EAs.</strong>
 
           <br><br>
 
           ${escapeHTML(
             error.message ||
-            "Unknown error"
+            "Unknown Supabase error"
           )}
 
           <br><br>
 
-          Check that:
+          <strong>Check:</strong>
 
           <br>
-          • <strong>ea_robots</strong> exists
+          • The table is named <strong>ea_robots</strong>
           <br>
-          • The column names match your table
+          • You are logged in
           <br>
-          • Your Supabase RLS policies allow access
+          • The saved EA has the correct <strong>mentor_id</strong>
           <br>
-          • <strong>supabase-config.js</strong> is correct
+          • Your Supabase RLS policy allows SELECT
         `;
 
       }
@@ -965,58 +1029,6 @@
 
     /*
     ==================================================
-      UPDATE STATISTICS
-    ==================================================
-    */
-
-    function updateStatistics(eas) {
-
-      const total =
-        eas.length;
-
-
-      const mt4 =
-        eas.filter(function (ea) {
-
-          return (
-            String(
-              ea.platform || ""
-            )
-            .toUpperCase() === "MT4"
-          );
-
-        })
-        .length;
-
-
-      const mt5 =
-        eas.filter(function (ea) {
-
-          return (
-            String(
-              ea.platform || "MT5"
-            )
-            .toUpperCase() === "MT5"
-          );
-
-        })
-        .length;
-
-
-      totalEAsElement.textContent =
-        total;
-
-      mt4EAsElement.textContent =
-        mt4;
-
-      mt5EAsElement.textContent =
-        mt5;
-
-    }
-
-
-    /*
-    ==================================================
       RENDER EAS
     ==================================================
     */
@@ -1025,7 +1037,7 @@
 
       /*
       ----------------------------------------------
-        NO EAS
+        EMPTY STATE
       ----------------------------------------------
       */
 
@@ -1043,8 +1055,8 @@
             </h3>
 
             <p>
-              Create your first Expert Advisor
-              to see it here.
+              You do not currently have any
+              Expert Advisors saved to your account.
             </p>
 
             <br>
@@ -1053,9 +1065,9 @@
               href="create-ea.html"
               class="create-button"
               style="
-                margin-top: 0;
-                min-height: 54px;
-                font-size: 17px;
+                margin-top:0;
+                min-height:54px;
+                font-size:17px;
               "
             >
               + Create New EA
@@ -1072,9 +1084,460 @@
 
       /*
       ----------------------------------------------
-        CREATE LIST
+        EA LIST
       ----------------------------------------------
       */
 
       let html =
-        `<div class="ea-list
+        `<div class="ea-list">`;
+
+
+      eas.forEach(function (ea) {
+
+        const id =
+          String(
+            ea.id || ""
+          );
+
+
+        const name =
+          escapeHTML(
+            ea.name ||
+            "Unnamed EA"
+          );
+
+
+        const platform =
+          escapeHTML(
+            formatPlatform(
+              ea.platform
+            )
+          );
+
+
+        const strategy =
+          escapeHTML(
+            ea.strategy ||
+            "Not specified"
+          );
+
+
+        const riskLevel =
+          escapeHTML(
+            ea.risk_level ||
+            "Not specified"
+          );
+
+
+        const version =
+          escapeHTML(
+            ea.version ||
+            "1.0"
+          );
+
+
+        const status =
+          escapeHTML(
+            ea.status ||
+            "draft"
+          );
+
+
+        const description =
+          escapeHTML(
+            ea.description ||
+            "No description available."
+          );
+
+
+        html += `
+
+          <article class="ea-card">
+
+            <div class="ea-top">
+
+              <div class="ea-name">
+                ${name}
+              </div>
+
+              <div class="platform-badge">
+                ${platform}
+              </div>
+
+            </div>
+
+
+            <div class="ea-meta">
+
+              <strong>Strategy:</strong>
+              ${strategy}
+
+              <br>
+
+              <strong>Risk:</strong>
+              ${riskLevel}
+
+              <br>
+
+              <strong>Version:</strong>
+              ${version}
+
+              <br>
+
+              <strong>Status:</strong>
+              ${status}
+
+            </div>
+
+
+            <p class="ea-description">
+              ${description}
+            </p>
+
+
+            <div class="ea-actions">
+
+              <button
+                type="button"
+                class="edit-button"
+                data-ea-id="${escapeHTML(id)}"
+              >
+                ✏ Edit EA
+              </button>
+
+
+              <button
+                type="button"
+                class="view-button"
+                data-view-id="${escapeHTML(id)}"
+              >
+                View Details
+              </button>
+
+            </div>
+
+          </article>
+
+        `;
+
+      });
+
+
+      html +=
+        `</div>`;
+
+
+      eaContent.className =
+        "";
+
+
+      eaContent.innerHTML =
+        html;
+
+
+      /*
+      ----------------------------------------------
+        EDIT BUTTON EVENTS
+      ----------------------------------------------
+      */
+
+      document
+        .querySelectorAll(
+          "[data-ea-id]"
+        )
+        .forEach(function (button) {
+
+          button.addEventListener(
+            "click",
+            function () {
+
+              const id =
+                button.dataset.eaId;
+
+              editEA(id);
+
+            }
+          );
+
+        });
+
+
+      /*
+      ----------------------------------------------
+        VIEW BUTTON EVENTS
+      ----------------------------------------------
+      */
+
+      document
+        .querySelectorAll(
+          "[data-view-id]"
+        )
+        .forEach(function (button) {
+
+          button.addEventListener(
+            "click",
+            function () {
+
+              const id =
+                button.dataset.viewId;
+
+              viewEA(id);
+
+            }
+          );
+
+        });
+
+    }
+
+
+    /*
+    ==================================================
+      EDIT EA
+    ==================================================
+    */
+
+    function editEA(id) {
+
+      if (!id) {
+
+        alert(
+          "EA ID could not be found."
+        );
+
+        return;
+
+      }
+
+
+      window.location.href =
+        "create-ea.html?id=" +
+        encodeURIComponent(id);
+
+    }
+
+
+    /*
+    ==================================================
+      VIEW EA DETAILS
+    ==================================================
+    */
+
+    async function viewEA(id) {
+
+      const client =
+        getSupabaseClient();
+
+
+      if (!client) {
+
+        alert(
+          "Supabase is not connected."
+        );
+
+        return;
+
+      }
+
+
+      if (!id) {
+
+        alert(
+          "EA ID could not be found."
+        );
+
+        return;
+
+      }
+
+
+      try {
+
+        /*
+          Get the current user first.
+          This ensures users only view
+          their own EA.
+        */
+
+        const {
+          data: sessionData
+        } =
+          await client.auth.getSession();
+
+
+        const user =
+          sessionData?.session?.user;
+
+
+        if (!user) {
+
+          alert(
+            "Please log in first."
+          );
+
+          return;
+
+        }
+
+
+        const {
+          data,
+          error
+        } =
+          await client
+            .from("ea_robots")
+            .select(`
+              name,
+              description,
+              platform,
+              strategy,
+              risk_level,
+              version,
+              status,
+              features,
+              created_at
+            `)
+            .eq("id", id)
+            .eq(
+              "mentor_id",
+              user.id
+            )
+            .single();
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        const features =
+          data.features
+            ? JSON.stringify(
+                data.features,
+                null,
+                2
+              )
+            : "No features configured";
+
+
+        alert(
+
+          "EA DETAILS\n\n" +
+
+          "Name: " +
+          (data.name || "Unnamed EA") +
+
+          "\n\nPlatform: " +
+          formatPlatform(
+            data.platform
+          ) +
+
+          "\nStrategy: " +
+          (data.strategy || "Not specified") +
+
+          "\nRisk Level: " +
+          (data.risk_level || "Not specified") +
+
+          "\nVersion: " +
+          (data.version || "1.0") +
+
+          "\nStatus: " +
+          (data.status || "draft") +
+
+          "\n\nDescription:\n" +
+          (
+            data.description ||
+            "No description"
+          ) +
+
+          "\n\nFeatures:\n" +
+          features
+
+        );
+
+      }
+      catch (error) {
+
+        console.error(
+          "View EA error:",
+          error
+        );
+
+
+        alert(
+          "Could not load EA details: " +
+          (
+            error.message ||
+            "Unknown error"
+          )
+        );
+
+      }
+
+    }
+
+
+    /*
+    ==================================================
+      REFRESH
+    ==================================================
+    */
+
+    refreshButton.addEventListener(
+      "click",
+      function () {
+
+        loadDashboard();
+
+      }
+    );
+
+
+    /*
+    ==================================================
+      INITIAL LOAD
+    ==================================================
+    */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
+
+        loadDashboard();
+
+      }
+    );
+
+
+    /*
+    ==================================================
+      AUTH STATE CHANGE
+
+      Automatically reload the dashboard
+      when the user logs in or logs out.
+    ==================================================
+    */
+
+    const initialClient =
+      getSupabaseClient();
+
+
+    if (
+      initialClient &&
+      initialClient.auth
+    ) {
+
+      initialClient.auth.onAuthStateChange(
+        function () {
+
+          loadDashboard();
+
+        }
+      );
+
+    }
+
+  </script>
+
+</body>
+</html>
