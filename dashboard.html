@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Alpha Traders Host Dashboard</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #0b0f19;
+  color: white;
+}
+
+header {
+  padding: 20px;
+  border-bottom: 1px solid #202637;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.logo span {
+  color: #00d084;
+}
+
+.logout {
+  border: 1px solid #394154;
+  padding: 9px 15px;
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+h1 {
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #929bad;
+  margin-bottom: 30px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.stat {
+  background: #121827;
+  border: 1px solid #20283a;
+  padding: 22px;
+  border-radius: 12px;
+}
+
+.stat h3 {
+  color: #8f99ad;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.stat strong {
+  font-size: 26px;
+}
+
+.section {
+  margin-top: 35px;
+}
+
+.section-title {
+  margin-bottom: 15px;
+}
+
+.card {
+  background: #121827;
+  border: 1px solid #20283a;
+  border-radius: 12px;
+  padding: 22px;
+  margin-bottom: 15px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.status {
+  color: #00d084;
+  font-weight: bold;
+}
+
+.button {
+  background: #00d084;
+  border: none;
+  color: #06100b;
+  padding: 10px 17px;
+  border-radius: 7px;
+  font-weight: bold;
+}
+
+.secondary {
+  background: #20283a;
+  color: white;
+}
+
+.add {
+  width: 100%;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+@media(max-width: 750px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    ALPHA <span>TRADERS HOST</span>
+  </div>
+
+  <a href="index.html" class="logout">
+    Home
+  </a>
+</header>
+
+<div class="container">
+
+  <h1>Trading Dashboard</h1>
+
+  <p class="subtitle">
+    Manage your MT4 and MT5 Expert Advisors.
+  </p>
+
+  <div class="stats">
+
+    <div class="stat">
+      <h3>MT4 ACCOUNTS</h3>
+      <strong>0</strong>
+    </div>
+
+    <div class="stat">
+      <h3>MT5 ACCOUNTS</h3>
+      <strong>0</strong>
+    </div>
+
+    <div class="stat">
+      <h3>RUNNING EAs</h3>
+      <strong>0</strong>
+    </div>
+
+    <div class="stat">
+      <h3>HOSTING SERVERS</h3>
+      <strong>0</strong>
+    </div>
+
+  </div>
+
+  <div class="section">
+
+    <h2 class="section-title">
+      MetaTrader Accounts
+    </h2>
+
+    <div class="card">
+
+      <div class="row">
+
+        <div>
+          <h3>No trading accounts connected</h3>
+
+          <p style="color:#929bad;margin-top:7px;">
+            Connect your MT4 or MT5 account to begin.
+          </p>
+        </div>
+
+        <button class="button" onclick="connectAccount()">
+          + Connect Account
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="section">
+
+    <h2 class="section-title">
+      Expert Advisors
+    </h2>
+
+    <div class="card">
+
+      <div class="row">
+
+        <div>
+          <h3>No EAs installed</h3>
+
+          <p style="color:#929bad;margin-top:7px;">
+            Upload an EA after connecting a trading account.
+          </p>
+        </div>
+
+        <button class="button secondary" onclick="uploadEA()">
+          Upload EA
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+function connectAccount() {
+  alert(
+    "MT4/MT5 account connection will be enabled after the secure backend is connected."
+  );
+}
+
+function uploadEA() {
+  alert(
+    "EA uploading will be enabled after the hosting server is connected."
+  );
+}
+
+</script>
+
+</body>
+</html>
