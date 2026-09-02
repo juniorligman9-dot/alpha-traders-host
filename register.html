@@ -20,8 +20,7 @@
   --text: #ffffff;
   --muted: #929bad;
   --accent: #00d084;
-  --accent-dark: #00a86b;
-  --error: #ff6b6b;
+  --danger: #ff6b6b;
 }
 
 body {
@@ -37,18 +36,17 @@ body {
 
 .box {
   width: 100%;
-  max-width: 480px;
+  max-width: 500px;
   background: var(--card);
   border: 1px solid #20283a;
-  border-radius: 20px;
-  padding: 35px;
+  border-radius: 18px;
+  padding: 38px;
 }
 
 .logo {
   text-align: center;
-  font-size: 26px;
+  font-size: 27px;
   font-weight: bold;
-  letter-spacing: 1px;
   margin-bottom: 10px;
 }
 
@@ -61,21 +59,25 @@ body {
   color: var(--muted);
   margin-bottom: 30px;
   font-size: 16px;
-  line-height: 1.5;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
 }
 
 label {
   display: block;
   margin-bottom: 8px;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: bold;
 }
 
 input,
 select {
   width: 100%;
-  padding: 14px;
-  margin-bottom: 18px;
+  padding: 15px;
+  margin-bottom: 20px;
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -93,30 +95,9 @@ select {
   cursor: pointer;
 }
 
-select option {
-  background: #121827;
-  color: white;
-}
-
-.role-info {
-  background: #0d1422;
-  border: 1px solid #263249;
-  border-radius: 10px;
-  padding: 14px;
-  margin-top: -5px;
-  margin-bottom: 20px;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.role-info strong {
-  color: var(--accent);
-}
-
 button {
   width: 100%;
-  padding: 15px;
+  padding: 16px;
   background: var(--accent);
   color: #07110f;
   border: none;
@@ -124,37 +105,18 @@ button {
   font-weight: bold;
   font-size: 17px;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.2s ease;
 }
 
-button:hover:not(:disabled) {
-  background: var(--accent-dark);
+button:hover {
+  opacity: 0.9;
   transform: translateY(-1px);
 }
 
 button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-}
-
-.links {
-  text-align: center;
-  margin-top: 25px;
-  color: var(--muted);
-}
-
-.links p {
-  margin-bottom: 10px;
-}
-
-a {
-  color: var(--accent);
-  text-decoration: none;
-  font-weight: bold;
-}
-
-a:hover {
-  text-decoration: underline;
+  transform: none;
 }
 
 .message {
@@ -166,11 +128,41 @@ a:hover {
 }
 
 .message.error {
-  color: var(--error);
+  color: var(--danger);
 }
 
 .message.success {
   color: var(--accent);
+}
+
+.links {
+  text-align: center;
+  margin-top: 24px;
+  color: var(--muted);
+}
+
+.links a {
+  display: inline-block;
+  margin-top: 10px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+.role-info {
+  background: rgba(0, 208, 132, 0.08);
+  border: 1px solid rgba(0, 208, 132, 0.25);
+  color: var(--muted);
+  border-radius: 10px;
+  padding: 13px;
+  margin-top: -8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 @media (max-width: 500px) {
@@ -183,7 +175,6 @@ a:hover {
   .box {
     margin-top: 20px;
     padding: 30px 22px;
-    border-radius: 16px;
   }
 
   .logo {
@@ -203,13 +194,11 @@ a:hover {
   </div>
 
   <p class="subtitle">
-    Create your account and choose how you want to use the platform.
+    Create your account
   </p>
 
 
   <form id="registerForm">
-
-    <!-- FULL NAME -->
 
     <label for="name">
       Full Name
@@ -223,7 +212,17 @@ a:hover {
     >
 
 
-    <!-- ACCOUNT TYPE -->
+    <label for="email">
+      Email
+    </label>
+
+    <input
+      type="email"
+      id="email"
+      placeholder="you@example.com"
+      required
+    >
+
 
     <label for="role">
       Account Type
@@ -243,33 +242,13 @@ a:hover {
     </select>
 
 
-    <!-- ROLE INFORMATION -->
-
     <div
       class="role-info"
       id="roleInfo"
     >
-      <strong>Client Account:</strong>
-      You can access available services and features immediately after registration.
+      Client accounts are approved automatically.
     </div>
 
-
-    <!-- EMAIL -->
-
-    <label for="email">
-      Email
-    </label>
-
-    <input
-      type="email"
-      id="email"
-      placeholder="you@example.com"
-      autocomplete="email"
-      required
-    >
-
-
-    <!-- PASSWORD -->
 
     <label for="password">
       Password
@@ -279,13 +258,10 @@ a:hover {
       type="password"
       id="password"
       placeholder="Create a password"
-      autocomplete="new-password"
       minlength="8"
       required
     >
 
-
-    <!-- CONFIRM PASSWORD -->
 
     <label for="confirm">
       Confirm Password
@@ -295,13 +271,10 @@ a:hover {
       type="password"
       id="confirm"
       placeholder="Confirm your password"
-      autocomplete="new-password"
       minlength="8"
       required
     >
 
-
-    <!-- SUBMIT -->
 
     <button
       type="submit"
@@ -313,15 +286,11 @@ a:hover {
   </form>
 
 
-  <!-- MESSAGE -->
-
   <div
     id="message"
     class="message"
   ></div>
 
-
-  <!-- LOGIN LINK -->
 
   <div class="links">
 
@@ -347,66 +316,74 @@ a:hover {
 
 <script>
 
-/*
-==========================================
-ELEMENTS
-==========================================
-*/
-
 const registerForm =
-  document.getElementById("registerForm");
+  document.getElementById(
+    "registerForm"
+  );
 
 const nameInput =
-  document.getElementById("name");
-
-const roleInput =
-  document.getElementById("role");
+  document.getElementById(
+    "name"
+  );
 
 const emailInput =
-  document.getElementById("email");
+  document.getElementById(
+    "email"
+  );
 
-const passwordInput =
-  document.getElementById("password");
-
-const confirmInput =
-  document.getElementById("confirm");
-
-const message =
-  document.getElementById("message");
-
-const registerButton =
-  document.getElementById("registerButton");
+const roleSelect =
+  document.getElementById(
+    "role"
+  );
 
 const roleInfo =
-  document.getElementById("roleInfo");
+  document.getElementById(
+    "roleInfo"
+  );
+
+const passwordInput =
+  document.getElementById(
+    "password"
+  );
+
+const confirmInput =
+  document.getElementById(
+    "confirm"
+  );
+
+const message =
+  document.getElementById(
+    "message"
+  );
+
+const registerButton =
+  document.getElementById(
+    "registerButton"
+  );
 
 
-/*
-==========================================
-UPDATE ROLE INFORMATION
-==========================================
-*/
+/* ==========================================
+   UPDATE ROLE INFORMATION
+========================================== */
 
-roleInput.addEventListener(
+roleSelect.addEventListener(
   "change",
   function () {
 
     if (
-      roleInput.value === "mentor"
+      roleSelect.value ===
+      "mentor"
     ) {
 
-      roleInfo.innerHTML = `
-        <strong>Mentor Account:</strong>
-        Your account will be submitted for approval.
-        You will only receive full mentor access after an administrator approves you.
-      `;
+      roleInfo.textContent =
+        "Mentor accounts require approval from an administrator before accessing the mentor dashboard.";
 
-    } else {
+    }
 
-      roleInfo.innerHTML = `
-        <strong>Client Account:</strong>
-        You can access available services and features immediately after registration.
-      `;
+    else {
+
+      roleInfo.textContent =
+        "Client accounts are approved automatically.";
 
     }
 
@@ -414,11 +391,9 @@ roleInput.addEventListener(
 );
 
 
-/*
-==========================================
-REGISTER ACCOUNT
-==========================================
-*/
+/* ==========================================
+   REGISTER USER
+========================================== */
 
 registerForm.addEventListener(
   "submit",
@@ -427,20 +402,14 @@ registerForm.addEventListener(
     e.preventDefault();
 
 
-    /*
-    --------------------------------------
-    GET VALUES
-    --------------------------------------
-    */
-
     const fullName =
       nameInput.value.trim();
 
-    const role =
-      roleInput.value;
-
     const email =
       emailInput.value.trim();
+
+    const role =
+      roleSelect.value;
 
     const password =
       passwordInput.value;
@@ -449,46 +418,14 @@ registerForm.addEventListener(
       confirmInput.value;
 
 
-    /*
-    --------------------------------------
-    RESET MESSAGE
-    --------------------------------------
-    */
-
-    message.textContent = "";
+    message.textContent =
+      "";
 
     message.className =
       "message";
 
 
-    /*
-    --------------------------------------
-    VALIDATE ROLE
-    --------------------------------------
-    */
-
-    if (
-      role !== "client" &&
-      role !== "mentor"
-    ) {
-
-      message.textContent =
-        "Please select a valid account type.";
-
-      message.classList.add(
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    /*
-    --------------------------------------
-    VALIDATE PASSWORD
-    --------------------------------------
-    */
+    /* PASSWORD CHECK */
 
     if (
       password !== confirm
@@ -506,34 +443,14 @@ registerForm.addEventListener(
     }
 
 
-    if (
-      password.length < 8
-    ) {
-
-      message.textContent =
-        "Password must be at least 8 characters.";
-
-      message.classList.add(
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    /*
-    --------------------------------------
-    CHECK SUPABASE
-    --------------------------------------
-    */
+    /* CHECK SUPABASE */
 
     if (
       !window.supabaseClient
     ) {
 
       message.textContent =
-        "Supabase is not connected. Please check supabase-config.js.";
+        "Supabase is not connected. Check supabase-config.js.";
 
       message.classList.add(
         "error"
@@ -544,11 +461,7 @@ registerForm.addEventListener(
     }
 
 
-    /*
-    --------------------------------------
-    LOADING STATE
-    --------------------------------------
-    */
+    /* LOADING */
 
     registerButton.disabled =
       true;
@@ -556,17 +469,17 @@ registerForm.addEventListener(
     registerButton.textContent =
       "Creating Account...";
 
+
     message.textContent =
       "Creating your account...";
 
 
     try {
 
-      /*
-      ====================================
-      CREATE USER
-      ====================================
-      */
+
+      /* ======================================
+         SUPABASE SIGN UP
+      ====================================== */
 
       const {
         data,
@@ -576,9 +489,11 @@ registerForm.addEventListener(
           .auth
           .signUp({
 
-            email: email,
+            email:
+              email,
 
-            password: password,
+            password:
+              password,
 
             options: {
 
@@ -597,108 +512,63 @@ registerForm.addEventListener(
           });
 
 
-      /*
-      ====================================
-      HANDLE ERROR
-      ====================================
-      */
-
-      if (error) {
+      if (
+        error
+      ) {
 
         throw error;
 
       }
 
 
-      /*
-      ====================================
-      SUCCESS
-      ====================================
-      */
-
       if (
-        data.user
+        !data.user
       ) {
 
-        message.className =
-          "message success";
-
-
-        /*
-        ----------------------------------
-        MENTOR
-        ----------------------------------
-        */
-
-        if (
-          role === "mentor"
-        ) {
-
-          message.textContent =
-            "Mentor account created successfully! Your account is now pending administrator approval. Please check your email if confirmation is required.";
-
-        }
-
-
-        /*
-        ----------------------------------
-        CLIENT
-        ----------------------------------
-        */
-
-        else {
-
-          message.textContent =
-            "Client account created successfully! Please check your email if confirmation is required.";
-
-        }
-
-
-        /*
-        ----------------------------------
-        RESET FORM
-        ----------------------------------
-        */
-
-        registerForm.reset();
-
-
-        /*
-        ----------------------------------
-        REDIRECT TO LOGIN
-        ----------------------------------
-        */
-
-        setTimeout(
-          function () {
-
-            window.location.href =
-              "login.html";
-
-          },
-          3500
+        throw new Error(
+          "Account could not be created."
         );
 
+      }
+
+
+      /* ======================================
+         SUCCESS MESSAGE
+      ====================================== */
+
+      message.className =
+        "message success";
+
+
+      if (
+        role ===
+        "mentor"
+      ) {
+
+        message.textContent =
+          "Mentor account created successfully! Please confirm your email. Your account will require administrator approval.";
 
       }
 
       else {
 
-        throw new Error(
-          "Unable to create the account."
-        );
+        message.textContent =
+          "Client account created successfully! Please confirm your email before signing in.";
 
       }
 
 
+      registerForm.reset();
+
+
     }
-
-
-    catch (err) {
+    catch (
+      error
+    ) {
 
       console.error(
         "Registration error:",
-        err
+        error
       );
 
 
@@ -709,10 +579,12 @@ registerForm.addEventListener(
       message.textContent =
         "Error: " +
         (
-          err.message ||
-          "Something went wrong. Please try again."
+          error.message ||
+          "Could not create account."
         );
 
+    }
+    finally {
 
       registerButton.disabled =
         false;
