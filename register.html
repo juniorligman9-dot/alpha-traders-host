@@ -166,7 +166,7 @@ a {
 <script src="supabase-config.js"></script>
 
 <script>
-document.getElementById("registerForm").addEventListener("submit", async function(e) {
+document.getElementById("registerForm").addEventListener("submit", async function (e) {
     e.preventDefault();
 
     const fullName = document.getElementById("name").value.trim();
@@ -184,31 +184,31 @@ document.getElementById("registerForm").addEventListener("submit", async functio
 
     message.textContent = "Creating your account...";
 
-    const { data, error } = await supabase.auth.signUp({
-        email: email,
-        password: password
-    });
+    try {
+        const { data, error } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: {
+                    full_name: fullName
+                }
+            }
+        });
 
-    if (error) {
-        message.textContent = error.message;
-        return;
-    }
-
-    if (data.user) {
-        const { error: profileError } = await supabase
-            .from("profiles")
-            .insert({
-                id: data.user.id,
-                full_name: fullName,
-                username: email.split("@")[0]
-            });
-
-        if (profileError) {
-            console.error(profileError);
+        if (error) {
+            message.textContent = "Error: " + error.message;
+            return;
         }
 
-        message.textContent =
-            "Account created successfully! Please check your email to confirm your account.";
+        if (data.user) {
+            message.textContent =
+                "Account created successfully! Please check your email to confirm your account.";
+        } else {
+            message.textContent = "Something went wrong. Please try again.";
+        }
+
+    } catch (err) {
+        message.textContent = "Connection error: " + err.message;
     }
 });
 </script>
