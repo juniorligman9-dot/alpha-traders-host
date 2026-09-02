@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>Login | Alpha Traders Host</title>
 
@@ -89,15 +93,18 @@
       font-size: 20px;
       font-weight: bold;
       cursor: pointer;
+      transition: 0.2s;
     }
 
     button:hover {
       opacity: 0.9;
+      transform: translateY(-1px);
     }
 
     button:disabled {
       opacity: 0.6;
       cursor: not-allowed;
+      transform: none;
     }
 
     .message {
@@ -106,10 +113,19 @@
       color: #bfc7d5;
       font-size: 17px;
       min-height: 24px;
+      line-height: 1.5;
     }
 
     .message.error {
       color: #ff8b8b;
+    }
+
+    .message.success {
+      color: #20c997;
+    }
+
+    .message.warning {
+      color: #f5c56b;
     }
 
     .links {
@@ -132,6 +148,7 @@
     }
 
     @media (max-width: 500px) {
+
       .login-box {
         padding: 40px 25px;
       }
@@ -139,6 +156,15 @@
       .logo {
         font-size: 28px;
       }
+
+      label {
+        font-size: 18px;
+      }
+
+      input {
+        font-size: 16px;
+      }
+
     }
   </style>
 </head>
@@ -155,53 +181,80 @@
       Sign in to your account
     </p>
 
+
     <form id="loginForm">
 
-      <label for="email">Email</label>
+      <label for="email">
+        Email
+      </label>
 
       <input
         type="email"
         id="email"
         placeholder="you@example.com"
         required
+        autocomplete="email"
       >
 
-      <label for="password">Password</label>
+
+      <label for="password">
+        Password
+      </label>
 
       <input
         type="password"
         id="password"
         placeholder="Your password"
         required
+        autocomplete="current-password"
       >
 
-      <button type="submit" id="loginButton">
+
+      <button
+        type="submit"
+        id="loginButton"
+      >
         Sign In
       </button>
 
     </form>
 
-    <div id="message" class="message"></div>
+
+    <div
+      id="message"
+      class="message"
+    ></div>
+
 
     <div class="links">
-      <p>Don't have an account?</p>
+
+      <p>
+        Don't have an account?
+      </p>
 
       <a href="register.html">
         Create Account
       </a>
+
     </div>
 
   </div>
 
 
-  <!-- Supabase -->
+  <!-- SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- Your Supabase Configuration -->
+  <!-- YOUR SUPABASE CONFIGURATION -->
   <script src="supabase-config.js"></script>
 
 
   <script>
+
+    /*
+    ==========================================
+    ELEMENTS
+    ==========================================
+    */
 
     const loginForm =
       document.getElementById("loginForm");
@@ -225,133 +278,387 @@
     ==========================================
     */
 
-    function showMessage(text, isError = false) {
+    function showMessage(
+      text,
+      type = ""
+    ) {
 
-      message.textContent = text;
+      message.textContent =
+        text;
 
-      if (isError) {
-        message.classList.add("error");
-      } else {
-        message.classList.remove("error");
-      }
+      message.className =
+        "message " + type;
 
     }
 
 
     /*
     ==========================================
-    GET USER ROLE
+    SET LOGIN BUTTON
     ==========================================
     */
 
-    async function getUserRole(userId) {
+    function setLoading(
+      isLoading,
+      text = "Sign In"
+    ) {
+
+      loginButton.disabled =
+        isLoading;
+
+      loginButton.textContent =
+        text;
+
+    }
+
+
+    /*
+    ==========================================
+    GET USER PROFILE
+
+    Returns:
+
+    {
+      role,
+      approval_status
+    }
+    ==========================================
+    */
+
+    async function getUserProfile(
+      userId
+    ) {
 
       const {
         data,
         error
       } =
-        await supabaseClient
+        await window.supabaseClient
           .from("profiles")
-          .select("role")
-          .eq("id", userId)
+          .select(`
+            role,
+            approval_status
+          `)
+          .eq(
+            "id",
+            userId
+          )
           .single();
 
 
       if (error) {
 
-        console.error(
-          "Profile error:",
-          error
+        throw new Error(
+          "Could not load your account profile: " +
+          error.message
         );
-
-        return null;
 
       }
 
 
-      return data?.role || null;
+      if (!data) {
+
+        throw new Error(
+          "No profile was found for this account."
+        );
+
+      }
+
+
+      return data;
 
     }
 
 
     /*
     ==========================================
-    LOGIN
+    REDIRECT OR BLOCK USER
+
+    Client:
+      approved → client dashboard
+
+    Mentor:
+      approved → mentor dashboard
+      pending  → blocked
+      rejected → blocked
+    ==========================================
+    */
+
+    async function handleUserAccess(
+      user
+    ) {
+
+      showMessage(
+        "Checking your account..."
+      );
+
+
+      const profile =
+        await getUserProfile(
+          user.id
+        );
+
+
+      const role =
+        String(
+          profile.role || ""
+        )
+        .toLowerCase();
+
+
+      const approvalStatus =
+        String(
+          profile.approval_status ||
+          ""
+        )
+        .toLowerCase();
+
+
+      /*
+      ======================================
+      CLIENT ACCESS
+      ======================================
+      */
+
+      if (role === "client") {
+
+        /*
+        Clients are normally approved
+        automatically.
+        */
+
+        if (
+          approvalStatus === "approved"
+        ) {
+
+          showMessage(
+            "Login successful! Redirecting...",
+            "success"
+          );
+
+
+          window.location.href =
+            "client-dashboard.html";
+
+          return;
+
+        }
+
+
+        /*
+        Safety fallback
+        */
+
+        if (
+          approvalStatus === "pending"
+        ) {
+
+          showMessage(
+            "Your client account is still awaiting approval.",
+            "warning"
+          );
+
+          return;
+
+        }
+
+
+        if (
+          approvalStatus === "rejected"
+        ) {
+
+          showMessage(
+            "Your account was not approved. Please contact support.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        showMessage(
+          "Your account approval status is invalid. Please contact support.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      /*
+      ======================================
+      MENTOR ACCESS
+      ======================================
+      */
+
+      if (role === "mentor") {
+
+        /*
+        APPROVED
+        */
+
+        if (
+          approvalStatus === "approved"
+        ) {
+
+          showMessage(
+            "Mentor login successful! Redirecting...",
+            "success"
+          );
+
+
+          window.location.href =
+            "dashboard.html";
+
+          return;
+
+        }
+
+
+        /*
+        PENDING
+        */
+
+        if (
+          approvalStatus === "pending"
+        ) {
+
+          showMessage(
+            "Your mentor application is awaiting administrator approval.",
+            "warning"
+          );
+
+          return;
+
+        }
+
+
+        /*
+        REJECTED
+        */
+
+        if (
+          approvalStatus === "rejected"
+        ) {
+
+          showMessage(
+            "Your mentor application was not approved. Please contact support for more information.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        showMessage(
+          "Your mentor account has an invalid approval status.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      /*
+      ======================================
+      INVALID ROLE
+      ======================================
+      */
+
+      showMessage(
+        "Your account has an invalid role. Please contact support.",
+        "error"
+      );
+
+    }
+
+
+    /*
+    ==========================================
+    LOGIN FORM
     ==========================================
     */
 
     loginForm.addEventListener(
       "submit",
-      async function (e) {
+      async function (event) {
 
-        e.preventDefault();
+        event.preventDefault();
 
 
         const email =
-          emailInput.value.trim();
+          emailInput.value
+            .trim();
+
 
         const password =
           passwordInput.value;
 
 
-        showMessage("");
+        showMessage(
+          ""
+        );
 
-        loginButton.disabled = true;
 
-        loginButton.textContent =
-          "Signing In...";
+        /*
+        ======================================
+        CHECK SUPABASE
+        ======================================
+        */
+
+        if (
+          typeof window.supabaseClient ===
+          "undefined"
+        ) {
+
+          showMessage(
+            "Supabase is not connected. Please check supabase-config.js.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        setLoading(
+          true,
+          "Signing In..."
+        );
 
 
         try {
 
           /*
-          ----------------------------------------
-          CHECK SUPABASE
-          ----------------------------------------
-          */
-
-          if (
-            typeof supabaseClient ===
-            "undefined"
-          ) {
-
-            throw new Error(
-              "Supabase is not connected. Check supabase-config.js"
-            );
-
-          }
-
-
-          /*
-          ----------------------------------------
+          ======================================
           SIGN IN
-          ----------------------------------------
+          ======================================
           */
 
           const {
             data,
             error
           } =
-            await supabaseClient
+            await window.supabaseClient
               .auth
               .signInWithPassword({
 
-                email: email,
+                email:
+                  email,
 
-                password: password
+                password:
+                  password
 
               });
 
 
           if (error) {
 
-            showMessage(
-              "Error: " +
-              error.message,
-              true
-            );
-
-            return;
+            throw error;
 
           }
 
@@ -362,163 +669,46 @@
 
           if (!user) {
 
-            showMessage(
-              "Unable to sign in. Please try again.",
-              true
+            throw new Error(
+              "Unable to sign in. Please try again."
             );
-
-            return;
 
           }
 
 
           /*
-          ----------------------------------------
-          GET USER ROLE
-          ----------------------------------------
+          ======================================
+          CHECK ROLE + APPROVAL
+          ======================================
           */
 
-          showMessage(
-            "Checking your account..."
+          await handleUserAccess(
+            user
           );
-
-
-          const role =
-            await getUserRole(
-              user.id
-            );
-
-
-          /*
-          ----------------------------------------
-          NO PROFILE FOUND
-          ----------------------------------------
-          */
-
-          if (!role) {
-
-            showMessage(
-              "Your account does not have a profile yet. Please contact the administrator.",
-              true
-            );
-
-            await supabaseClient
-              .auth
-              .signOut();
-
-            return;
-
-          }
-
-
-          /*
-          ----------------------------------------
-          MENTOR LOGIN
-          ----------------------------------------
-          */
-
-          if (
-            String(role)
-              .toLowerCase() ===
-            "mentor"
-          ) {
-
-            showMessage(
-              "Mentor login successful! Redirecting..."
-            );
-
-
-            setTimeout(
-              function () {
-
-                window.location.href =
-                  "dashboard.html";
-
-              },
-              700
-            );
-
-            return;
-
-          }
-
-
-          /*
-          ----------------------------------------
-          CLIENT LOGIN
-          ----------------------------------------
-          */
-
-          if (
-            String(role)
-              .toLowerCase() ===
-            "client"
-          ) {
-
-            showMessage(
-              "Client login successful! Redirecting..."
-            );
-
-
-            setTimeout(
-              function () {
-
-                window.location.href =
-                  "client-dashboard.html";
-
-              },
-              700
-            );
-
-            return;
-
-          }
-
-
-          /*
-          ----------------------------------------
-          UNKNOWN ROLE
-          ----------------------------------------
-          */
-
-          showMessage(
-            "Your account has an invalid role: " +
-            role,
-            true
-          );
-
-
-          await supabaseClient
-            .auth
-            .signOut();
 
 
         }
-        catch (err) {
+        catch (error) {
 
           console.error(
             "Login error:",
-            err
+            error
           );
 
 
           showMessage(
-            "Connection error: " +
-            (
-              err.message ||
-              "Please try again."
-            ),
-            true
+            error.message ||
+            "Unable to sign in. Please try again.",
+            "error"
           );
 
         }
         finally {
 
-          loginButton.disabled =
-            false;
-
-          loginButton.textContent =
-            "Sign In";
+          setLoading(
+            false,
+            "Sign In"
+          );
 
         }
 
@@ -530,8 +720,10 @@
     ==========================================
     CHECK EXISTING SESSION
 
-    If already logged in,
-    send user to correct dashboard.
+    If the user is already logged in,
+    automatically check their role and
+    send approved users to the correct
+    dashboard.
     ==========================================
     */
 
@@ -540,10 +732,12 @@
       try {
 
         if (
-          typeof supabaseClient ===
+          typeof window.supabaseClient ===
           "undefined"
         ) {
+
           return;
+
         }
 
 
@@ -551,13 +745,15 @@
           data,
           error
         } =
-          await supabaseClient
+          await window.supabaseClient
             .auth
             .getUser();
 
 
         if (error) {
+
           return;
+
         }
 
 
@@ -566,28 +762,22 @@
 
 
         if (!user) {
+
           return;
-        }
-
-
-        const role =
-          await getUserRole(
-            user.id
-          );
-
-
-        if (role === "mentor") {
-
-          window.location.href =
-            "dashboard.html";
 
         }
-        else if (role === "client") {
 
-          window.location.href =
-            "client-dashboard.html";
 
-        }
+        setLoading(
+          true,
+          "Checking..."
+        );
+
+
+        await handleUserAccess(
+          user
+        );
+
 
       }
       catch (error) {
@@ -598,13 +788,21 @@
         );
 
       }
+      finally {
+
+        setLoading(
+          false,
+          "Sign In"
+        );
+
+      }
 
     }
 
 
     /*
     ==========================================
-    LOAD
+    PAGE LOAD
     ==========================================
     */
 
