@@ -10,10 +10,12 @@
 
   <title>Admin Dashboard | Alpha Traders Host</title>
 
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -29,6 +31,7 @@
       --text: #e7e9ee;
       --muted: #b6bfce;
       --accent: #55c5b5;
+      --accent-dark: #36a999;
       --danger: #ef6666;
       --warning: #f5b942;
       --success: #55c5b5;
@@ -52,6 +55,10 @@
         "Segoe UI",
         sans-serif;
     }
+
+    /* =========================
+       HEADER
+    ========================== */
 
     header {
       width: 100%;
@@ -110,6 +117,15 @@
       color: #ffc1c1;
     }
 
+    .logout-button:hover {
+      background: rgba(239, 102, 102, 0.08);
+      color: var(--danger);
+    }
+
+    /* =========================
+       MAIN
+    ========================== */
+
     main {
       width: 100%;
     }
@@ -135,6 +151,10 @@
       color: var(--muted);
       font-size: 19px;
     }
+
+    /* =========================
+       STATS
+    ========================== */
 
     .stats-grid {
       display: grid;
@@ -166,6 +186,10 @@
       color: var(--muted);
       font-size: 16px;
     }
+
+    /* =========================
+       SECTIONS
+    ========================== */
 
     .section {
       width: 100%;
@@ -202,6 +226,15 @@
     .refresh-button:hover {
       background: rgba(85, 197, 181, 0.08);
     }
+
+    .refresh-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* =========================
+       USER CARDS
+    ========================== */
 
     .user-list {
       display: grid;
@@ -272,6 +305,10 @@
       margin-bottom: 18px;
     }
 
+    /* =========================
+       ACTIONS
+    ========================== */
+
     .actions {
       display: flex;
       flex-wrap: wrap;
@@ -294,11 +331,29 @@
       color: #10201f;
     }
 
+    .approve-button:hover {
+      background: var(--accent-dark);
+    }
+
     .reject-button {
       background: transparent;
       border: 1px solid var(--danger);
       color: #ffc1c1;
     }
+
+    .reject-button:hover {
+      background: rgba(239, 102, 102, 0.08);
+    }
+
+    .approve-button:disabled,
+    .reject-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* =========================
+       STATES
+    ========================== */
 
     .empty-state,
     .status-message {
@@ -311,14 +366,19 @@
       border-radius: 18px;
     }
 
+    .empty-state h3 {
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
     .error-message {
       color: #ffc1c1;
       border-color: var(--danger);
     }
 
-    .hidden {
-      display: none;
-    }
+    /* =========================
+       MOBILE
+    ========================== */
 
     @media (max-width: 950px) {
 
@@ -383,7 +443,12 @@
         font-size: 40px;
       }
 
+      .user-top {
+        flex-direction: column;
+      }
+
     }
+
   </style>
 </head>
 
@@ -392,6 +457,7 @@
   <!-- HEADER -->
 
   <header>
+
     <div class="nav-container">
 
       <a
@@ -400,6 +466,7 @@
       >
         ALPHA <span>TRADERS HOST</span>
       </a>
+
 
       <div class="nav-actions">
 
@@ -410,6 +477,7 @@
         >
           ↻ Refresh
         </button>
+
 
         <button
           type="button"
@@ -422,8 +490,11 @@
       </div>
 
     </div>
+
   </header>
 
+
+  <!-- MAIN -->
 
   <main>
 
@@ -534,6 +605,7 @@
 
         </div>
 
+
         <div
           id="pendingContent"
           class="status-message"
@@ -556,6 +628,7 @@
 
         </div>
 
+
         <div
           id="approvedContent"
           class="status-message"
@@ -577,6 +650,7 @@
           </h2>
 
         </div>
+
 
         <div
           id="clientsContent"
@@ -630,6 +704,24 @@
 
 
     /* ========================================
+       GET SUPABASE
+    ======================================== */
+
+    function getSupabaseClient() {
+
+      if (
+        typeof window.supabaseClient !==
+        "undefined"
+      ) {
+        return window.supabaseClient;
+      }
+
+      return null;
+
+    }
+
+
+    /* ========================================
        ESCAPE HTML
     ======================================== */
 
@@ -653,23 +745,6 @@
 
 
     /* ========================================
-       GET SUPABASE
-    ======================================== */
-
-    function getSupabaseClient() {
-
-      if (
-        window.supabaseClient
-      ) {
-        return window.supabaseClient;
-      }
-
-      return null;
-
-    }
-
-
-    /* ========================================
        FORMAT DATE
     ======================================== */
 
@@ -679,16 +754,709 @@
         return "Unknown";
       }
 
-      try {
+      const parsedDate =
+        new Date(date);
 
-        return new Date(
-          date
-        ).toLocaleDateString();
+      if (
+        Number.isNaN(
+          parsedDate.getTime()
+        )
+      ) {
+        return "Unknown";
+      }
+
+      return parsedDate.toLocaleDateString();
+
+    }
+
+
+    /* ========================================
+       SET LOADING
+    ======================================== */
+
+    function setLoading() {
+
+      pendingContent.className =
+        "status-message";
+
+      pendingContent.textContent =
+        "Loading mentor applications...";
+
+
+      approvedContent.className =
+        "status-message";
+
+      approvedContent.textContent =
+        "Loading approved mentors...";
+
+
+      clientsContent.className =
+        "status-message";
+
+      clientsContent.textContent =
+        "Loading clients...";
+
+    }
+
+
+    /* ========================================
+       SHOW ERROR
+    ======================================== */
+
+    function showError(message) {
+
+      const errorHTML =
+        `
+
+          <div class="status-message error-message">
+
+            <strong>
+              Dashboard Error
+            </strong>
+
+            <br><br>
+
+            ${escapeHTML(
+              message
+            )}
+
+          </div>
+
+        `;
+
+
+      pendingContent.className =
+        "";
+
+      approvedContent.className =
+        "";
+
+      clientsContent.className =
+        "";
+
+
+      pendingContent.innerHTML =
+        errorHTML;
+
+      approvedContent.innerHTML =
+        errorHTML;
+
+      clientsContent.innerHTML =
+        errorHTML;
+
+    }
+
+
+    /* ========================================
+       UPDATE STATISTICS
+    ======================================== */
+
+    function updateStatistics(users) {
+
+      const clients =
+        users.filter(
+          function(user) {
+
+            return (
+              String(
+                user.role || ""
+              )
+              .toLowerCase() ===
+              "client"
+            );
+
+          }
+        );
+
+
+      const pending =
+        users.filter(
+          function(user) {
+
+            return (
+              String(
+                user.role || ""
+              )
+              .toLowerCase() ===
+              "mentor"
+            )
+            &&
+            (
+              String(
+                user.approval_status ||
+                ""
+              )
+              .toLowerCase() ===
+              "pending"
+            );
+
+          }
+        );
+
+
+      const approved =
+        users.filter(
+          function(user) {
+
+            return (
+              String(
+                user.role || ""
+              )
+              .toLowerCase() ===
+              "mentor"
+            )
+            &&
+            (
+              String(
+                user.approval_status ||
+                ""
+              )
+              .toLowerCase() ===
+              "approved"
+            );
+
+          }
+        );
+
+
+      totalUsers.textContent =
+        users.length;
+
+      totalClients.textContent =
+        clients.length;
+
+      pendingMentors.textContent =
+        pending.length;
+
+      approvedMentors.textContent =
+        approved.length;
+
+    }
+
+
+    /* ========================================
+       CREATE MENTOR CARD
+    ======================================== */
+
+    function createMentorCard(
+      user,
+      status
+    ) {
+
+      const name =
+        escapeHTML(
+          user.full_name ||
+          "Unnamed Mentor"
+        );
+
+
+      const email =
+        escapeHTML(
+          user.email ||
+          "Email unavailable"
+        );
+
+
+      const createdAt =
+        escapeHTML(
+          formatDate(
+            user.created_at
+          )
+        );
+
+
+      const userId =
+        String(
+          user.id || ""
+        );
+
+
+      let actions =
+        "";
+
+
+      if (
+        status === "pending"
+      ) {
+
+        actions =
+          `
+
+            <div class="actions">
+
+              <button
+                type="button"
+                class="approve-button"
+                onclick="approveMentor('${userId}')"
+              >
+                ✓ Approve Mentor
+              </button>
+
+
+              <button
+                type="button"
+                class="reject-button"
+                onclick="rejectMentor('${userId}')"
+              >
+                ✕ Reject
+              </button>
+
+            </div>
+
+          `;
 
       }
-      catch {
+      else if (
+        status === "approved"
+      ) {
 
-        return "Unknown";
+        actions =
+          `
+
+            <div class="actions">
+
+              <button
+                type="button"
+                class="reject-button"
+                onclick="rejectMentor('${userId}')"
+              >
+                Remove Approval
+              </button>
+
+            </div>
+
+          `;
+
+      }
+
+
+      return `
+
+        <article class="user-card">
+
+          <div class="user-top">
+
+            <div>
+
+              <div class="user-name">
+                ${name}
+              </div>
+
+
+              <div class="user-email">
+                ${email}
+              </div>
+
+            </div>
+
+
+            <div class="badge ${escapeHTML(status)}">
+
+              ${escapeHTML(
+                status.toUpperCase()
+              )}
+
+            </div>
+
+          </div>
+
+
+          <div class="user-meta">
+
+            Applied:
+            ${createdAt}
+
+          </div>
+
+
+          ${actions}
+
+        </article>
+
+      `;
+
+    }
+
+
+    /* ========================================
+       RENDER PENDING MENTORS
+    ======================================== */
+
+    function renderPendingMentors(users) {
+
+      const mentors =
+        users.filter(
+          function(user) {
+
+            return (
+              String(
+                user.role || ""
+              )
+              .toLowerCase() ===
+              "mentor"
+            )
+            &&
+            (
+              String(
+                user.approval_status ||
+                ""
+              )
+              .toLowerCase() ===
+              "pending"
+            );
+
+          }
+        );
+
+
+      if (
+        mentors.length === 0
+      ) {
+
+        pendingContent.className =
+          "empty-state";
+
+
+        pendingContent.innerHTML =
+          `
+            <h3>
+              No pending applications
+            </h3>
+
+            <p>
+              There are currently no mentors
+              waiting for approval.
+            </p>
+          `;
+
+        return;
+
+      }
+
+
+      let html =
+        '<div class="user-list">';
+
+
+      mentors.forEach(
+        function(user) {
+
+          html +=
+            createMentorCard(
+              user,
+              "pending"
+            );
+
+        }
+      );
+
+
+      html +=
+        "</div>";
+
+
+      pendingContent.className =
+        "";
+
+
+      pendingContent.innerHTML =
+        html;
+
+    }
+
+
+    /* ========================================
+       RENDER APPROVED MENTORS
+    ======================================== */
+
+    function renderApprovedMentors(users) {
+
+      const mentors =
+        users.filter(
+          function(user) {
+
+            return (
+              String(
+                user.role || ""
+              )
+              .toLowerCase() ===
+              "mentor"
+            )
+            &&
+            (
+              String(
+                user.approval_status ||
+                ""
+              )
+              .toLowerCase() ===
+              "approved"
+            );
+
+          }
+        );
+
+
+      if (
+        mentors.length === 0
+      ) {
+
+        approvedContent.className =
+          "empty-state";
+
+
+        approvedContent.innerHTML =
+          `
+            <h3>
+              No approved mentors yet
+            </h3>
+
+            <p>
+              Approved mentor accounts
+              will appear here.
+            </p>
+          `;
+
+        return;
+
+      }
+
+
+      let html =
+        '<div class="user-list">';
+
+
+      mentors.forEach(
+        function(user) {
+
+          html +=
+            createMentorCard(
+              user,
+              "approved"
+            );
+
+        }
+      );
+
+
+      html +=
+        "</div>";
+
+
+      approvedContent.className =
+        "";
+
+
+      approvedContent.innerHTML =
+        html;
+
+    }
+
+
+    /* ========================================
+       RENDER CLIENTS
+    ======================================== */
+
+    function renderClients(users) {
+
+      const clients =
+        users.filter(
+          function(user) {
+
+            return (
+              String(
+                user.role || ""
+              )
+              .toLowerCase() ===
+              "client"
+            );
+
+          }
+        );
+
+
+      if (
+        clients.length === 0
+      ) {
+
+        clientsContent.className =
+          "empty-state";
+
+
+        clientsContent.innerHTML =
+          `
+            <h3>
+              No clients yet
+            </h3>
+          `;
+
+        return;
+
+      }
+
+
+      let html =
+        '<div class="user-list">';
+
+
+      clients.forEach(
+        function(user) {
+
+          const name =
+            escapeHTML(
+              user.full_name ||
+              "Unnamed User"
+            );
+
+
+          const email =
+            escapeHTML(
+              user.email ||
+              "Email unavailable"
+            );
+
+
+          html +=
+            `
+
+              <article class="user-card">
+
+                <div class="user-top">
+
+                  <div>
+
+                    <div class="user-name">
+                      ${name}
+                    </div>
+
+
+                    <div class="user-email">
+                      ${email}
+                    </div>
+
+                  </div>
+
+
+                  <div class="badge client">
+                    CLIENT
+                  </div>
+
+                </div>
+
+              </article>
+
+            `;
+
+        }
+      );
+
+
+      html +=
+        "</div>";
+
+
+      clientsContent.className =
+        "";
+
+
+      clientsContent.innerHTML =
+        html;
+
+    }
+
+
+    /* ========================================
+       APPROVE MENTOR
+    ======================================== */
+
+    async function approveMentor(userId) {
+
+      if (!userId) {
+
+        alert(
+          "Mentor ID is missing."
+        );
+
+        return;
+
+      }
+
+
+      const confirmed =
+        confirm(
+          "Are you sure you want to approve this mentor?"
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      const supabaseClient =
+        getSupabaseClient();
+
+
+      if (!supabaseClient) {
+
+        alert(
+          "Supabase is not connected."
+        );
+
+        return;
+
+      }
+
+
+      try {
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .from("profiles")
+            .update({
+              approval_status:
+                "approved"
+            })
+            .eq(
+              "id",
+              userId
+            )
+            .eq(
+              "role",
+              "mentor"
+            );
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        alert(
+          "Mentor approved successfully!"
+        );
+
+
+        await loadDashboard();
+
+
+      }
+      catch (error) {
+
+        console.error(
+          "Approve mentor error:",
+          error
+        );
+
+
+        alert(
+          "Could not approve mentor: " +
+          (
+            error.message ||
+            "Unknown error"
+          )
+        );
 
       }
 
@@ -696,7 +1464,106 @@
 
 
     /* ========================================
-       LOAD ADMIN DASHBOARD
+       REJECT MENTOR
+    ======================================== */
+
+    async function rejectMentor(userId) {
+
+      if (!userId) {
+
+        alert(
+          "Mentor ID is missing."
+        );
+
+        return;
+
+      }
+
+
+      const confirmed =
+        confirm(
+          "Are you sure you want to reject this mentor?"
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      const supabaseClient =
+        getSupabaseClient();
+
+
+      if (!supabaseClient) {
+
+        alert(
+          "Supabase is not connected."
+        );
+
+        return;
+
+      }
+
+
+      try {
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .from("profiles")
+            .update({
+              approval_status:
+                "rejected"
+            })
+            .eq(
+              "id",
+              userId
+            )
+            .eq(
+              "role",
+              "mentor"
+            );
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        alert(
+          "Mentor application rejected."
+        );
+
+
+        await loadDashboard();
+
+
+      }
+      catch (error) {
+
+        console.error(
+          "Reject mentor error:",
+          error
+        );
+
+
+        alert(
+          "Could not reject mentor: " +
+          (
+            error.message ||
+            "Unknown error"
+          )
+        );
+
+      }
+
+    }
+
+
+    /* ========================================
+       LOAD DASHBOARD
     ======================================== */
 
     async function loadDashboard() {
@@ -719,11 +1586,18 @@
       setLoading();
 
 
+      refreshButton.disabled =
+        true;
+
+      refreshTopButton.disabled =
+        true;
+
+
       try {
 
-        /* ------------------------------------
-           CHECK LOGGED IN USER
-        ------------------------------------ */
+        /* =========================
+           GET LOGGED-IN USER
+        ========================== */
 
         const {
           data: authData,
@@ -753,9 +1627,9 @@
         }
 
 
-        /* ------------------------------------
-           CHECK ADMIN PROFILE
-        ------------------------------------ */
+        /* =========================
+           CHECK ADMIN ROLE
+        ========================== */
 
         const {
           data: adminProfile,
@@ -779,14 +1653,22 @@
 
 
         if (
+          !adminProfile ||
           String(
-            adminProfile.role
-          ).toLowerCase() !== "admin"
+            adminProfile.role || ""
+          )
+          .toLowerCase()
+          .trim() !== "admin"
         ) {
 
           alert(
             "Access denied. Admin access is required."
           );
+
+
+          await supabaseClient
+            .auth
+            .signOut();
 
 
           window.location.href =
@@ -797,9 +1679,9 @@
         }
 
 
-        /* ------------------------------------
-           LOAD ALL PROFILES
-        ------------------------------------ */
+        /* =========================
+           LOAD PROFILES
+        ========================== */
 
         const {
           data: profiles,
@@ -807,7 +1689,16 @@
         } =
           await supabaseClient
             .from("profiles")
-            .select("*")
+            .select(
+              `
+                id,
+                full_name,
+                email,
+                role,
+                approval_status,
+                created_at
+              `
+            )
             .order(
               "created_at",
               {
@@ -862,319 +1753,85 @@
         );
 
       }
+      finally {
 
-    }
+        refreshButton.disabled =
+          false;
 
-
-    /* ========================================
-       UPDATE STATISTICS
-    ======================================== */
-
-    function updateStatistics(users) {
-
-      const clients =
-        users.filter(function(user) {
-
-          return (
-            String(
-              user.role || ""
-            )
-            .toLowerCase() ===
-            "client"
-          );
-
-        });
-
-
-      const pending =
-        users.filter(function(user) {
-
-          return (
-            String(
-              user.role || ""
-            )
-            .toLowerCase() ===
-            "mentor"
-          ) &&
-          (
-            String(
-              user.approval_status || ""
-            )
-            .toLowerCase() ===
-            "pending"
-          );
-
-        });
-
-
-      const approved =
-        users.filter(function(user) {
-
-          return (
-            String(
-              user.role || ""
-            )
-            .toLowerCase() ===
-            "mentor"
-          ) &&
-          (
-            String(
-              user.approval_status || ""
-            )
-            .toLowerCase() ===
-            "approved"
-          );
-
-        });
-
-
-      totalUsers.textContent =
-        users.length;
-
-      totalClients.textContent =
-        clients.length;
-
-      pendingMentors.textContent =
-        pending.length;
-
-      approvedMentors.textContent =
-        approved.length;
-
-    }
-
-
-    /* ========================================
-       PENDING MENTORS
-    ======================================== */
-
-    function renderPendingMentors(users) {
-
-      const mentors =
-        users.filter(function(user) {
-
-          return (
-            String(
-              user.role || ""
-            )
-            .toLowerCase() ===
-            "mentor"
-          ) &&
-          (
-            String(
-              user.approval_status || ""
-            )
-            .toLowerCase() ===
-            "pending"
-          );
-
-        });
-
-
-      if (
-        mentors.length === 0
-      ) {
-
-        pendingContent.className =
-          "empty-state";
-
-        pendingContent.innerHTML =
-          "<h3>No pending applications</h3>" +
-          "<br>" +
-          "<p>There are currently no mentors waiting for approval.</p>";
-
-        return;
+        refreshTopButton.disabled =
+          false;
 
       }
 
-
-      let html =
-        '<div class="user-list">';
-
-
-      mentors.forEach(
-        function(user) {
-
-          html += createMentorCard(
-            user,
-            "pending"
-          );
-
-        }
-      );
-
-
-      html +=
-        "</div>";
-
-
-      pendingContent.className =
-        "";
-
-
-      pendingContent.innerHTML =
-        html;
-
     }
 
 
     /* ========================================
-       APPROVED MENTORS
+       REFRESH BUTTONS
     ======================================== */
 
-    function renderApprovedMentors(users) {
+    refreshButton.addEventListener(
+      "click",
+      function() {
 
-      const mentors =
-        users.filter(function(user) {
-
-          return (
-            String(
-              user.role || ""
-            )
-            .toLowerCase() ===
-            "mentor"
-          ) &&
-          (
-            String(
-              user.approval_status || ""
-            )
-            .toLowerCase() ===
-            "approved"
-          );
-
-        });
-
-
-      if (
-        mentors.length === 0
-      ) {
-
-        approvedContent.className =
-          "empty-state";
-
-        approvedContent.innerHTML =
-          "<h3>No approved mentors yet</h3>";
-
-        return;
+        loadDashboard();
 
       }
+    );
 
 
-      let html =
-        '<div class="user-list">';
+    refreshTopButton.addEventListener(
+      "click",
+      function() {
 
+        loadDashboard();
 
-      mentors.forEach(
-        function(user) {
-
-          html += createMentorCard(
-            user,
-            "approved"
-          );
-
-        }
-      );
-
-
-      html +=
-        "</div>";
-
-
-      approvedContent.className =
-        "";
-
-
-      approvedContent.innerHTML =
-        html;
-
-    }
+      }
+    );
 
 
     /* ========================================
-       CLIENTS
+       LOGOUT
     ======================================== */
 
-    function renderClients(users) {
+    logoutButton.addEventListener(
+      "click",
+      async function() {
 
-      const clients =
-        users.filter(function(user) {
-
-          return (
-            String(
-              user.role || ""
-            )
-            .toLowerCase() ===
-            "client"
-          );
-
-        });
+        const supabaseClient =
+          getSupabaseClient();
 
 
-      if (
-        clients.length === 0
-      ) {
+        if (supabaseClient) {
 
-        clientsContent.className =
-          "empty-state";
-
-        clientsContent.innerHTML =
-          "<h3>No clients yet</h3>";
-
-        return;
-
-      }
-
-
-      let html =
-        '<div class="user-list">';
-
-
-      clients.forEach(
-        function(user) {
-
-          const name =
-            escapeHTML(
-              user.full_name ||
-              "Unnamed User"
-            );
-
-
-          const email =
-            escapeHTML(
-              user.email ||
-              "Email unavailable"
-            );
-
-
-          html += `
-
-            <article class="user-card">
-
-              <div class="user-top">
-
-                <div>
-
-                  <div class="user-name">
-                    ${name}
-                  </div>
-
-                  <div class="user-email">
-                    ${email}
-                  </div>
-
-                </div>
-
-                <div class="badge client">
-                  CLIENT
-                </div>
-
-              </div>
-
-            </article>
-
-          `;
+          await supabaseClient
+            .auth
+            .signOut();
 
         }
-      );
 
 
-      
+        window.location.href =
+          "login.html";
+
+      }
+    );
+
+
+    /* ========================================
+       INITIALIZE
+    ======================================== */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function() {
+
+        loadDashboard();
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
