@@ -6,9 +6,10 @@
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-  <title>Create EA | Alpha Traders Host</title>
+  <title>EA Builder | Alpha Traders Host</title>
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -25,10 +26,11 @@
     header {
       background: #101827;
       border-bottom: 1px solid #293449;
-      padding: 22px 7%;
+      padding: 20px 7%;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 20px;
     }
 
     .logo {
@@ -41,41 +43,63 @@
       color: #20c997;
     }
 
+    nav {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+
     nav a {
       color: #20c997;
       text-decoration: none;
-      font-size: 16px;
+      font-size: 15px;
     }
 
     .container {
-      width: 90%;
-      max-width: 800px;
-      margin: 50px auto;
+      width: 92%;
+      max-width: 1100px;
+      margin: 40px auto 70px;
+    }
+
+    .page-title {
+      margin-bottom: 30px;
+    }
+
+    .page-title h1 {
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+
+    .page-title p {
+      color: #aeb8c8;
+      line-height: 1.6;
+    }
+
+    .builder-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
     }
 
     .card {
       background: #182233;
       border: 1px solid #2c3a52;
       border-radius: 20px;
-      padding: 35px;
+      padding: 28px;
     }
 
-    h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
-
-    .subtitle {
-      color: #aeb8c8;
-      margin-bottom: 30px;
-      line-height: 1.6;
+    .card h2 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #20c997;
     }
 
     label {
       display: block;
-      font-size: 17px;
-      margin-top: 22px;
-      margin-bottom: 9px;
+      margin-top: 18px;
+      margin-bottom: 8px;
+      font-size: 15px;
+      color: #d9deea;
     }
 
     input,
@@ -83,10 +107,10 @@
     textarea {
       width: 100%;
       background: #0e1624;
-      color: white;
+      color: #ffffff;
       border: 2px solid #34435c;
-      border-radius: 12px;
-      padding: 16px;
+      border-radius: 10px;
+      padding: 14px;
       font-size: 16px;
       outline: none;
     }
@@ -97,206 +121,730 @@
       border-color: #20c997;
     }
 
+    select option {
+      background: #182233;
+      color: #ffffff;
+    }
+
     textarea {
-      min-height: 150px;
+      min-height: 100px;
       resize: vertical;
     }
 
-    select option {
-      background: #182233;
-      color: white;
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .switch-row {
+      margin-top: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      background: #111a29;
+      border: 1px solid #2c3a52;
+      border-radius: 12px;
+      padding: 15px;
+    }
+
+    .switch-info h3 {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .switch-info p {
+      color: #9da9bc;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 55px;
+      height: 30px;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #4a5568;
+      border-radius: 30px;
+      transition: 0.3s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 4px;
+      bottom: 4px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+
+    input:checked + .slider {
+      background: #20c997;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(25px);
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
     }
 
     button {
-      width: 100%;
-      margin-top: 30px;
-      padding: 18px;
       border: none;
       border-radius: 12px;
-      background: #20c997;
-      color: #07110f;
-      font-size: 18px;
+      padding: 16px 20px;
+      font-size: 17px;
       font-weight: bold;
       cursor: pointer;
+      transition: 0.2s;
     }
 
     button:hover {
       opacity: 0.9;
+      transform: translateY(-1px);
     }
 
     button:disabled {
       opacity: 0.6;
       cursor: not-allowed;
+      transform: none;
+    }
+
+    .generate-button {
+      width: 100%;
+      margin-top: 25px;
+      background: #20c997;
+      color: #07110f;
+    }
+
+    .save-button {
+      width: 100%;
+      margin-top: 15px;
+      background: #263850;
+      color: white;
+      border: 1px solid #40516a;
+    }
+
+    .download-button {
+      width: 100%;
+      margin-top: 15px;
+      background: #2d6cdf;
+      color: white;
     }
 
     .message {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 18px;
+      min-height: 24px;
       color: #aeb8c8;
       line-height: 1.5;
     }
 
-    .robots-section {
-      margin-top: 40px;
+    .success {
+      color: #20c997;
     }
 
-    .robots-section h2 {
-      margin-bottom: 20px;
+    .error {
+      color: #ff8b8b;
     }
 
-    .robot-card {
-      background: #182233;
+    .code-output {
+      width: 100%;
+      min-height: 650px;
+      background: #080d16;
+      color: #c9f7e9;
       border: 1px solid #2c3a52;
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 15px;
-    }
-
-    .robot-card h3 {
-      color: #20c997;
-      margin-bottom: 10px;
-    }
-
-    .robot-info {
-      color: #b8c1d1;
-      margin: 6px 0;
-    }
-
-    .status {
-      display: inline-block;
-      margin-top: 10px;
-      background: #243a39;
-      color: #20c997;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 13px;
-    }
-
-    .empty {
-      color: #aeb8c8;
-      text-align: center;
-      padding: 25px;
-      background: #182233;
       border-radius: 12px;
+      padding: 18px;
+      font-family: monospace;
+      font-size: 13px;
+      line-height: 1.55;
+      white-space: pre;
+      overflow: auto;
     }
 
-    @media (max-width: 600px) {
+    .warning {
+      margin-top: 20px;
+      padding: 15px;
+      background: #282416;
+      border: 1px solid #5b5229;
+      border-radius: 10px;
+      color: #e7d995;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .strategy-box {
+      margin-top: 20px;
+      padding: 15px;
+      background: #111a29;
+      border-radius: 12px;
+      border: 1px solid #2c3a52;
+    }
+
+    .strategy-box p {
+      color: #b7c0d0;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    @media (max-width: 850px) {
+
+      .builder-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full-width {
+        grid-column: auto;
+      }
+
       header {
         padding: 18px 5%;
       }
 
+    }
+
+    @media (max-width: 600px) {
+
+      .row {
+        grid-template-columns: 1fr;
+      }
+
       .container {
-        width: 92%;
-        margin: 30px auto;
+        width: 94%;
+        margin-top: 25px;
       }
 
       .card {
-        padding: 25px 20px;
+        padding: 20px;
       }
 
-      h1 {
-        font-size: 27px;
+      .page-title h1 {
+        font-size: 28px;
       }
+
+      .logo {
+        font-size: 18px;
+      }
+
+      nav {
+        gap: 12px;
+      }
+
     }
+
   </style>
 </head>
 
 <body>
 
-  <header>
-    <div class="logo">
-      ALPHA <span>TRADERS HOST</span>
-    </div>
 
-    <nav>
-      <a href="dashboard.html">Dashboard</a>
-    </nav>
-  </header>
+<header>
 
+  <div class="logo">
+    ALPHA <span>TRADERS HOST</span>
+  </div>
 
-  <main class="container">
+  <nav>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="create-ea.html">My EAs</a>
+  </nav>
 
-    <div class="card">
-
-      <h1>🤖 Create Your EA Robot</h1>
-
-      <p class="subtitle">
-        Create and save your Expert Advisor details.
-        Your EA will be connected to your mentor account.
-      </p>
+</header>
 
 
-      <form id="eaForm">
+<main class="container">
 
-        <label for="name">
-          EA Robot Name
+
+  <div class="page-title">
+
+    <h1>🤖 EA Builder</h1>
+
+    <p>
+      Build a starter Expert Advisor strategy using moving averages,
+      RSI confirmation and risk settings.
+    </p>
+
+  </div>
+
+
+  <div class="builder-grid">
+
+
+    <!-- SETTINGS -->
+
+    <section class="card">
+
+      <h2>1. EA Information</h2>
+
+
+      <label for="eaName">
+        EA Robot Name
+      </label>
+
+      <input
+        type="text"
+        id="eaName"
+        placeholder="Example: Alpha Gold Scalper"
+        required
+      >
+
+
+      <div class="row">
+
+        <div>
+
+          <label for="platform">
+            Platform
+          </label>
+
+          <select id="platform">
+
+            <option value="MT5">
+              MetaTrader 5 (MT5)
+            </option>
+
+            <option value="MT4">
+              MetaTrader 4 (MT4)
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div>
+
+          <label for="version">
+            Version
+          </label>
+
+          <input
+            type="text"
+            id="version"
+            value="v1.0"
+          >
+
+        </div>
+
+      </div>
+
+
+      <label for="symbol">
+        Trading Symbol
+      </label>
+
+      <input
+        type="text"
+        id="symbol"
+        value="EURUSD"
+        placeholder="Example: EURUSD"
+      >
+
+
+      <label for="timeframe">
+        Trading Timeframe
+      </label>
+
+      <select id="timeframe">
+
+        <option value="CURRENT">
+          Current Chart Timeframe
+        </option>
+
+        <option value="M5">
+          M5 - 5 Minutes
+        </option>
+
+        <option value="M15">
+          M15 - 15 Minutes
+        </option>
+
+        <option value="M30">
+          M30 - 30 Minutes
+        </option>
+
+        <option value="H1">
+          H1 - 1 Hour
+        </option>
+
+        <option value="H4">
+          H4 - 4 Hours
+        </option>
+
+        <option value="D1">
+          D1 - Daily
+        </option>
+
+      </select>
+
+
+      <h2 style="margin-top:35px;">
+        2. Moving Average Strategy
+      </h2>
+
+
+      <div class="row">
+
+        <div>
+
+          <label for="fastMA">
+            Fast MA Period
+          </label>
+
+          <input
+            type="number"
+            id="fastMA"
+            value="20"
+            min="1"
+          >
+
+        </div>
+
+
+        <div>
+
+          <label for="slowMA">
+            Slow MA Period
+          </label>
+
+          <input
+            type="number"
+            id="slowMA"
+            value="50"
+            min="2"
+          >
+
+        </div>
+
+      </div>
+
+
+      <label for="maType">
+        Moving Average Type
+      </label>
+
+      <select id="maType">
+
+        <option value="EMA">
+          Exponential Moving Average (EMA)
+        </option>
+
+        <option value="SMA">
+          Simple Moving Average (SMA)
+        </option>
+
+      </select>
+
+
+      <div class="strategy-box">
+
+        <p>
+          <strong>Buy signal:</strong>
+          Fast MA crosses above Slow MA.
+          <br><br>
+
+          <strong>Sell signal:</strong>
+          Fast MA crosses below Slow MA.
+        </p>
+
+      </div>
+
+
+      <div class="switch-row">
+
+        <div class="switch-info">
+
+          <h3>
+            Enable RSI Confirmation
+          </h3>
+
+          <p>
+            Add an RSI filter to the MA crossover strategy.
+          </p>
+
+        </div>
+
+
+        <label class="switch">
+
+          <input
+            type="checkbox"
+            id="useRSI"
+            checked
+          >
+
+          <span class="slider"></span>
+
+        </label>
+
+      </div>
+
+
+      <div id="rsiSettings">
+
+        <div class="row">
+
+          <div>
+
+            <label for="rsiPeriod">
+              RSI Period
+            </label>
+
+            <input
+              type="number"
+              id="rsiPeriod"
+              value="14"
+              min="2"
+            >
+
+          </div>
+
+
+          <div>
+
+            <label for="buyRSI">
+              Maximum Buy RSI
+            </label>
+
+            <input
+              type="number"
+              id="buyRSI"
+              value="70"
+              min="1"
+              max="100"
+            >
+
+          </div>
+
+        </div>
+
+
+        <label for="sellRSI">
+          Minimum Sell RSI
         </label>
 
         <input
-          type="text"
-          id="name"
-          placeholder="Example: Alpha Gold Scalper"
-          required
+          type="number"
+          id="sellRSI"
+          value="30"
+          min="1"
+          max="100"
         >
 
-
-        <label for="platform">
-          Trading Platform
-        </label>
-
-        <select id="platform" required>
-          <option value="MT5">MT5</option>
-          <option value="MT4">MT4</option>
-        </select>
+      </div>
 
 
-        <label for="strategy">
-          Trading Strategy
-        </label>
-
-        <textarea
-          id="strategy"
-          placeholder="Describe how your EA trades. Example: Uses moving averages, RSI confirmation and risk management..."
-        ></textarea>
+    </section>
 
 
-        <label for="risk">
-          Risk Level
-        </label>
+    <!-- RISK -->
 
-        <select id="risk">
-          <option value="Low">Low Risk</option>
-          <option value="Medium" selected>Medium Risk</option>
-          <option value="High">High Risk</option>
-        </select>
+    <section class="card">
+
+      <h2>3. Trade & Risk Settings</h2>
 
 
-        <label for="version">
-          EA Version
-        </label>
+      <label for="lotSize">
+        Lot Size
+      </label>
 
-        <input
-          type="text"
-          id="version"
-          placeholder="Example: v1.0"
+      <input
+        type="number"
+        id="lotSize"
+        value="0.01"
+        step="0.01"
+        min="0.01"
+      >
+
+
+      <div class="row">
+
+        <div>
+
+          <label for="stopLoss">
+            Stop Loss (Points)
+          </label>
+
+          <input
+            type="number"
+            id="stopLoss"
+            value="500"
+            min="0"
+          >
+
+        </div>
+
+
+        <div>
+
+          <label for="takeProfit">
+            Take Profit (Points)
+          </label>
+
+          <input
+            type="number"
+            id="takeProfit"
+            value="1000"
+            min="0"
+          >
+
+        </div>
+
+      </div>
+
+
+      <label for="maxTrades">
+        Maximum Open Positions
+      </label>
+
+      <input
+        type="number"
+        id="maxTrades"
+        value="1"
+        min="1"
+        max="20"
+      >
+
+
+      <label for="riskLevel">
+        Risk Level
+      </label>
+
+      <select id="riskLevel">
+
+        <option value="Low">
+          Low
+        </option>
+
+        <option
+          value="Medium"
+          selected
         >
+          Medium
+        </option>
+
+        <option value="High">
+          High
+        </option>
+
+      </select>
 
 
-        <label for="description">
-          Additional Description
+      <div class="switch-row">
+
+        <div class="switch-info">
+
+          <h3>
+            Enable Buy Trades
+          </h3>
+
+          <p>
+            Allow the EA to open buy positions.
+          </p>
+
+        </div>
+
+
+        <label class="switch">
+
+          <input
+            type="checkbox"
+            id="allowBuy"
+            checked
+          >
+
+          <span class="slider"></span>
+
         </label>
 
-        <textarea
-          id="description"
-          placeholder="Add additional information about this EA..."
-        ></textarea>
+      </div>
 
 
-        <button type="submit" id="saveButton">
-          Save EA Robot
-        </button>
+      <div class="switch-row">
 
-      </form>
+        <div class="switch-info">
+
+          <h3>
+            Enable Sell Trades
+          </h3>
+
+          <p>
+            Allow the EA to open sell positions.
+          </p>
+
+        </div>
+
+
+        <label class="switch">
+
+          <input
+            type="checkbox"
+            id="allowSell"
+            checked
+          >
+
+          <span class="slider"></span>
+
+        </label>
+
+      </div>
+
+
+      <label for="description">
+        EA Description
+      </label>
+
+      <textarea
+        id="description"
+        placeholder="Describe the purpose of this EA..."
+      ></textarea>
+
+
+      <button
+        type="button"
+        class="generate-button"
+        id="generateButton"
+      >
+        ⚙ Generate EA Code
+      </button>
+
+
+      <button
+        type="button"
+        class="save-button"
+        id="saveButton"
+      >
+        💾 Save EA Details
+      </button>
+
+
+      <button
+        type="button"
+        class="download-button"
+        id="downloadButton"
+        disabled
+      >
+        ⬇ Download EA File
+      </button>
 
 
       <div
@@ -304,353 +852,1603 @@
         class="message"
       ></div>
 
-    </div>
 
+      <div class="warning">
 
-    <section class="robots-section">
+        <strong>Important:</strong>
 
-      <h2>My EA Robots</h2>
+        This builder creates starter MQL source code.
+        Always compile, review and test the EA in MetaEditor
+        and Strategy Tester before using it on a real trading account.
 
-      <div id="robotsList">
-        <p class="empty">
-          Loading your EA robots...
-        </p>
       </div>
+
 
     </section>
 
-  </main>
+
+    <!-- GENERATED CODE -->
+
+    <section class="card full-width">
+
+      <h2>
+        4. Generated EA Source Code
+      </h2>
+
+      <textarea
+        id="codeOutput"
+        class="code-output"
+        readonly
+        placeholder="Your generated EA code will appear here..."
+      ></textarea>
+
+    </section>
 
 
-  <!-- Supabase Library -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <!-- Your Supabase Configuration -->
-  <script src="supabase-config.js"></script>
+  </div>
 
 
-  <script>
-
-    const eaForm = document.getElementById("eaForm");
-
-    const message =
-      document.getElementById("message");
-
-    const saveButton =
-      document.getElementById("saveButton");
-
-    const robotsList =
-      document.getElementById("robotsList");
+</main>
 
 
-    /*
-      Check that Supabase is available
-    */
+<!-- SUPABASE LIBRARY -->
 
-    if (!window.supabaseClient) {
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-      message.textContent =
-        "Supabase connection is not configured. Please check supabase-config.js.";
+
+<!-- YOUR SUPABASE CONFIGURATION -->
+
+<script src="supabase-config.js"></script>
+
+
+<script>
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const eaName =
+  document.getElementById("eaName");
+
+const platform =
+  document.getElementById("platform");
+
+const version =
+  document.getElementById("version");
+
+const symbol =
+  document.getElementById("symbol");
+
+const timeframe =
+  document.getElementById("timeframe");
+
+const fastMA =
+  document.getElementById("fastMA");
+
+const slowMA =
+  document.getElementById("slowMA");
+
+const maType =
+  document.getElementById("maType");
+
+const useRSI =
+  document.getElementById("useRSI");
+
+const rsiSettings =
+  document.getElementById("rsiSettings");
+
+const rsiPeriod =
+  document.getElementById("rsiPeriod");
+
+const buyRSI =
+  document.getElementById("buyRSI");
+
+const sellRSI =
+  document.getElementById("sellRSI");
+
+const lotSize =
+  document.getElementById("lotSize");
+
+const stopLoss =
+  document.getElementById("stopLoss");
+
+const takeProfit =
+  document.getElementById("takeProfit");
+
+const maxTrades =
+  document.getElementById("maxTrades");
+
+const riskLevel =
+  document.getElementById("riskLevel");
+
+const allowBuy =
+  document.getElementById("allowBuy");
+
+const allowSell =
+  document.getElementById("allowSell");
+
+const description =
+  document.getElementById("description");
+
+const generateButton =
+  document.getElementById("generateButton");
+
+const saveButton =
+  document.getElementById("saveButton");
+
+const downloadButton =
+  document.getElementById("downloadButton");
+
+const codeOutput =
+  document.getElementById("codeOutput");
+
+const message =
+  document.getElementById("message");
+
+
+let generatedCode = "";
+
+
+/* =====================================================
+   RSI SETTINGS SHOW / HIDE
+===================================================== */
+
+useRSI.addEventListener(
+  "change",
+
+  function() {
+
+    if (useRSI.checked) {
+
+      rsiSettings.style.display = "block";
+
+    } else {
+
+      rsiSettings.style.display = "none";
 
     }
 
+  }
 
-    /*
-      Check if user is logged in
-    */
+);
 
-    async function getCurrentUser() {
 
-      const {
-        data,
-        error
-      } = await window.supabaseClient.auth.getUser();
+/* =====================================================
+   MESSAGE
+===================================================== */
 
-      if (error || !data.user) {
+function showMessage(
+  text,
+  type = ""
+) {
 
-        window.location.href = "login.html";
+  message.textContent = text;
 
-        return null;
+  message.className =
+    "message " + type;
 
+}
+
+
+/* =====================================================
+   SANITIZE EA NAME FOR FILE NAME
+===================================================== */
+
+function createFileName(name) {
+
+  return name
+    .replace(/[^a-zA-Z0-9_-]/g, "_")
+    .replace(/_+/g, "_");
+
+}
+
+
+/* =====================================================
+   GET SETTINGS
+===================================================== */
+
+function getSettings() {
+
+  return {
+
+    name:
+      eaName.value.trim() || "Alpha_EA",
+
+    platform:
+      platform.value,
+
+    version:
+      version.value.trim() || "v1.0",
+
+    symbol:
+      symbol.value.trim() || "_Symbol",
+
+    timeframe:
+      timeframe.value,
+
+    fastMA:
+      parseInt(fastMA.value),
+
+    slowMA:
+      parseInt(slowMA.value),
+
+    maType:
+      maType.value,
+
+    useRSI:
+      useRSI.checked,
+
+    rsiPeriod:
+      parseInt(rsiPeriod.value),
+
+    buyRSI:
+      parseFloat(buyRSI.value),
+
+    sellRSI:
+      parseFloat(sellRSI.value),
+
+    lotSize:
+      parseFloat(lotSize.value),
+
+    stopLoss:
+      parseInt(stopLoss.value),
+
+    takeProfit:
+      parseInt(takeProfit.value),
+
+    maxTrades:
+      parseInt(maxTrades.value),
+
+    riskLevel:
+      riskLevel.value,
+
+    allowBuy:
+      allowBuy.checked,
+
+    allowSell:
+      allowSell.checked,
+
+    description:
+      description.value.trim()
+
+  };
+
+}
+
+
+/* =====================================================
+   VALIDATE SETTINGS
+===================================================== */
+
+function validateSettings(settings) {
+
+  if (!settings.name) {
+
+    return "Please enter an EA name.";
+
+  }
+
+  if (
+    !Number.isFinite(settings.fastMA) ||
+    settings.fastMA < 1
+  ) {
+
+    return "Fast MA must be greater than 0.";
+
+  }
+
+  if (
+    !Number.isFinite(settings.slowMA) ||
+    settings.slowMA <= settings.fastMA
+  ) {
+
+    return "Slow MA must be greater than Fast MA.";
+
+  }
+
+  if (
+    !settings.allowBuy &&
+    !settings.allowSell
+  ) {
+
+    return "Enable Buy Trades, Sell Trades, or both.";
+
+  }
+
+  if (
+    !Number.isFinite(settings.lotSize) ||
+    settings.lotSize <= 0
+  ) {
+
+    return "Lot size must be greater than 0.";
+
+  }
+
+  return null;
+
+}
+
+
+/* =====================================================
+   MT4 TIMEFRAME
+===================================================== */
+
+function getMT4Timeframe(value) {
+
+  const map = {
+
+    "CURRENT":
+      "PERIOD_CURRENT",
+
+    "M5":
+      "PERIOD_M5",
+
+    "M15":
+      "PERIOD_M15",
+
+    "M30":
+      "PERIOD_M30",
+
+    "H1":
+      "PERIOD_H1",
+
+    "H4":
+      "PERIOD_H4",
+
+    "D1":
+      "PERIOD_D1"
+
+  };
+
+  return map[value] ||
+    "PERIOD_CURRENT";
+
+}
+
+
+/* =====================================================
+   MT5 TIMEFRAME
+===================================================== */
+
+function getMT5Timeframe(value) {
+
+  const map = {
+
+    "CURRENT":
+      "PERIOD_CURRENT",
+
+    "M5":
+      "PERIOD_M5",
+
+    "M15":
+      "PERIOD_M15",
+
+    "M30":
+      "PERIOD_M30",
+
+    "H1":
+      "PERIOD_H1",
+
+    "H4":
+      "PERIOD_H4",
+
+    "D1":
+      "PERIOD_D1"
+
+  };
+
+  return map[value] ||
+    "PERIOD_CURRENT";
+
+}
+
+
+/* =====================================================
+   GENERATE MT4 CODE
+===================================================== */
+
+function generateMT4(settings) {
+
+  const maMethod =
+    settings.maType === "EMA"
+      ? "MODE_EMA"
+      : "MODE_SMA";
+
+  const timeframeValue =
+    getMT4Timeframe(
+      settings.timeframe
+    );
+
+  const buyCondition =
+    settings.allowBuy
+      ? `
+   bool buySignal =
+      (fastPrevious <= slowPrevious &&
+       fastCurrent > slowCurrent);`
+      : `
+   bool buySignal = false;`;
+
+  const sellCondition =
+    settings.allowSell
+      ? `
+   bool sellSignal =
+      (fastPrevious >= slowPrevious &&
+       fastCurrent < slowCurrent);`
+      : `
+   bool sellSignal = false;`;
+
+  const rsiCode =
+    settings.useRSI
+      ? `
+
+   double currentRSI =
+      iRSI(
+         NULL,
+         ${timeframeValue},
+         RSI_Period,
+         PRICE_CLOSE,
+         1
+      );
+
+   if(buySignal &&
+      currentRSI >= Buy_RSI_Max)
+   {
+      buySignal = false;
+   }
+
+   if(sellSignal &&
+      currentRSI <= Sell_RSI_Min)
+   {
+      sellSignal = false;
+   }`
+      : "";
+
+  return `
+//+------------------------------------------------------------------+
+//| ${settings.name}
+//| Version: ${settings.version}
+//| Platform: MetaTrader 4
+//| Generated by Alpha Traders Host EA Builder
+//+------------------------------------------------------------------+
+#property strict
+
+input double LotSize = ${settings.lotSize};
+input int StopLossPoints = ${settings.stopLoss};
+input int TakeProfitPoints = ${settings.takeProfit};
+input int MaxOpenTrades = ${settings.maxTrades};
+
+input int FastMAPeriod = ${settings.fastMA};
+input int SlowMAPeriod = ${settings.slowMA};
+
+${settings.useRSI
+? `input int RSI_Period = ${settings.rsiPeriod};
+input double Buy_RSI_Max = ${settings.buyRSI};
+input double Sell_RSI_Min = ${settings.sellRSI};`
+: ""}
+
+input int MagicNumber = 2026001;
+
+//+------------------------------------------------------------------+
+//| Expert initialization function
+//+------------------------------------------------------------------+
+int OnInit()
+{
+   Print("${settings.name} initialized.");
+
+   return(INIT_SUCCEEDED);
+}
+
+//+------------------------------------------------------------------+
+//| Count open trades
+//+------------------------------------------------------------------+
+int CountOpenTrades()
+{
+   int count = 0;
+
+   for(int i = OrdersTotal() - 1; i >= 0; i--)
+   {
+      if(OrderSelect(
+         i,
+         SELECT_BY_POS,
+         MODE_TRADES
+      ))
+      {
+         if(
+            OrderMagicNumber() == MagicNumber &&
+            OrderSymbol() == Symbol()
+         )
+         {
+            count++;
+         }
       }
+   }
 
-      return data.user;
+   return(count);
+}
 
-    }
+//+------------------------------------------------------------------+
+//| Expert tick function
+//+------------------------------------------------------------------+
+void OnTick()
+{
+   static datetime lastBarTime = 0;
 
+   datetime currentBarTime =
+      iTime(
+         NULL,
+         ${timeframeValue},
+         0
+      );
 
-    /*
-      Load mentor's EA robots
-    */
+   if(currentBarTime == lastBarTime)
+      return;
 
-    async function loadRobots() {
-
-      try {
-
-        const user =
-          await getCurrentUser();
-
-        if (!user) return;
-
-
-        const {
-          data,
-          error
-        } = await window.supabaseClient
-          .from("ea_robots")
-          .select("*")
-          .eq("mentor_id", user.id)
-          .order("created_at", {
-            ascending: false
-          });
+   lastBarTime = currentBarTime;
 
 
-        if (error) {
-
-          robotsList.innerHTML =
-            '<p class="empty">Error loading EA robots: '
-            + error.message +
-            '</p>';
-
-          return;
-
-        }
+   if(CountOpenTrades() >= MaxOpenTrades)
+      return;
 
 
-        if (!data || data.length === 0) {
+   double fastPrevious =
+      iMA(
+         NULL,
+         ${timeframeValue},
+         FastMAPeriod,
+         0,
+         ${maMethod},
+         PRICE_CLOSE,
+         2
+      );
 
-          robotsList.innerHTML =
-            '<p class="empty">You have not created any EA robots yet.</p>';
+   double fastCurrent =
+      iMA(
+         NULL,
+         ${timeframeValue},
+         FastMAPeriod,
+         0,
+         ${maMethod},
+         PRICE_CLOSE,
+         1
+      );
 
-          return;
+   double slowPrevious =
+      iMA(
+         NULL,
+         ${timeframeValue},
+         SlowMAPeriod,
+         0,
+         ${maMethod},
+         PRICE_CLOSE,
+         2
+      );
 
-        }
+   double slowCurrent =
+      iMA(
+         NULL,
+         ${timeframeValue},
+         SlowMAPeriod,
+         0,
+         ${maMethod},
+         PRICE_CLOSE,
+         1
+      );
+${buyCondition}
+${sellCondition}
+${rsiCode}
 
+   if(buySignal)
+   {
+      OpenBuyTrade();
+   }
 
-        robotsList.innerHTML = "";
+   if(sellSignal)
+   {
+      OpenSellTrade();
+   }
+}
 
+//+------------------------------------------------------------------+
+//| Open Buy Trade
+//+------------------------------------------------------------------+
+void OpenBuyTrade()
+{
+   RefreshRates();
 
-        data.forEach(function(robot) {
+   double price = Ask;
 
-          const robotCard =
-            document.createElement("div");
+   double stopLoss = 0;
+   double takeProfit = 0;
 
-          robotCard.className =
-            "robot-card";
+   if(StopLossPoints > 0)
+      stopLoss =
+         price -
+         StopLossPoints * Point;
 
-
-          const safeName =
-            escapeHtml(robot.name || "Unnamed EA");
-
-          const safePlatform =
-            escapeHtml(robot.platform || "");
-
-          const safeRisk =
-            escapeHtml(robot.risk_level || "");
-
-          const safeVersion =
-            escapeHtml(robot.version || "");
-
-          const safeStrategy =
-            escapeHtml(robot.strategy || "No strategy description provided.");
-
-
-          robotCard.innerHTML = `
-
-            <h3>${safeName}</h3>
-
-            <p class="robot-info">
-              <strong>Platform:</strong>
-              ${safePlatform}
-            </p>
-
-            <p class="robot-info">
-              <strong>Risk:</strong>
-              ${safeRisk}
-            </p>
-
-            <p class="robot-info">
-              <strong>Version:</strong>
-              ${safeVersion}
-            </p>
-
-            <p class="robot-info">
-              <strong>Strategy:</strong>
-              ${safeStrategy}
-            </p>
-
-            <span class="status">
-              ${escapeHtml(robot.status || "draft")}
-            </span>
-
-          `;
-
-
-          robotsList.appendChild(robotCard);
-
-        });
+   if(TakeProfitPoints > 0)
+      takeProfit =
+         price +
+         TakeProfitPoints * Point;
 
 
-      } catch (err) {
+   int ticket =
+      OrderSend(
+         Symbol(),
+         OP_BUY,
+         LotSize,
+         price,
+         10,
+         stopLoss,
+         takeProfit,
+         "${settings.name}",
+         MagicNumber,
+         0,
+         clrGreen
+      );
 
-        robotsList.innerHTML =
-          '<p class="empty">Connection error: '
-          + err.message +
-          '</p>';
+   if(ticket < 0)
+   {
+      Print(
+         "Buy order failed. Error: ",
+         GetLastError()
+      );
+   }
+}
 
+//+------------------------------------------------------------------+
+//| Open Sell Trade
+//+------------------------------------------------------------------+
+void OpenSellTrade()
+{
+   RefreshRates();
+
+   double price = Bid;
+
+   double stopLoss = 0;
+   double takeProfit = 0;
+
+   if(StopLossPoints > 0)
+      stopLoss =
+         price +
+         StopLossPoints * Point;
+
+   if(TakeProfitPoints > 0)
+      takeProfit =
+         price -
+         TakeProfitPoints * Point;
+
+
+   int ticket =
+      OrderSend(
+         Symbol(),
+         OP_SELL,
+         LotSize,
+         price,
+         10,
+         stopLoss,
+         takeProfit,
+         "${settings.name}",
+         MagicNumber,
+         0,
+         clrRed
+      );
+
+   if(ticket < 0)
+   {
+      Print(
+         "Sell order failed. Error: ",
+         GetLastError()
+      );
+   }
+}
+
+//+------------------------------------------------------------------+
+//| End
+//+------------------------------------------------------------------+
+`;
+
+}
+
+
+/* =====================================================
+   GENERATE MT5 CODE
+===================================================== */
+
+function generateMT5(settings) {
+
+  const maMethod =
+    settings.maType === "EMA"
+      ? "MODE_EMA"
+      : "MODE_SMA";
+
+  const timeframeValue =
+    getMT5Timeframe(
+      settings.timeframe
+    );
+
+  const rsiInputs =
+    settings.useRSI
+      ? `
+input int RSI_Period = ${settings.rsiPeriod};
+input double Buy_RSI_Max = ${settings.buyRSI};
+input double Sell_RSI_Min = ${settings.sellRSI};`
+      : "";
+
+  const rsiHandle =
+    settings.useRSI
+      ? `
+int rsiHandle;`
+      : "";
+
+  const rsiInit =
+    settings.useRSI
+      ? `
+
+   rsiHandle =
+      iRSI(
+         _Symbol,
+         ${timeframeValue},
+         RSI_Period,
+         PRICE_CLOSE
+      );
+
+   if(rsiHandle == INVALID_HANDLE)
+   {
+      Print("Failed to create RSI handle.");
+      return(INIT_FAILED);
+   }`
+      : "";
+
+  const rsiRelease =
+    settings.useRSI
+      ? `
+
+   if(rsiHandle != INVALID_HANDLE)
+      IndicatorRelease(rsiHandle);`
+      : "";
+
+  const rsiSignal =
+    settings.useRSI
+      ? `
+
+   double rsiBuffer[];
+
+   ArraySetAsSeries(
+      rsiBuffer,
+      true
+   );
+
+   if(
+      CopyBuffer(
+         rsiHandle,
+         0,
+         1,
+         1,
+         rsiBuffer
+      ) < 1
+   )
+   {
+      return;
+   }
+
+   double currentRSI =
+      rsiBuffer[0];
+
+   if(
+      buySignal &&
+      currentRSI >= Buy_RSI_Max
+   )
+   {
+      buySignal = false;
+   }
+
+   if(
+      sellSignal &&
+      currentRSI <= Sell_RSI_Min
+   )
+   {
+      sellSignal = false;
+   }`
+      : "";
+
+  const buyEnabled =
+    settings.allowBuy
+      ? "true"
+      : "false";
+
+  const sellEnabled =
+    settings.allowSell
+      ? "true"
+      : "false";
+
+  return `
+//+------------------------------------------------------------------+
+//| ${settings.name}
+//| Version: ${settings.version}
+//| Platform: MetaTrader 5
+//| Generated by Alpha Traders Host EA Builder
+//+------------------------------------------------------------------+
+#property strict
+
+#include <Trade/Trade.mqh>
+
+CTrade trade;
+
+input double LotSize = ${settings.lotSize};
+input int StopLossPoints = ${settings.stopLoss};
+input int TakeProfitPoints = ${settings.takeProfit};
+input int MaxOpenTrades = ${settings.maxTrades};
+
+input int FastMAPeriod = ${settings.fastMA};
+input int SlowMAPeriod = ${settings.slowMA};
+${rsiInputs}
+
+input ulong MagicNumber = 2026001;
+
+int fastMAHandle;
+int slowMAHandle;
+${rsiHandle}
+
+
+//+------------------------------------------------------------------+
+//| Expert initialization function
+//+------------------------------------------------------------------+
+int OnInit()
+{
+   trade.SetExpertMagicNumber(
+      MagicNumber
+   );
+
+
+   fastMAHandle =
+      iMA(
+         _Symbol,
+         ${timeframeValue},
+         FastMAPeriod,
+         0,
+         ${maMethod},
+         PRICE_CLOSE
+      );
+
+
+   slowMAHandle =
+      iMA(
+         _Symbol,
+         ${timeframeValue},
+         SlowMAPeriod,
+         0,
+         ${maMethod},
+         PRICE_CLOSE
+      );
+
+
+   if(
+      fastMAHandle == INVALID_HANDLE ||
+      slowMAHandle == INVALID_HANDLE
+   )
+   {
+      Print(
+         "Failed to create MA indicators."
+      );
+
+      return(INIT_FAILED);
+   }
+${rsiInit}
+
+   Print(
+      "${settings.name} initialized."
+   );
+
+   return(INIT_SUCCEEDED);
+}
+
+
+//+------------------------------------------------------------------+
+//| Expert deinitialization
+//+------------------------------------------------------------------+
+void OnDeinit(
+   const int reason
+)
+{
+   if(fastMAHandle != INVALID_HANDLE)
+      IndicatorRelease(
+         fastMAHandle
+      );
+
+   if(slowMAHandle != INVALID_HANDLE)
+      IndicatorRelease(
+         slowMAHandle
+      );
+${rsiRelease}
+}
+
+
+//+------------------------------------------------------------------+
+//| Count EA positions
+//+------------------------------------------------------------------+
+int CountOpenPositions()
+{
+   int count = 0;
+
+   for(
+      int i = PositionsTotal() - 1;
+      i >= 0;
+      i--
+   )
+   {
+      ulong ticket =
+         PositionGetTicket(i);
+
+      if(ticket > 0)
+      {
+         string positionSymbol =
+            PositionGetString(
+               POSITION_SYMBOL
+            );
+
+         long positionMagic =
+            PositionGetInteger(
+               POSITION_MAGIC
+            );
+
+         if(
+            positionSymbol == _Symbol &&
+            positionMagic == (long)MagicNumber
+         )
+         {
+            count++;
+         }
       }
+   }
+
+   return(count);
+}
+
+
+//+------------------------------------------------------------------+
+//| Expert tick function
+//+------------------------------------------------------------------+
+void OnTick()
+{
+   static datetime lastBarTime = 0;
+
+   datetime currentBarTime =
+      iTime(
+         _Symbol,
+         ${timeframeValue},
+         0
+      );
+
+
+   if(
+      currentBarTime == lastBarTime
+   )
+   {
+      return;
+   }
+
+   lastBarTime =
+      currentBarTime;
+
+
+   if(
+      CountOpenPositions() >=
+      MaxOpenTrades
+   )
+   {
+      return;
+   }
+
+
+   double fastBuffer[];
+   double slowBuffer[];
+
+
+   ArraySetAsSeries(
+      fastBuffer,
+      true
+   );
+
+   ArraySetAsSeries(
+      slowBuffer,
+      true
+   );
+
+
+   if(
+      CopyBuffer(
+         fastMAHandle,
+         0,
+         1,
+         2,
+         fastBuffer
+      ) < 2
+   )
+   {
+      return;
+   }
+
+
+   if(
+      CopyBuffer(
+         slowMAHandle,
+         0,
+         1,
+         2,
+         slowBuffer
+      ) < 2
+   )
+   {
+      return;
+   }
+
+
+   double fastCurrent =
+      fastBuffer[0];
+
+   double fastPrevious =
+      fastBuffer[1];
+
+   double slowCurrent =
+      slowBuffer[0];
+
+   double slowPrevious =
+      slowBuffer[1];
+
+
+   bool buySignal =
+      (
+         ${buyEnabled} &&
+         fastPrevious <= slowPrevious &&
+         fastCurrent > slowCurrent
+      );
+
+
+   bool sellSignal =
+      (
+         ${sellEnabled} &&
+         fastPrevious >= slowPrevious &&
+         fastCurrent < slowCurrent
+      );
+${rsiSignal}
+
+
+   if(buySignal)
+   {
+      OpenBuyTrade();
+   }
+
+
+   if(sellSignal)
+   {
+      OpenSellTrade();
+   }
+}
+
+
+//+------------------------------------------------------------------+
+//| Open Buy Trade
+//+------------------------------------------------------------------+
+void OpenBuyTrade()
+{
+   double ask =
+      SymbolInfoDouble(
+         _Symbol,
+         SYMBOL_ASK
+      );
+
+
+   double point =
+      SymbolInfoDouble(
+         _Symbol,
+         SYMBOL_POINT
+      );
+
+
+   double sl = 0;
+   double tp = 0;
+
+
+   if(StopLossPoints > 0)
+   {
+      sl =
+         ask -
+         StopLossPoints * point;
+   }
+
+
+   if(TakeProfitPoints > 0)
+   {
+      tp =
+         ask +
+         TakeProfitPoints * point;
+   }
+
+
+   if(
+      !trade.Buy(
+         LotSize,
+         _Symbol,
+         0,
+         sl,
+         tp,
+         "${settings.name}"
+      )
+   )
+   {
+      Print(
+         "Buy failed. Error: ",
+         GetLastError()
+      );
+   }
+}
+
+
+//+------------------------------------------------------------------+
+//| Open Sell Trade
+//+------------------------------------------------------------------+
+void OpenSellTrade()
+{
+   double bid =
+      SymbolInfoDouble(
+         _Symbol,
+         SYMBOL_BID
+      );
+
+
+   double point =
+      SymbolInfoDouble(
+         _Symbol,
+         SYMBOL_POINT
+      );
+
+
+   double sl = 0;
+   double tp = 0;
+
+
+   if(StopLossPoints > 0)
+   {
+      sl =
+         bid +
+         StopLossPoints * point;
+   }
+
+
+   if(TakeProfitPoints > 0)
+   {
+      tp =
+         bid -
+         TakeProfitPoints * point;
+   }
+
+
+   if(
+      !trade.Sell(
+         LotSize,
+         _Symbol,
+         0,
+         sl,
+         tp,
+         "${settings.name}"
+      )
+   )
+   {
+      Print(
+         "Sell failed. Error: ",
+         GetLastError()
+      );
+   }
+}
+
+
+//+------------------------------------------------------------------+
+//| End
+//+------------------------------------------------------------------+
+`;
+
+}
+
+
+/* =====================================================
+   GENERATE CODE
+===================================================== */
+
+generateButton.addEventListener(
+  "click",
+
+  function() {
+
+    const settings =
+      getSettings();
+
+
+    const validationError =
+      validateSettings(
+        settings
+      );
+
+
+    if(validationError) {
+
+      showMessage(
+        validationError,
+        "error"
+      );
+
+      return;
 
     }
 
 
-    /*
-      Prevent unsafe text from being inserted as HTML
-    */
+    if(
+      settings.platform === "MT4"
+    ) {
 
-    function escapeHtml(text) {
+      generatedCode =
+        generateMT4(
+          settings
+        );
 
-      const div =
-        document.createElement("div");
+    } else {
 
-      div.textContent =
-        String(text);
-
-      return div.innerHTML;
+      generatedCode =
+        generateMT5(
+          settings
+        );
 
     }
 
 
-    /*
-      Save a new EA Robot
-    */
-
-    eaForm.addEventListener(
-      "submit",
-
-      async function(event) {
-
-        event.preventDefault();
+    codeOutput.value =
+      generatedCode;
 
 
-        try {
-
-          const user =
-            await getCurrentUser();
-
-          if (!user) return;
+    downloadButton.disabled =
+      false;
 
 
-          const name =
-            document.getElementById("name").value.trim();
+    showMessage(
+      "✅ EA source code generated successfully.",
+      "success"
+    );
 
-          const platform =
-            document.getElementById("platform").value;
+  }
 
-          const strategy =
-            document.getElementById("strategy").value.trim();
-
-          const risk =
-            document.getElementById("risk").value;
-
-          const version =
-            document.getElementById("version").value.trim();
-
-          const description =
-            document.getElementById("description").value.trim();
+);
 
 
-          message.textContent = "";
+/* =====================================================
+   DOWNLOAD EA FILE
+===================================================== */
 
-          saveButton.disabled = true;
+downloadButton.addEventListener(
+  "click",
 
-          saveButton.textContent =
-            "Saving EA...";
+  function() {
 
+    if(!generatedCode) {
 
-          const {
-            data,
-            error
-          } = await window.supabaseClient
-            .from("ea_robots")
-            .insert([
+      showMessage(
+        "Generate the EA code first.",
+        "error"
+      );
 
-              {
-                mentor_id: user.id,
+      return;
 
-                name: name,
-
-                platform: platform,
-
-                strategy: strategy || null,
-
-                risk_level: risk,
-
-                version: version || null,
-
-                description: description || null,
-
-                status: "draft"
-
-              }
-
-            ])
-            .select();
+    }
 
 
-          if (error) {
-
-            message.textContent =
-              "Error: " + error.message;
-
-            return;
-
-          }
+    const settings =
+      getSettings();
 
 
-          message.textContent =
-            "✅ EA Robot created successfully!";
+    const extension =
+      settings.platform === "MT4"
+        ? ".mq4"
+        : ".mq5";
 
 
-          eaForm.reset();
+    const fileName =
+      createFileName(
+        settings.name
+      ) + extension;
 
 
-          document.getElementById("platform").value =
-            "MT5";
-
-
-          document.getElementById("risk").value =
-            "Medium";
-
-
-          await loadRobots();
-
-
-        } catch (err) {
-
-          message.textContent =
-            "Connection error: " + err.message;
-
-        } finally {
-
-          saveButton.disabled = false;
-
-          saveButton.textContent =
-            "Save EA Robot";
-
+    const blob =
+      new Blob(
+        [generatedCode],
+        {
+          type:
+            "text/plain;charset=utf-8"
         }
+      );
 
-      }
 
+    const url =
+      URL.createObjectURL(
+        blob
+      );
+
+
+    const link =
+      document.createElement(
+        "a"
+      );
+
+
+    link.href =
+      url;
+
+    link.download =
+      fileName;
+
+
+    document.body.appendChild(
+      link
     );
 
 
-    /*
-      Load robots when page opens
-    */
+    link.click();
 
-    loadRobots();
 
-  </script>
+    document.body.removeChild(
+      link
+    );
+
+
+    URL.revokeObjectURL(
+      url
+    );
+
+
+    showMessage(
+      "⬇ EA source file downloaded: " +
+      fileName,
+      "success"
+    );
+
+  }
+
+);
+
+
+/* =====================================================
+   GET CURRENT USER
+===================================================== */
+
+async function getCurrentUser() {
+
+  if(!window.supabaseClient) {
+
+    showMessage(
+      "Supabase is not configured. Check supabase-config.js.",
+      "error"
+    );
+
+    return null;
+
+  }
+
+
+  try {
+
+    const {
+      data,
+      error
+    } =
+      await window.supabaseClient
+        .auth
+        .getUser();
+
+
+    if(
+      error ||
+      !data.user
+    ) {
+
+      window.location.href =
+        "login.html";
+
+      return null;
+
+    }
+
+
+    return data.user;
+
+
+  } catch(error) {
+
+    showMessage(
+      "Connection error: " +
+      error.message,
+      "error"
+    );
+
+    return null;
+
+  }
+
+}
+
+
+/* =====================================================
+   SAVE EA DETAILS TO SUPABASE
+===================================================== */
+
+saveButton.addEventListener(
+  "click",
+
+  async function() {
+
+    const settings =
+      getSettings();
+
+
+    const validationError =
+      validateSettings(
+        settings
+      );
+
+
+    if(validationError) {
+
+      showMessage(
+        validationError,
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    const user =
+      await getCurrentUser();
+
+
+    if(!user) {
+
+      return;
+
+    }
+
+
+    try {
+
+      saveButton.disabled =
+        true;
+
+
+      saveButton.textContent =
+        "Saving...";
+
+
+      const strategyText =
+        `MA Crossover Strategy
+Fast MA: ${settings.fastMA}
+Slow MA: ${settings.slowMA}
+MA Type: ${settings.maType}
+RSI Enabled: ${settings.useRSI ? "Yes" : "No"}
+RSI Period: ${settings.rsiPeriod}
+Buy RSI Maximum: ${settings.buyRSI}
+Sell RSI Minimum: ${settings.sellRSI}
+Symbol: ${settings.symbol}
+Timeframe: ${settings.timeframe}
+Lot Size: ${settings.lotSize}
+Stop Loss Points: ${settings.stopLoss}
+Take Profit Points: ${settings.takeProfit}
+Maximum Trades: ${settings.maxTrades}
+Buy Enabled: ${settings.allowBuy}
+Sell Enabled: ${settings.allowSell}`;
+
+
+      const {
+        error
+      } =
+        await window.supabaseClient
+          .from("ea_robots")
+          .insert([
+
+            {
+
+              mentor_id:
+                user.id,
+
+              name:
+                settings.name,
+
+              platform:
+                settings.platform,
+
+              strategy:
+                strategyText,
+
+              risk_level:
+                settings.riskLevel,
+
+              version:
+                settings.version,
+
+              description:
+                settings.description ||
+                "EA created using Alpha Traders Host EA Builder.",
+
+              status:
+                "draft"
+
+            }
+
+          ]);
+
+
+      if(error) {
+
+        showMessage(
+          "Error saving EA: " +
+          error.message,
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      showMessage(
+        "✅ EA details saved successfully to your account.",
+        "success"
+      );
+
+
+    } catch(error) {
+
+      showMessage(
+        "Connection error: " +
+        error.message,
+        "error"
+      );
+
+    } finally {
+
+      saveButton.disabled =
+        false;
+
+
+      saveButton.textContent =
+        "💾 Save EA Details";
+
+    }
+
+  }
+
+);
+
+
+/* =====================================================
+   CHECK LOGIN WHEN PAGE OPENS
+===================================================== */
+
+window.addEventListener(
+  "load",
+
+  async function() {
+
+    if(window.supabaseClient) {
+
+      await getCurrentUser();
+
+    }
+
+  }
+
+);
+
+
+</script>
+
 
 </body>
 </html>
