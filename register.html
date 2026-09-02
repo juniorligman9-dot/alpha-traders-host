@@ -162,32 +162,53 @@ a {
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
 <script>
+document.getElementById("registerForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
 
-document.getElementById("registerForm").addEventListener("submit", function(e) {
+    const fullName = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const confirm = document.getElementById("confirm").value;
+    const message = document.getElementById("message");
 
-  e.preventDefault();
+    message.textContent = "";
 
-  const password =
-    document.getElementById("password").value;
+    if (password !== confirm) {
+        message.textContent = "Passwords do not match.";
+        return;
+    }
 
-  const confirm =
-    document.getElementById("confirm").value;
+    message.textContent = "Creating your account...";
 
-  const message =
-    document.getElementById("message");
+    const { data, error } = await supabase.auth.signUp({
+        email: email,
+        password: password
+    });
 
-  if (password !== confirm) {
-    message.textContent = "Passwords do not match.";
-    return;
-  }
+    if (error) {
+        message.textContent = error.message;
+        return;
+    }
 
-  message.textContent =
-    "Registration backend will be connected next.";
+    if (data.user) {
+        const { error: profileError } = await supabase
+            .from("profiles")
+            .insert({
+                id: data.user.id,
+                full_name: fullName,
+                username: email.split("@")[0]
+            });
 
+        if (profileError) {
+            console.error(profileError);
+        }
+
+        message.textContent =
+            "Account created successfully! Please check your email to confirm your account.";
+    }
 });
-
 </script>
-
-</body>
-</html>
