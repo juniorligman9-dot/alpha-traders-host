@@ -1,2486 +1,2165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>EA Builder | Alpha Traders Host</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    :root {
-      --bg: #0d1422;
-      --header: #101827;
-      --card: #202b3e;
-      --card-dark: #172131;
-      --border: #33445d;
-      --text: #f1f3f7;
-      --muted: #aeb9cb;
-      --green: #20c997;
-      --green-dark: #159b74;
-      --danger: #e05252;
-      --input: #141e2d;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    /* =========================
-       HEADER
-    ========================= */
-
-    header {
-      background: var(--header);
-      border-bottom: 1px solid var(--border);
-      padding: 22px 30px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .header-inner {
-      max-width: 1150px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      white-space: nowrap;
-    }
-
-    .logo span {
-      color: var(--green);
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    nav a {
-      color: var(--text);
-      text-decoration: none;
-      border: 1px solid var(--border);
-      padding: 13px 22px;
-      border-radius: 14px;
-      transition: 0.2s;
-    }
-
-    nav a:hover {
-      border-color: var(--green);
-      color: var(--green);
-    }
-
-    /* =========================
-       MAIN
-    ========================= */
-
-    .container {
-      max-width: 1150px;
-      margin: auto;
-      padding: 55px 25px 80px;
-    }
-
-    .page-title {
-      margin-bottom: 30px;
-    }
-
-    .page-title h1 {
-      font-size: 42px;
-      margin-bottom: 12px;
-    }
-
-    .page-title p {
-      color: var(--muted);
-      font-size: 20px;
-      line-height: 1.5;
-    }
-
-    /* =========================
-       STATUS
-    ========================= */
-
-    .status-box {
-      display: none;
-      padding: 18px 20px;
-      border-radius: 16px;
-      margin-bottom: 28px;
-      border: 1px solid var(--border);
-      background: var(--card-dark);
-      font-size: 16px;
-    }
-
-    .status-box.loading {
-      display: block;
-      border-color: #23695a;
-      background: #152a2f;
-      color: #b9e9dc;
-    }
-
-    .status-box.success {
-      display: block;
-      border-color: var(--green);
-      color: #bff5df;
-    }
-
-    .status-box.error {
-      display: block;
-      border-color: var(--danger);
-      color: #ffbaba;
-    }
-
-    /* =========================
-       CARDS
-    ========================= */
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 25px;
-      padding: 38px;
-      margin-bottom: 30px;
-    }
-
-    .card h2 {
-      font-size: 30px;
-      margin-bottom: 12px;
-    }
-
-    .card-description {
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1.5;
-      margin-bottom: 30px;
-    }
-
-    /* =========================
-       FORM
-    ========================= */
-
-    .builder-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 25px;
-    }
-
-    .full-width {
-      grid-column: 1 / -1;
-    }
-
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    label {
-      font-size: 17px;
-      font-weight: bold;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      background: var(--input);
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      padding: 18px;
-      font-size: 17px;
-      outline: none;
-      transition: 0.2s;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--green);
-      box-shadow: 0 0 0 2px rgba(32, 201, 151, 0.1);
-    }
-
-    textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    /* =========================
-       PLATFORM BUTTONS
-    ========================= */
-
-    .platform-options {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-    }
-
-    .platform-option {
-      background: var(--input);
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      padding: 20px;
-      cursor: pointer;
-      text-align: center;
-      font-weight: bold;
-      font-size: 18px;
-      transition: 0.2s;
-    }
-
-    .platform-option:hover {
-      border-color: var(--green);
-    }
-
-    .platform-option.active {
-      border-color: var(--green);
-      background: rgba(32, 201, 151, 0.1);
-      color: var(--green);
-    }
-
-    /* =========================
-       SWITCHES
-    ========================= */
-
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
-    }
-
-    .feature {
-      background: var(--card-dark);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .feature h3 {
-      font-size: 16px;
-      margin-bottom: 5px;
-    }
-
-    .feature p {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .switch {
-      position: relative;
-      width: 55px;
-      height: 30px;
-      flex-shrink: 0;
-    }
-
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
-      inset: 0;
-      cursor: pointer;
-      background: #455068;
-      border-radius: 30px;
-      transition: 0.3s;
-    }
-
-    .slider:before {
-      content: "";
-      position: absolute;
-      width: 22px;
-      height: 22px;
-      left: 4px;
-      bottom: 4px;
-      background: white;
-      border-radius: 50%;
-      transition: 0.3s;
-    }
-
-    .switch input:checked + .slider {
-      background: var(--green);
-    }
-
-    .switch input:checked + .slider:before {
-      transform: translateX(25px);
-    }
-
-    /* =========================
-       BUTTONS
-    ========================= */
-
-    button {
-      border: none;
-      border-radius: 14px;
-      padding: 17px 24px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    button:hover {
-      transform: translateY(-1px);
-      opacity: 0.92;
-    }
-
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .generate-button {
-      width: 100%;
-      margin-top: 30px;
-      background: var(--green);
-      color: #071611;
-      font-size: 18px;
-    }
-
-    .save-button {
-      width: 100%;
-      margin-top: 15px;
-      background: #263850;
-      color: white;
-      border: 1px solid #40516a;
-    }
-
-    .load-button {
-      background: var(--green);
-      color: #071611;
-    }
-
-    .delete-button {
-      background: transparent;
-      color: #ff8e8e;
-      border: 1px solid #854040;
-    }
-
-    .cancel-edit-button {
-      display: none;
-      width: 100%;
-      margin-top: 15px;
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-
-    /* =========================
-       PREVIEW
-    ========================= */
-
-    .preview {
-      display: none;
-      background: #0b121d;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 22px;
-      margin-top: 25px;
-      overflow-x: auto;
-    }
-
-    .preview h3 {
-      margin-bottom: 15px;
-      color: var(--green);
-    }
-
-    pre {
-      color: #c8d7e6;
-      font-family: monospace;
-      font-size: 14px;
-      line-height: 1.7;
-      white-space: pre-wrap;
-    }
-
-    /* =========================
-       SAVED EAS
-    ========================= */
-
-    .saved-eas {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 22px;
-    }
-
-    .ea-item {
-      background: var(--card-dark);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 28px;
-    }
-
-    .ea-item-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 18px;
-    }
-
-    .ea-item h3 {
-      font-size: 24px;
-      word-break: break-word;
-    }
-
-    .platform-badge {
-      color: var(--green);
-      border: 1px solid var(--green);
-      padding: 8px 12px;
-      border-radius: 20px;
-      font-weight: bold;
-      font-size: 14px;
-      white-space: nowrap;
-    }
-
-    .ea-meta {
-      color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 18px;
-    }
-
-    .ea-description {
-      color: var(--muted);
-      line-height: 1.5;
-      margin-bottom: 22px;
-    }
-
-    .ea-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .empty-state {
-      color: var(--muted);
-      text-align: center;
-      padding: 35px 10px;
-    }
-
-    /* =========================
-       MOBILE
-    ========================= */
-
-    @media (max-width: 700px) {
-      header {
-        padding: 20px;
-      }
-
-      .header-inner {
-        gap: 15px;
-      }
-
-      .logo {
-        font-size: 18px;
-      }
-
-      nav a {
-        padding: 12px 18px;
-      }
-
-      .container {
-        padding: 45px 30px 70px;
-      }
-
-      .page-title h1 {
-        font-size: 38px;
-      }
-
-      .card {
-        padding: 38px;
-      }
-
-      .builder-grid,
-      .feature-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .full-width {
-        grid-column: auto;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>EA Builder | Alpha Traders Host</title>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Your Supabase Configuration -->
+    <script src="supabase-config.js"></script>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --background: #0d1422;
+            --header: #101827;
+            --card: #1a2436;
+            --card-dark: #131d2c;
+            --border: #314158;
+            --text: #f1f4f9;
+            --muted: #aeb8c9;
+            --green: #20c997;
+            --green-dark: #159b73;
+            --danger: #ef5350;
+            --warning: #f4b942;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        header {
+            background: var(--header);
+            border-bottom: 1px solid var(--border);
+            padding: 22px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: var(--green);
+        }
+
+        nav {
+            display: flex;
+            gap: 12px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 14px 22px;
+            border-radius: 14px;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            border-color: var(--green);
+        }
+
+        .container {
+            width: min(1100px, 92%);
+            margin: 0 auto;
+            padding: 55px 0 80px;
+        }
+
+        .page-title {
+            margin-bottom: 35px;
+        }
+
+        .page-title h1 {
+            font-size: clamp(36px, 6vw, 52px);
+            margin-bottom: 14px;
+        }
+
+        .page-title p {
+            color: var(--muted);
+            font-size: 22px;
+            line-height: 1.5;
+        }
+
+        .status-box {
+            background: rgba(32, 201, 151, 0.08);
+            border: 1px solid rgba(32, 201, 151, 0.4);
+            padding: 20px;
+            border-radius: 18px;
+            color: var(--muted);
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .status-box.success {
+            border-color: var(--green);
+            color: #b9ffe8;
+        }
+
+        .status-box.error {
+            border-color: var(--danger);
+            color: #ffc4c4;
+            background: rgba(239, 83, 80, 0.08);
+        }
+
+        .status-box.warning {
+            border-color: var(--warning);
+            color: #ffe5a8;
+            background: rgba(244, 185, 66, 0.08);
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 26px;
+            padding: 38px;
+            margin-bottom: 35px;
+        }
+
+        .card h2 {
+            font-size: 34px;
+            margin-bottom: 12px;
+        }
+
+        .card > p {
+            color: var(--muted);
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            background: #131d2c;
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 18px;
+            font-size: 17px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 2px rgba(32, 201, 151, 0.1);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .switch-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-top: 10px;
+        }
+
+        .switch-card {
+            background: var(--card-dark);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .switch-card h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .switch-card p {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .switch {
+            position: relative;
+            width: 54px;
+            height: 30px;
+            flex-shrink: 0;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: #465068;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        .slider::before {
+            content: "";
+            position: absolute;
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        input:checked + .slider {
+            background: var(--green);
+        }
+
+        input:checked + .slider::before {
+            transform: translateX(24px);
+        }
+
+        .button-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        button {
+            border: none;
+            padding: 17px 25px;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            opacity: 0.95;
+        }
+
+        button:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .primary-button {
+            background: var(--green);
+            color: #07120e;
+        }
+
+        .secondary-button {
+            background: #26344a;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .update-button {
+            background: #3b82f6;
+            color: white;
+            display: none;
+        }
+
+        .danger-button {
+            background: rgba(239, 83, 80, 0.15);
+            color: #ff8c8c;
+            border: 1px solid rgba(239, 83, 80, 0.4);
+        }
+
+        .preview {
+            background: #0b121e;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 20px;
+            margin-top: 30px;
+            overflow-x: auto;
+        }
+
+        .preview h3 {
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        pre {
+            color: #b8f5df;
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .ea-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .ea-item {
+            background: var(--card-dark);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 25px;
+        }
+
+        .ea-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .ea-name {
+            font-size: 27px;
+            font-weight: bold;
+        }
+
+        .badge {
+            display: inline-block;
+            color: var(--green);
+            border: 1px solid var(--green);
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .ea-meta {
+            color: var(--muted);
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .ea-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .empty {
+            color: var(--muted);
+            text-align: center;
+            padding: 35px;
+            border: 1px dashed var(--border);
+            border-radius: 18px;
+        }
+
+        .editing-banner {
+            display: none;
+            background: rgba(59, 130, 246, 0.12);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            color: #b9d5ff;
+            padding: 18px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 20px 4%;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            nav a {
+                padding: 12px 16px;
+            }
+
+            .container {
+                width: 92%;
+                padding-top: 40px;
+            }
+
+            .card {
+                padding: 28px 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+
+            .switch-row {
+                grid-template-columns: 1fr;
+            }
+
+            .ea-top {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
 </head>
 
 <body>
 
-  <!-- =========================
-       HEADER
-  ========================== -->
+<header>
 
-  <header>
-    <div class="header-inner">
-
-      <div class="logo">
+    <div class="logo">
         ALPHA <span>TRADERS HOST</span>
-      </div>
-
-      <nav>
-        <a href="dashboard.html">Home</a>
-      </nav>
-
     </div>
-  </header>
+
+    <nav>
+        <a href="dashboard.html">Dashboard</a>
+    </nav>
+
+</header>
 
 
-  <!-- =========================
-       MAIN
-  ========================== -->
-
-  <main class="container">
+<main class="container">
 
     <section class="page-title">
-      <h1>Expert Advisor Builder</h1>
 
-      <p>
-        Build, save and manage your MT4 or MT5 Expert Advisor
-        configurations.
-      </p>
+        <h1>Expert Advisor Builder</h1>
+
+        <p>
+            Build, save and manage your MT4 or MT5 Expert Advisor
+            configurations.
+        </p>
+
     </section>
 
 
-    <!-- STATUS -->
+    <!-- ACCOUNT STATUS -->
 
     <div
-      id="statusBox"
-      class="status-box loading"
+        id="accountStatus"
+        class="status-box"
     >
-      Checking account...
+        Checking account...
     </div>
 
 
-    <!-- =========================
-         EA INFORMATION
-    ========================== -->
+    <!-- EDITING BANNER -->
+
+    <div
+        id="editingBanner"
+        class="editing-banner"
+    >
+        ✏️ You are editing an existing EA.
+        Make your changes and press <strong>Update EA</strong>.
+    </div>
+
+
+    <!-- EA BUILDER -->
 
     <section class="card">
 
-      <h2 id="formTitle">EA Information</h2>
+        <h2>EA Information</h2>
 
-      <p class="card-description">
-        Give your Expert Advisor a name and configure
-        its trading settings.
-      </p>
-
-
-      <form id="eaForm">
-
-        <div class="builder-grid">
+        <p>
+            Configure the basic information for your Expert Advisor.
+        </p>
 
 
-          <!-- EA NAME -->
+        <form id="eaForm">
 
-          <div class="field">
-            <label for="eaName">
-              EA Name
-            </label>
-
-            <input
-              id="eaName"
-              type="text"
-              placeholder="Example: Alpha Trend EA"
-              required
-            >
-          </div>
+            <div class="form-grid">
 
 
-          <!-- VERSION -->
+                <!-- EA NAME -->
 
-          <div class="field">
-            <label for="version">
-              Version
-            </label>
+                <div class="field full-width">
 
-            <input
-              id="version"
-              type="text"
-              value="1.0"
-              required
-            >
-          </div>
+                    <label for="eaName">
+                        EA Name
+                    </label>
+
+                    <input
+                        id="eaName"
+                        type="text"
+                        placeholder="Example: Alpha Trend EA"
+                        required
+                    >
+
+                </div>
 
 
-          <!-- PLATFORM -->
+                <!-- VERSION -->
 
-          <div class="field full-width">
+                <div class="field">
 
-            <label>
-              Platform
-            </label>
+                    <label for="version">
+                        Version
+                    </label>
 
-            <div class="platform-options">
+                    <input
+                        id="version"
+                        type="text"
+                        value="1.0"
+                    >
 
-              <div
-                class="platform-option"
-                data-platform="MT4"
-              >
-                MT4
-              </div>
+                </div>
 
-              <div
-                class="platform-option active"
-                data-platform="MT5"
-              >
-                MT5
-              </div>
+
+                <!-- PLATFORM -->
+
+                <div class="field">
+
+                    <label for="platform">
+                        Platform
+                    </label>
+
+                    <select id="platform">
+
+                        <option value="MT5">
+                            MT5
+                        </option>
+
+                        <option value="MT4">
+                            MT4
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- STRATEGY -->
+
+                <div class="field">
+
+                    <label for="strategy">
+                        Strategy
+                    </label>
+
+                    <select id="strategy">
+
+                        <option value="Trend Following">
+                            Trend Following
+                        </option>
+
+                        <option value="Scalping">
+                            Scalping
+                        </option>
+
+                        <option value="Breakout">
+                            Breakout
+                        </option>
+
+                        <option value="Grid">
+                            Grid
+                        </option>
+
+                        <option value="Mean Reversion">
+                            Mean Reversion
+                        </option>
+
+                        <option value="Custom">
+                            Custom
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- RISK -->
+
+                <div class="field">
+
+                    <label for="riskLevel">
+                        Risk Level
+                    </label>
+
+                    <select id="riskLevel">
+
+                        <option value="Low">
+                            Low
+                        </option>
+
+                        <option
+                            value="Medium"
+                            selected
+                        >
+                            Medium
+                        </option>
+
+                        <option value="High">
+                            High
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- LOT SIZE -->
+
+                <div class="field">
+
+                    <label for="lotSize">
+                        Starting Lot Size
+                    </label>
+
+                    <input
+                        id="lotSize"
+                        type="number"
+                        step="0.01"
+                        min="0.01"
+                        value="0.01"
+                    >
+
+                </div>
+
+
+                <!-- SYMBOL -->
+
+                <div class="field">
+
+                    <label for="symbol">
+                        Trading Symbol
+                    </label>
+
+                    <input
+                        id="symbol"
+                        type="text"
+                        placeholder="Example: EURUSD"
+                        value="EURUSD"
+                    >
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="field full-width">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        placeholder="Describe how this Expert Advisor should trade..."
+                    ></textarea>
+
+                </div>
+
 
             </div>
 
-            <input
-              type="hidden"
-              id="platform"
-              value="MT5"
+
+            <!-- FEATURES -->
+
+            <h2
+                style="
+                    margin-top:40px;
+                    font-size:26px;
+                "
             >
-
-          </div>
-
-
-          <!-- STRATEGY -->
-
-          <div class="field">
-
-            <label for="strategy">
-              Strategy
-            </label>
-
-            <select id="strategy">
-
-              <option value="Trend Following">
-                Trend Following
-              </option>
-
-              <option value="Scalping">
-                Scalping
-              </option>
-
-              <option value="Breakout">
-                Breakout
-              </option>
-
-              <option value="Grid">
-                Grid
-              </option>
-
-              <option value="Martingale">
-                Martingale
-              </option>
-
-              <option value="Mean Reversion">
-                Mean Reversion
-              </option>
-
-              <option value="Custom">
-                Custom
-              </option>
-
-            </select>
-
-          </div>
+                EA Features
+            </h2>
 
 
-          <!-- RISK -->
-
-          <div class="field">
-
-            <label for="riskLevel">
-              Risk Level
-            </label>
-
-            <select id="riskLevel">
-
-              <option value="Low">
-                Low
-              </option>
-
-              <option
-                value="Medium"
-                selected
-              >
-                Medium
-              </option>
-
-              <option value="High">
-                High
-              </option>
-
-            </select>
-
-          </div>
+            <div class="switch-row">
 
 
-          <!-- LOT SIZE -->
+                <!-- AUTO LOT -->
 
-          <div class="field">
+                <div class="switch-card">
 
-            <label for="lotSize">
-              Lot Size
-            </label>
+                    <div>
 
-            <input
-              id="lotSize"
-              type="number"
-              min="0.01"
-              step="0.01"
-              value="0.01"
-            >
+                        <h3>
+                            Automatic Lot Size
+                        </h3>
 
-          </div>
+                        <p>
+                            Automatically calculate trade volume.
+                        </p>
 
+                    </div>
 
-          <!-- STOP LOSS -->
+                    <label class="switch">
 
-          <div class="field">
+                        <input
+                            id="automaticLotSize"
+                            type="checkbox"
+                            checked
+                        >
 
-            <label for="stopLoss">
-              Stop Loss (Pips)
-            </label>
+                        <span class="slider"></span>
 
-            <input
-              id="stopLoss"
-              type="number"
-              min="0"
-              value="50"
-            >
+                    </label>
 
-          </div>
+                </div>
 
 
-          <!-- TAKE PROFIT -->
+                <!-- TRAILING STOP -->
 
-          <div class="field">
+                <div class="switch-card">
 
-            <label for="takeProfit">
-              Take Profit (Pips)
-            </label>
+                    <div>
 
-            <input
-              id="takeProfit"
-              type="number"
-              min="0"
-              value="100"
-            >
+                        <h3>
+                            Trailing Stop
+                        </h3>
 
-          </div>
+                        <p>
+                            Move stop loss as the trade becomes profitable.
+                        </p>
 
+                    </div>
 
-          <!-- TIMEFRAME -->
+                    <label class="switch">
 
-          <div class="field">
+                        <input
+                            id="trailingStop"
+                            type="checkbox"
+                            checked
+                        >
 
-            <label for="timeframe">
-              Trading Timeframe
-            </label>
+                        <span class="slider"></span>
 
-            <select id="timeframe">
+                    </label>
 
-              <option value="M1">M1</option>
-              <option value="M5">M5</option>
-              <option value="M15" selected>M15</option>
-              <option value="M30">M30</option>
-              <option value="H1">H1</option>
-              <option value="H4">H4</option>
-              <option value="D1">D1</option>
-
-            </select>
-
-          </div>
+                </div>
 
 
-          <!-- DESCRIPTION -->
+                <!-- BREAK EVEN -->
 
-          <div class="field full-width">
+                <div class="switch-card">
 
-            <label for="description">
-              Description
-            </label>
+                    <div>
 
-            <textarea
-              id="description"
-              placeholder="Describe what this Expert Advisor does..."
-            ></textarea>
+                        <h3>
+                            Break Even
+                        </h3>
 
-          </div>
+                        <p>
+                            Protect trades by moving stop loss to entry.
+                        </p>
+
+                    </div>
+
+                    <label class="switch">
+
+                        <input
+                            id="breakEven"
+                            type="checkbox"
+                            checked
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <!-- NEWS FILTER -->
+
+                <div class="switch-card">
+
+                    <div>
+
+                        <h3>
+                            News Filter
+                        </h3>
+
+                        <p>
+                            Avoid trading during major news events.
+                        </p>
+
+                    </div>
+
+                    <label class="switch">
+
+                        <input
+                            id="newsFilter"
+                            type="checkbox"
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="button-row">
+
+                <!-- SAVE -->
+
+                <button
+                    type="submit"
+                    id="saveButton"
+                    class="primary-button"
+                >
+                    💾 Save EA
+                </button>
+
+
+                <!-- UPDATE -->
+
+                <button
+                    type="button"
+                    id="updateButton"
+                    class="update-button"
+                >
+                    🔄 Update EA
+                </button>
+
+
+                <!-- NEW EA -->
+
+                <button
+                    type="button"
+                    id="newEaButton"
+                    class="secondary-button"
+                >
+                    + Create New EA
+                </button>
+
+
+                <!-- PREVIEW -->
+
+                <button
+                    type="button"
+                    id="previewButton"
+                    class="secondary-button"
+                >
+                    👁 Preview Configuration
+                </button>
+
+            </div>
+
+
+        </form>
+
+
+        <!-- PREVIEW -->
+
+        <div
+            id="previewBox"
+            class="preview"
+            style="display:none;"
+        >
+
+            <h3>
+                EA Configuration Preview
+            </h3>
+
+            <pre id="previewContent"></pre>
 
         </div>
-
-
-        <!-- =========================
-             FEATURES
-        ========================== -->
-
-        <div style="margin-top: 35px;">
-
-          <h2 style="font-size: 24px; margin-bottom: 20px;">
-            EA Features
-          </h2>
-
-
-          <div class="feature-grid">
-
-
-            <!-- AUTOMATIC LOT SIZE -->
-
-            <div class="feature">
-
-              <div>
-                <h3>Automatic Lot Size</h3>
-                <p>Calculate lots automatically.</p>
-              </div>
-
-              <label class="switch">
-
-                <input
-                  id="automaticLotSize"
-                  type="checkbox"
-                  checked
-                >
-
-                <span class="slider"></span>
-
-              </label>
-
-            </div>
-
-
-            <!-- TRAILING STOP -->
-
-            <div class="feature">
-
-              <div>
-                <h3>Trailing Stop</h3>
-                <p>Move stop loss as profit grows.</p>
-              </div>
-
-              <label class="switch">
-
-                <input
-                  id="trailingStop"
-                  type="checkbox"
-                  checked
-                >
-
-                <span class="slider"></span>
-
-              </label>
-
-            </div>
-
-
-            <!-- BREAK EVEN -->
-
-            <div class="feature">
-
-              <div>
-                <h3>Break Even</h3>
-                <p>Move trade protection to break even.</p>
-              </div>
-
-              <label class="switch">
-
-                <input
-                  id="breakEven"
-                  type="checkbox"
-                  checked
-                >
-
-                <span class="slider"></span>
-
-              </label>
-
-            </div>
-
-
-            <!-- NEWS FILTER -->
-
-            <div class="feature">
-
-              <div>
-                <h3>News Filter</h3>
-                <p>Pause trading during important news.</p>
-              </div>
-
-              <label class="switch">
-
-                <input
-                  id="newsFilter"
-                  type="checkbox"
-                >
-
-                <span class="slider"></span>
-
-              </label>
-
-            </div>
-
-
-          </div>
-
-        </div>
-
-
-        <!-- BUTTONS -->
-
-        <button
-          type="button"
-          class="generate-button"
-          id="generateButton"
-        >
-          Generate EA Configuration
-        </button>
-
-
-        <button
-          type="submit"
-          class="save-button"
-          id="saveButton"
-        >
-          Save EA to My Account
-        </button>
-
-
-        <button
-          type="button"
-          class="cancel-edit-button"
-          id="cancelEditButton"
-        >
-          Cancel Editing
-        </button>
-
-
-      </form>
-
-
-      <!-- =========================
-           CONFIG PREVIEW
-      ========================== -->
-
-      <div
-        class="preview"
-        id="previewBox"
-      >
-
-        <h3>
-          EA Configuration Preview
-        </h3>
-
-        <pre id="configurationPreview"></pre>
-
-      </div>
 
 
     </section>
 
 
-    <!-- =========================
-         SAVED EAS
-    ========================== -->
+    <!-- MY EAS -->
 
     <section class="card">
 
-      <h2>
-        My Saved EAs
-      </h2>
+        <h2>My Saved EAs</h2>
 
-      <p class="card-description">
-        Your Expert Advisor configurations saved
-        to your account.
-      </p>
+        <p>
+            Your Expert Advisor configurations saved to your account.
+        </p>
 
 
-      <div
-        id="savedEAs"
-        class="saved-eas"
-      >
+        <div
+            id="eaList"
+            class="ea-list"
+        >
 
-        <div class="empty-state">
-          Loading your saved EAs...
+            <div class="empty">
+
+                Loading your EAs...
+
+            </div>
+
         </div>
 
-      </div>
 
     </section>
 
 
-  </main>
+</main>
 
 
-  <!-- =========================
-       SUPABASE
-  ========================== -->
+<script>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+/* =========================================================
+   SUPABASE
+========================================================= */
 
-  <script src="supabase-config.js"></script>
+function getSupabaseClient() {
 
-
-  <!-- =========================
-       JAVASCRIPT
-  ========================== -->
-
-  <script>
-
-    /* ========================================
-       VARIABLES
-    ======================================== */
-
-    let currentUser = null;
-
-    let editingEAId = null;
-
-    let savedEAsData = [];
-
-
-    /* ========================================
-       DOM ELEMENTS
-    ======================================== */
-
-    const statusBox =
-      document.getElementById("statusBox");
-
-    const eaForm =
-      document.getElementById("eaForm");
-
-    const formTitle =
-      document.getElementById("formTitle");
-
-    const eaName =
-      document.getElementById("eaName");
-
-    const version =
-      document.getElementById("version");
-
-    const platform =
-      document.getElementById("platform");
-
-    const strategy =
-      document.getElementById("strategy");
-
-    const riskLevel =
-      document.getElementById("riskLevel");
-
-    const lotSize =
-      document.getElementById("lotSize");
-
-    const stopLoss =
-      document.getElementById("stopLoss");
-
-    const takeProfit =
-      document.getElementById("takeProfit");
-
-    const timeframe =
-      document.getElementById("timeframe");
-
-    const description =
-      document.getElementById("description");
-
-    const automaticLotSize =
-      document.getElementById("automaticLotSize");
-
-    const trailingStop =
-      document.getElementById("trailingStop");
-
-    const breakEven =
-      document.getElementById("breakEven");
-
-    const newsFilter =
-      document.getElementById("newsFilter");
-
-    const generateButton =
-      document.getElementById("generateButton");
-
-    const saveButton =
-      document.getElementById("saveButton");
-
-    const cancelEditButton =
-      document.getElementById("cancelEditButton");
-
-    const previewBox =
-      document.getElementById("previewBox");
-
-    const configurationPreview =
-      document.getElementById("configurationPreview");
-
-    const savedEAs =
-      document.getElementById("savedEAs");
-
-
-    /* ========================================
-       STATUS MESSAGE
-    ======================================== */
-
-    function showStatus(message, type) {
-
-      statusBox.textContent = message;
-
-      statusBox.className =
-        "status-box " + type;
-
-    }
-
-
-    function hideStatus() {
-
-      statusBox.style.display = "none";
-
-    }
-
-
-    /* ========================================
-       CHECK SUPABASE
-    ======================================== */
-
-    function getSupabaseClient() {
-
-      if (window.supabaseClient) {
-
+    if (window.supabaseClient) {
         return window.supabaseClient;
+    }
 
-      }
+    if (window.supabase) {
+
+        /*
+        If your supabase-config.js uses another variable,
+        change it here if necessary.
+        */
+
+        return null;
+
+    }
+
+    return null;
+
+}
 
 
-      if (window.supabase) {
+const supabaseClient = getSupabaseClient();
 
-        if (
-          typeof SUPABASE_URL !== "undefined" &&
-          typeof SUPABASE_ANON_KEY !== "undefined"
-        ) {
 
-          window.supabaseClient =
-            window.supabase.createClient(
-              SUPABASE_URL,
-              SUPABASE_ANON_KEY
+/* =========================================================
+   DOM ELEMENTS
+========================================================= */
+
+const accountStatus =
+    document.getElementById("accountStatus");
+
+const eaForm =
+    document.getElementById("eaForm");
+
+const eaName =
+    document.getElementById("eaName");
+
+const version =
+    document.getElementById("version");
+
+const platform =
+    document.getElementById("platform");
+
+const strategy =
+    document.getElementById("strategy");
+
+const riskLevel =
+    document.getElementById("riskLevel");
+
+const lotSize =
+    document.getElementById("lotSize");
+
+const symbol =
+    document.getElementById("symbol");
+
+const description =
+    document.getElementById("description");
+
+const automaticLotSize =
+    document.getElementById("automaticLotSize");
+
+const trailingStop =
+    document.getElementById("trailingStop");
+
+const breakEven =
+    document.getElementById("breakEven");
+
+const newsFilter =
+    document.getElementById("newsFilter");
+
+const saveButton =
+    document.getElementById("saveButton");
+
+const updateButton =
+    document.getElementById("updateButton");
+
+const newEaButton =
+    document.getElementById("newEaButton");
+
+const previewButton =
+    document.getElementById("previewButton");
+
+const previewBox =
+    document.getElementById("previewBox");
+
+const previewContent =
+    document.getElementById("previewContent");
+
+const eaList =
+    document.getElementById("eaList");
+
+const editingBanner =
+    document.getElementById("editingBanner");
+
+
+/* =========================================================
+   CURRENT USER / CURRENT EA
+========================================================= */
+
+let currentUser = null;
+
+let editingEaId = null;
+
+
+/* =========================================================
+   SHOW MESSAGE
+========================================================= */
+
+function showStatus(
+    message,
+    type = "normal"
+) {
+
+    accountStatus.textContent =
+        message;
+
+    accountStatus.className =
+        "status-box";
+
+    if (type === "success") {
+
+        accountStatus.classList.add(
+            "success"
+        );
+
+    }
+
+    if (type === "error") {
+
+        accountStatus.classList.add(
+            "error"
+        );
+
+    }
+
+    if (type === "warning") {
+
+        accountStatus.classList.add(
+            "warning"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   GET CURRENT USER
+========================================================= */
+
+async function checkUser() {
+
+    try {
+
+        if (!supabaseClient) {
+
+            showStatus(
+                "Supabase is not connected. Check supabase-config.js.",
+                "error"
             );
 
-          return window.supabaseClient;
+            return;
 
         }
 
-      }
-
-
-      return null;
-
-    }
-
-
-    /* ========================================
-       PLATFORM SELECTOR
-    ======================================== */
-
-    document
-      .querySelectorAll(".platform-option")
-      .forEach(function(option) {
-
-        option.addEventListener(
-          "click",
-          function() {
-
-            document
-              .querySelectorAll(".platform-option")
-              .forEach(function(item) {
-
-                item.classList.remove("active");
-
-              });
-
-
-            option.classList.add("active");
-
-            platform.value =
-              option.dataset.platform;
-
-          }
-        );
-
-      });
-
-
-    function setPlatform(value) {
-
-      platform.value = value;
-
-
-      document
-        .querySelectorAll(".platform-option")
-        .forEach(function(option) {
-
-          if (
-            option.dataset.platform === value
-          ) {
-
-            option.classList.add("active");
-
-          } else {
-
-            option.classList.remove("active");
-
-          }
-
-        });
-
-    }
-
-
-    /* ========================================
-       BUILD SETTINGS OBJECT
-    ======================================== */
-
-    function buildSettings() {
-
-      return {
-
-        lot_size:
-          parseFloat(lotSize.value) || 0.01,
-
-        stop_loss:
-          parseFloat(stopLoss.value) || 0,
-
-        take_profit:
-          parseFloat(takeProfit.value) || 0,
-
-        timeframe:
-          timeframe.value,
-
-        features: {
-
-          automatic_lot_size:
-            automaticLotSize.checked,
-
-          trailing_stop:
-            trailingStop.checked,
-
-          break_even:
-            breakEven.checked,
-
-          news_filter:
-            newsFilter.checked
-
-        }
-
-      };
-
-    }
-
-
-    /* ========================================
-       BUILD EA CONFIGURATION
-    ======================================== */
-
-    function buildConfiguration() {
-
-      const settings =
-        buildSettings();
-
-
-      const configuration = {
-
-        name:
-          eaName.value.trim(),
-
-        version:
-          version.value.trim(),
-
-        platform:
-          platform.value,
-
-        strategy:
-          strategy.value,
-
-        risk_level:
-          riskLevel.value,
-
-        description:
-          description.value.trim(),
-
-        settings:
-          settings,
-
-        generated_at:
-          new Date().toISOString()
-
-      };
-
-
-      return configuration;
-
-    }
-
-
-    /* ========================================
-       GENERATE PREVIEW
-    ======================================== */
-
-    generateButton.addEventListener(
-      "click",
-      function() {
-
-        if (
-          !eaName.value.trim()
-        ) {
-
-          showStatus(
-            "Please enter an EA name before generating the configuration.",
-            "error"
-          );
-
-          eaName.focus();
-
-          return;
-
-        }
-
-
-        const configuration =
-          buildConfiguration();
-
-
-        configurationPreview.textContent =
-          JSON.stringify(
-            configuration,
-            null,
-            2
-          );
-
-
-        previewBox.style.display =
-          "block";
-
-
-        showStatus(
-          "EA configuration generated successfully.",
-          "success"
-        );
-
-
-        previewBox.scrollIntoView({
-          behavior: "smooth",
-          block: "nearest"
-        });
-
-      }
-    );
-
-
-    /* ========================================
-       GET CURRENT USER
-    ======================================== */
-
-    async function checkUser() {
-
-      showStatus(
-        "Checking account...",
-        "loading"
-      );
-
-
-      const client =
-        getSupabaseClient();
-
-
-      if (!client) {
-
-        showStatus(
-          "Supabase connection could not be found. Please check supabase-config.js.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      try {
 
         const {
-          data,
-          error
-        } =
-          await client.auth.getUser();
+            data,
+            error
+        } = await supabaseClient.auth.getUser();
 
 
         if (error) {
 
-          throw error;
+            console.error(error);
+
+            showStatus(
+                "Please sign in to create and manage EAs.",
+                "warning"
+            );
+
+            return;
 
         }
 
 
-        if (
-          !data ||
-          !data.user
-        ) {
+        if (!data.user) {
 
-          showStatus(
-            "You are not logged in. Please sign in first.",
-            "error"
-          );
+            showStatus(
+                "Please sign in to create and manage EAs.",
+                "warning"
+            );
 
-
-          setTimeout(
-            function() {
-
-              window.location.href =
-                "index.html";
-
-            },
-            1500
-          );
-
-
-          return;
+            return;
 
         }
 
 
         currentUser =
-          data.user;
+            data.user;
 
 
         showStatus(
-          "Account connected. You can create and save Expert Advisors.",
-          "success"
+            "✓ Signed in as " +
+            currentUser.email,
+            "success"
         );
 
 
-        await loadSavedEAs();
+        await loadEAs();
 
 
-        setTimeout(
-          function() {
+    } catch (error) {
 
-            hideStatus();
-
-          },
-          2500
-        );
-
-
-      } catch (error) {
-
-        console.error(
-          "Account check error:",
-          error
-        );
-
+        console.error(error);
 
         showStatus(
-          "Unable to check your account: " +
-          error.message,
-          "error"
+            "Connection error: " +
+            error.message,
+            "error"
         );
-
-      }
 
     }
 
-
-    /* ========================================
-       LOAD SAVED EAS
-    ======================================== */
-
-    async function loadSavedEAs() {
-
-      const client =
-        getSupabaseClient();
+}
 
 
-      if (
-        !client ||
-        !currentUser
-      ) {
+/* =========================================================
+   BUILD EA DATA
+========================================================= */
 
-        return;
+function getEaData() {
 
-      }
+    return {
 
+        name:
+            eaName.value.trim(),
 
-      savedEAs.innerHTML =
-        `
-        <div class="empty-state">
-          Loading your saved EAs...
-        </div>
-        `;
+        version:
+            version.value.trim(),
 
+        platform:
+            platform.value,
 
-      try {
+        strategy:
+            strategy.value,
 
-        const {
-          data,
-          error
-        } =
-          await client
-            .from("robots")
-            .select("*")
-            .eq(
-              "mentor_id",
-              currentUser.id
-            )
-            .order(
-              "created_at",
-              {
-                ascending: false
-              }
-            );
+        risk_level:
+            riskLevel.value,
 
+        lot_size:
+            Number(lotSize.value),
 
-        if (error) {
+        symbol:
+            symbol.value.trim(),
 
-          throw error;
+        description:
+            description.value.trim(),
+
+        features: {
+
+            automatic_lot_size:
+                automaticLotSize.checked,
+
+            trailing_stop:
+                trailingStop.checked,
+
+            break_even:
+                breakEven.checked,
+
+            news_filter:
+                newsFilter.checked
 
         }
 
+    };
 
-        savedEAsData =
-          data || [];
+}
 
 
-        renderSavedEAs(
-          savedEAsData
-        );
+/* =========================================================
+   VALIDATE
+========================================================= */
 
+function validateEA() {
 
-      } catch (error) {
-
-        console.error(
-          "Load EAs error:",
-          error
-        );
-
-
-        savedEAs.innerHTML =
-          `
-          <div class="empty-state">
-            Unable to load your saved EAs.
-            <br><br>
-            ${escapeHTML(error.message)}
-          </div>
-          `;
-
-      }
-
-    }
-
-
-    /* ========================================
-       RENDER SAVED EAS
-    ======================================== */
-
-    function renderSavedEAs(eas) {
-
-      savedEAs.innerHTML = "";
-
-
-      if (
-        !eas ||
-        eas.length === 0
-      ) {
-
-        savedEAs.innerHTML =
-          `
-          <div class="empty-state">
-            No Expert Advisors saved yet.
-            <br><br>
-            Create your first EA above.
-          </div>
-          `;
-
-
-        return;
-
-      }
-
-
-      eas.forEach(function(ea) {
-
-        const card =
-          document.createElement("div");
-
-
-        card.className =
-          "ea-item";
-
-
-        const eaDescription =
-          ea.description ||
-          "EA created using Alpha Traders Host EA Builder.";
-
-
-        card.innerHTML =
-          `
-          <div class="ea-item-top">
-
-            <h3>
-              ${escapeHTML(
-                ea.name || "Unnamed EA"
-              )}
-            </h3>
-
-            <span class="platform-badge">
-              ${escapeHTML(
-                ea.platform || "MT5"
-              )}
-            </span>
-
-          </div>
-
-
-          <div class="ea-meta">
-
-            Strategy:
-            ${escapeHTML(
-              ea.strategy || "Custom"
-            )}
-
-            <br>
-
-            Risk:
-            ${escapeHTML(
-              ea.risk_level || "Medium"
-            )}
-
-            <br>
-
-            Version:
-            ${escapeHTML(
-              ea.version || "1.0"
-            )}
-
-          </div>
-
-
-          <p class="ea-description">
-
-            ${escapeHTML(
-              eaDescription
-            )}
-
-          </p>
-
-
-          <div class="ea-actions">
-
-            <button
-              class="load-button"
-              data-id="${ea.id}"
-            >
-              Load
-            </button>
-
-
-            <button
-              class="delete-button"
-              data-delete-id="${ea.id}"
-            >
-              Delete
-            </button>
-
-          </div>
-          `;
-
-
-        savedEAs.appendChild(
-          card
-        );
-
-      });
-
-
-      /* LOAD BUTTONS */
-
-      document
-        .querySelectorAll(".load-button")
-        .forEach(function(button) {
-
-          button.addEventListener(
-            "click",
-            function() {
-
-              const id =
-                button.dataset.id;
-
-
-              loadEAIntoBuilder(
-                id
-              );
-
-            }
-          );
-
-        });
-
-
-      /* DELETE BUTTONS */
-
-      document
-        .querySelectorAll(".delete-button")
-        .forEach(function(button) {
-
-          button.addEventListener(
-            "click",
-            function() {
-
-              const id =
-                button.dataset.deleteId;
-
-
-              deleteEA(
-                id
-              );
-
-            }
-          );
-
-        });
-
-    }
-
-
-    /* ========================================
-       LOAD EA INTO BUILDER
-    ======================================== */
-
-    function loadEAIntoBuilder(id) {
-
-      const ea =
-        savedEAsData.find(
-          function(item) {
-
-            return String(item.id) ===
-              String(id);
-
-          }
-        );
-
-
-      if (!ea) {
+    if (!eaName.value.trim()) {
 
         showStatus(
-          "EA could not be found.",
-          "error"
+            "Please enter an EA name.",
+            "error"
         );
 
-        return;
+        eaName.focus();
 
-      }
-
-
-      /*
-        STORE THE EA ID.
-
-        This tells the Save button that
-        we are updating an existing EA.
-      */
-
-      editingEAId =
-        ea.id;
-
-
-      /*
-        LOAD BASIC INFORMATION
-      */
-
-      eaName.value =
-        ea.name || "";
-
-
-      version.value =
-        ea.version || "1.0";
-
-
-      setPlatform(
-        ea.platform || "MT5"
-      );
-
-
-      strategy.value =
-        ea.strategy || "Trend Following";
-
-
-      riskLevel.value =
-        ea.risk_level || "Medium";
-
-
-      description.value =
-        ea.description || "";
-
-
-      /*
-        LOAD SETTINGS
-      */
-
-      const settings =
-        ea.settings || {};
-
-
-      lotSize.value =
-        settings.lot_size ||
-        0.01;
-
-
-      stopLoss.value =
-        settings.stop_loss ??
-        50;
-
-
-      takeProfit.value =
-        settings.take_profit ??
-        100;
-
-
-      timeframe.value =
-        settings.timeframe ||
-        "M15";
-
-
-      /*
-        LOAD FEATURES
-      */
-
-      const features =
-        settings.features || {};
-
-
-      automaticLotSize.checked =
-        features.automatic_lot_size !== false;
-
-
-      trailingStop.checked =
-        features.trailing_stop !== false;
-
-
-      breakEven.checked =
-        features.break_even !== false;
-
-
-      newsFilter.checked =
-        features.news_filter === true;
-
-
-      /*
-        UPDATE PAGE UI
-      */
-
-      formTitle.textContent =
-        "Editing: " +
-        (ea.name || "Expert Advisor");
-
-
-      saveButton.textContent =
-        "Update EA";
-
-
-      cancelEditButton.style.display =
-        "block";
-
-
-      /*
-        SHOW CONFIGURATION
-      */
-
-      const configuration = {
-
-        name:
-          ea.name,
-
-        version:
-          ea.version,
-
-        platform:
-          ea.platform,
-
-        strategy:
-          ea.strategy,
-
-        risk_level:
-          ea.risk_level,
-
-        description:
-          ea.description,
-
-        settings:
-          settings,
-
-        loaded_from_account:
-          true
-
-      };
-
-
-      configurationPreview.textContent =
-        JSON.stringify(
-          configuration,
-          null,
-          2
-        );
-
-
-      previewBox.style.display =
-        "block";
-
-
-      /*
-        SCROLL TO FORM
-      */
-
-      window.scrollTo({
-
-        top: 0,
-
-        behavior: "smooth"
-
-      });
-
-
-      showStatus(
-        "EA loaded successfully. You can now edit it and click Update EA.",
-        "success"
-      );
+        return false;
 
     }
 
 
-    /* ========================================
-       SAVE OR UPDATE EA
-    ======================================== */
+    if (!currentUser) {
 
-    eaForm.addEventListener(
-      "submit",
-      async function(event) {
+        showStatus(
+            "You must be signed in before saving an EA.",
+            "error"
+        );
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   SAVE NEW EA
+========================================================= */
+
+eaForm.addEventListener(
+    "submit",
+    async function(event) {
 
         event.preventDefault();
 
 
-        if (
-          !currentUser
-        ) {
+        if (!validateEA()) {
 
-          showStatus(
-            "Please wait while we check your account.",
-            "loading"
-          );
-
-          return;
-
-        }
-
-
-        const client =
-          getSupabaseClient();
-
-
-        if (!client) {
-
-          showStatus(
-            "Supabase connection is unavailable.",
-            "error"
-          );
-
-          return;
-
-        }
-
-
-        if (
-          !eaName.value.trim()
-        ) {
-
-          showStatus(
-            "Please enter an EA name.",
-            "error"
-          );
-
-          return;
-
-        }
-
-
-        saveButton.disabled =
-          true;
-
-
-        saveButton.textContent =
-          editingEAId
-            ? "Updating..."
-            : "Saving...";
-
-
-        try {
-
-          const settings =
-            buildSettings();
-
-
-          const robotData = {
-
-            mentor_id:
-              currentUser.id,
-
-            name:
-              eaName.value.trim(),
-
-            platform:
-              platform.value,
-
-            strategy:
-              strategy.value,
-
-            risk_level:
-              riskLevel.value,
-
-            version:
-              version.value.trim() || "1.0",
-
-            description:
-              description.value.trim() ||
-              "EA created using Alpha Traders Host EA Builder.",
-
-            settings:
-              settings,
-
-            status:
-              "draft"
-
-          };
-
-
-          let result;
-
-
-          /*
-            UPDATE EXISTING EA
-          */
-
-          if (editingEAId) {
-
-            result =
-              await client
-                .from("robots")
-                .update(robotData)
-                .eq(
-                  "id",
-                  editingEAId
-                )
-                .eq(
-                  "mentor_id",
-                  currentUser.id
-                );
-
-
-          }
-
-          /*
-            CREATE NEW EA
-          */
-
-          else {
-
-            result =
-              await client
-                .from("robots")
-                .insert(
-                  [robotData]
-                );
-
-          }
-
-
-          if (
-            result.error
-          ) {
-
-            throw result.error;
-
-          }
-
-
-          /*
-            GENERATE PREVIEW
-          */
-
-          const configuration =
-            buildConfiguration();
-
-
-          configurationPreview.textContent =
-            JSON.stringify(
-              configuration,
-              null,
-              2
-            );
-
-
-          previewBox.style.display =
-            "block";
-
-
-          /*
-            SUCCESS MESSAGE
-          */
-
-          if (editingEAId) {
-
-            showStatus(
-              "EA updated successfully.",
-              "success"
-            );
-
-          } else {
-
-            showStatus(
-              "EA saved successfully to your account.",
-              "success"
-            );
-
-          }
-
-
-          /*
-            RESET EDITING STATE
-          */
-
-          editingEAId =
-            null;
-
-
-          formTitle.textContent =
-            "EA Information";
-
-
-          saveButton.textContent =
-            "Save EA to My Account";
-
-
-          cancelEditButton.style.display =
-            "none";
-
-
-          /*
-            RELOAD EAS
-          */
-
-          await loadSavedEAs();
-
-
-          /*
-            SCROLL TO SAVED EAS
-          */
-
-          setTimeout(
-            function() {
-
-              document
-                .querySelector(
-                  "#savedEAs"
-                )
-                .scrollIntoView({
-
-                  behavior: "smooth",
-
-                  block: "center"
-
-                });
-
-            },
-            500
-          );
-
-
-        } catch (error) {
-
-          console.error(
-            "Save EA error:",
-            error
-          );
-
-
-          showStatus(
-            "Error saving EA: " +
-            error.message,
-            "error"
-          );
-
-
-        } finally {
-
-          saveButton.disabled =
-            false;
-
-
-          saveButton.textContent =
-            editingEAId
-              ? "Update EA"
-              : "Save EA to My Account";
-
-        }
-
-      }
-    );
-
-
-    /* ========================================
-       CANCEL EDITING
-    ======================================== */
-
-    cancelEditButton.addEventListener(
-      "click",
-      function() {
-
-        editingEAId =
-          null;
-
-
-        eaForm.reset();
-
-
-        version.value =
-          "1.0";
-
-
-        riskLevel.value =
-          "Medium";
-
-
-        lotSize.value =
-          "0.01";
-
-
-        stopLoss.value =
-          "50";
-
-
-        takeProfit.value =
-          "100";
-
-
-        timeframe.value =
-          "M15";
-
-
-        automaticLotSize.checked =
-          true;
-
-
-        trailingStop.checked =
-          true;
-
-
-        breakEven.checked =
-          true;
-
-
-        newsFilter.checked =
-          false;
-
-
-        setPlatform(
-          "MT5"
-        );
-
-
-        formTitle.textContent =
-          "EA Information";
-
-
-        saveButton.textContent =
-          "Save EA to My Account";
-
-
-        cancelEditButton.style.display =
-          "none";
-
-
-        previewBox.style.display =
-          "none";
-
-
-        showStatus(
-          "Editing cancelled. You can now create a new EA.",
-          "success"
-        );
-
-      }
-    );
-
-
-    /* ========================================
-       DELETE EA
-    ======================================== */
-
-    async function deleteEA(id) {
-
-      if (
-        !currentUser
-      ) {
-
-        return;
-
-      }
-
-
-      const confirmed =
-        confirm(
-          "Are you sure you want to delete this EA?"
-        );
-
-
-      if (!confirmed) {
-
-        return;
-
-      }
-
-
-      const client =
-        getSupabaseClient();
-
-
-      if (!client) {
-
-        showStatus(
-          "Supabase connection is unavailable.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      try {
-
-        const {
-          error
-        } =
-          await client
-            .from("robots")
-            .delete()
-            .eq(
-              "id",
-              id
-            )
-            .eq(
-              "mentor_id",
-              currentUser.id
-            );
-
-
-        if (error) {
-
-          throw error;
+            return;
 
         }
 
 
         /*
-          IF CURRENTLY EDITING THIS EA,
-          CANCEL EDITING
+        If an EA is currently loaded,
+        don't create a duplicate.
         */
 
-        if (
-          String(editingEAId) ===
-          String(id)
-        ) {
+        if (editingEaId) {
 
-          cancelEditButton.click();
+            showStatus(
+                "You are editing an existing EA. Please use Update EA.",
+                "warning"
+            );
+
+            return;
+
+        }
+
+
+        saveButton.disabled =
+            true;
+
+        saveButton.textContent =
+            "Saving...";
+
+
+        try {
+
+            const eaData =
+                getEaData();
+
+
+            const {
+                error
+            } = await supabaseClient
+                .from("ea_robots")
+                .insert({
+
+                    mentor_id:
+                        currentUser.id,
+
+                    name:
+                        eaData.name,
+
+                    version:
+                        eaData.version,
+
+                    platform:
+                        eaData.platform,
+
+                    strategy:
+                        eaData.strategy,
+
+                    risk_level:
+                        eaData.risk_level,
+
+                    lot_size:
+                        eaData.lot_size,
+
+                    symbol:
+                        eaData.symbol,
+
+                    description:
+                        eaData.description,
+
+                    features:
+                        eaData.features,
+
+                    status:
+                        "draft"
+
+                });
+
+
+            if (error) {
+
+                throw error;
+
+            }
+
+
+            showStatus(
+                "✓ EA saved successfully!",
+                "success"
+            );
+
+
+            resetForm();
+
+
+            await loadEAs();
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            showStatus(
+                "Error saving EA: " +
+                error.message,
+                "error"
+            );
+
+        } finally {
+
+            saveButton.disabled =
+                false;
+
+            saveButton.textContent =
+                "💾 Save EA";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   LOAD ALL EAS
+========================================================= */
+
+async function loadEAs() {
+
+    if (!currentUser) {
+
+        return;
+
+    }
+
+
+    try {
+
+        eaList.innerHTML =
+            `
+            <div class="empty">
+                Loading your EAs...
+            </div>
+            `;
+
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from("ea_robots")
+            .select("*")
+            .eq(
+                "mentor_id",
+                currentUser.id
+            )
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        if (!data || data.length === 0) {
+
+            eaList.innerHTML =
+                `
+                <div class="empty">
+                    You have not created any EAs yet.
+                    Create your first EA above.
+                </div>
+                `;
+
+            return;
+
+        }
+
+
+        renderEAs(data);
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        eaList.innerHTML =
+            `
+            <div class="empty">
+                Error loading EAs:
+                ${escapeHtml(error.message)}
+            </div>
+            `;
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER EAS
+========================================================= */
+
+function renderEAs(eas) {
+
+    eaList.innerHTML = "";
+
+
+    eas.forEach(function(ea) {
+
+        const item =
+            document.createElement("div");
+
+
+        item.className =
+            "ea-item";
+
+
+        item.innerHTML =
+            `
+
+            <div class="ea-top">
+
+                <div>
+
+                    <div class="ea-name">
+                        ${escapeHtml(ea.name || "Unnamed EA")}
+                    </div>
+
+                </div>
+
+                <span class="badge">
+                    ${escapeHtml(ea.platform || "MT5")}
+                </span>
+
+            </div>
+
+
+            <div class="ea-meta">
+
+                Strategy:
+                ${escapeHtml(ea.strategy || "Not specified")}
+
+                <br>
+
+                Risk:
+                ${escapeHtml(ea.risk_level || "Medium")}
+
+                <br>
+
+                Version:
+                ${escapeHtml(ea.version || "1.0")}
+
+                <br>
+
+                ${escapeHtml(
+                    ea.description ||
+                    "EA created using Alpha Traders Host EA Builder."
+                )}
+
+            </div>
+
+
+            <div class="ea-actions">
+
+                <button
+                    class="primary-button"
+                    onclick="loadEA('${ea.id}')"
+                >
+                    Load & Edit
+                </button>
+
+
+                <button
+                    class="danger-button"
+                    onclick="deleteEA('${ea.id}')"
+                >
+                    Delete
+                </button>
+
+            </div>
+
+            `;
+
+
+        eaList.appendChild(item);
+
+    });
+
+}
+
+
+/* =========================================================
+   LOAD ONE EA INTO FORM
+========================================================= */
+
+async function loadEA(id) {
+
+    try {
+
+        showStatus(
+            "Loading EA...",
+            "normal"
+        );
+
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from("ea_robots")
+            .select("*")
+            .eq(
+                "id",
+                id
+            )
+            .eq(
+                "mentor_id",
+                currentUser.id
+            )
+            .single();
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        /*
+        Set editing EA ID
+        */
+
+        editingEaId =
+            data.id;
+
+
+        /*
+        Fill form
+        */
+
+        eaName.value =
+            data.name || "";
+
+        version.value =
+            data.version || "1.0";
+
+        platform.value =
+            data.platform || "MT5";
+
+        strategy.value =
+            data.strategy || "Trend Following";
+
+        riskLevel.value =
+            data.risk_level || "Medium";
+
+        lotSize.value =
+            data.lot_size || 0.01;
+
+        symbol.value =
+            data.symbol || "EURUSD";
+
+        description.value =
+            data.description || "";
+
+
+        /*
+        FEATURES
+        */
+
+        const features =
+            data.features || {};
+
+
+        automaticLotSize.checked =
+            features.automatic_lot_size ?? true;
+
+
+        trailingStop.checked =
+            features.trailing_stop ?? true;
+
+
+        breakEven.checked =
+            features.break_even ?? true;
+
+
+        newsFilter.checked =
+            features.news_filter ?? false;
+
+
+        /*
+        Show update mode
+        */
+
+        updateButton.style.display =
+            "inline-block";
+
+
+        editingBanner.style.display =
+            "block";
+
+
+        saveButton.style.display =
+            "none";
+
+
+        newEaButton.style.display =
+            "inline-block";
+
+
+        showStatus(
+            "✓ EA loaded. You can now edit it and press Update EA.",
+            "success"
+        );
+
+
+        /*
+        Scroll to form
+        */
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior:
+                "smooth"
+
+        });
+
+
+        updatePreview();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        showStatus(
+            "Error loading EA: " +
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   UPDATE EA
+========================================================= */
+
+updateButton.addEventListener(
+    "click",
+    async function() {
+
+        if (!editingEaId) {
+
+            showStatus(
+                "Please load an EA first.",
+                "warning"
+            );
+
+            return;
+
+        }
+
+
+        if (!validateEA()) {
+
+            return;
+
+        }
+
+
+        updateButton.disabled =
+            true;
+
+        updateButton.textContent =
+            "Updating...";
+
+
+        try {
+
+            const eaData =
+                getEaData();
+
+
+            const {
+                error
+            } = await supabaseClient
+                .from("ea_robots")
+                .update({
+
+                    name:
+                        eaData.name,
+
+                    version:
+                        eaData.version,
+
+                    platform:
+                        eaData.platform,
+
+                    strategy:
+                        eaData.strategy,
+
+                    risk_level:
+                        eaData.risk_level,
+
+                    lot_size:
+                        eaData.lot_size,
+
+                    symbol:
+                        eaData.symbol,
+
+                    description:
+                        eaData.description,
+
+                    features:
+                        eaData.features,
+
+                    updated_at:
+                        new Date().toISOString()
+
+                })
+                .eq(
+                    "id",
+                    editingEaId
+                )
+                .eq(
+                    "mentor_id",
+                    currentUser.id
+                );
+
+
+            if (error) {
+
+                throw error;
+
+            }
+
+
+            showStatus(
+                "✓ EA updated successfully!",
+                "success"
+            );
+
+
+            await loadEAs();
+
+
+            updatePreview();
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            showStatus(
+                "Error updating EA: " +
+                error.message,
+                "error"
+            );
+
+        } finally {
+
+            updateButton.disabled =
+                false;
+
+            updateButton.textContent =
+                "🔄 Update EA";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   DELETE EA
+========================================================= */
+
+async function deleteEA(id) {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to delete this EA?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const {
+            error
+        } = await supabaseClient
+            .from("ea_robots")
+            .delete()
+            .eq(
+                "id",
+                id
+            )
+            .eq(
+                "mentor_id",
+                currentUser.id
+            );
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        /*
+        If deleted EA is currently open,
+        reset the builder.
+        */
+
+        if (editingEaId === id) {
+
+            resetForm();
 
         }
 
 
         showStatus(
-          "EA deleted successfully.",
-          "success"
+            "EA deleted successfully.",
+            "success"
         );
 
 
-        await loadSavedEAs();
+        await loadEAs();
 
 
-      } catch (error) {
+    } catch (error) {
 
-        console.error(
-          "Delete EA error:",
-          error
-        );
+        console.error(error);
 
 
         showStatus(
-          "Error deleting EA: " +
-          error.message,
-          "error"
+            "Error deleting EA: " +
+            error.message,
+            "error"
         );
-
-      }
 
     }
 
-
-    /* ========================================
-       SAFE HTML
-    ======================================== */
-
-    function escapeHTML(value) {
-
-      if (
-        value === null ||
-        value === undefined
-      ) {
-
-        return "";
-
-      }
+}
 
 
-      const div =
+/* =========================================================
+   CREATE NEW EA
+========================================================= */
+
+newEaButton.addEventListener(
+    "click",
+    function() {
+
+        resetForm();
+
+
+        showStatus(
+            "Ready to create a new EA.",
+            "success"
+        );
+
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior:
+                "smooth"
+
+        });
+
+    }
+);
+
+
+/* =========================================================
+   RESET FORM
+========================================================= */
+
+function resetForm() {
+
+    editingEaId =
+        null;
+
+
+    eaForm.reset();
+
+
+    version.value =
+        "1.0";
+
+
+    platform.value =
+        "MT5";
+
+
+    strategy.value =
+        "Trend Following";
+
+
+    riskLevel.value =
+        "Medium";
+
+
+    lotSize.value =
+        "0.01";
+
+
+    symbol.value =
+        "EURUSD";
+
+
+    automaticLotSize.checked =
+        true;
+
+
+    trailingStop.checked =
+        true;
+
+
+    breakEven.checked =
+        true;
+
+
+    newsFilter.checked =
+        false;
+
+
+    /*
+    Switch buttons
+    */
+
+    updateButton.style.display =
+        "none";
+
+
+    saveButton.style.display =
+        "inline-block";
+
+
+    editingBanner.style.display =
+        "none";
+
+
+    previewBox.style.display =
+        "none";
+
+
+}
+
+
+/* =========================================================
+   PREVIEW
+========================================================= */
+
+previewButton.addEventListener(
+    "click",
+    function() {
+
+        updatePreview();
+
+        previewBox.style.display =
+            "block";
+
+    }
+);
+
+
+function updatePreview() {
+
+    const data =
+        getEaData();
+
+
+    const previewData = {
+
+        ea_name:
+            data.name || "Unnamed EA",
+
+        version:
+            data.version,
+
+        platform:
+            data.platform,
+
+        strategy:
+            data.strategy,
+
+        risk_level:
+            data.risk_level,
+
+        lot_size:
+            data.lot_size,
+
+        symbol:
+            data.symbol,
+
+        description:
+            data.description,
+
+        features:
+            data.features,
+
+        generated_at:
+            new Date().toISOString()
+
+    };
+
+
+    previewContent.textContent =
+        JSON.stringify(
+            previewData,
+            null,
+            2
+        );
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(text) {
+
+    const div =
         document.createElement("div");
 
 
-      div.textContent =
-        String(value);
+    div.textContent =
+        String(text);
 
 
-      return div.innerHTML;
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        checkUser();
 
     }
+);
 
-
-    /* ========================================
-       START APPLICATION
-    ======================================== */
-
-    window.addEventListener(
-      "load",
-      async function() {
-
-        await checkUser();
-
-      }
-    );
-
-  </script>
+</script>
 
 </body>
 </html>
