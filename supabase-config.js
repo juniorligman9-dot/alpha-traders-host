@@ -1,4 +1,4 @@
-const SUPABASE_URL = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+const SUPABASE_URL = "https://oavqwluxiqqfzvdzdrzl.supabase.co/rest/v1/";
 
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_T7FLuaPz21XX4Bu73BSWXg_zFfXPFYW";
 
