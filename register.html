@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create Account - Alpha Traders Host</title>
+<title>Create Account | Alpha Traders Host</title>
 
 <style>
 * {
@@ -55,7 +55,8 @@ label {
   margin-bottom: 8px;
 }
 
-input {
+input,
+select {
   width: 100%;
   padding: 14px;
   margin-bottom: 18px;
@@ -66,30 +67,76 @@ input {
   font-size: 16px;
 }
 
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #00d084;
+}
+
+select {
+  cursor: pointer;
+}
+
+option {
+  background: #121827;
+  color: white;
+}
+
 button {
   width: 100%;
   padding: 14px;
   background: #00d084;
+  color: #07110f;
   border: none;
   border-radius: 8px;
   font-weight: bold;
   font-size: 16px;
+  cursor: pointer;
 }
 
-.links {
-  text-align: center;
-  margin-top: 20px;
+button:hover {
+  opacity: 0.9;
 }
 
-a {
-  color: #00d084;
-  text-decoration: none;
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .message {
   text-align: center;
-  margin-top: 15px;
+  margin-top: 18px;
+  min-height: 24px;
   color: #929bad;
+  line-height: 1.5;
+}
+
+.message.error {
+  color: #ff8080;
+}
+
+.message.success {
+  color: #00d084;
+}
+
+.links {
+  text-align: center;
+  margin-top: 22px;
+}
+
+.links a {
+  color: #00d084;
+  text-decoration: none;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 500px) {
+  .box {
+    padding: 28px 22px;
+  }
 }
 </style>
 </head>
@@ -103,12 +150,13 @@ a {
   </div>
 
   <p class="subtitle">
-    Create your hosting account
+    Create your account
   </p>
+
 
   <form id="registerForm">
 
-    <label>Full Name</label>
+    <label for="name">Full Name</label>
 
     <input
       type="text"
@@ -117,7 +165,32 @@ a {
       required
     >
 
-    <label>Email</label>
+
+    <label for="role">
+      Account Type
+    </label>
+
+    <select
+      id="role"
+      required
+    >
+      <option value="" selected disabled>
+        Select account type
+      </option>
+
+      <option value="client">
+        Client
+      </option>
+
+      <option value="mentor">
+        Mentor
+      </option>
+    </select>
+
+
+    <label for="email">
+      Email
+    </label>
 
     <input
       type="email"
@@ -126,7 +199,10 @@ a {
       required
     >
 
-    <label>Password</label>
+
+    <label for="password">
+      Password
+    </label>
 
     <input
       type="password"
@@ -136,7 +212,10 @@ a {
       required
     >
 
-    <label>Confirm Password</label>
+
+    <label for="confirm">
+      Confirm Password
+    </label>
 
     <input
       type="password"
@@ -146,69 +225,305 @@ a {
       required
     >
 
-    <button type="submit">
+
+    <button
+      type="submit"
+      id="registerButton"
+    >
       Create Account
     </button>
 
   </form>
 
-  <div id="message" class="message"></div>
+
+  <div
+    id="message"
+    class="message"
+  ></div>
+
 
   <div class="links">
-    <p>Already have an account?</p>
+
+    <p>
+      Already have an account?
+    </p>
+
     <br>
-    <a href="login.html">Sign In</a>
+
+    <a href="login.html">
+      Sign In
+    </a>
+
   </div>
 
 </div>
 
+
+<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script src="supabase-config.js"></script>
 
+
 <script>
-document.getElementById("registerForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
 
-    const fullName = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-    const confirm = document.getElementById("confirm").value;
-    const message = document.getElementById("message");
+const registerForm =
+  document.getElementById("registerForm");
 
-    message.textContent = "";
+const registerButton =
+  document.getElementById("registerButton");
+
+const message =
+  document.getElementById("message");
+
+
+function showMessage(text, type = "") {
+
+  message.textContent =
+    text;
+
+  message.className =
+    "message " + type;
+
+}
+
+
+/*
+==========================================
+REGISTER ACCOUNT
+==========================================
+*/
+
+registerForm.addEventListener(
+  "submit",
+  async function (event) {
+
+    event.preventDefault();
+
+
+    const fullName =
+      document
+        .getElementById("name")
+        .value
+        .trim();
+
+
+    const role =
+      document
+        .getElementById("role")
+        .value;
+
+
+    const email =
+      document
+        .getElementById("email")
+        .value
+        .trim();
+
+
+    const password =
+      document
+        .getElementById("password")
+        .value;
+
+
+    const confirm =
+      document
+        .getElementById("confirm")
+        .value;
+
+
+    /*
+    ======================================
+    VALIDATE ROLE
+    ======================================
+    */
+
+    if (
+      role !== "client" &&
+      role !== "mentor"
+    ) {
+
+      showMessage(
+        "Please select Client or Mentor.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    /*
+    ======================================
+    VALIDATE PASSWORD
+    ======================================
+    */
 
     if (password !== confirm) {
-        message.textContent = "Passwords do not match.";
-        return;
+
+      showMessage(
+        "Passwords do not match.",
+        "error"
+      );
+
+      return;
+
     }
 
-    message.textContent = "Creating your account...";
+
+    /*
+    ======================================
+    CHECK SUPABASE
+    ======================================
+    */
+
+    if (
+      typeof window.supabaseClient ===
+      "undefined"
+    ) {
+
+      showMessage(
+        "Supabase is not connected.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    registerButton.disabled =
+      true;
+
+    registerButton.textContent =
+      "Creating Account...";
+
+
+    showMessage(
+      "Creating your account..."
+    );
+
 
     try {
-        const { data, error } = await window.supabaseClient.auth.signUp({
+
+      /*
+      ======================================
+      CREATE AUTH ACCOUNT
+
+      The database trigger will automatically
+      create the profile.
+
+      Client → approved
+      Mentor → pending
+      ======================================
+      */
+
+      const {
+        data,
+        error
+      } =
+        await window.supabaseClient
+          .auth
+          .signUp({
+
             email: email,
+
             password: password,
+
             options: {
-                data: {
-                    full_name: fullName
-                }
+
+              data: {
+
+                full_name:
+                  fullName,
+
+                role:
+                  role
+
+              }
+
             }
-        });
 
-        if (error) {
-            message.textContent = "Error: " + error.message;
-            return;
-        }
+          });
 
-        if (data.user) {
-            message.textContent =
-                "Account created successfully! Please check your email to confirm your account.";
-        } else {
-            message.textContent = "Something went wrong. Please try again.";
-        }
 
-    } catch (err) {
-        message.textContent = "Connection error: " + err.message;
+      if (error) {
+
+        throw error;
+
+      }
+
+
+      if (!data?.user) {
+
+        throw new Error(
+          "Account could not be created."
+        );
+
+      }
+
+
+      /*
+      ======================================
+      SUCCESS MESSAGE
+      ======================================
+      */
+
+      if (role === "mentor") {
+
+        showMessage(
+          "Mentor application submitted successfully! Please check your email to confirm your account. Your mentor account will be available after administrator approval.",
+          "success"
+        );
+
+      }
+      else {
+
+        showMessage(
+          "Client account created successfully! Please check your email to confirm your account.",
+          "success"
+        );
+
+      }
+
+
+      registerForm.reset();
+
+
     }
-});
+    catch (error) {
+
+      console.error(
+        "Registration error:",
+        error
+      );
+
+
+      showMessage(
+        "Error: " +
+        (
+          error.message ||
+          "Please try again."
+        ),
+        "error"
+      );
+
+    }
+    finally {
+
+      registerButton.disabled =
+        false;
+
+      registerButton.textContent =
+        "Create Account";
+
+    }
+
+  }
+);
+
 </script>
+
+</body>
+</html>
