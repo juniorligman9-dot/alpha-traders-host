@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Mentor Dashboard | Alpha Traders Host</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #111a29;
+      --header: #131d2d;
+      --card: #2a374a;
+      --card-dark: #1b2738;
+      --border: #3b4d66;
+      --text: #e7e9ee;
+      --muted: #b6bfce;
+      --accent: #55c5b5;
+      --danger: #ef6666;
+      --warning: #f5b942;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--header);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px 25px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .nav-button {
+      min-height: 45px;
+      padding: 0 17px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .nav-button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .logout-button {
+      border-color: var(--danger);
+      color: #ffc1c1;
+    }
+
+    main {
+      width: 100%;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 45px 25px 80px;
+    }
+
+    .hero {
+      margin-bottom: 35px;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 58px);
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 25px;
+    }
+
+    .stat-number {
+      color: var(--accent);
+      font-size: 40px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+    }
+
+    .section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 25px;
+      padding: 28px;
+      margin-bottom: 28px;
+    }
+
+    .section-header {
+      margin-bottom: 22px;
+    }
+
+    .section-header h2 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    select,
+    input {
+      width: 100%;
+      min-height: 52px;
+      padding: 0 15px;
+      background: var(--card-dark);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 16px;
+      outline: none;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: var(--accent);
+    }
+
+    .generate-button {
+      width: 100%;
+      min-height: 55px;
+      border: none;
+      border-radius: 13px;
+      background: var(--accent);
+      color: #10201f;
+      font-size: 17px;
+      font-weight: 800;
+      margin-top: 20px;
+    }
+
+    .generate-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .message {
+      margin-top: 18px;
+      padding: 15px;
+      border-radius: 12px;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .message.success {
+      display: block;
+      color: #b8fff4;
+      border: 1px solid var(--accent);
+      background: rgba(85, 197, 181, 0.08);
+    }
+
+    .message.error {
+      display: block;
+      color: #ffc1c1;
+      border: 1px solid var(--danger);
+      background: rgba(239, 102, 102, 0.08);
+    }
+
+    .client-list,
+    .license-list {
+      display: grid;
+      gap: 15px;
+    }
+
+    .client-card,
+    .license-card {
+      background: var(--card-dark);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .client-name,
+    .license-key {
+      font-size: 19px;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .client-email,
+    .license-meta {
+      color: var(--muted);
+      margin-top: 7px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .license-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 15px;
+      margin-bottom: 12px;
+    }
+
+    .badge {
+      flex-shrink: 0;
+      padding: 6px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      border: 1px solid var(--border);
+    }
+
+    .badge.active {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .badge.revoked {
+      color: #ffc1c1;
+      border-color: var(--danger);
+    }
+
+    .badge.expired {
+      color: var(--warning);
+      border-color: var(--warning);
+    }
+
+    .license-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 17px;
+    }
+
+    .copy-button,
+    .revoke-button {
+      min-height: 42px;
+      padding: 0 16px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    .copy-button {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+
+    .revoke-button {
+      background: transparent;
+      color: #ffc1c1;
+      border: 1px solid var(--danger);
+    }
+
+    .empty-state,
+    .loading-state {
+      padding: 30px;
+      text-align: center;
+      color: var(--muted);
+      background: var(--card-dark);
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+    }
+
+    @media (max-width: 700px) {
+
+      .nav-container {
+        flex-direction: column;
+      }
+
+      .nav-actions {
+        width: 100%;
+      }
+
+      .nav-button {
+        flex: 1;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        padding: 32px 18px 60px;
+      }
+
+      .section {
+        padding: 20px;
+      }
+
+      .hero h1 {
+        font-size: 40px;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+
+<header>
+
+  <div class="nav-container">
+
+    <a
+      href="index.html"
+      class="logo"
+    >
+      ALPHA <span>TRADERS HOST</span>
+    </a>
+
+
+    <div class="nav-actions">
+
+      <button
+        type="button"
+        class="nav-button"
+        id="refreshButton"
+      >
+        ↻ Refresh
+      </button>
+
+
+      <button
+        type="button"
+        class="nav-button logout-button"
+        id="logoutButton"
+      >
+        Logout
+      </button>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<main>
+
+  <div class="container">
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+      <h1>
+        Mentor Dashboard
+      </h1>
+
+      <p>
+        Manage your approved clients and generate
+        license keys for the Alpha Traders Host
+        trading robot.
+      </p>
+
+    </section>
+
+
+
+    <!-- STATISTICS -->
+
+    <section class="stats-grid">
+
+      <div class="stat-card">
+
+        <div
+          class="stat-number"
+          id="totalClients"
+        >
+          0
+        </div>
+
+        <div class="stat-label">
+          Approved Clients
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div
+          class="stat-number"
+          id="totalKeys"
+        >
+          0
+        </div>
+
+        <div class="stat-label">
+          License Keys
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div
+          class="stat-number"
+          id="activeKeys"
+        >
+          0
+        </div>
+
+        <div class="stat-label">
+          Active Keys
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- GENERATE LICENSE -->
+
+    <section class="section">
+
+      <div class="section-header">
+
+        <h2>
+          Generate License Key
+        </h2>
+
+        <p>
+          Select one of your approved clients and
+          generate a license key for their trading robot.
+        </p>
+
+      </div>
+
+
+      <form id="licenseForm">
+
+        <div class="form-grid">
+
+
+          <div class="form-group full">
+
+            <label for="clientSelect">
+              Select Client
+            </label>
+
+            <select
+              id="clientSelect"
+              required
+            >
+
+              <option value="">
+                Loading clients...
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="expiryDate">
+              Expiry Date
+            </label>
+
+            <input
+              type="date"
+              id="expiryDate"
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              License Status
+            </label>
+
+            <input
+              type="text"
+              value="Active"
+              disabled
+            >
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="generate-button"
+          id="generateButton"
+        >
+          🔑 Generate License Key
+        </button>
+
+      </form>
+
+
+      <div
+        id="message"
+        class="message"
+      ></div>
+
+    </section>
+
+
+
+    <!-- APPROVED CLIENTS -->
+
+    <section class="section">
+
+      <div class="section-header">
+
+        <h2>
+          My Approved Clients
+        </h2>
+
+        <p>
+          Clients who have an approved mentorship
+          relationship with you.
+        </p>
+
+      </div>
+
+
+      <div
+        id="clientsContent"
+        class="loading-state"
+      >
+        Loading clients...
+      </div>
+
+    </section>
+
+
+
+    <!-- LICENSE KEYS -->
+
+    <section class="section">
+
+      <div class="section-header">
+
+        <h2>
+          My License Keys
+        </h2>
+
+        <p>
+          License keys you have generated for your clients.
+        </p>
+
+      </div>
+
+
+      <div
+        id="licensesContent"
+        class="loading-state"
+      >
+        Loading license keys...
+      </div>
+
+    </section>
+
+
+  </div>
+
+</main>
+
+
+
+<script>
+
+
+/* ==========================================
+   ELEMENTS
+========================================== */
+
+const clientSelect =
+  document.getElementById(
+    "clientSelect"
+  );
+
+const licenseForm =
+  document.getElementById(
+    "licenseForm"
+  );
+
+const expiryDate =
+  document.getElementById(
+    "expiryDate"
+  );
+
+const generateButton =
+  document.getElementById(
+    "generateButton"
+  );
+
+const refreshButton =
+  document.getElementById(
+    "refreshButton"
+  );
+
+const logoutButton =
+  document.getElementById(
+    "logoutButton"
+  );
+
+const clientsContent =
+  document.getElementById(
+    "clientsContent"
+  );
+
+const licensesContent =
+  document.getElementById(
+    "licensesContent"
+  );
+
+const message =
+  document.getElementById(
+    "message"
+  );
+
+const totalClients =
+  document.getElementById(
+    "totalClients"
+  );
+
+const totalKeys =
+  document.getElementById(
+    "totalKeys"
+  );
+
+const activeKeys =
+  document.getElementById(
+    "activeKeys"
+  );
+
+
+let currentUser = null;
+
+let approvedClients = [];
+
+
+/* ==========================================
+   ESCAPE HTML
+========================================== */
+
+function escapeHTML(value) {
+
+  if (
+    value === null ||
+    value === undefined
+  ) {
+    return "";
+  }
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+/* ==========================================
+   SHOW MESSAGE
+========================================== */
+
+function showMessage(
+  text,
+  type
+) {
+
+  message.textContent =
+    text;
+
+  message.className =
+    "message " + type;
+
+}
+
+
+/* ==========================================
+   CLEAR MESSAGE
+========================================== */
+
+function clearMessage() {
+
+  message.textContent =
+    "";
+
+  message.className =
+    "message";
+
+}
+
+
+/* ==========================================
+   FORMAT DATE
+========================================== */
+
+function formatDate(date) {
+
+  if (!date) {
+    return "No expiry";
+  }
+
+  try {
+
+    return new Date(
+      date
+    ).toLocaleDateString();
+
+  }
+  catch {
+
+    return "Unknown";
+
+  }
+
+}
+
+
+/* ==========================================
+   GET SUPABASE
+========================================== */
+
+function getSupabaseClient() {
+
+  if (
+    window.supabaseClient
+  ) {
+
+    return window.supabaseClient;
+
+  }
+
+  return null;
+
+}
+
+
+/* ==========================================
+   LOAD DASHBOARD
+========================================== */
+
+async function loadDashboard() {
+
+  const supabaseClient =
+    getSupabaseClient();
+
+
+  if (!supabaseClient) {
+
+    showMessage(
+      "Supabase is not connected. Check supabase-config.js.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  clientsContent.innerHTML =
+    "Loading clients...";
+
+  clientsContent.className =
+    "loading-state";
+
+
+  licensesContent.innerHTML =
+    "Loading license keys...";
+
+  licensesContent.className =
+    "loading-state";
+
+
+  try {
+
+
+    /* ======================================
+       GET LOGGED IN USER
+    ====================================== */
+
+    const {
+      data: authData,
+      error: authError
+    } =
+      await supabaseClient
+        .auth
+        .getUser();
+
+
+    if (authError) {
+
+      throw authError;
+
+    }
+
+
+    currentUser =
+      authData?.user;
+
+
+    if (!currentUser) {
+
+      window.location.href =
+        "login.html";
+
+      return;
+
+    }
+
+
+    /* ======================================
+       CHECK MENTOR PROFILE
+    ====================================== */
+
+    const {
+      data: mentorProfile,
+      error: mentorError
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select(
+          "id, role, approval_status"
+        )
+        .eq(
+          "id",
+          currentUser.id
+        )
+        .single();
+
+
+    if (mentorError) {
+
+      throw mentorError;
+
+    }
+
+
+    if (
+      String(
+        mentorProfile.role || ""
+      ).toLowerCase() !==
+      "mentor"
+    ) {
+
+      alert(
+        "Access denied. Mentor access is required."
+      );
+
+
+      window.location.href =
+        "login.html";
+
+      return;
+
+    }
+
+
+    if (
+      String(
+        mentorProfile.approval_status || ""
+      ).toLowerCase() !==
+      "approved"
+    ) {
+
+      clientsContent.className =
+        "empty-state";
+
+      clientsContent.innerHTML =
+        "<h3>Your mentor account is awaiting approval.</h3>";
+
+      licensesContent.className =
+        "empty-state";
+
+      licensesContent.innerHTML =
+        "<h3>License generation is unavailable until you are approved.</h3>";
+
+      clientSelect.innerHTML =
+        '<option value="">Mentor approval required</option>';
+
+      generateButton.disabled =
+        true;
+
+      return;
+
+    }
+
+
+    generateButton.disabled =
+      false;
+
+
+    /* ======================================
+       LOAD APPROVED MENTOR REQUESTS
+    ====================================== */
+
+    const {
+      data: requests,
+      error: requestsError
+    } =
+      await supabaseClient
+        .from("mentor_requests")
+        .select(
+          "client_id, mentor_id, status"
+        )
+        .eq(
+          "mentor_id",
+          currentUser.id
+        )
+        .eq(
+          "status",
+          "approved"
+        );
+
+
+    if (requestsError) {
+
+      throw requestsError;
+
+    }
+
+
+    const clientIds =
+      [
+        ...new Set(
+          (
+            requests || []
+          )
+          .map(
+            request =>
+              request.client_id
+          )
+          .filter(
+            Boolean
+          )
+        )
+      ];
+
+
+    /* ======================================
+       LOAD CLIENT PROFILES
+    ====================================== */
+
+    let clients =
+      [];
+
+
+    if (
+      clientIds.length > 0
+    ) {
+
+      const {
+        data: clientProfiles,
+        error: clientsError
+      } =
+        await supabaseClient
+          .from("profiles")
+          .select(
+            "id, full_name, email, role"
+          )
+          .in(
+            "id",
+            clientIds
+          );
+
+
+      if (clientsError) {
+
+        throw clientsError;
+
+      }
+
+
+      clients =
+        clientProfiles ||
+        [];
+
+    }
+
+
+    approvedClients =
+      clients;
+
+
+    renderClients(
+      clients
+    );
+
+
+    populateClientSelect(
+      clients
+    );
+
+
+    /* ======================================
+       LOAD LICENSE KEYS
+    ====================================== */
+
+    const {
+      data: licenses,
+      error: licensesError
+    } =
+      await supabaseClient
+        .from("license_keys")
+        .select("*")
+        .eq(
+          "mentor_id",
+          currentUser.id
+        )
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        );
+
+
+    if (licensesError) {
+
+      throw licensesError;
+
+    }
+
+
+    renderLicenses(
+      licenses || [],
+      clients
+    );
+
+
+    /* ======================================
+       UPDATE STATISTICS
+    ====================================== */
+
+    updateStatistics(
+      clients,
+      licenses || []
+    );
+
+
+  }
+  catch (error) {
+
+
+    console.error(
+      "Dashboard error:",
+      error
+    );
+
+
+    clientsContent.className =
+      "empty-state";
+
+    clientsContent.innerHTML =
+      "<h3>Could not load dashboard</h3>" +
+      "<p>" +
+      escapeHTML(
+        error.message ||
+        "An unknown error occurred."
+      ) +
+      "</p>";
+
+
+    licensesContent.className =
+      "empty-state";
+
+    licensesContent.innerHTML =
+      "<h3>Could not load license keys</h3>";
+
+
+    showMessage(
+      error.message ||
+      "Could not load dashboard.",
+      "error"
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   UPDATE STATISTICS
+========================================== */
+
+function updateStatistics(
+  clients,
+  licenses
+) {
+
+  totalClients.textContent =
+    clients.length;
+
+
+  totalKeys.textContent =
+    licenses.length;
+
+
+  const active =
+    licenses.filter(
+      license =>
+        String(
+          license.status || ""
+        ).toLowerCase() ===
+        "active"
+    );
+
+
+  activeKeys.textContent =
+    active.length;
+
+}
+
+
+/* ==========================================
+   POPULATE CLIENT SELECT
+========================================== */
+
+function populateClientSelect(clients) {
+
+  if (
+    clients.length === 0
+  ) {
+
+    clientSelect.innerHTML =
+      '<option value="">No approved clients available</option>';
+
+    generateButton.disabled =
+      true;
+
+    return;
+
+  }
+
+
+  generateButton.disabled =
+    false;
+
+
+  let html =
+    '<option value="">-- Select a client --</option>';
+
+
+  clients.forEach(
+    function(client) {
+
+      const name =
+        escapeHTML(
+          client.full_name ||
+          "Unnamed Client"
+        );
+
+
+      const email =
+        escapeHTML(
+          client.email ||
+          ""
+        );
+
+
+      html +=
+        '<option value="' +
+        client.id +
+        '">' +
+        name +
+        (
+          email
+            ? " — " + email
+            : ""
+        ) +
+        '</option>';
+
+    }
+  );
+
+
+  clientSelect.innerHTML =
+    html;
+
+}
+
+
+/* ==========================================
+   RENDER CLIENTS
+========================================== */
+
+function renderClients(clients) {
+
+  if (
+    clients.length === 0
+  ) {
+
+    clientsContent.className =
+      "empty-state";
+
+    clientsContent.innerHTML =
+      "<h3>No approved clients yet</h3>" +
+      "<br>" +
+      "<p>When a client sends you a request and it is approved, they will appear here.</p>";
+
+    return;
+
+  }
+
+
+  let html =
+    '<div class="client-list">';
+
+
+  clients.forEach(
+    function(client) {
+
+      const name =
+        escapeHTML(
+          client.full_name ||
+          "Unnamed Client"
+        );
+
+
+      const email =
+        escapeHTML(
+          client.email ||
+          "Email unavailable"
+        );
+
+
+      html += `
+
+        <article class="client-card">
+
+          <div class="client-name">
+            ${name}
+          </div>
+
+          <div class="client-email">
+            ${email}
+          </div>
+
+        </article>
+
+      `;
+
+    }
+  );
+
+
+  html +=
+    "</div>";
+
+
+  clientsContent.className =
+    "";
+
+
+  clientsContent.innerHTML =
+    html;
+
+}
+
+
+/* ==========================================
+   RENDER LICENSE KEYS
+========================================== */
+
+function renderLicenses(
+  licenses,
+  clients
+) {
+
+  if (
+    licenses.length === 0
+  ) {
+
+    licensesContent.className =
+      "empty-state";
+
+    licensesContent.innerHTML =
+      "<h3>No license keys yet</h3>" +
+      "<br>" +
+      "<p>Generate your first license key for an approved client.</p>";
+
+    return;
+
+  }
+
+
+  let html =
+    '<div class="license-list">';
+
+
+  licenses.forEach(
+    function(license) {
+
+
+      const client =
+        clients.find(
+          client =>
+            client.id ===
+            license.client_id
+        );
+
+
+      const clientName =
+        escapeHTML(
+          client?.full_name ||
+          "Unknown Client"
+        );
+
+
+      const status =
+        String(
+          license.status ||
+          "unknown"
+        ).toLowerCase();
+
+
+      const licenseKey =
+        escapeHTML(
+          license.license_key
+        );
+
+
+      html += `
+
+        <article class="license-card">
+
+          <div class="license-top">
+
+            <div>
+
+              <div class="license-key">
+                ${licenseKey}
+              </div>
+
+              <div class="license-meta">
+
+                Client:
+                ${clientName}
+
+                <br>
+
+                Created:
+                ${formatDate(
+                  license.created_at
+                )}
+
+                <br>
+
+                Expires:
+                ${formatDate(
+                  license.expires_at
+                )}
+
+              </div>
+
+            </div>
+
+
+            <div
+              class="badge ${status}"
+            >
+              ${escapeHTML(
+                status.toUpperCase()
+              )}
+            </div>
+
+          </div>
+
+
+          <div class="license-actions">
+
+            <button
+              type="button"
+              class="copy-button"
+              onclick="copyLicenseKey('${licenseKey}')"
+            >
+              📋 Copy Key
+            </button>
+
+
+            ${
+              status === "active"
+                ? `
+
+                  <button
+                    type="button"
+                    class="revoke-button"
+                    onclick="revokeLicense('${license.id}')"
+                  >
+                    Revoke Key
+                  </button>
+
+                `
+                : ""
+            }
+
+          </div>
+
+        </article>
+
+      `;
+
+    }
+  );
+
+
+  html +=
+    "</div>";
+
+
+  licensesContent.className =
+    "";
+
+
+  licensesContent.innerHTML =
+    html;
+
+}
+
+
+/* ==========================================
+   GENERATE LICENSE
+========================================== */
+
+licenseForm.addEventListener(
+  "submit",
+  async function(event) {
+
+    event.preventDefault();
+
+
+    clearMessage();
+
+
+    const clientId =
+      clientSelect.value;
+
+
+    if (!clientId) {
+
+      showMessage(
+        "Please select a client.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    generateButton.disabled =
+      true;
+
+    generateButton.textContent =
+      "Generating...";
+
+
+    try {
+
+
+      let expiryValue =
+        null;
+
+
+      if (
+        expiryDate.value
+      ) {
+
+        expiryValue =
+          new Date(
+            expiryDate.value +
+            "T23:59:59"
+          ).toISOString();
+
+      }
+
+
+      const {
+        data,
+        error
+      } =
+        await window.supabaseClient
+          .rpc(
+            "create_license_key",
+            {
+              target_client_id:
+                clientId,
+
+              expiry_date:
+                expiryValue
+            }
+          );
+
+
+      if (error) {
+
+        throw error;
+
+      }
+
+
+      showMessage(
+        "License key generated successfully: " +
+        (
+          data?.license_key ||
+          "Key created"
+        ),
+        "success"
+      );
+
+
+      expiryDate.value =
+        "";
+
+
+      clientSelect.value =
+        "";
+
+
+      await loadDashboard();
+
+
+    }
+    catch (error) {
+
+
+      console.error(
+        "License generation error:",
+        error
+      );
+
+
+      showMessage(
+        error.message ||
+        "Could not generate license key.",
+        "error"
+      );
+
+    }
+    finally {
+
+
+      generateButton.disabled =
+        false;
+
+      generateButton.textContent =
+        "🔑 Generate License Key";
+
+    }
+
+  }
+);
+
+
+/* ==========================================
+   COPY LICENSE KEY
+========================================== */
+
+async function copyLicenseKey(key) {
+
+  try {
+
+    await navigator
+      .clipboard
+      .writeText(key);
+
+
+    showMessage(
+      "License key copied to clipboard.",
+      "success"
+    );
+
+  }
+  catch {
+
+    showMessage(
+      "Could not copy the license key.",
+      "error"
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   REVOKE LICENSE
+========================================== */
+
+async function revokeLicense(
+  licenseId
+) {
+
+  const confirmed =
+    confirm(
+      "Are you sure you want to revoke this license key? The client will no longer be able to use it."
+    );
+
+
+  if (!confirmed) {
+
+    return;
+
+  }
+
+
+  try {
+
+
+    const {
+      error
+    } =
+      await window.supabaseClient
+        .from("license_keys")
+        .update({
+          status:
+            "revoked"
+        })
+        .eq(
+          "id",
+          licenseId
+        )
+        .eq(
+          "mentor_id",
+          currentUser.id
+        );
+
+
+    if (error) {
+
+      throw error;
+
+    }
+
+
+    showMessage(
+      "License key revoked successfully.",
+      "success"
+    );
+
+
+    await loadDashboard();
+
+
+  }
+  catch (error) {
+
+
+    console.error(
+      "Revoke error:",
+      error
+    );
+
+
+    showMessage(
+      error.message ||
+      "Could not revoke the license key.",
+      "error"
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   REFRESH
+========================================== */
+
+refreshButton.addEventListener(
+  "click",
+  async function() {
+
+    refreshButton.disabled =
+      true;
+
+    refreshButton.textContent =
+      "Refreshing...";
+
+
+    await loadDashboard();
+
+
+    refreshButton.disabled =
+      false;
+
+    refreshButton.textContent =
+      "↻ Refresh";
+
+  }
+);
+
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+logoutButton.addEventListener(
+  "click",
+  async function() {
+
+
+    try {
+
+      if (
+        window.supabaseClient
+      ) {
+
+        await window.supabaseClient
+          .auth
+          .signOut();
+
+      }
+
+
+      window.location.href =
+        "login.html";
+
+
+    }
+    catch (error) {
+
+
+      console.error(
+        "Logout error:",
+        error
+      );
+
+    }
+
+  }
+);
+
+
+/* ==========================================
+   START DASHBOARD
+========================================== */
+
+loadDashboard();
+
+
+</script>
+
+</body>
+</html>
