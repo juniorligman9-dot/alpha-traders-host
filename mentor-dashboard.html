@@ -30,6 +30,7 @@
       --text: #e7e9ee;
       --muted: #b6bfce;
       --accent: #55c5b5;
+      --accent-dark: #36a999;
       --danger: #ef6666;
       --warning: #f5b942;
     }
@@ -37,13 +38,7 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family:
-        Inter,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
+      font-family: Arial, sans-serif;
       min-height: 100vh;
     }
 
@@ -53,14 +48,12 @@
     }
 
     .nav-container {
-      width: 100%;
-      max-width: 1200px;
+      max-width: 1250px;
       margin: auto;
-      padding: 20px 25px;
-
+      padding: 20px 28px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 20px;
     }
 
@@ -69,52 +62,36 @@
       text-decoration: none;
       font-size: 24px;
       font-weight: 800;
-      letter-spacing: 1px;
     }
 
     .logo span {
       color: var(--accent);
     }
 
-    .nav-actions {
+    nav {
       display: flex;
       gap: 10px;
     }
 
-    button {
-      font-family: inherit;
-      cursor: pointer;
-    }
-
     .nav-button {
-      min-height: 45px;
-      padding: 0 17px;
+      padding: 13px 18px;
       border-radius: 12px;
       border: 1px solid var(--border);
       background: transparent;
       color: var(--text);
-      font-weight: 700;
-    }
-
-    .nav-button:hover {
-      border-color: var(--accent);
-      color: var(--accent);
+      cursor: pointer;
+      font-weight: bold;
     }
 
     .logout-button {
       border-color: var(--danger);
-      color: #ffc1c1;
-    }
-
-    main {
-      width: 100%;
+      color: var(--danger);
     }
 
     .container {
-      width: 100%;
-      max-width: 1200px;
+      max-width: 1250px;
       margin: auto;
-      padding: 45px 25px 80px;
+      padding: 45px 28px 80px;
     }
 
     .hero {
@@ -129,13 +106,11 @@
     .hero p {
       color: var(--muted);
       font-size: 18px;
-      line-height: 1.6;
     }
 
     .stats-grid {
       display: grid;
-      grid-template-columns:
-        repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       gap: 18px;
       margin-bottom: 30px;
     }
@@ -143,226 +118,179 @@
     .stat-card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 22px;
+      border-radius: 20px;
       padding: 25px;
     }
 
     .stat-number {
       color: var(--accent);
       font-size: 40px;
-      font-weight: 800;
-      margin-bottom: 8px;
+      font-weight: bold;
     }
 
     .stat-label {
       color: var(--muted);
+      margin-top: 8px;
     }
 
     .section {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 25px;
-      padding: 28px;
+      border-radius: 24px;
+      padding: 25px;
       margin-bottom: 28px;
     }
 
     .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
       margin-bottom: 22px;
     }
 
     .section-header h2 {
-      font-size: 28px;
-      margin-bottom: 8px;
+      font-size: 27px;
     }
 
-    .section-header p {
-      color: var(--muted);
-      line-height: 1.5;
+    .refresh-button {
+      padding: 12px 18px;
+      border: 1px solid var(--accent);
+      background: transparent;
+      color: var(--accent);
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
     }
 
-    .form-grid {
+    .list {
       display: grid;
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 18px;
     }
 
-    .form-group {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .form-group.full {
-      grid-column: 1 / -1;
-    }
-
-    label {
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    select,
-    input {
-      width: 100%;
-      min-height: 52px;
-      padding: 0 15px;
-      background: var(--card-dark);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      color: var(--text);
-      font-size: 16px;
-      outline: none;
-    }
-
-    select:focus,
-    input:focus {
-      border-color: var(--accent);
-    }
-
-    .generate-button {
-      width: 100%;
-      min-height: 55px;
-      border: none;
-      border-radius: 13px;
-      background: var(--accent);
-      color: #10201f;
-      font-size: 17px;
-      font-weight: 800;
-      margin-top: 20px;
-    }
-
-    .generate-button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    .message {
-      margin-top: 18px;
-      padding: 15px;
-      border-radius: 12px;
-      display: none;
-      line-height: 1.5;
-    }
-
-    .message.success {
-      display: block;
-      color: #b8fff4;
-      border: 1px solid var(--accent);
-      background: rgba(85, 197, 181, 0.08);
-    }
-
-    .message.error {
-      display: block;
-      color: #ffc1c1;
-      border: 1px solid var(--danger);
-      background: rgba(239, 102, 102, 0.08);
-    }
-
-    .client-list,
-    .license-list {
-      display: grid;
-      gap: 15px;
-    }
-
-    .client-card,
-    .license-card {
+    .card {
       background: var(--card-dark);
       border: 1px solid var(--border);
       border-radius: 18px;
       padding: 20px;
     }
 
-    .client-name,
-    .license-key {
-      font-size: 19px;
-      font-weight: 800;
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .muted {
+      color: var(--muted);
+      margin-bottom: 8px;
       overflow-wrap: anywhere;
     }
 
-    .client-email,
-    .license-meta {
-      color: var(--muted);
-      margin-top: 7px;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .license-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 15px;
-      margin-bottom: 12px;
-    }
-
     .badge {
-      flex-shrink: 0;
+      display: inline-block;
       padding: 6px 11px;
       border-radius: 999px;
       font-size: 12px;
-      font-weight: 800;
+      font-weight: bold;
       border: 1px solid var(--border);
+      margin-bottom: 12px;
     }
 
-    .badge.active {
-      color: var(--accent);
-      border-color: var(--accent);
-    }
-
-    .badge.revoked {
-      color: #ffc1c1;
-      border-color: var(--danger);
-    }
-
-    .badge.expired {
+    .pending {
       color: var(--warning);
       border-color: var(--warning);
     }
 
-    .license-actions {
+    .approved,
+    .active {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .rejected,
+    .revoked {
+      color: var(--danger);
+      border-color: var(--danger);
+    }
+
+    .actions {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 17px;
+      margin-top: 15px;
     }
 
-    .copy-button,
-    .revoke-button {
-      min-height: 42px;
-      padding: 0 16px;
-      border-radius: 10px;
-      font-weight: 700;
-    }
-
+    .approve-button,
+    .generate-button,
     .copy-button {
-      background: transparent;
-      color: var(--accent);
-      border: 1px solid var(--accent);
+      padding: 11px 16px;
+      border: none;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #10201f;
+      font-weight: bold;
+      cursor: pointer;
     }
 
+    .reject-button,
     .revoke-button {
-      background: transparent;
-      color: #ffc1c1;
+      padding: 11px 16px;
       border: 1px solid var(--danger);
+      border-radius: 10px;
+      background: transparent;
+      color: var(--danger);
+      font-weight: bold;
+      cursor: pointer;
     }
 
-    .empty-state,
-    .loading-state {
+    .status-message,
+    .empty-state {
       padding: 30px;
       text-align: center;
-      color: var(--muted);
       background: var(--card-dark);
       border: 1px dashed var(--border);
       border-radius: 16px;
+      color: var(--muted);
     }
 
-    @media (max-width: 700px) {
+    .error {
+      color: #ffc1c1;
+      border-color: var(--danger);
+    }
+
+    .license-key {
+      font-family: monospace;
+      color: var(--accent);
+      background: #101824;
+      border: 1px solid var(--border);
+      padding: 12px;
+      border-radius: 10px;
+      margin: 12px 0;
+      word-break: break-all;
+      font-size: 15px;
+    }
+
+    @media (max-width: 850px) {
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .list {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+    @media (max-width: 600px) {
 
       .nav-container {
         flex-direction: column;
+        align-items: stretch;
       }
 
-      .nav-actions {
+      nav {
         width: 100%;
       }
 
@@ -370,24 +298,21 @@
         flex: 1;
       }
 
+      .container {
+        padding: 30px 18px 60px;
+      }
+
       .stats-grid {
         grid-template-columns: 1fr;
       }
 
-      .form-grid {
-        grid-template-columns: 1fr;
+      .section-header {
+        flex-direction: column;
+        align-items: stretch;
       }
 
-      .container {
-        padding: 32px 18px 60px;
-      }
-
-      .section {
-        padding: 20px;
-      }
-
-      .hero h1 {
-        font-size: 40px;
+      .refresh-button {
+        width: 100%;
       }
 
     }
@@ -397,29 +322,23 @@
 
 <body>
 
-
 <header>
 
   <div class="nav-container">
 
-    <a
-      href="index.html"
-      class="logo"
-    >
+    <a href="index.html" class="logo">
       ALPHA <span>TRADERS HOST</span>
     </a>
 
-
-    <div class="nav-actions">
+    <nav>
 
       <button
         type="button"
         class="nav-button"
-        id="refreshButton"
+        id="refreshAllButton"
       >
         ↻ Refresh
       </button>
-
 
       <button
         type="button"
@@ -429,7 +348,7 @@
         Logout
       </button>
 
-    </div>
+    </nav>
 
   </div>
 
@@ -440,31 +359,24 @@
 
   <div class="container">
 
-
-    <!-- HERO -->
-
     <section class="hero">
 
-      <h1>
+      <h1 id="welcomeTitle">
         Mentor Dashboard
       </h1>
 
       <p>
-        Manage your approved clients and generate
-        license keys for the Alpha Traders Host
-        trading robot.
+        Manage your clients, Expert Advisors and license keys.
       </p>
 
     </section>
 
 
-
-    <!-- STATISTICS -->
+    <!-- STATS -->
 
     <section class="stats-grid">
 
       <div class="stat-card">
-
         <div
           class="stat-number"
           id="totalClients"
@@ -475,12 +387,10 @@
         <div class="stat-label">
           Approved Clients
         </div>
-
       </div>
 
 
       <div class="stat-card">
-
         <div
           class="stat-number"
           id="totalKeys"
@@ -491,12 +401,10 @@
         <div class="stat-label">
           License Keys
         </div>
-
       </div>
 
 
       <div class="stat-card">
-
         <div
           class="stat-number"
           id="activeKeys"
@@ -507,105 +415,44 @@
         <div class="stat-label">
           Active Keys
         </div>
+      </div>
 
+
+      <div class="stat-card">
+        <div
+          class="stat-number"
+          id="totalEAs"
+        >
+          0
+        </div>
+
+        <div class="stat-label">
+          My EAs
+        </div>
       </div>
 
     </section>
 
 
-
-    <!-- GENERATE LICENSE -->
+    <!-- CLIENT REQUESTS -->
 
     <section class="section">
 
       <div class="section-header">
 
         <h2>
-          Generate License Key
+          Client Requests
         </h2>
-
-        <p>
-          Select one of your approved clients and
-          generate a license key for their trading robot.
-        </p>
 
       </div>
 
-
-      <form id="licenseForm">
-
-        <div class="form-grid">
-
-
-          <div class="form-group full">
-
-            <label for="clientSelect">
-              Select Client
-            </label>
-
-            <select
-              id="clientSelect"
-              required
-            >
-
-              <option value="">
-                Loading clients...
-              </option>
-
-            </select>
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label for="expiryDate">
-              Expiry Date
-            </label>
-
-            <input
-              type="date"
-              id="expiryDate"
-            >
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label>
-              License Status
-            </label>
-
-            <input
-              type="text"
-              value="Active"
-              disabled
-            >
-
-          </div>
-
+      <div id="requestsContent">
+        <div class="status-message">
+          Loading requests...
         </div>
-
-
-        <button
-          type="submit"
-          class="generate-button"
-          id="generateButton"
-        >
-          🔑 Generate License Key
-        </button>
-
-      </form>
-
-
-      <div
-        id="message"
-        class="message"
-      ></div>
+      </div>
 
     </section>
-
 
 
     <!-- APPROVED CLIENTS -->
@@ -615,26 +462,26 @@
       <div class="section-header">
 
         <h2>
-          My Approved Clients
+          Approved Clients
         </h2>
 
-        <p>
-          Clients who have an approved mentorship
-          relationship with you.
-        </p>
+        <button
+          type="button"
+          class="refresh-button"
+          onclick="loadApprovedClients()"
+        >
+          ↻ Refresh Clients
+        </button>
 
       </div>
 
-
-      <div
-        id="clientsContent"
-        class="loading-state"
-      >
-        Loading clients...
+      <div id="clientsContent">
+        <div class="status-message">
+          Loading clients...
+        </div>
       </div>
 
     </section>
-
 
 
     <!-- LICENSE KEYS -->
@@ -644,67 +491,103 @@
       <div class="section-header">
 
         <h2>
-          My License Keys
+          Generated License Keys
         </h2>
 
-        <p>
-          License keys you have generated for your clients.
-        </p>
+        <button
+          type="button"
+          class="refresh-button"
+          onclick="loadLicenseKeys()"
+        >
+          ↻ Refresh Keys
+        </button>
 
       </div>
 
-
-      <div
-        id="licensesContent"
-        class="loading-state"
-      >
-        Loading license keys...
+      <div id="keysContent">
+        <div class="status-message">
+          Loading license keys...
+        </div>
       </div>
 
     </section>
 
+
+    <!-- EAs -->
+
+    <section class="section">
+
+      <div class="section-header">
+
+        <h2>
+          My Expert Advisors
+        </h2>
+
+        <a
+          href="create-ea.html"
+          class="refresh-button"
+          style="text-decoration:none;text-align:center;"
+        >
+          + Create EA
+        </a>
+
+      </div>
+
+      <div id="easContent">
+        <div class="status-message">
+          Loading EAs...
+        </div>
+      </div>
+
+    </section>
 
   </div>
 
 </main>
 
 
-
 <script>
+
+let currentUser = null;
+let currentProfile = null;
+
+let approvedClients = [];
+let mentorRequests = [];
+let licenseKeys = [];
 
 
 /* ==========================================
    ELEMENTS
 ========================================== */
 
-const clientSelect =
+const welcomeTitle =
   document.getElementById(
-    "clientSelect"
+    "welcomeTitle"
   );
 
-const licenseForm =
+const totalClientsElement =
   document.getElementById(
-    "licenseForm"
+    "totalClients"
   );
 
-const expiryDate =
+const totalKeysElement =
   document.getElementById(
-    "expiryDate"
+    "totalKeys"
   );
 
-const generateButton =
+const activeKeysElement =
   document.getElementById(
-    "generateButton"
+    "activeKeys"
   );
 
-const refreshButton =
+const totalEAsElement =
   document.getElementById(
-    "refreshButton"
+    "totalEAs"
   );
 
-const logoutButton =
+const requestsContent =
   document.getElementById(
-    "logoutButton"
+    "requestsContent"
   );
 
 const clientsContent =
@@ -712,35 +595,36 @@ const clientsContent =
     "clientsContent"
   );
 
-const licensesContent =
+const keysContent =
   document.getElementById(
-    "licensesContent"
+    "keysContent"
   );
 
-const message =
+const easContent =
   document.getElementById(
-    "message"
+    "easContent"
   );
 
-const totalClients =
+const logoutButton =
   document.getElementById(
-    "totalClients"
+    "logoutButton"
   );
 
-const totalKeys =
+const refreshAllButton =
   document.getElementById(
-    "totalKeys"
-  );
-
-const activeKeys =
-  document.getElementById(
-    "activeKeys"
+    "refreshAllButton"
   );
 
 
-let currentUser = null;
+/* ==========================================
+   SUPABASE
+========================================== */
 
-let approvedClients = [];
+function getSupabaseClient() {
+
+  return window.supabaseClient || null;
+
+}
 
 
 /* ==========================================
@@ -767,88 +651,36 @@ function escapeHTML(value) {
 
 
 /* ==========================================
-   SHOW MESSAGE
-========================================== */
-
-function showMessage(
-  text,
-  type
-) {
-
-  message.textContent =
-    text;
-
-  message.className =
-    "message " + type;
-
-}
-
-
-/* ==========================================
-   CLEAR MESSAGE
-========================================== */
-
-function clearMessage() {
-
-  message.textContent =
-    "";
-
-  message.className =
-    "message";
-
-}
-
-
-/* ==========================================
    FORMAT DATE
 ========================================== */
 
-function formatDate(date) {
+function formatDate(value) {
 
-  if (!date) {
-    return "No expiry";
-  }
-
-  try {
-
-    return new Date(
-      date
-    ).toLocaleDateString();
-
-  }
-  catch {
-
+  if (!value) {
     return "Unknown";
-
   }
 
-}
-
-
-/* ==========================================
-   GET SUPABASE
-========================================== */
-
-function getSupabaseClient() {
+  const date =
+    new Date(value);
 
   if (
-    window.supabaseClient
+    Number.isNaN(
+      date.getTime()
+    )
   ) {
-
-    return window.supabaseClient;
-
+    return "Unknown";
   }
 
-  return null;
+  return date.toLocaleDateString();
 
 }
 
 
 /* ==========================================
-   LOAD DASHBOARD
+   CHECK MENTOR ACCESS
 ========================================== */
 
-async function loadDashboard() {
+async function checkMentorAccess() {
 
   const supabaseClient =
     getSupabaseClient();
@@ -856,455 +688,567 @@ async function loadDashboard() {
 
   if (!supabaseClient) {
 
-    showMessage(
-      "Supabase is not connected. Check supabase-config.js.",
-      "error"
+    throw new Error(
+      "Supabase is not connected."
     );
-
-    return;
 
   }
 
 
-  clientsContent.innerHTML =
-    "Loading clients...";
-
-  clientsContent.className =
-    "loading-state";
-
-
-  licensesContent.innerHTML =
-    "Loading license keys...";
-
-  licensesContent.className =
-    "loading-state";
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .auth
+      .getUser();
 
 
-  try {
+  if (
+    error ||
+    !data.user
+  ) {
+
+    window.location.href =
+      "login.html";
+
+    return false;
+
+  }
 
 
-    /* ======================================
-       GET LOGGED IN USER
-    ====================================== */
-
-    const {
-      data: authData,
-      error: authError
-    } =
-      await supabaseClient
-        .auth
-        .getUser();
+  currentUser =
+    data.user;
 
 
-    if (authError) {
-
-      throw authError;
-
-    }
-
-
-    currentUser =
-      authData?.user;
-
-
-    if (!currentUser) {
-
-      window.location.href =
-        "login.html";
-
-      return;
-
-    }
+  const {
+    data: profile,
+    error: profileError
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select(
+        "id, full_name, email, role, approval_status"
+      )
+      .eq(
+        "id",
+        currentUser.id
+      )
+      .single();
 
 
-    /* ======================================
-       CHECK MENTOR PROFILE
-    ====================================== */
+  if (
+    profileError ||
+    !profile
+  ) {
 
-    const {
-      data: mentorProfile,
-      error: mentorError
-    } =
-      await supabaseClient
-        .from("profiles")
-        .select(
-          "id, role, approval_status"
-        )
-        .eq(
-          "id",
-          currentUser.id
-        )
-        .single();
+    throw new Error(
+      "Could not load your profile."
+    );
+
+  }
 
 
-    if (mentorError) {
-
-      throw mentorError;
-
-    }
+  currentProfile =
+    profile;
 
 
-    if (
-      String(
-        mentorProfile.role || ""
-      ).toLowerCase() !==
-      "mentor"
-    ) {
+  const role =
+    String(
+      profile.role || ""
+    )
+    .toLowerCase();
 
-      alert(
-        "Access denied. Mentor access is required."
+
+  const approval =
+    String(
+      profile.approval_status || ""
+    )
+    .toLowerCase();
+
+
+  if (
+    role === "client"
+  ) {
+
+    window.location.href =
+      "client-dashboard.html";
+
+    return false;
+
+  }
+
+
+  if (
+    role !== "mentor" ||
+    approval !== "approved"
+  ) {
+
+    await supabaseClient
+      .auth
+      .signOut();
+
+
+    alert(
+      "Your mentor account has not been approved yet."
+    );
+
+
+    window.location.href =
+      "login.html";
+
+    return false;
+
+  }
+
+
+  const firstName =
+    String(
+      profile.full_name || ""
+    )
+    .trim()
+    .split(" ")[0];
+
+
+  if (firstName) {
+
+    welcomeTitle.textContent =
+      "Welcome, " +
+      firstName;
+
+  }
+
+
+  return true;
+
+}
+
+
+/* ==========================================
+   LOAD MENTOR REQUESTS
+========================================== */
+
+async function loadMentorRequests() {
+
+  const supabaseClient =
+    getSupabaseClient();
+
+
+  requestsContent.innerHTML =
+    '<div class="status-message">Loading requests...</div>';
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("mentor_requests")
+      .select(
+        "id, client_id, mentor_id, status, created_at, updated_at"
+      )
+      .eq(
+        "mentor_id",
+        currentUser.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
       );
 
 
-      window.location.href =
-        "login.html";
-
-      return;
-
-    }
+  if (error) {
+    throw error;
+  }
 
 
-    if (
-      String(
-        mentorProfile.approval_status || ""
-      ).toLowerCase() !==
-      "approved"
-    ) {
-
-      clientsContent.className =
-        "empty-state";
-
-      clientsContent.innerHTML =
-        "<h3>Your mentor account is awaiting approval.</h3>";
-
-      licensesContent.className =
-        "empty-state";
-
-      licensesContent.innerHTML =
-        "<h3>License generation is unavailable until you are approved.</h3>";
-
-      clientSelect.innerHTML =
-        '<option value="">Mentor approval required</option>';
-
-      generateButton.disabled =
-        true;
-
-      return;
-
-    }
+  mentorRequests =
+    Array.isArray(data)
+      ? data
+      : [];
 
 
-    generateButton.disabled =
-      false;
-
-
-    /* ======================================
-       LOAD APPROVED MENTOR REQUESTS
-    ====================================== */
-
-    const {
-      data: requests,
-      error: requestsError
-    } =
-      await supabaseClient
-        .from("mentor_requests")
-        .select(
-          "client_id, mentor_id, status"
-        )
-        .eq(
-          "mentor_id",
-          currentUser.id
-        )
-        .eq(
-          "status",
-          "approved"
-        );
-
-
-    if (requestsError) {
-
-      throw requestsError;
-
-    }
-
-
-    const clientIds =
-      [
-        ...new Set(
-          (
-            requests || []
-          )
+  const clientIds =
+    [
+      ...new Set(
+        mentorRequests
           .map(
             request =>
               request.client_id
           )
-          .filter(
-            Boolean
-          )
-        )
-      ];
+          .filter(Boolean)
+      )
+    ];
 
 
-    /* ======================================
-       LOAD CLIENT PROFILES
-    ====================================== */
-
-    let clients =
-      [];
+  let clientMap = {};
 
 
-    if (
-      clientIds.length > 0
-    ) {
-
-      const {
-        data: clientProfiles,
-        error: clientsError
-      } =
-        await supabaseClient
-          .from("profiles")
-          .select(
-            "id, full_name, email, role"
-          )
-          .in(
-            "id",
-            clientIds
-          );
-
-
-      if (clientsError) {
-
-        throw clientsError;
-
-      }
-
-
-      clients =
-        clientProfiles ||
-        [];
-
-    }
-
-
-    approvedClients =
-      clients;
-
-
-    renderClients(
-      clients
-    );
-
-
-    populateClientSelect(
-      clients
-    );
-
-
-    /* ======================================
-       LOAD LICENSE KEYS
-    ====================================== */
+  if (
+    clientIds.length > 0
+  ) {
 
     const {
-      data: licenses,
-      error: licensesError
+      data: clients,
+      error: clientsError
     } =
       await supabaseClient
-        .from("license_keys")
-        .select("*")
-        .eq(
-          "mentor_id",
-          currentUser.id
+        .from("profiles")
+        .select(
+          "id, full_name, email"
         )
-        .order(
-          "created_at",
-          {
-            ascending: false
-          }
+        .in(
+          "id",
+          clientIds
         );
 
 
-    if (licensesError) {
-
-      throw licensesError;
-
+    if (clientsError) {
+      throw clientsError;
     }
 
 
-    renderLicenses(
-      licenses || [],
-      clients
-    );
+    (clients || []).forEach(
+      client => {
 
+        clientMap[
+          client.id
+        ] =
+          client;
 
-    /* ======================================
-       UPDATE STATISTICS
-    ====================================== */
-
-    updateStatistics(
-      clients,
-      licenses || []
-    );
-
-
-  }
-  catch (error) {
-
-
-    console.error(
-      "Dashboard error:",
-      error
-    );
-
-
-    clientsContent.className =
-      "empty-state";
-
-    clientsContent.innerHTML =
-      "<h3>Could not load dashboard</h3>" +
-      "<p>" +
-      escapeHTML(
-        error.message ||
-        "An unknown error occurred."
-      ) +
-      "</p>";
-
-
-    licensesContent.className =
-      "empty-state";
-
-    licensesContent.innerHTML =
-      "<h3>Could not load license keys</h3>";
-
-
-    showMessage(
-      error.message ||
-      "Could not load dashboard.",
-      "error"
+      }
     );
 
   }
+
+
+  mentorRequests =
+    mentorRequests.map(
+      request => ({
+
+        ...request,
+
+        client:
+          clientMap[
+            request.client_id
+          ] ||
+          null
+
+      })
+    );
+
+
+  renderRequests();
 
 }
 
 
 /* ==========================================
-   UPDATE STATISTICS
+   RENDER REQUESTS
 ========================================== */
 
-function updateStatistics(
-  clients,
-  licenses
-) {
-
-  totalClients.textContent =
-    clients.length;
-
-
-  totalKeys.textContent =
-    licenses.length;
-
-
-  const active =
-    licenses.filter(
-      license =>
-        String(
-          license.status || ""
-        ).toLowerCase() ===
-        "active"
-    );
-
-
-  activeKeys.textContent =
-    active.length;
-
-}
-
-
-/* ==========================================
-   POPULATE CLIENT SELECT
-========================================== */
-
-function populateClientSelect(clients) {
+function renderRequests() {
 
   if (
-    clients.length === 0
+    mentorRequests.length === 0
   ) {
 
-    clientSelect.innerHTML =
-      '<option value="">No approved clients available</option>';
-
-    generateButton.disabled =
-      true;
+    requestsContent.innerHTML =
+      '<div class="empty-state">No client requests yet.</div>';
 
     return;
 
   }
 
 
-  generateButton.disabled =
-    false;
-
-
   let html =
-    '<option value="">-- Select a client --</option>';
+    '<div class="list">';
 
 
-  clients.forEach(
-    function(client) {
+  mentorRequests.forEach(
+    request => {
 
-      const name =
-        escapeHTML(
-          client.full_name ||
-          "Unnamed Client"
-        );
+      const client =
+        request.client || {};
 
-
-      const email =
-        escapeHTML(
-          client.email ||
-          ""
-        );
+      const status =
+        String(
+          request.status ||
+          "pending"
+        )
+        .toLowerCase();
 
 
-      html +=
-        '<option value="' +
-        client.id +
-        '">' +
-        name +
-        (
-          email
-            ? " — " + email
-            : ""
-        ) +
-        '</option>';
+      html += `
+
+        <article class="card">
+
+          <span
+            class="badge ${escapeHTML(status)}"
+          >
+            ${escapeHTML(status)}
+          </span>
+
+          <h3>
+            ${escapeHTML(
+              client.full_name ||
+              "Client"
+            )}
+          </h3>
+
+          <div class="muted">
+            ${escapeHTML(
+              client.email ||
+              "Email unavailable"
+            )}
+          </div>
+
+          <div class="muted">
+            Requested:
+            ${escapeHTML(
+              formatDate(
+                request.created_at
+              )
+            )}
+          </div>
+
+
+          ${
+            status === "pending"
+              ? `
+
+                <div class="actions">
+
+                  <button
+                    class="approve-button"
+                    onclick="
+                      updateRequestStatus(
+                        '${request.id}',
+                        'approved'
+                      )
+                    "
+                  >
+                    ✓ Accept
+                  </button>
+
+                  <button
+                    class="reject-button"
+                    onclick="
+                      updateRequestStatus(
+                        '${request.id}',
+                        'rejected'
+                      )
+                    "
+                  >
+                    ✕ Reject
+                  </button>
+
+                </div>
+
+              `
+              : ""
+          }
+
+        </article>
+
+      `;
 
     }
   );
 
 
-  clientSelect.innerHTML =
+  html +=
+    "</div>";
+
+
+  requestsContent.innerHTML =
     html;
 
 }
 
 
 /* ==========================================
-   RENDER CLIENTS
+   UPDATE REQUEST STATUS
 ========================================== */
 
-function renderClients(clients) {
+async function updateRequestStatus(
+  requestId,
+  newStatus
+) {
+
+  const confirmed =
+    confirm(
+      "Are you sure you want to " +
+      newStatus +
+      " this request?"
+    );
+
+
+  if (!confirmed) {
+    return;
+  }
+
+
+  try {
+
+    const supabaseClient =
+      getSupabaseClient();
+
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .rpc(
+          "update_mentor_request_status",
+          {
+
+            request_id:
+              requestId,
+
+            new_status:
+              newStatus
+
+          }
+        );
+
+
+    if (error) {
+      throw error;
+    }
+
+
+    await refreshAll();
+
+
+  }
+  catch (error) {
+
+    alert(
+      "Could not update request: " +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   LOAD APPROVED CLIENTS
+========================================== */
+
+async function loadApprovedClients() {
+
+  const supabaseClient =
+    getSupabaseClient();
+
+
+  clientsContent.innerHTML =
+    '<div class="status-message">Loading clients...</div>';
+
+
+  const {
+    data: requests,
+    error
+  } =
+    await supabaseClient
+      .from("mentor_requests")
+      .select(
+        "client_id, created_at"
+      )
+      .eq(
+        "mentor_id",
+        currentUser.id
+      )
+      .eq(
+        "status",
+        "approved"
+      );
+
+
+  if (error) {
+    throw error;
+  }
+
+
+  const clientIds =
+    [
+      ...new Set(
+        (requests || [])
+          .map(
+            request =>
+              request.client_id
+          )
+          .filter(Boolean)
+      )
+    ];
+
 
   if (
-    clients.length === 0
+    clientIds.length === 0
   ) {
 
-    clientsContent.className =
-      "empty-state";
+    approvedClients =
+      [];
+
+
+    renderApprovedClients();
+
+    return;
+
+  }
+
+
+  const {
+    data: clients,
+    error: clientsError
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select(
+        "id, full_name, email"
+      )
+      .in(
+        "id",
+        clientIds
+      );
+
+
+  if (clientsError) {
+    throw clientsError;
+  }
+
+
+  approvedClients =
+    Array.isArray(clients)
+      ? clients
+      : [];
+
+
+  renderApprovedClients();
+
+}
+
+
+/* ==========================================
+   RENDER APPROVED CLIENTS
+========================================== */
+
+function renderApprovedClients() {
+
+  totalClientsElement.textContent =
+    approvedClients.length;
+
+
+  if (
+    approvedClients.length === 0
+  ) {
 
     clientsContent.innerHTML =
-      "<h3>No approved clients yet</h3>" +
-      "<br>" +
-      "<p>When a client sends you a request and it is approved, they will appear here.</p>";
+      '<div class="empty-state">No approved clients yet.</div>';
 
     return;
 
@@ -1312,36 +1256,47 @@ function renderClients(clients) {
 
 
   let html =
-    '<div class="client-list">';
+    '<div class="list">';
 
 
-  clients.forEach(
-    function(client) {
-
-      const name =
-        escapeHTML(
-          client.full_name ||
-          "Unnamed Client"
-        );
-
-
-      const email =
-        escapeHTML(
-          client.email ||
-          "Email unavailable"
-        );
-
+  approvedClients.forEach(
+    client => {
 
       html += `
 
-        <article class="client-card">
+        <article class="card">
 
-          <div class="client-name">
-            ${name}
+          <span class="badge approved">
+            APPROVED CLIENT
+          </span>
+
+          <h3>
+            ${escapeHTML(
+              client.full_name ||
+              "Client"
+            )}
+          </h3>
+
+          <div class="muted">
+            ${escapeHTML(
+              client.email ||
+              "Email unavailable"
+            )}
           </div>
 
-          <div class="client-email">
-            ${email}
+          <div class="actions">
+
+            <button
+              class="generate-button"
+              onclick="
+                generateLicenseKey(
+                  '${client.id}'
+                )
+              "
+            >
+              🔑 Generate License Key
+            </button>
+
           </div>
 
         </article>
@@ -1356,12 +1311,201 @@ function renderClients(clients) {
     "</div>";
 
 
-  clientsContent.className =
-    "";
-
-
   clientsContent.innerHTML =
     html;
+
+}
+
+
+/* ==========================================
+   GENERATE LICENSE KEY
+========================================== */
+
+async function generateLicenseKey(
+  clientId
+) {
+
+  const confirmed =
+    confirm(
+      "Generate a new license key for this client?"
+    );
+
+
+  if (!confirmed) {
+    return;
+  }
+
+
+  try {
+
+    const supabaseClient =
+      getSupabaseClient();
+
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .rpc(
+          "generate_license_key",
+          {
+
+            target_client_id:
+              clientId
+
+          }
+        );
+
+
+    if (error) {
+      throw error;
+    }
+
+
+    alert(
+      "License key generated successfully!\n\n" +
+      (
+        data?.license_key ||
+        "Key created"
+      )
+    );
+
+
+    await loadLicenseKeys();
+
+  }
+  catch (error) {
+
+    console.error(error);
+
+    alert(
+      "Could not generate license key: " +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   LOAD LICENSE KEYS
+========================================== */
+
+async function loadLicenseKeys() {
+
+  const supabaseClient =
+    getSupabaseClient();
+
+
+  keysContent.innerHTML =
+    '<div class="status-message">Loading license keys...</div>';
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("license_keys")
+      .select(
+        "id, license_key, client_id, mentor_id, status, created_at, updated_at"
+      )
+      .eq(
+        "mentor_id",
+        currentUser.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
+
+
+  if (error) {
+    throw error;
+  }
+
+
+  licenseKeys =
+    Array.isArray(data)
+      ? data
+      : [];
+
+
+  const clientIds =
+    [
+      ...new Set(
+        licenseKeys
+          .map(
+            key =>
+              key.client_id
+          )
+          .filter(Boolean)
+      )
+    ];
+
+
+  let clientMap = {};
+
+
+  if (
+    clientIds.length > 0
+  ) {
+
+    const {
+      data: clients,
+      error: clientsError
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select(
+          "id, full_name, email"
+        )
+        .in(
+          "id",
+          clientIds
+        );
+
+
+    if (clientsError) {
+      throw clientsError;
+    }
+
+
+    (clients || []).forEach(
+      client => {
+
+        clientMap[
+          client.id
+        ] =
+          client;
+
+      }
+    );
+
+  }
+
+
+  licenseKeys =
+    licenseKeys.map(
+      key => ({
+
+        ...key,
+
+        client:
+          clientMap[
+            key.client_id
+          ] ||
+          null
+
+      })
+    );
+
+
+  renderLicenseKeys();
 
 }
 
@@ -1370,22 +1514,29 @@ function renderClients(clients) {
    RENDER LICENSE KEYS
 ========================================== */
 
-function renderLicenses(
-  licenses,
-  clients
-) {
+function renderLicenseKeys() {
+
+  totalKeysElement.textContent =
+    licenseKeys.length;
+
+
+  activeKeysElement.textContent =
+    licenseKeys.filter(
+      key =>
+        String(
+          key.status || ""
+        )
+        .toLowerCase() ===
+        "active"
+    ).length;
+
 
   if (
-    licenses.length === 0
+    licenseKeys.length === 0
   ) {
 
-    licensesContent.className =
-      "empty-state";
-
-    licensesContent.innerHTML =
-      "<h3>No license keys yet</h3>" +
-      "<br>" +
-      "<p>Generate your first license key for an approved client.</p>";
+    keysContent.innerHTML =
+      '<div class="empty-state">No license keys generated yet.</div>';
 
     return;
 
@@ -1393,96 +1544,72 @@ function renderLicenses(
 
 
   let html =
-    '<div class="license-list">';
+    '<div class="list">';
 
 
-  licenses.forEach(
-    function(license) {
-
-
-      const client =
-        clients.find(
-          client =>
-            client.id ===
-            license.client_id
-        );
-
-
-      const clientName =
-        escapeHTML(
-          client?.full_name ||
-          "Unknown Client"
-        );
-
+  licenseKeys.forEach(
+    key => {
 
       const status =
         String(
-          license.status ||
-          "unknown"
-        ).toLowerCase();
-
-
-      const licenseKey =
-        escapeHTML(
-          license.license_key
-        );
+          key.status ||
+          "active"
+        )
+        .toLowerCase();
 
 
       html += `
 
-        <article class="license-card">
+        <article class="card">
 
-          <div class="license-top">
+          <span
+            class="badge ${escapeHTML(status)}"
+          >
+            ${escapeHTML(status)}
+          </span>
 
-            <div>
+          <h3>
+            ${escapeHTML(
+              key.client?.full_name ||
+              "Client"
+            )}
+          </h3>
 
-              <div class="license-key">
-                ${licenseKey}
-              </div>
-
-              <div class="license-meta">
-
-                Client:
-                ${clientName}
-
-                <br>
-
-                Created:
-                ${formatDate(
-                  license.created_at
-                )}
-
-                <br>
-
-                Expires:
-                ${formatDate(
-                  license.expires_at
-                )}
-
-              </div>
-
-            </div>
-
-
-            <div
-              class="badge ${status}"
-            >
-              ${escapeHTML(
-                status.toUpperCase()
-              )}
-            </div>
-
+          <div class="muted">
+            ${escapeHTML(
+              key.client?.email ||
+              ""
+            )}
           </div>
 
+          <div class="license-key">
+            ${escapeHTML(
+              key.license_key
+            )}
+          </div>
 
-          <div class="license-actions">
+          <div class="muted">
+            Created:
+            ${escapeHTML(
+              formatDate(
+                key.created_at
+              )
+            )}
+          </div>
+
+          <div class="actions">
 
             <button
-              type="button"
               class="copy-button"
-              onclick="copyLicenseKey('${licenseKey}')"
+              onclick="
+                copyLicenseKey(
+                  '${escapeHTML(
+                    key.license_key
+                  )}'
+                )
+              "
             >
-              📋 Copy Key
+              📋 Copy
             </button>
 
 
@@ -1491,11 +1618,14 @@ function renderLicenses(
                 ? `
 
                   <button
-                    type="button"
                     class="revoke-button"
-                    onclick="revokeLicense('${license.id}')"
+                    onclick="
+                      revokeLicenseKey(
+                        '${key.id}'
+                      )
+                    "
                   >
-                    Revoke Key
+                    Revoke
                   </button>
 
                 `
@@ -1516,174 +1646,35 @@ function renderLicenses(
     "</div>";
 
 
-  licensesContent.className =
-    "";
-
-
-  licensesContent.innerHTML =
+  keysContent.innerHTML =
     html;
 
 }
 
 
 /* ==========================================
-   GENERATE LICENSE
-========================================== */
-
-licenseForm.addEventListener(
-  "submit",
-  async function(event) {
-
-    event.preventDefault();
-
-
-    clearMessage();
-
-
-    const clientId =
-      clientSelect.value;
-
-
-    if (!clientId) {
-
-      showMessage(
-        "Please select a client.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    generateButton.disabled =
-      true;
-
-    generateButton.textContent =
-      "Generating...";
-
-
-    try {
-
-
-      let expiryValue =
-        null;
-
-
-      if (
-        expiryDate.value
-      ) {
-
-        expiryValue =
-          new Date(
-            expiryDate.value +
-            "T23:59:59"
-          ).toISOString();
-
-      }
-
-
-      const {
-        data,
-        error
-      } =
-        await window.supabaseClient
-          .rpc(
-            "create_license_key",
-            {
-              target_client_id:
-                clientId,
-
-              expiry_date:
-                expiryValue
-            }
-          );
-
-
-      if (error) {
-
-        throw error;
-
-      }
-
-
-      showMessage(
-        "License key generated successfully: " +
-        (
-          data?.license_key ||
-          "Key created"
-        ),
-        "success"
-      );
-
-
-      expiryDate.value =
-        "";
-
-
-      clientSelect.value =
-        "";
-
-
-      await loadDashboard();
-
-
-    }
-    catch (error) {
-
-
-      console.error(
-        "License generation error:",
-        error
-      );
-
-
-      showMessage(
-        error.message ||
-        "Could not generate license key.",
-        "error"
-      );
-
-    }
-    finally {
-
-
-      generateButton.disabled =
-        false;
-
-      generateButton.textContent =
-        "🔑 Generate License Key";
-
-    }
-
-  }
-);
-
-
-/* ==========================================
    COPY LICENSE KEY
 ========================================== */
 
-async function copyLicenseKey(key) {
+async function copyLicenseKey(
+  key
+) {
 
   try {
 
-    await navigator
-      .clipboard
-      .writeText(key);
+    await navigator.clipboard.writeText(
+      key
+    );
 
-
-    showMessage(
-      "License key copied to clipboard.",
-      "success"
+    alert(
+      "License key copied!"
     );
 
   }
   catch {
 
-    showMessage(
-      "Could not copy the license key.",
-      "error"
+    alert(
+      "Could not copy the key automatically."
     );
 
   }
@@ -1692,41 +1683,48 @@ async function copyLicenseKey(key) {
 
 
 /* ==========================================
-   REVOKE LICENSE
+   REVOKE LICENSE KEY
 ========================================== */
 
-async function revokeLicense(
-  licenseId
+async function revokeLicenseKey(
+  keyId
 ) {
 
   const confirmed =
     confirm(
-      "Are you sure you want to revoke this license key? The client will no longer be able to use it."
+      "Are you sure you want to revoke this license key?"
     );
 
 
   if (!confirmed) {
-
     return;
-
   }
 
 
   try {
 
+    const supabaseClient =
+      getSupabaseClient();
+
 
     const {
       error
     } =
-      await window.supabaseClient
+      await supabaseClient
         .from("license_keys")
         .update({
+
           status:
-            "revoked"
+            "revoked",
+
+          updated_at:
+            new Date()
+              .toISOString()
+
         })
         .eq(
           "id",
-          licenseId
+          keyId
         )
         .eq(
           "mentor_id",
@@ -1735,35 +1733,18 @@ async function revokeLicense(
 
 
     if (error) {
-
       throw error;
-
     }
 
 
-    showMessage(
-      "License key revoked successfully.",
-      "success"
-    );
-
-
-    await loadDashboard();
-
+    await loadLicenseKeys();
 
   }
   catch (error) {
 
-
-    console.error(
-      "Revoke error:",
-      error
-    );
-
-
-    showMessage(
-      error.message ||
-      "Could not revoke the license key.",
-      "error"
+    alert(
+      "Could not revoke key: " +
+      error.message
     );
 
   }
@@ -1772,31 +1753,169 @@ async function revokeLicense(
 
 
 /* ==========================================
-   REFRESH
+   LOAD EAs
 ========================================== */
 
-refreshButton.addEventListener(
-  "click",
-  async function() {
+async function loadEAs() {
 
-    refreshButton.disabled =
+  const supabaseClient =
+    getSupabaseClient();
+
+
+  easContent.innerHTML =
+    '<div class="status-message">Loading EAs...</div>';
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("ea_robots")
+      .select(
+        "id, name, description, platform, created_at"
+      )
+      .eq(
+        "mentor_id",
+        currentUser.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
+
+
+  if (error) {
+    throw error;
+  }
+
+
+  const eas =
+    Array.isArray(data)
+      ? data
+      : [];
+
+
+  totalEAsElement.textContent =
+    eas.length;
+
+
+  if (
+    eas.length === 0
+  ) {
+
+    easContent.innerHTML =
+      '<div class="empty-state">No Expert Advisors created yet.</div>';
+
+    return;
+
+  }
+
+
+  let html =
+    '<div class="list">';
+
+
+  eas.forEach(
+    ea => {
+
+      html += `
+
+        <article class="card">
+
+          <h3>
+            ${escapeHTML(
+              ea.name ||
+              "Unnamed EA"
+            )}
+          </h3>
+
+          <div class="muted">
+            Platform:
+            ${escapeHTML(
+              ea.platform ||
+              "Not specified"
+            )}
+          </div>
+
+          <div class="muted">
+            ${escapeHTML(
+              ea.description ||
+              "No description"
+            )}
+          </div>
+
+        </article>
+
+      `;
+
+    }
+  );
+
+
+  html +=
+    "</div>";
+
+
+  easContent.innerHTML =
+    html;
+
+}
+
+
+/* ==========================================
+   REFRESH ALL
+========================================== */
+
+async function refreshAll() {
+
+  try {
+
+    refreshAllButton.disabled =
       true;
 
-    refreshButton.textContent =
-      "Refreshing...";
+    refreshAllButton.textContent =
+      "Loading...";
 
 
-    await loadDashboard();
+    await Promise.all([
 
+      loadMentorRequests(),
 
-    refreshButton.disabled =
+      loadApprovedClients(),
+
+      loadLicenseKeys(),
+
+      loadEAs()
+
+    ]);
+
+  }
+  catch (error) {
+
+    console.error(
+      error
+    );
+
+    alert(
+      "Could not refresh dashboard: " +
+      error.message
+    );
+
+  }
+  finally {
+
+    refreshAllButton.disabled =
       false;
 
-    refreshButton.textContent =
+    refreshAllButton.textContent =
       "↻ Refresh";
 
   }
-);
+
+}
 
 
 /* ==========================================
@@ -1807,31 +1926,58 @@ logoutButton.addEventListener(
   "click",
   async function() {
 
+    const supabaseClient =
+      getSupabaseClient();
+
+
+    if (supabaseClient) {
+
+      await supabaseClient
+        .auth
+        .signOut();
+
+    }
+
+
+    window.location.href =
+      "login.html";
+
+  }
+);
+
+
+/* ==========================================
+   INITIALIZE
+========================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  async function() {
 
     try {
 
-      if (
-        window.supabaseClient
-      ) {
+      const allowed =
+        await checkMentorAccess();
 
-        await window.supabaseClient
-          .auth
-          .signOut();
 
+      if (!allowed) {
+        return;
       }
 
 
-      window.location.href =
-        "login.html";
-
+      await refreshAll();
 
     }
     catch (error) {
 
-
       console.error(
-        "Logout error:",
         error
+      );
+
+
+      alert(
+        "Dashboard error: " +
+        error.message
       );
 
     }
@@ -1841,11 +1987,13 @@ logoutButton.addEventListener(
 
 
 /* ==========================================
-   START DASHBOARD
+   REFRESH BUTTON
 ========================================== */
 
-loadDashboard();
-
+refreshAllButton.addEventListener(
+  "click",
+  refreshAll
+);
 
 </script>
 
