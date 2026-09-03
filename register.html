@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
   <meta charset="UTF-8">
@@ -12,989 +11,1079 @@
 
   <meta
     name="theme-color"
-    content="#050806"
+    content="#020d0a"
   >
 
-  <title>Create Account | Alpha Traders Host</title>
+  <title>
+    Register | Alpha Traders Host
+  </title>
+
+
+  <!-- ========================================
+       SUPABASE
+  ========================================= -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="supabase-config.js"></script>
 
 
   <style>
 
-    /* =========================
+    /* ========================================
        RESET
-    ========================== */
+    ========================================= */
 
     * {
-
-      box-sizing:
-        border-box;
-
-      margin:
-        0;
-
-      padding:
-        0;
-
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
 
     :root {
 
-      --bg:
-        #050806;
+      --bg: #020d0a;
 
-      --bg-soft:
-        #08110d;
+      --bg-secondary: #061511;
 
-      --card:
-        #0b120f;
+      --card: #081b16;
 
-      --text:
-        #f5f7f6;
+      --card-dark: #04110d;
 
-      --muted:
-        #98a39d;
+      --border: #163f33;
 
-      --accent:
-        #00d084;
+      --border-light: #235b49;
 
-      --danger:
-        #ff7777;
+      --text: #f1f7f4;
 
-      --warning:
-        #f5c451;
+      --muted: #9eafa8;
+
+      --accent: #20c997;
+
+      --accent-light: #4be0b3;
+
+      --accent-dark: #129b74;
+
+      --purple: #9d72e5;
+
+      --danger: #ef6666;
+
+      --warning: #f5b942;
+
+      --success: #20c997;
+
+    }
+
+
+    html,
+    body {
+
+      width: 100%;
+
+      min-height: 100%;
+
+      overflow-x: hidden;
 
     }
 
 
     body {
 
-      min-height:
-        100vh;
+      min-height: 100vh;
 
       background:
-        var(--bg);
 
-      color:
-        var(--text);
+        radial-gradient(
+          circle at top right,
+          rgba(32, 201, 151, 0.09),
+          transparent 35%
+        ),
+
+        radial-gradient(
+          circle at bottom left,
+          rgba(157, 114, 229, 0.07),
+          transparent 35%
+        ),
+
+        linear-gradient(
+          180deg,
+          #03100c 0%,
+          #020d0a 55%,
+          #010806 100%
+        );
+
+      color: var(--text);
 
       font-family:
-        Arial,
+
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
         sans-serif;
 
-      overflow-x:
-        hidden;
-
     }
 
 
-    a {
+    /* ========================================
+       HEADER
+    ========================================= */
 
-      text-decoration:
-        none;
+    header {
 
-    }
-
-
-
-    /* =========================
-       BACKGROUND
-    ========================== */
-
-    .glow {
-
-      position:
-        fixed;
-
-      width:
-        500px;
-
-      height:
-        500px;
-
-      border-radius:
-        50%;
-
-      background:
-        rgba(0, 208, 132, 0.10);
-
-      filter:
-        blur(130px);
-
-      pointer-events:
-        none;
-
-      z-index:
-        -1;
-
-    }
-
-
-    .glow-one {
-
-      top:
-        -250px;
-
-      left:
-        -220px;
-
-    }
-
-
-    .glow-two {
-
-      right:
-        -250px;
-
-      bottom:
-        -250px;
-
-    }
-
-
-
-    /* =========================
-       NAVIGATION
-    ========================== */
-
-    nav {
-
-      width:
-        100%;
-
-      display:
-        flex;
-
-      justify-content:
-        space-between;
-
-      align-items:
-        center;
-
-      padding:
-        18px 7%;
+      width: 100%;
 
       border-bottom:
-        1px solid rgba(255,255,255,0.08);
+
+        1px solid
+        rgba(32, 201, 151, 0.12);
 
       background:
-        rgba(5,8,6,0.85);
+
+        rgba(3, 16, 12, 0.94);
 
       backdrop-filter:
-        blur(15px);
+
+        blur(14px);
 
     }
 
 
-    .brand {
+    .nav-container {
 
-      display:
-        flex;
+      width: 100%;
 
-      align-items:
-        center;
+      max-width: 1200px;
 
-      gap:
-        12px;
+      margin: 0 auto;
 
-      color:
-        white;
+      padding:
+
+        20px 28px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 20px;
 
     }
 
 
-    .brand-icon {
+    .logo {
 
-      width:
-        42px;
+      display: inline-flex;
 
-      height:
-        42px;
+      align-items: center;
 
-      border-radius:
-        12px;
+      text-decoration: none;
 
-      overflow:
-        hidden;
+      font-size: 23px;
+
+      font-weight: 900;
+
+      letter-spacing: 1px;
+
+    }
+
+
+    .logo .alpha {
+
+      color: var(--purple);
+
+    }
+
+
+    .logo .traders {
+
+      color: var(--accent);
+
+      margin-left: 7px;
+
+    }
+
+
+    .login-link {
+
+      min-height: 45px;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding:
+
+        0 18px;
+
+      border:
+
+        1px solid
+        rgba(32, 201, 151, 0.4);
+
+      border-radius: 12px;
+
+      color: var(--accent);
 
       background:
-        #07120e;
 
-      border:
-        1px solid rgba(0,208,132,0.45);
+        rgba(32, 201, 151, 0.04);
 
-    }
+      text-decoration: none;
 
+      font-size: 14px;
 
-    .brand-icon img {
-
-      width:
-        100%;
-
-      height:
-        100%;
-
-      object-fit:
-        cover;
-
-    }
-
-
-    .brand-text {
-
-      font-size:
-        20px;
-
-      font-weight:
-        bold;
-
-      letter-spacing:
-        1px;
-
-    }
-
-
-    .brand-text span {
-
-      color:
-        var(--accent);
-
-    }
-
-
-    .nav-login {
-
-      color:
-        white;
-
-      padding:
-        11px 20px;
-
-      border:
-        1px solid rgba(255,255,255,0.16);
-
-      border-radius:
-        10px;
-
-      font-weight:
-        bold;
+      font-weight: 800;
 
       transition:
-        0.2s;
+
+        0.2s ease;
 
     }
 
 
-    .nav-login:hover {
+    .login-link:hover {
 
-      color:
-        var(--accent);
+      background:
+
+        rgba(32, 201, 151, 0.1);
 
       border-color:
+
         var(--accent);
 
     }
 
 
+    /* ========================================
+       MAIN
+    ========================================= */
 
-    /* =========================
-       PAGE
-    ========================== */
+    main {
 
-    .page {
-
-      width:
-        100%;
-
-      max-width:
-        1200px;
-
-      margin:
-        auto;
+      width: 100%;
 
       min-height:
-        calc(100vh - 79px);
 
-      display:
-        grid;
+        calc(100vh - 86px);
 
-      grid-template-columns:
-        0.9fr 1.1fr;
+      display: flex;
 
-      gap:
-        70px;
+      align-items: center;
 
-      align-items:
-        center;
+      justify-content: center;
 
       padding:
-        70px 7%;
+
+        60px 20px 80px;
 
     }
 
 
+    .register-wrapper {
 
-    /* =========================
-       INTRO
-    ========================== */
+      width: 100%;
 
-    .intro {
+      max-width: 620px;
 
-      max-width:
-        500px;
+    }
+
+
+    /* ========================================
+       HERO
+    ========================================= */
+
+    .register-intro {
+
+      text-align: center;
+
+      margin-bottom: 30px;
 
     }
 
 
     .eyebrow {
 
-      display:
-        inline-flex;
+      display: inline-flex;
 
-      align-items:
-        center;
+      align-items: center;
 
-      gap:
-        9px;
+      gap: 8px;
 
-      color:
-        #78efba;
+      color: var(--accent);
 
-      background:
-        rgba(0,208,132,0.07);
+      font-size: 12px;
 
-      border:
-        1px solid rgba(0,208,132,0.20);
+      font-weight: 900;
 
-      border-radius:
-        30px;
+      text-transform: uppercase;
 
-      padding:
-        10px 15px;
+      letter-spacing: 1.5px;
 
-      font-size:
-        13px;
-
-      margin-bottom:
-        25px;
+      margin-bottom: 15px;
 
     }
 
 
-    .dot {
+    .eyebrow::before {
 
-      width:
-        8px;
+      content: "";
 
-      height:
-        8px;
+      width: 8px;
 
-      background:
-        var(--accent);
+      height: 8px;
 
-      border-radius:
-        50%;
+      border-radius: 50%;
+
+      background: var(--accent);
 
       box-shadow:
-        0 0 15px var(--accent);
+
+        0 0 15px
+        rgba(32, 201, 151, 0.8);
 
     }
 
 
-    .intro h1 {
+    .register-intro h1 {
 
       font-size:
-        clamp(42px, 5vw, 65px);
 
-      line-height:
-        1.08;
+        clamp(36px, 8vw, 52px);
+
+      line-height: 1.1;
 
       letter-spacing:
-        -2px;
 
-      margin-bottom:
-        22px;
+        -1.4px;
 
-    }
-
-
-    .intro h1 span {
-
-      color:
-        var(--accent);
+      margin-bottom: 13px;
 
     }
 
 
-    .intro-text {
+    .register-intro h1 span {
 
-      color:
-        var(--muted);
-
-      font-size:
-        17px;
-
-      line-height:
-        1.7;
-
-      margin-bottom:
-        35px;
+      color: var(--accent);
 
     }
 
 
-    .benefits {
+    .register-intro p {
 
-      list-style:
-        none;
+      max-width: 520px;
 
-      display:
-        flex;
+      margin: 0 auto;
 
-      flex-direction:
-        column;
+      color: var(--muted);
 
-      gap:
-        18px;
+      font-size: 16px;
+
+      line-height: 1.7;
 
     }
 
 
-    .benefits li {
-
-      display:
-        flex;
-
-      align-items:
-        center;
-
-      gap:
-        14px;
-
-      color:
-        #c4ccc7;
-
-      padding-bottom:
-        18px;
-
-      border-bottom:
-        1px solid rgba(255,255,255,0.06);
-
-      font-size:
-        16px;
-
-    }
-
-
-    .check {
-
-      color:
-        var(--accent);
-
-      font-size:
-        22px;
-
-      font-weight:
-        bold;
-
-    }
-
-
-
-    /* =========================
-       REGISTER CARD
-    ========================== */
+    /* ========================================
+       CARD
+    ========================================= */
 
     .register-card {
 
-      width:
-        100%;
+      width: 100%;
+
+      padding: 34px;
 
       background:
+
         linear-gradient(
           145deg,
-          rgba(15,25,20,0.98),
-          rgba(7,12,9,0.98)
+          rgba(9, 29, 23, 0.97),
+          rgba(3, 15, 11, 0.98)
         );
 
       border:
-        1px solid rgba(255,255,255,0.10);
 
-      border-radius:
-        24px;
+        1px solid
+        rgba(32, 201, 151, 0.18);
 
-      padding:
-        38px;
+      border-radius: 26px;
 
       box-shadow:
-        0 30px 80px rgba(0,0,0,0.45);
+
+        0 25px 80px
+        rgba(0, 0, 0, 0.3);
 
     }
 
 
-    .card-header {
+    /* ========================================
+       ROLE SELECTOR
+    ========================================= */
 
-      margin-bottom:
-        30px;
+    .role-title {
 
-    }
+      color: var(--text);
 
+      font-size: 15px;
 
-    .card-header h2 {
+      font-weight: 800;
 
-      font-size:
-        30px;
-
-      margin-bottom:
-        10px;
+      margin-bottom: 13px;
 
     }
 
 
-    .card-header p {
+    .role-grid {
 
-      color:
-        var(--muted);
+      display: grid;
 
-      line-height:
-        1.5;
+      grid-template-columns:
+
+        repeat(2, minmax(0, 1fr));
+
+      gap: 12px;
+
+      margin-bottom: 28px;
 
     }
 
 
+    .role-option {
 
-    /* =========================
+      position: relative;
+
+    }
+
+
+    .role-option input {
+
+      position: absolute;
+
+      opacity: 0;
+
+      pointer-events: none;
+
+    }
+
+
+    .role-card {
+
+      min-height: 125px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: center;
+
+      padding: 20px;
+
+      border:
+
+        1px solid
+        var(--border);
+
+      border-radius: 18px;
+
+      background:
+
+        rgba(3, 15, 11, 0.55);
+
+      cursor: pointer;
+
+      transition:
+
+        0.2s ease;
+
+    }
+
+
+    .role-card:hover {
+
+      border-color:
+
+        var(--border-light);
+
+      transform:
+
+        translateY(-2px);
+
+    }
+
+
+    .role-option input:checked
+    + .role-card {
+
+      border-color:
+
+        var(--accent);
+
+      background:
+
+        rgba(32, 201, 151, 0.08);
+
+      box-shadow:
+
+        0 0 0 1px
+        rgba(32, 201, 151, 0.15),
+
+        0 10px 30px
+        rgba(32, 201, 151, 0.06);
+
+    }
+
+
+    .role-icon {
+
+      font-size: 27px;
+
+      margin-bottom: 10px;
+
+    }
+
+
+    .role-name {
+
+      font-size: 17px;
+
+      font-weight: 900;
+
+      margin-bottom: 5px;
+
+    }
+
+
+    .role-description {
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      line-height: 1.5;
+
+    }
+
+
+    /* ========================================
        FORM
-    ========================== */
+    ========================================= */
 
     form {
 
-      display:
-        flex;
-
-      flex-direction:
-        column;
+      width: 100%;
 
     }
 
 
-    .field {
+    .form-group {
 
-      margin-bottom:
-        19px;
+      margin-bottom: 19px;
 
     }
 
 
     label {
 
-      display:
-        block;
+      display: block;
 
-      margin-bottom:
-        9px;
+      margin-bottom: 8px;
 
-      font-size:
-        14px;
+      color: #dce7e2;
 
-      font-weight:
-        bold;
+      font-size: 14px;
 
-      color:
-        #dce2df;
+      font-weight: 800;
 
     }
 
 
-    input,
-    select {
+    .input-wrapper {
 
-      width:
-        100%;
+      position: relative;
+
+    }
+
+
+    input {
+
+      width: 100%;
+
+      min-height: 54px;
 
       padding:
-        15px 16px;
 
-      background:
-        #080e0b;
+        0 17px;
 
       border:
-        1px solid rgba(255,255,255,0.12);
 
-      border-radius:
-        12px;
+        1px solid
+        var(--border);
 
-      color:
-        white;
+      border-radius: 13px;
 
-      font-size:
-        16px;
+      outline: none;
 
-      outline:
-        none;
+      background:
+
+        rgba(2, 13, 10, 0.7);
+
+      color: var(--text);
+
+      font-size: 15px;
 
       transition:
-        0.2s;
+
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
 
     }
 
 
     input::placeholder {
 
-      color:
-        #59635e;
+      color: #65756e;
 
     }
 
 
-    input:focus,
-    select:focus {
+    input:focus {
 
       border-color:
+
         var(--accent);
+
+      background:
+
+        rgba(4, 21, 16, 0.9);
 
       box-shadow:
-        0 0 0 3px rgba(0,208,132,0.08);
+
+        0 0 0 4px
+        rgba(32, 201, 151, 0.08);
 
     }
 
 
-    select option {
+    .password-input {
 
-      background:
-        #0b120f;
-
-      color:
-        white;
+      padding-right: 55px;
 
     }
 
 
+    .toggle-password {
 
-    /* =========================
-       ROLE INFO
-    ========================== */
+      position: absolute;
 
-    .role-info {
+      top: 50%;
 
-      background:
-        rgba(0,208,132,0.06);
-
-      border:
-        1px solid rgba(0,208,132,0.18);
-
-      border-radius:
-        12px;
-
-      padding:
-        13px 15px;
-
-      margin-top:
-        -4px;
-
-      margin-bottom:
-        20px;
-
-      color:
-        #aab5ae;
-
-      font-size:
-        13px;
-
-      line-height:
-        1.55;
-
-    }
-
-
-
-    /* =========================
-       BUTTONS
-    ========================== */
-
-    button {
-
-      width:
-        100%;
-
-      padding:
-        16px;
-
-      background:
-        var(--accent);
-
-      color:
-        #031008;
-
-      border:
-        none;
-
-      border-radius:
-        12px;
-
-      font-size:
-        16px;
-
-      font-weight:
-        bold;
-
-      cursor:
-        pointer;
-
-      transition:
-        0.2s;
-
-    }
-
-
-    button:hover {
+      right: 12px;
 
       transform:
-        translateY(-2px);
+
+        translateY(-50%);
+
+      min-width: 38px;
+
+      height: 38px;
+
+      border: none;
+
+      border-radius: 9px;
+
+      background: transparent;
+
+      color: var(--muted);
+
+      cursor: pointer;
+
+      font-size: 17px;
 
     }
 
 
-    button:disabled {
+    .toggle-password:hover {
 
-      opacity:
-        0.6;
-
-      cursor:
-        not-allowed;
-
-      transform:
-        none;
-
-    }
-
-
-    .resend-box {
-
-      display:
-        none;
-
-      margin-top:
-        14px;
-
-    }
-
-
-    .resend-box.show {
-
-      display:
-        block;
-
-    }
-
-
-    .resend-button {
+      color: var(--accent);
 
       background:
-        transparent;
 
-      color:
-        var(--accent);
-
-      border:
-        1px solid rgba(0,208,132,0.50);
+        rgba(32, 201, 151, 0.07);
 
     }
 
 
+    .form-help {
 
-    /* =========================
+      display: block;
+
+      margin-top: 7px;
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      line-height: 1.5;
+
+    }
+
+
+    /* ========================================
+       MENTOR NOTICE
+    ========================================= */
+
+    .mentor-notice {
+
+      display: none;
+
+      margin-bottom: 20px;
+
+      padding: 16px;
+
+      border:
+
+        1px solid
+        rgba(245, 185, 66, 0.35);
+
+      border-radius: 14px;
+
+      background:
+
+        rgba(245, 185, 66, 0.05);
+
+      color: #f7d58b;
+
+      font-size: 13px;
+
+      line-height: 1.6;
+
+    }
+
+
+    .mentor-notice strong {
+
+      color: var(--warning);
+
+    }
+
+
+    .mentor-notice.show {
+
+      display: block;
+
+    }
+
+
+    /* ========================================
        MESSAGE
-    ========================== */
+    ========================================= */
 
     .message {
 
-      text-align:
-        center;
+      display: none;
 
-      margin-top:
-        18px;
+      margin-bottom: 20px;
 
-      min-height:
-        24px;
+      padding: 15px 17px;
 
-      color:
-        var(--muted);
+      border-radius: 13px;
 
-      line-height:
-        1.5;
+      font-size: 14px;
 
-      font-size:
-        14px;
+      line-height: 1.55;
 
     }
 
 
-    .message.error {
+    .message.show {
 
-      color:
-        var(--danger);
+      display: block;
 
     }
 
 
     .message.success {
 
-      color:
-        var(--accent);
+      color: #b8f2dc;
+
+      border:
+
+        1px solid
+        rgba(32, 201, 151, 0.4);
+
+      background:
+
+        rgba(32, 201, 151, 0.08);
 
     }
 
 
-    .message.warning {
+    .message.error {
 
-      color:
-        var(--warning);
+      color: #ffc7c7;
 
-    }
+      border:
 
+        1px solid
+        rgba(239, 102, 102, 0.45);
 
+      background:
 
-    /* =========================
-       LINKS
-    ========================== */
-
-    .links {
-
-      text-align:
-        center;
-
-      margin-top:
-        25px;
-
-      color:
-        var(--muted);
-
-      font-size:
-        14px;
+        rgba(239, 102, 102, 0.07);
 
     }
 
 
-    .links a {
+    /* ========================================
+       BUTTON
+    ========================================= */
 
-      display:
-        inline-block;
+    .submit-button {
 
-      margin-top:
-        9px;
+      width: 100%;
 
-      color:
-        var(--accent);
+      min-height: 55px;
 
-      font-weight:
-        bold;
+      border: none;
+
+      border-radius: 14px;
+
+      background:
+
+        linear-gradient(
+          135deg,
+          var(--accent-light),
+          var(--accent)
+        );
+
+      color: #03130e;
+
+      font-size: 16px;
+
+      font-weight: 900;
+
+      cursor: pointer;
+
+      transition:
+
+        transform 0.2s ease,
+        opacity 0.2s ease,
+        box-shadow 0.2s ease;
+
+      box-shadow:
+
+        0 12px 30px
+        rgba(32, 201, 151, 0.13);
 
     }
 
 
-    .links a:hover {
+    .submit-button:hover {
 
-      text-decoration:
-        underline;
+      transform:
+
+        translateY(-2px);
+
+      box-shadow:
+
+        0 16px 35px
+        rgba(32, 201, 151, 0.2);
 
     }
 
 
+    .submit-button:disabled {
 
-    /* =========================
+      opacity: 0.65;
+
+      cursor: not-allowed;
+
+      transform: none;
+
+    }
+
+
+    .login-text {
+
+      text-align: center;
+
+      color: var(--muted);
+
+      font-size: 14px;
+
+      margin-top: 22px;
+
+    }
+
+
+    .login-text a {
+
+      color: var(--accent);
+
+      text-decoration: none;
+
+      font-weight: 800;
+
+    }
+
+
+    .login-text a:hover {
+
+      text-decoration: underline;
+
+    }
+
+
+    /* ========================================
+       LOADING
+    ========================================= */
+
+    .spinner {
+
+      width: 17px;
+
+      height: 17px;
+
+      display: inline-block;
+
+      vertical-align: middle;
+
+      margin-right: 8px;
+
+      border:
+
+        2px solid
+        rgba(3, 19, 14, 0.35);
+
+      border-top-color:
+
+        #03130e;
+
+      border-radius: 50%;
+
+      animation:
+
+        spin 0.7s linear infinite;
+
+    }
+
+
+    @keyframes spin {
+
+      to {
+
+        transform:
+          rotate(360deg);
+
+      }
+
+    }
+
+
+    /* ========================================
        MOBILE
-    ========================== */
+    ========================================= */
 
-    @media (max-width: 900px) {
+    @media (max-width: 650px) {
 
-      .page {
+      header {
+
+        position: relative;
+
+      }
+
+
+      .nav-container {
+
+        padding:
+
+          18px 18px;
+
+      }
+
+
+      .logo {
+
+        font-size: 18px;
+
+      }
+
+
+      .login-link {
+
+        min-height: 42px;
+
+        padding:
+
+          0 14px;
+
+        font-size: 13px;
+
+      }
+
+
+      main {
+
+        align-items: flex-start;
+
+        padding:
+
+          38px 16px 60px;
+
+      }
+
+
+      .register-intro {
+
+        margin-bottom: 25px;
+
+      }
+
+
+      .register-intro h1 {
+
+        font-size: 39px;
+
+      }
+
+
+      .register-intro p {
+
+        font-size: 15px;
+
+      }
+
+
+      .register-card {
+
+        padding:
+
+          23px 18px;
+
+        border-radius: 21px;
+
+      }
+
+
+      .role-grid {
 
         grid-template-columns:
+
           1fr;
 
-        gap:
-          50px;
-
       }
 
 
-      .intro {
+      .role-card {
 
-        max-width:
-          650px;
-
-      }
-
-
-      .register-card {
-
-        max-width:
-          600px;
-
-      }
-
-    }
-
-
-    @media (max-width: 600px) {
-
-      nav {
-
-        padding:
-          15px 5%;
-
-      }
-
-
-      .brand-text {
-
-        font-size:
-          15px;
-
-      }
-
-
-      .brand-icon {
-
-        width:
-          38px;
-
-        height:
-          38px;
-
-      }
-
-
-      .nav-login {
-
-        padding:
-          9px 15px;
-
-        font-size:
-          14px;
-
-      }
-
-
-      .page {
-
-        padding:
-          50px 5%;
-
-        gap:
-          45px;
-
-      }
-
-
-      .register-card {
-
-        padding:
-          28px 20px;
-
-        border-radius:
-          20px;
+        min-height: 105px;
 
       }
 
@@ -1008,379 +1097,354 @@
 <body>
 
 
-  <!-- BACKGROUND -->
+  <!-- ========================================
+       HEADER
+  ========================================= -->
 
-  <div class="glow glow-one"></div>
+  <header>
 
-  <div class="glow glow-two"></div>
+    <div class="nav-container">
 
+      <a
+        href="index.html"
+        class="logo"
+      >
 
+        <span class="alpha">
+          ALPHA
+        </span>
 
-  <!-- NAVIGATION -->
+        <span class="traders">
+          TRADERS HOST
+        </span>
 
-  <nav>
+      </a>
 
 
-    <a
-      href="index.html"
-      class="brand"
-    >
+      <a
+        href="login.html"
+        class="login-link"
+      >
+        Sign In
+      </a>
 
-      <div class="brand-icon">
+    </div>
 
-        <img
-          src="./icons/icon-192.png"
-          alt="Alpha Traders Host"
-        >
+  </header>
 
-      </div>
 
+  <!-- ========================================
+       MAIN
+  ========================================= -->
 
-      <div class="brand-text">
+  <main>
 
-        ALPHA
-        <span>TRADERS HOST</span>
+    <div class="register-wrapper">
 
-      </div>
 
-    </a>
+      <!-- INTRO -->
 
+      <section class="register-intro">
 
-    <a
-      href="login.html"
-      class="nav-login"
-    >
+        <div class="eyebrow">
+          Join The Platform
+        </div>
 
-      Login
 
-    </a>
+        <h1>
+          Create Your <span>Account</span>
+        </h1>
 
-
-  </nav>
-
-
-
-  <!-- MAIN -->
-
-  <main class="page">
-
-
-    <!-- INTRO -->
-
-    <section class="intro">
-
-
-      <div class="eyebrow">
-
-        <span class="dot"></span>
-
-        JOIN THE PLATFORM
-
-      </div>
-
-
-      <h1>
-
-        Start your
-        <span>trading journey.</span>
-
-      </h1>
-
-
-      <p class="intro-text">
-
-        Create your Alpha Traders Host account and access
-        a platform designed to connect traders and mentors.
-
-      </p>
-
-
-      <ul class="benefits">
-
-
-        <li>
-
-          <span class="check">✓</span>
-
-          Create your account securely
-
-        </li>
-
-
-        <li>
-
-          <span class="check">✓</span>
-
-          Access your role-based dashboard
-
-        </li>
-
-
-        <li>
-
-          <span class="check">✓</span>
-
-          Connect with approved mentors
-
-        </li>
-
-
-        <li>
-
-          <span class="check">✓</span>
-
-          Manage your trading journey from anywhere
-
-        </li>
-
-
-      </ul>
-
-
-    </section>
-
-
-
-    <!-- REGISTER CARD -->
-
-    <section class="register-card">
-
-
-      <div class="card-header">
-
-        <h2>Create Account</h2>
 
         <p>
-          Enter your details to join Alpha Traders Host.
+          Join Alpha Traders Host and connect
+          with traders, mentors and opportunities
+          built for growth.
         </p>
 
-      </div>
+      </section>
 
 
+      <!-- REGISTER CARD -->
 
-      <form id="registerForm">
-
-
-        <!-- NAME -->
-
-        <div class="field">
-
-          <label for="name">
-
-            Full Name
-
-          </label>
-
-          <input
-            type="text"
-            id="name"
-            placeholder="Your full name"
-            autocomplete="name"
-            required
-          >
-
-        </div>
+      <section class="register-card">
 
 
+        <!-- MESSAGE -->
 
-        <!-- EMAIL -->
-
-        <div class="field">
-
-          <label for="email">
-
-            Email Address
-
-          </label>
-
-          <input
-            type="email"
-            id="email"
-            placeholder="you@example.com"
-            autocomplete="email"
-            required
-          >
-
-        </div>
-
+        <div
+          id="messageBox"
+          class="message"
+        ></div>
 
 
         <!-- ROLE -->
 
-        <div class="field">
+        <div class="role-title">
+          I want to join as:
+        </div>
 
-          <label for="role">
 
-            Account Type
+        <div class="role-grid">
+
+
+          <!-- CLIENT -->
+
+          <label class="role-option">
+
+            <input
+              type="radio"
+              name="role"
+              value="client"
+              checked
+            >
+
+
+            <div class="role-card">
+
+              <div class="role-icon">
+                👤
+              </div>
+
+
+              <div class="role-name">
+                Client
+              </div>
+
+
+              <div class="role-description">
+                Find and connect with approved mentors.
+              </div>
+
+            </div>
 
           </label>
 
-          <select
-            id="role"
-            required
-          >
 
-            <option value="client">
+          <!-- MENTOR -->
 
-              Client
+          <label class="role-option">
 
-            </option>
+            <input
+              type="radio"
+              name="role"
+              value="mentor"
+            >
 
-            <option value="mentor">
 
-              Mentor
+            <div class="role-card">
 
-            </option>
+              <div class="role-icon">
+                📈
+              </div>
 
-          </select>
+
+              <div class="role-name">
+                Mentor
+              </div>
+
+
+              <div class="role-description">
+                Apply to become a mentor on the platform.
+              </div>
+
+            </div>
+
+          </label>
 
         </div>
 
 
+        <!-- MENTOR NOTICE -->
 
         <div
-          class="role-info"
-          id="roleInfo"
+          id="mentorNotice"
+          class="mentor-notice"
         >
 
-          Client accounts are approved automatically.
+          <strong>
+            ⏳ Mentor applications require approval.
+          </strong>
+
+          <br>
+
+          Your account will be created with a
+          <strong>pending</strong> status until
+          an administrator reviews your application.
 
         </div>
 
 
+        <!-- FORM -->
 
-        <!-- PASSWORD -->
+        <form
+          id="registerForm"
+          novalidate
+        >
 
-        <div class="field">
 
-          <label for="password">
+          <!-- FULL NAME -->
 
-            Password
+          <div class="form-group">
 
-          </label>
+            <label for="fullName">
+              Full Name
+            </label>
 
-          <input
-            type="password"
-            id="password"
-            placeholder="Create a password"
-            minlength="8"
-            autocomplete="new-password"
-            required
+
+            <input
+              type="text"
+              id="fullName"
+              name="fullName"
+              placeholder="Enter your full name"
+              autocomplete="name"
+              required
+              maxlength="100"
+            >
+
+          </div>
+
+
+          <!-- EMAIL -->
+
+          <div class="form-group">
+
+            <label for="email">
+              Email Address
+            </label>
+
+
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+              maxlength="150"
+            >
+
+          </div>
+
+
+          <!-- PASSWORD -->
+
+          <div class="form-group">
+
+            <label for="password">
+              Password
+            </label>
+
+
+            <div class="input-wrapper">
+
+              <input
+                type="password"
+                id="password"
+                class="password-input"
+                name="password"
+                placeholder="Create a secure password"
+                autocomplete="new-password"
+                required
+                minlength="6"
+              >
+
+
+              <button
+                type="button"
+                class="toggle-password"
+                id="togglePassword"
+                aria-label="Show password"
+              >
+                👁
+              </button>
+
+            </div>
+
+
+            <span class="form-help">
+              Use at least 6 characters.
+            </span>
+
+          </div>
+
+
+          <!-- CONFIRM PASSWORD -->
+
+          <div class="form-group">
+
+            <label for="confirmPassword">
+              Confirm Password
+            </label>
+
+
+            <div class="input-wrapper">
+
+              <input
+                type="password"
+                id="confirmPassword"
+                class="password-input"
+                name="confirmPassword"
+                placeholder="Confirm your password"
+                autocomplete="new-password"
+                required
+              >
+
+
+              <button
+                type="button"
+                class="toggle-password"
+                id="toggleConfirmPassword"
+                aria-label="Show password"
+              >
+                👁
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- SUBMIT -->
+
+          <button
+            type="submit"
+            class="submit-button"
+            id="registerButton"
           >
-
-        </div>
-
-
-
-        <!-- CONFIRM PASSWORD -->
-
-        <div class="field">
-
-          <label for="confirm">
-
-            Confirm Password
-
-          </label>
-
-          <input
-            type="password"
-            id="confirm"
-            placeholder="Confirm your password"
-            minlength="8"
-            autocomplete="new-password"
-            required
-          >
-
-        </div>
+            Create Account
+          </button>
 
 
+          <div class="login-text">
 
-        <button
-          type="submit"
-          id="registerButton"
-        >
+            Already have an account?
 
-          Create Account →
+            <a href="login.html">
+              Sign in here
+            </a>
 
-        </button>
-
-
-      </form>
+          </div>
 
 
+        </form>
 
-      <!-- MESSAGE -->
+      </section>
 
-      <div
-        id="message"
-        class="message"
-      ></div>
-
-
-
-      <!-- RESEND -->
-
-      <div
-        id="resendBox"
-        class="resend-box"
-      >
-
-        <button
-          type="button"
-          id="resendButton"
-          class="resend-button"
-        >
-
-          Resend Confirmation Email
-
-        </button>
-
-      </div>
-
-
-
-      <!-- LOGIN -->
-
-      <div class="links">
-
-        <p>
-
-          Already have an account?
-
-        </p>
-
-        <a href="login.html">
-
-          Sign In →
-
-        </a>
-
-      </div>
-
-
-    </section>
-
+    </div>
 
   </main>
 
 
-
-  <!-- =========================
-       SUPABASE
-  ========================== -->
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <script src="supabase-config.js"></script>
-
-
+  <!-- ========================================
+       JAVASCRIPT
+  ========================================= -->
 
   <script>
 
-
-    /* ==========================================
+    /* ========================================
        ELEMENTS
-    ========================================== */
+    ========================================= */
 
     const registerForm =
       document.getElementById(
@@ -1388,9 +1452,9 @@
       );
 
 
-    const nameInput =
+    const fullNameInput =
       document.getElementById(
-        "name"
+        "fullName"
       );
 
 
@@ -1400,33 +1464,15 @@
       );
 
 
-    const roleSelect =
-      document.getElementById(
-        "role"
-      );
-
-
-    const roleInfo =
-      document.getElementById(
-        "roleInfo"
-      );
-
-
     const passwordInput =
       document.getElementById(
         "password"
       );
 
 
-    const confirmInput =
+    const confirmPasswordInput =
       document.getElementById(
-        "confirm"
-      );
-
-
-    const message =
-      document.getElementById(
-        "message"
+        "confirmPassword"
       );
 
 
@@ -1436,41 +1482,54 @@
       );
 
 
-    const resendBox =
+    const messageBox =
       document.getElementById(
-        "resendBox"
+        "messageBox"
       );
 
 
-    const resendButton =
+    const mentorNotice =
       document.getElementById(
-        "resendButton"
+        "mentorNotice"
       );
 
 
-
-    /* ==========================================
-       GITHUB PAGES URLS
-    ========================================== */
-
-    const SITE_URL =
-      "https://juniorligman9-dot.github.io/alpha-traders-host/";
+    const roleInputs =
+      document.querySelectorAll(
+        'input[name="role"]'
+      );
 
 
-    const LOGIN_URL =
-      "https://juniorligman9-dot.github.io/alpha-traders-host/login.html";
+    const togglePassword =
+      document.getElementById(
+        "togglePassword"
+      );
 
 
+    const toggleConfirmPassword =
+      document.getElementById(
+        "toggleConfirmPassword"
+      );
 
-    /* ==========================================
+
+    /* ========================================
        GET SUPABASE CLIENT
-    ========================================== */
+    ========================================= */
 
     function getSupabaseClient() {
+
+      /*
+       * Your supabase-config.js should create:
+       *
+       * window.supabaseClient
+       *
+       */
 
       if (
         typeof window.supabaseClient !==
         "undefined"
+        &&
+        window.supabaseClient
       ) {
 
         return window.supabaseClient;
@@ -1483,297 +1542,385 @@
     }
 
 
+    /* ========================================
+       GET SELECTED ROLE
+    ========================================= */
 
-    /* ==========================================
-       SHOW MESSAGE
-    ========================================== */
+    function getSelectedRole() {
 
-    function showMessage(
-      text,
-      type = ""
-    ) {
-
-      message.textContent =
-        text;
-
-
-      message.className =
-        "message";
-
-
-      if (
-        type
-      ) {
-
-        message.classList.add(
-          type
+      const selectedRole =
+        document.querySelector(
+          'input[name="role"]:checked'
         );
 
+
+      if (!selectedRole) {
+
+        return "client";
+
       }
+
+
+      return String(
+        selectedRole.value
+      )
+      .toLowerCase()
+      .trim();
 
     }
 
 
+    /* ========================================
+       ROLE CHANGE
+    ========================================= */
 
-    /* ==========================================
-       ROLE INFORMATION
-    ========================================== */
+    function updateRoleUI() {
 
-    function updateRoleInfo() {
+      const role =
+        getSelectedRole();
+
 
       if (
-        roleSelect.value ===
-        "mentor"
+        role === "mentor"
       ) {
 
-        roleInfo.textContent =
-          "Mentor accounts require administrator approval after email confirmation.";
+        mentorNotice.classList.add(
+          "show"
+        );
+
+
+        registerButton.textContent =
+          "Submit Mentor Application";
 
       }
+
 
       else {
 
-        roleInfo.textContent =
-          "Client accounts are approved automatically after registration.";
+        mentorNotice.classList.remove(
+          "show"
+        );
+
+
+        registerButton.textContent =
+          "Create Account";
 
       }
 
     }
 
 
-    roleSelect.addEventListener(
-      "change",
-      updateRoleInfo
-    );
-
-
-    updateRoleInfo();
-
-
-
-    /* ==========================================
-       SHOW / HIDE RESEND
-    ========================================== */
-
-    function showResend() {
-
-      resendBox.classList.add(
-        "show"
-      );
-
-    }
-
-
-    function hideResend() {
-
-      resendBox.classList.remove(
-        "show"
-      );
-
-    }
-
-
-
-    /* ==========================================
-       RESEND CONFIRMATION EMAIL
-    ========================================== */
-
-    resendButton.addEventListener(
-      "click",
-      async function() {
-
-
-        const supabaseClient =
-          getSupabaseClient();
-
-
-        const email =
-          emailInput.value
-            .trim();
-
-
-
-        if (
-          !supabaseClient
-        ) {
-
-          showMessage(
-            "Supabase is not connected. Please check supabase-config.js.",
-            "error"
-          );
-
-          return;
-
-        }
-
-
-
-        if (
-          !email
-        ) {
-
-          showMessage(
-            "Please enter your email address first.",
-            "error"
-          );
-
-          return;
-
-        }
-
-
-
-        resendButton.disabled =
-          true;
-
-
-        resendButton.textContent =
-          "Sending...";
-
-
-
-        try {
-
-
-          const {
-            error
-          } =
-            await supabaseClient
-              .auth
-              .resend({
-
-                type:
-                  "signup",
-
-                email:
-                  email,
-
-                options: {
-
-                  emailRedirectTo:
-                    LOGIN_URL
-
-                }
-
-              });
-
-
-
-          if (
-            error
-          ) {
-
-            throw error;
-
-          }
-
-
-
-          showMessage(
-            "Confirmation email sent! Check your inbox and spam folder.",
-            "success"
-          );
-
-
-        }
-
-
-        catch (
-          error
-        ) {
-
-
-          console.error(
-            "Resend error:",
-            error
-          );
-
-
-          showMessage(
-            error.message ||
-            "Could not resend the confirmation email.",
-            "error"
-          );
-
-
-        }
-
-
-        finally {
-
-
-          resendButton.disabled =
-            false;
-
-
-          resendButton.textContent =
-            "Resend Confirmation Email";
-
-
-        }
-
+    roleInputs.forEach(
+      function(input) {
+
+        input.addEventListener(
+          "change",
+          updateRoleUI
+        );
 
       }
     );
 
 
+    /* ========================================
+       SHOW MESSAGE
+    ========================================= */
 
-    /* ==========================================
+    function showMessage(
+      message,
+      type
+    ) {
+
+      messageBox.textContent =
+        message;
+
+
+      messageBox.className =
+        "message show " +
+        type;
+
+    }
+
+
+    /* ========================================
+       HIDE MESSAGE
+    ========================================= */
+
+    function hideMessage() {
+
+      messageBox.textContent =
+        "";
+
+
+      messageBox.className =
+        "message";
+
+    }
+
+
+    /* ========================================
+       SET LOADING
+    ========================================= */
+
+    function setLoading(
+      isLoading
+    ) {
+
+      registerButton.disabled =
+        isLoading;
+
+
+      if (isLoading) {
+
+        registerButton.innerHTML =
+          '<span class="spinner"></span>Creating account...';
+
+      }
+
+
+      else {
+
+        updateRoleUI();
+
+      }
+
+    }
+
+
+    /* ========================================
+       NORMALIZE EMAIL
+    ========================================= */
+
+    function normalizeEmail(
+      email
+    ) {
+
+      return String(
+        email || ""
+      )
+      .trim()
+      .toLowerCase();
+
+    }
+
+
+    /* ========================================
+       CLEAN NAME
+    ========================================= */
+
+    function cleanName(
+      name
+    ) {
+
+      return String(
+        name || ""
+      )
+      .trim()
+      .replace(
+        /\s+/g,
+        " "
+      );
+
+    }
+
+
+    /* ========================================
+       PASSWORD TOGGLE
+    ========================================= */
+
+    function setupPasswordToggle(
+      button,
+      input
+    ) {
+
+      button.addEventListener(
+        "click",
+        function() {
+
+          const isHidden =
+            input.type ===
+            "password";
+
+
+          input.type =
+            isHidden
+              ? "text"
+              : "password";
+
+
+          button.textContent =
+            isHidden
+              ? "🙈"
+              : "👁";
+
+
+          button.setAttribute(
+            "aria-label",
+            isHidden
+              ? "Hide password"
+              : "Show password"
+          );
+
+        }
+      );
+
+    }
+
+
+    setupPasswordToggle(
+      togglePassword,
+      passwordInput
+    );
+
+
+    setupPasswordToggle(
+      toggleConfirmPassword,
+      confirmPasswordInput
+    );
+
+
+    /* ========================================
+       CREATE PROFILE
+    ========================================= */
+
+    async function createOrUpdateProfile(
+      supabaseClient,
+      userId,
+      fullName,
+      email,
+      role,
+      approvalStatus
+    ) {
+
+      /*
+       * IMPORTANT:
+       *
+       * We only send actual column values.
+       *
+       * approval_status is:
+       *
+       * mentor -> pending
+       * client -> approved
+       *
+       */
+
+      const profileData = {
+
+        id:
+          userId,
+
+        full_name:
+          fullName,
+
+        email:
+          email,
+
+        role:
+          role,
+
+        approval_status:
+          approvalStatus
+
+      };
+
+
+      /*
+       * UPSERT prevents a duplicate-profile
+       * error if a database trigger already
+       * created the profile.
+       */
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("profiles")
+          .upsert(
+            profileData,
+            {
+              onConflict:
+                "id"
+            }
+          );
+
+
+      if (error) {
+
+        throw error;
+
+      }
+
+    }
+
+
+    /* ========================================
        REGISTER USER
-    ========================================== */
+    ========================================= */
 
     registerForm.addEventListener(
       "submit",
       async function(event) {
 
-
         event.preventDefault();
 
 
-
-        const supabaseClient =
-          getSupabaseClient();
+        hideMessage();
 
 
+        /* ====================================
+           GET VALUES
+        ===================================== */
 
         const fullName =
-          nameInput.value
-            .trim();
+          cleanName(
+            fullNameInput.value
+          );
 
 
         const email =
-          emailInput.value
-            .trim();
-
-
-        const role =
-          roleSelect.value;
+          normalizeEmail(
+            emailInput.value
+          );
 
 
         const password =
           passwordInput.value;
 
 
-        const confirm =
-          confirmInput.value;
+        const confirmPassword =
+          confirmPasswordInput.value;
 
 
-
-        /* CLEAR */
-
-        hideResend();
+        const role =
+          getSelectedRole();
 
 
-        showMessage(
-          ""
-        );
-
-
-
-        /* VALIDATE NAME */
+        /* ====================================
+           VALIDATE ROLE
+        ===================================== */
 
         if (
-          !fullName
+          role !== "client"
+          &&
+          role !== "mentor"
+        ) {
+
+          showMessage(
+            "Please select either Client or Mentor.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        /* ====================================
+           VALIDATE NAME
+        ===================================== */
+
+        if (
+          fullName.length < 2
         ) {
 
           showMessage(
@@ -1781,31 +1928,65 @@
             "error"
           );
 
+
+          fullNameInput.focus();
+
           return;
 
         }
 
 
-
-        /* VALIDATE PASSWORD */
+        /* ====================================
+           VALIDATE EMAIL
+        ===================================== */
 
         if (
-          password.length < 8
+          !email
+          ||
+          !email.includes("@")
         ) {
 
           showMessage(
-            "Your password must be at least 8 characters long.",
+            "Please enter a valid email address.",
             "error"
           );
+
+
+          emailInput.focus();
 
           return;
 
         }
 
 
+        /* ====================================
+           VALIDATE PASSWORD
+        ===================================== */
 
         if (
-          password !== confirm
+          password.length < 6
+        ) {
+
+          showMessage(
+            "Your password must contain at least 6 characters.",
+            "error"
+          );
+
+
+          passwordInput.focus();
+
+          return;
+
+        }
+
+
+        /* ====================================
+           PASSWORD MATCH
+        ===================================== */
+
+        if (
+          password !==
+          confirmPassword
         ) {
 
           showMessage(
@@ -1813,17 +1994,23 @@
             "error"
           );
 
+
+          confirmPasswordInput.focus();
+
           return;
 
         }
 
 
+        /* ====================================
+           GET SUPABASE
+        ===================================== */
 
-        /* CHECK SUPABASE */
+        const supabaseClient =
+          getSupabaseClient();
 
-        if (
-          !supabaseClient
-        ) {
+
+        if (!supabaseClient) {
 
           showMessage(
             "Supabase is not connected. Please check supabase-config.js.",
@@ -1835,33 +2022,36 @@
         }
 
 
-
-        /* LOADING */
-
-        registerButton.disabled =
-          true;
-
-
-        registerButton.textContent =
-          "Creating Account...";
-
-
-        showMessage(
-          "Creating your account..."
+        setLoading(
+          true
         );
-
 
 
         try {
 
+          /* ==================================
+             APPROVAL STATUS
+          =================================== */
 
-          /* ======================================
-             CREATE AUTH ACCOUNT
-          ====================================== */
+          /*
+           * Clients are immediately active.
+           *
+           * Mentors must be reviewed by admin.
+           */
+
+          const approvalStatus =
+            role === "mentor"
+              ? "pending"
+              : "approved";
+
+
+          /* ==================================
+             SIGN UP USER
+          =================================== */
 
           const {
-            data,
-            error
+            data: signUpData,
+            error: signUpError
           } =
             await supabaseClient
               .auth
@@ -1875,16 +2065,16 @@
 
                 options: {
 
-                  emailRedirectTo:
-                    LOGIN_URL,
-
                   data: {
 
                     full_name:
                       fullName,
 
                     role:
-                      role
+                      role,
+
+                    approval_status:
+                      approvalStatus
 
                   }
 
@@ -1893,109 +2083,142 @@
               });
 
 
+          if (signUpError) {
 
-          if (
-            error
-          ) {
-
-            throw error;
+            throw signUpError;
 
           }
 
 
+          const user =
+            signUpData?.user;
+
+
+          if (!user) {
+
+            throw new Error(
+              "Account creation failed. No user was returned."
+            );
+
+          }
+
+
+          /*
+           * Supabase may return an existing user
+           * with an empty identities array when
+           * the email is already registered.
+           */
 
           if (
-            !data ||
-            !data.user
+            signUpData?.user?.identities
+            &&
+            signUpData.user.identities.length === 0
           ) {
 
             throw new Error(
-              "Account could not be created."
+              "An account with this email address may already exist. Please try signing in."
             );
 
           }
 
 
+          /* ==================================
+             CREATE / UPDATE PROFILE
+          =================================== */
 
-          /* ======================================
-             CHECK EXISTING USER
-          ====================================== */
+          try {
 
-          const identities =
-            data.user.identities;
-
-
-          if (
-            Array.isArray(
-              identities
-            ) &&
-            identities.length === 0
-          ) {
-
-            showMessage(
-              "This email may already have an account. If it is not confirmed, you can resend the confirmation email below.",
-              "warning"
+            await createOrUpdateProfile(
+              supabaseClient,
+              user.id,
+              fullName,
+              email,
+              role,
+              approvalStatus
             );
-
-
-            showResend();
-
-            return;
 
           }
 
 
+          catch (profileError) {
 
-          /* ======================================
-             SUCCESS
-          ====================================== */
+            console.error(
+              "Profile creation error:",
+              profileError
+            );
+
+
+            /*
+             * Give a clear message instead of
+             * silently pretending registration
+             * worked perfectly.
+             */
+
+            throw new Error(
+              "Your account was created, but the profile could not be saved. " +
+              (
+                profileError.message ||
+                "Please check your Supabase profiles table and RLS policies."
+              )
+            );
+
+          }
+
+
+          /* ==================================
+             SUCCESS: MENTOR
+          =================================== */
 
           if (
             role === "mentor"
           ) {
 
             showMessage(
-              "Account created! Check your email to confirm your account. After confirmation, your mentor account will wait for administrator approval.",
+              "Your mentor application was submitted successfully. Your account is now pending admin approval.",
               "success"
             );
 
-          }
 
-          else {
+            setTimeout(
+              function() {
 
-            showMessage(
-              "Account created! Check your email and confirm your account before logging in.",
-              "success"
+                window.location.href =
+                  "login.html";
+
+              },
+              2200
             );
 
+
+            return;
+
           }
 
 
+          /* ==================================
+             SUCCESS: CLIENT
+          =================================== */
 
-          /* KEEP EMAIL FOR RESEND */
-
-          nameInput.value =
-            "";
-
-
-          passwordInput.value =
-            "";
-
-
-          confirmInput.value =
-            "";
+          showMessage(
+            "Account created successfully! You can now sign in.",
+            "success"
+          );
 
 
-          showResend();
+          setTimeout(
+            function() {
 
+              window.location.href =
+                "login.html";
+
+            },
+            1800
+          );
 
         }
 
 
-        catch (
-          error
-        ) {
-
+        catch (error) {
 
           console.error(
             "Registration error:",
@@ -2003,71 +2226,73 @@
           );
 
 
-          const errorText =
+          let errorMessage =
+            error?.message ||
+            "Could not create your account. Please try again.";
+
+
+          /*
+           * Friendly duplicate-email message.
+           */
+
+          const lowerMessage =
             String(
-              error.message || ""
+              errorMessage
             )
             .toLowerCase();
 
 
-
           if (
-            errorText.includes(
+            lowerMessage.includes(
               "already registered"
-            ) ||
-            errorText.includes(
+            )
+            ||
+            lowerMessage.includes(
               "already exists"
-            ) ||
-            errorText.includes(
-              "user already"
             )
           ) {
 
-            showMessage(
-              "This email already has an account. If you have not verified it yet, resend the confirmation email below.",
-              "warning"
-            );
-
-
-            showResend();
+            errorMessage =
+              "This email address is already registered. Please sign in instead.";
 
           }
 
-          else {
 
-            showMessage(
-              error.message ||
-              "Could not create your account. Please try again.",
-              "error"
-            );
-
-          }
-
+          showMessage(
+            errorMessage,
+            "error"
+          );
 
         }
 
 
         finally {
 
-
-          registerButton.disabled =
-            false;
-
-
-          registerButton.textContent =
-            "Create Account →";
-
+          setLoading(
+            false
+          );
 
         }
-
 
       }
     );
 
 
+    /* ========================================
+       INITIALIZE
+    ========================================= */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function() {
+
+        updateRoleUI();
+
+      }
+    );
+
   </script>
 
 
 </body>
-
 </html>
