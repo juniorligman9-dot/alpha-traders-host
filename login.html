@@ -13,13 +13,30 @@
 
   <title>Login | Alpha Traders Host</title>
 
+  <meta
+    name="theme-color"
+    content="#050806"
+  >
+
 
   <style>
 
+
+    /* =========================
+       RESET
+    ========================== */
+
     * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+
+      box-sizing:
+        border-box;
+
+      margin:
+        0;
+
+      padding:
+        0;
+
     }
 
 
@@ -29,180 +46,775 @@
         Arial,
         sans-serif;
 
-      background: #0d1422;
+      background:
+        #050806;
 
-      color: #f4f4f4;
+      color:
+        #ffffff;
 
-      min-height: 100vh;
+      min-height:
+        100vh;
 
-      display: flex;
+      overflow-x:
+        hidden;
 
-      justify-content: center;
+    }
 
-      align-items: center;
 
-      padding: 20px;
+    a {
+
+      text-decoration:
+        none;
+
+    }
+
+
+
+    /* =========================
+       BACKGROUND
+    ========================== */
+
+    .glow {
+
+      position:
+        fixed;
+
+      width:
+        500px;
+
+      height:
+        500px;
+
+      border-radius:
+        50%;
+
+      background:
+        rgba(0, 208, 132, 0.10);
+
+      filter:
+        blur(130px);
+
+      pointer-events:
+        none;
+
+      z-index:
+        -1;
+
+    }
+
+
+    .glow-one {
+
+      top:
+        -250px;
+
+      left:
+        -250px;
+
+    }
+
+
+    .glow-two {
+
+      right:
+        -250px;
+
+      bottom:
+        -250px;
+
+    }
+
+
+
+    /* =========================
+       PAGE
+    ========================== */
+
+    .login-page {
+
+      min-height:
+        100vh;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        1fr 1fr;
+
+    }
+
+
+
+    /* =========================
+       LEFT SIDE
+    ========================== */
+
+    .welcome-side {
+
+      padding:
+        50px 8%;
+
+      border-right:
+        1px solid rgba(255,255,255,0.07);
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      justify-content:
+        space-between;
+
+      min-height:
+        100vh;
+
+    }
+
+
+    /* =========================
+       BRAND
+    ========================== */
+
+    .brand {
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      gap:
+        12px;
+
+      color:
+        white;
+
+      width:
+        fit-content;
+
+    }
+
+
+    .brand-icon {
+
+      width:
+        48px;
+
+      height:
+        48px;
+
+      border-radius:
+        14px;
+
+      overflow:
+        hidden;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      border:
+        1px solid rgba(0,208,132,0.40);
+
+      background:
+        #07120e;
+
+    }
+
+
+    .brand-icon img {
+
+      width:
+        100%;
+
+      height:
+        100%;
+
+      object-fit:
+        cover;
+
+    }
+
+
+    .brand-text {
+
+      font-size:
+        20px;
+
+      font-weight:
+        bold;
+
+      letter-spacing:
+        1px;
+
+    }
+
+
+    .brand-text span {
+
+      color:
+        #00d084;
+
+    }
+
+
+
+    /* =========================
+       WELCOME CONTENT
+    ========================== */
+
+    .welcome-content {
+
+      max-width:
+        540px;
+
+      margin:
+        auto 0;
+
+      padding:
+        70px 0;
+
+    }
+
+
+    .welcome-badge {
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      gap:
+        8px;
+
+      padding:
+        10px 16px;
+
+      border-radius:
+        30px;
+
+      color:
+        #7bf0be;
+
+      background:
+        rgba(0,208,132,0.07);
+
+      border:
+        1px solid rgba(0,208,132,0.20);
+
+      font-size:
+        13px;
+
+      font-weight:
+        bold;
+
+      letter-spacing:
+        0.5px;
+
+      margin-bottom:
+        25px;
+
+    }
+
+
+    .status-dot {
+
+      width:
+        8px;
+
+      height:
+        8px;
+
+      border-radius:
+        50%;
+
+      background:
+        #00d084;
+
+      box-shadow:
+        0 0 12px #00d084;
+
+    }
+
+
+    .welcome-content h1 {
+
+      font-size:
+        clamp(42px, 5vw, 68px);
+
+      line-height:
+        1.05;
+
+      letter-spacing:
+        -2px;
+
+      margin-bottom:
+        25px;
+
+    }
+
+
+    .welcome-content h1 span {
+
+      color:
+        #00d084;
+
+    }
+
+
+    .welcome-content p {
+
+      color:
+        #929c96;
+
+      font-size:
+        18px;
+
+      line-height:
+        1.7;
+
+      max-width:
+        500px;
+
+    }
+
+
+
+    /* =========================
+       PLATFORM FEATURES
+    ========================== */
+
+    .platform-list {
+
+      margin-top:
+        45px;
+
+      max-width:
+        500px;
+
+    }
+
+
+    .platform-item {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        18px;
+
+      padding:
+        18px 0;
+
+      border-bottom:
+        1px solid rgba(255,255,255,0.07);
+
+    }
+
+
+    .platform-check {
+
+      width:
+        30px;
+
+      height:
+        30px;
+
+      border-radius:
+        50%;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      background:
+        rgba(0,208,132,0.10);
+
+      color:
+        #00d084;
+
+      font-weight:
+        bold;
+
+      flex-shrink:
+        0;
+
+    }
+
+
+    .platform-item span {
+
+      color:
+        #c4cbc7;
+
+      font-size:
+        16px;
+
+    }
+
+
+
+    /* =========================
+       FOOTER TEXT
+    ========================== */
+
+    .welcome-footer {
+
+      color:
+        #5f6b64;
+
+      font-size:
+        13px;
+
+    }
+
+
+
+    /* =========================
+       RIGHT LOGIN SIDE
+    ========================== */
+
+    .form-side {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      padding:
+        40px;
+
+      min-height:
+        100vh;
 
     }
 
 
     .login-box {
 
-      width: 100%;
+      width:
+        100%;
 
-      max-width: 600px;
+      max-width:
+        500px;
 
-      background: #171f30;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(18,28,22,0.95),
+          rgba(7,12,9,0.95)
+        );
 
       border:
-        1px solid #2c3850;
+        1px solid rgba(255,255,255,0.09);
 
-      border-radius: 25px;
+      border-radius:
+        24px;
 
-      padding: 45px 35px;
+      padding:
+        45px 40px;
 
-    }
+      box-shadow:
+        0 30px 80px rgba(0,0,0,0.45);
 
-
-    .logo {
-
-      text-align: center;
-
-      font-size: 32px;
-
-      font-weight: bold;
-
-      letter-spacing: 1px;
-
-      margin-bottom: 20px;
+      position:
+        relative;
 
     }
 
 
-    .logo span {
+    .login-box::before {
 
-      color: #20c997;
+      content:
+        "";
+
+      position:
+        absolute;
+
+      top:
+        0;
+
+      left:
+        10%;
+
+      right:
+        10%;
+
+      height:
+        1px;
+
+      background:
+        linear-gradient(
+          to right,
+          transparent,
+          rgba(0,208,132,0.8),
+          transparent
+        );
+
+    }
+
+
+
+    /* =========================
+       MOBILE BRAND
+    ========================== */
+
+    .mobile-brand {
+
+      display:
+        none;
+
+      justify-content:
+        center;
+
+      margin-bottom:
+        35px;
+
+    }
+
+
+
+    /* =========================
+       FORM HEADER
+    ========================== */
+
+    .form-header {
+
+      margin-bottom:
+        35px;
+
+    }
+
+
+    .form-header h2 {
+
+      font-size:
+        34px;
+
+      margin-bottom:
+        12px;
 
     }
 
 
     .subtitle {
 
-      text-align: center;
+      color:
+        #8e9892;
 
-      color: #aeb7c7;
+      font-size:
+        16px;
 
-      font-size: 18px;
-
-      margin-bottom: 15px;
+      line-height:
+        1.6;
 
     }
 
 
     .selected-role {
 
-      text-align: center;
+      display:
+        inline-flex;
 
-      color: #20c997;
+      align-items:
+        center;
 
-      font-size: 16px;
+      margin-top:
+        18px;
 
-      font-weight: bold;
+      padding:
+        9px 14px;
 
-      margin-bottom: 35px;
+      border-radius:
+        20px;
+
+      color:
+        #00d084;
+
+      background:
+        rgba(0,208,132,0.08);
+
+      border:
+        1px solid rgba(0,208,132,0.16);
+
+      font-size:
+        14px;
+
+      font-weight:
+        bold;
 
     }
 
 
+
+    /* =========================
+       FORM
+    ========================== */
+
     form {
 
-      display: flex;
+      display:
+        flex;
 
-      flex-direction: column;
+      flex-direction:
+        column;
 
     }
 
 
     label {
 
-      font-size: 20px;
+      font-size:
+        14px;
 
-      margin-bottom: 10px;
+      font-weight:
+        bold;
 
-      color: #f1f1f1;
+      color:
+        #d8dedb;
+
+      margin-bottom:
+        9px;
+
+    }
+
+
+    .input-group {
+
+      position:
+        relative;
+
+      margin-bottom:
+        22px;
 
     }
 
 
     input {
 
-      width: 100%;
+      width:
+        100%;
 
-      padding: 18px;
+      padding:
+        16px 17px;
 
-      margin-bottom: 25px;
-
-      border-radius: 15px;
+      border-radius:
+        12px;
 
       border:
-        2px solid #34415a;
+        1px solid rgba(255,255,255,0.12);
 
-      background: #0d1422;
+      background:
+        #080d0a;
 
-      color: white;
+      color:
+        white;
 
-      font-size: 18px;
+      font-size:
+        16px;
 
-      outline: none;
+      outline:
+        none;
+
+      transition:
+        0.2s;
+
+    }
+
+
+    input::placeholder {
+
+      color:
+        #59635d;
 
     }
 
 
     input:focus {
 
-      border-color: #20c997;
+      border-color:
+        #00d084;
+
+      box-shadow:
+        0 0 0 3px rgba(0,208,132,0.08);
 
     }
 
 
+
+    /* =========================
+       BUTTONS
+    ========================== */
+
     button {
 
-      width: 100%;
+      width:
+        100%;
 
-      padding: 18px;
+      padding:
+        16px;
 
-      background: #20c997;
+      background:
+        #00d084;
 
-      color: #07110f;
+      color:
+        #031008;
 
-      border: none;
+      border:
+        none;
 
-      border-radius: 15px;
+      border-radius:
+        12px;
 
-      font-size: 20px;
+      font-size:
+        16px;
 
-      font-weight: bold;
+      font-weight:
+        bold;
 
-      cursor: pointer;
+      cursor:
+        pointer;
 
-      transition: 0.2s;
+      transition:
+        0.2s;
 
     }
 
 
     button:hover {
 
-      opacity: 0.9;
-
       transform:
-        translateY(-1px);
+        translateY(-2px);
+
+      box-shadow:
+        0 10px 25px rgba(0,208,132,0.18);
 
     }
 
 
     button:disabled {
 
-      opacity: 0.6;
+      opacity:
+        0.6;
 
       cursor:
         not-allowed;
@@ -210,93 +822,139 @@
       transform:
         none;
 
+      box-shadow:
+        none;
+
     }
 
 
     .resend-button {
 
-      margin-top: 12px;
+      margin-top:
+        12px;
 
       background:
         transparent;
 
       color:
-        #20c997;
+        #9da7a1;
 
       border:
-        2px solid #20c997;
+        1px solid rgba(255,255,255,0.12);
+
+      font-size:
+        14px;
 
     }
 
 
     .resend-button:hover {
 
+      color:
+        #00d084;
+
+      border-color:
+        rgba(0,208,132,0.45);
+
       background:
-        rgba(32, 201, 151, 0.08);
+        rgba(0,208,132,0.04);
+
+      box-shadow:
+        none;
 
     }
 
 
+
+    /* =========================
+       MESSAGE
+    ========================== */
+
     .message {
 
-      margin-top: 20px;
+      margin-top:
+        20px;
 
-      text-align: center;
+      text-align:
+        center;
 
-      color: #bfc7d5;
+      color:
+        #aeb7b2;
 
-      font-size: 17px;
+      font-size:
+        14px;
 
-      min-height: 24px;
+      min-height:
+        24px;
 
-      line-height: 1.5;
+      line-height:
+        1.6;
 
     }
 
 
     .error {
 
-      color: #ff9b9b;
+      color:
+        #ff9b9b;
 
     }
 
 
     .success {
 
-      color: #20c997;
+      color:
+        #00d084;
 
     }
 
+
+
+    /* =========================
+       LINKS
+    ========================== */
 
     .links {
 
-      text-align: center;
+      text-align:
+        center;
 
-      margin-top: 25px;
+      margin-top:
+        30px;
 
-      color: #e5e5e5;
+      padding-top:
+        28px;
 
-      font-size: 18px;
+      border-top:
+        1px solid rgba(255,255,255,0.07);
 
-    }
+      color:
+        #89938d;
 
-
-    .links a {
-
-      display: inline-block;
-
-      margin-top: 12px;
-
-      color: #20c997;
-
-      text-decoration: none;
-
-      font-size: 20px;
+      font-size:
+        14px;
 
     }
 
 
-    .links a:hover {
+    .create-account {
+
+      display:
+        inline-block;
+
+      margin-top:
+        10px;
+
+      color:
+        #00d084;
+
+      font-weight:
+        bold;
+
+    }
+
+
+    .create-account:hover {
 
       text-decoration:
         underline;
@@ -304,74 +962,220 @@
     }
 
 
+
+    /* =========================
+       ROLE LINKS
+    ========================== */
+
+    .role-title {
+
+      margin-top:
+        28px;
+
+      margin-bottom:
+        14px;
+
+      color:
+        #69736d;
+
+      font-size:
+        12px;
+
+      text-transform:
+        uppercase;
+
+      letter-spacing:
+        1px;
+
+    }
+
+
     .role-links {
 
-      display: flex;
+      display:
+        grid;
 
-      flex-wrap: wrap;
+      grid-template-columns:
+        repeat(3, 1fr);
 
-      justify-content: center;
-
-      gap: 10px;
-
-      margin-top: 20px;
+      gap:
+        8px;
 
     }
 
 
     .role-links a {
 
-      color: #aeb7c7;
+      color:
+        #aeb7b2;
 
-      font-size: 14px;
+      font-size:
+        12px;
 
-      text-decoration: none;
+      text-decoration:
+        none;
 
-      padding: 8px 12px;
+      padding:
+        12px 6px;
 
       border:
-        1px solid #34415a;
+        1px solid rgba(255,255,255,0.09);
 
-      border-radius: 10px;
+      border-radius:
+        10px;
+
+      transition:
+        0.2s;
 
     }
 
 
     .role-links a:hover {
 
-      color: #20c997;
+      color:
+        #00d084;
 
-      border-color: #20c997;
+      border-color:
+        rgba(0,208,132,0.40);
+
+      background:
+        rgba(0,208,132,0.05);
+
+    }
+
+
+
+    /* =========================
+       BACK TO HOME
+    ========================== */
+
+    .back-home {
+
+      display:
+        inline-block;
+
+      margin-top:
+        28px;
+
+      color:
+        #66716a;
+
+      font-size:
+        13px;
+
+    }
+
+
+    .back-home:hover {
+
+      color:
+        #00d084;
+
+    }
+
+
+
+    /* =========================
+       MOBILE
+    ========================== */
+
+    @media (
+      max-width: 900px
+    ) {
+
+      .login-page {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+
+      .welcome-side {
+
+        display:
+          none;
+
+      }
+
+
+      .form-side {
+
+        min-height:
+          100vh;
+
+      }
+
+
+      .mobile-brand {
+
+        display:
+          flex;
+
+      }
 
     }
 
 
     @media (
-      max-width: 500px
+      max-width: 550px
     ) {
 
-      .login-box {
+      .form-side {
 
         padding:
-          40px 25px;
+          20px;
 
       }
 
 
-      .logo {
+      .login-box {
 
-        font-size: 28px;
+        padding:
+          35px 22px;
+
+        border-radius:
+          20px;
+
+      }
+
+
+      .form-header h2 {
+
+        font-size:
+          29px;
 
       }
 
 
       .role-links {
 
-        flex-direction: column;
+        grid-template-columns:
+          1fr;
+
+      }
+
+
+      .brand-text {
+
+        font-size:
+          17px;
+
+      }
+
+
+      .brand-icon {
+
+        width:
+          42px;
+
+        height:
+          42px;
 
       }
 
     }
+
 
   </style>
 
@@ -381,179 +1185,453 @@
 <body>
 
 
-  <div class="login-box">
+  <!-- =========================
+       BACKGROUND GLOWS
+  ========================== -->
+
+  <div
+    class="glow glow-one"
+  ></div>
 
 
-    <!-- LOGO -->
-
-    <div class="logo">
-
-      ALPHA
-      <span>
-        TRADERS HOST
-      </span>
-
-    </div>
+  <div
+    class="glow glow-two"
+  ></div>
 
 
-    <!-- SUBTITLE -->
 
-    <p class="subtitle">
+  <!-- =========================
+       LOGIN PAGE
+  ========================== -->
 
-      Sign in to your account
-
-    </p>
-
-
-    <!-- SELECTED ROLE -->
-
-    <div
-      id="selectedRole"
-      class="selected-role"
-    >
-      Account Login
-    </div>
+  <main class="login-page">
 
 
-    <!-- LOGIN FORM -->
 
-    <form id="loginForm">
+    <!-- =========================
+         LEFT WELCOME SECTION
+    ========================== -->
 
-
-      <!-- EMAIL -->
-
-      <label for="email">
-
-        Email
-
-      </label>
+    <section class="welcome-side">
 
 
-      <input
+      <!-- BRAND -->
 
-        type="email"
-
-        id="email"
-
-        placeholder="you@example.com"
-
-        autocomplete="email"
-
-        required
-
+      <a
+        href="index.html"
+        class="brand"
       >
 
 
-      <!-- PASSWORD -->
+        <div class="brand-icon">
 
-      <label for="password">
+          <img
+            src="./icons/icon-192.png"
+            alt="Alpha Traders Host"
+          >
 
-        Password
-
-      </label>
-
-
-      <input
-
-        type="password"
-
-        id="password"
-
-        placeholder="Your password"
-
-        autocomplete="current-password"
-
-        required
-
-      >
+        </div>
 
 
-      <!-- SIGN IN BUTTON -->
+        <div class="brand-text">
 
-      <button
-        type="submit"
-        id="loginButton"
-      >
+          ALPHA
+          <span>
+            TRADERS HOST
+          </span>
 
-        Sign In
+        </div>
 
-      </button>
-
-
-      <!-- RESEND CONFIRMATION EMAIL -->
-
-      <button
-        type="button"
-        id="resendButton"
-        class="resend-button"
-      >
-
-        Resend Confirmation Email
-
-      </button>
-
-
-    </form>
-
-
-    <!-- MESSAGE -->
-
-    <div
-      id="message"
-      class="message"
-    >
-    </div>
-
-
-    <!-- REGISTER -->
-
-    <div class="links">
-
-      <p>
-
-        Don't have an account?
-
-      </p>
-
-
-      <a href="register.html">
-
-        Create Account
 
       </a>
 
 
-      <!-- ROLE LOGIN LINKS -->
 
-      <div class="role-links">
+      <!-- WELCOME CONTENT -->
 
-        <a href="login.html?role=admin">
-
-          👑 Admin Login
-
-        </a>
+      <div class="welcome-content">
 
 
-        <a href="login.html?role=mentor">
+        <div class="welcome-badge">
 
-          🎓 Mentor Login
+          <span class="status-dot"></span>
 
-        </a>
+          SECURE PLATFORM ACCESS
+
+        </div>
 
 
-        <a href="login.html?role=client">
+        <h1>
 
-          👤 Client Login
+          Your trading
+          <span>
+            workspace.
+          </span>
 
-        </a>
+        </h1>
+
+
+        <p>
+
+          Sign in to access your Alpha Traders Host
+          dashboard and manage your platform activity
+          from anywhere.
+
+        </p>
+
+
+
+        <!-- FEATURES -->
+
+        <div class="platform-list">
+
+
+          <div class="platform-item">
+
+            <div class="platform-check">
+
+              ✓
+
+            </div>
+
+            <span>
+
+              Access your personal dashboard
+
+            </span>
+
+          </div>
+
+
+          <div class="platform-item">
+
+            <div class="platform-check">
+
+              ✓
+
+            </div>
+
+            <span>
+
+              Manage mentorship and platform activity
+
+            </span>
+
+          </div>
+
+
+          <div class="platform-item">
+
+            <div class="platform-check">
+
+              ✓
+
+            </div>
+
+            <span>
+
+              Secure role-based access
+
+            </span>
+
+          </div>
+
+
+        </div>
+
 
       </div>
 
 
-    </div>
+
+      <!-- FOOTER -->
+
+      <div class="welcome-footer">
+
+        © 2026 Alpha Traders Host
+
+      </div>
 
 
-  </div>
+    </section>
+
+
+
+    <!-- =========================
+         RIGHT LOGIN SECTION
+    ========================== -->
+
+    <section class="form-side">
+
+
+      <div class="login-box">
+
+
+        <!-- MOBILE BRAND -->
+
+        <div class="mobile-brand">
+
+
+          <a
+            href="index.html"
+            class="brand"
+          >
+
+
+            <div class="brand-icon">
+
+              <img
+                src="./icons/icon-192.png"
+                alt="Alpha Traders Host"
+              >
+
+            </div>
+
+
+            <div class="brand-text">
+
+              ALPHA
+              <span>
+                TRADERS HOST
+              </span>
+
+            </div>
+
+
+          </a>
+
+
+        </div>
+
+
+
+        <!-- FORM HEADER -->
+
+        <div class="form-header">
+
+
+          <h2>
+
+            Welcome back
+
+          </h2>
+
+
+          <p class="subtitle">
+
+            Sign in to continue to your account.
+
+          </p>
+
+
+          <div
+            id="selectedRole"
+            class="selected-role"
+          >
+
+            Account Login
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             LOGIN FORM
+        ========================== -->
+
+        <form id="loginForm">
+
+
+          <!-- EMAIL -->
+
+          <label for="email">
+
+            Email address
+
+          </label>
+
+
+          <div class="input-group">
+
+
+            <input
+
+              type="email"
+
+              id="email"
+
+              placeholder="you@example.com"
+
+              autocomplete="email"
+
+              required
+
+            >
+
+
+          </div>
+
+
+
+          <!-- PASSWORD -->
+
+          <label for="password">
+
+            Password
+
+          </label>
+
+
+          <div class="input-group">
+
+
+            <input
+
+              type="password"
+
+              id="password"
+
+              placeholder="Enter your password"
+
+              autocomplete="current-password"
+
+              required
+
+            >
+
+
+          </div>
+
+
+
+          <!-- SIGN IN -->
+
+          <button
+            type="submit"
+            id="loginButton"
+          >
+
+            Sign In →
+
+          </button>
+
+
+
+          <!-- RESEND EMAIL -->
+
+          <button
+            type="button"
+            id="resendButton"
+            class="resend-button"
+          >
+
+            Resend Confirmation Email
+
+          </button>
+
+
+        </form>
+
+
+
+        <!-- MESSAGE -->
+
+        <div
+          id="message"
+          class="message"
+        >
+        </div>
+
+
+
+        <!-- =========================
+             ACCOUNT LINKS
+        ========================== -->
+
+        <div class="links">
+
+
+          <p>
+
+            Don't have an account?
+
+          </p>
+
+
+          <a
+            href="register.html"
+            class="create-account"
+          >
+
+            Create your account →
+
+          </a>
+
+
+
+          <div class="role-title">
+
+            Choose login type
+
+          </div>
+
+
+
+          <!-- ROLE LINKS -->
+
+          <div class="role-links">
+
+
+            <a href="login.html?role=admin">
+
+              👑 Admin
+
+            </a>
+
+
+            <a href="login.html?role=mentor">
+
+              🎓 Mentor
+
+            </a>
+
+
+            <a href="login.html?role=client">
+
+              👤 Client
+
+            </a>
+
+
+          </div>
+
+
+
+          <!-- BACK HOME -->
+
+          <a
+            href="index.html"
+            class="back-home"
+          >
+
+            ← Back to home
+
+          </a>
+
+
+        </div>
+
+
+      </div>
+
+
+    </section>
+
+
+  </main>
 
 
 
@@ -709,7 +1787,7 @@
 
 
       loginButton.textContent =
-        "Sign In";
+        "Sign In →";
 
     }
 
@@ -992,11 +2070,6 @@
           if (
             error
           ) {
-
-            /*
-              If the email has not been confirmed,
-              Supabase may return an error.
-            */
 
             showError(
               "Login failed: " +
