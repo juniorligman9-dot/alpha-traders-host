@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -205,6 +206,33 @@
 
       cursor:
         not-allowed;
+
+      transform:
+        none;
+
+    }
+
+
+    .resend-button {
+
+      margin-top: 12px;
+
+      background:
+        transparent;
+
+      color:
+        #20c997;
+
+      border:
+        2px solid #20c997;
+
+    }
+
+
+    .resend-button:hover {
+
+      background:
+        rgba(32, 201, 151, 0.08);
 
     }
 
@@ -440,7 +468,7 @@
       >
 
 
-      <!-- BUTTON -->
+      <!-- SIGN IN BUTTON -->
 
       <button
         type="submit"
@@ -448,6 +476,19 @@
       >
 
         Sign In
+
+      </button>
+
+
+      <!-- RESEND CONFIRMATION EMAIL -->
+
+      <button
+        type="button"
+        id="resendButton"
+        class="resend-button"
+      >
+
+        Resend Confirmation Email
 
       </button>
 
@@ -563,6 +604,12 @@
       );
 
 
+    const resendButton =
+      document.getElementById(
+        "resendButton"
+      );
+
+
     const selectedRoleElement =
       document.getElementById(
         "selectedRole"
@@ -652,7 +699,7 @@
 
 
     /* ==========================================
-       RESET BUTTON
+       RESET LOGIN BUTTON
     ========================================== */
 
     function resetLoginButton() {
@@ -702,6 +749,148 @@
         "message success";
 
     }
+
+
+
+    /* ==========================================
+       RESEND CONFIRMATION EMAIL
+    ========================================== */
+
+    resendButton.addEventListener(
+      "click",
+      async function() {
+
+
+        const supabaseClient =
+          getSupabaseClient();
+
+
+        if (
+          !supabaseClient
+        ) {
+
+          showError(
+            "Supabase is not connected. Please check supabase-config.js"
+          );
+
+          return;
+
+        }
+
+
+        const email =
+          emailInput.value
+            .trim();
+
+
+        if (
+          !email
+        ) {
+
+          showError(
+            "Please enter your email address first."
+          );
+
+          return;
+
+        }
+
+
+        message.textContent =
+          "";
+
+
+        message.className =
+          "message";
+
+
+        resendButton.disabled =
+          true;
+
+
+        resendButton.textContent =
+          "Sending Email...";
+
+
+        try {
+
+
+          const {
+            error
+          } =
+            await supabaseClient
+              .auth
+              .resend({
+
+                type:
+                  "signup",
+
+                email:
+                  email,
+
+                options: {
+
+                  emailRedirectTo:
+                    "https://juniorligman9-dot.github.io/alpha-traders-host/"
+
+                }
+
+              });
+
+
+          if (
+            error
+          ) {
+
+            throw error;
+
+          }
+
+
+          showSuccess(
+            "Confirmation email sent! Please check your inbox and spam folder."
+          );
+
+
+        }
+
+
+        catch (
+          error
+        ) {
+
+
+          console.error(
+            "Resend email error:",
+            error
+          );
+
+
+          showError(
+            error.message ||
+            "Could not send the confirmation email. Please try again later."
+          );
+
+
+        }
+
+
+        finally {
+
+
+          resendButton.disabled =
+            false;
+
+
+          resendButton.textContent =
+            "Resend Confirmation Email";
+
+
+        }
+
+
+      }
+    );
 
 
 
@@ -803,6 +992,11 @@
           if (
             error
           ) {
+
+            /*
+              If the email has not been confirmed,
+              Supabase may return an error.
+            */
 
             showError(
               "Login failed: " +
@@ -908,10 +1102,6 @@
 
           /* ======================================
              CHECK WRONG LOGIN TYPE
-
-             This is only a convenience check.
-             Real security comes from checking
-             the database role.
           ====================================== */
 
           if (
@@ -976,8 +1166,6 @@
           ) {
 
 
-            /* Client approval handling */
-
             if (
               approvalStatus === "rejected"
             ) {
@@ -995,13 +1183,6 @@
 
             }
 
-
-            /*
-              Clients can log in when their
-              status is approved or when
-              your system does not require
-              client approval.
-            */
 
             if (
               approvalStatus === "pending"
