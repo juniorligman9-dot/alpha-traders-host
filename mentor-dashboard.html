@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -13,7 +14,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
 
+
   <style>
+
+    /* ==========================================
+       RESET
+    ========================================== */
 
     * {
       box-sizing: border-box;
@@ -21,314 +27,1363 @@
       padding: 0;
     }
 
+
+    /* ==========================================
+       COLORS
+    ========================================== */
+
     :root {
-      --bg: #111a29;
-      --header: #131d2d;
-      --card: #2a374a;
-      --card-dark: #1b2738;
-      --border: #3b4d66;
-      --text: #e7e9ee;
-      --muted: #b6bfce;
-      --accent: #55c5b5;
-      --accent-dark: #36a999;
-      --danger: #ef6666;
-      --warning: #f5b942;
+
+      --bg:
+        #03100c;
+
+      --bg-soft:
+        #061711;
+
+      --header:
+        rgba(4, 18, 13, 0.92);
+
+      --card:
+        #091712;
+
+      --card-hover:
+        #0c2119;
+
+      --card-inner:
+        #07130f;
+
+      --border:
+        rgba(125, 160, 145, 0.20);
+
+      --border-strong:
+        rgba(41, 205, 154, 0.45);
+
+      --text:
+        #edf4f0;
+
+      --muted:
+        #a8b5af;
+
+      --accent:
+        #20c997;
+
+      --accent-bright:
+        #35e0ad;
+
+      --accent-dark:
+        #119b72;
+
+      --danger:
+        #ff7272;
+
+      --warning:
+        #ffc45b;
+
     }
+
+
+    /* ==========================================
+       BODY
+    ========================================== */
+
+    html {
+      scroll-behavior: smooth;
+    }
+
 
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: Arial, sans-serif;
-      min-height: 100vh;
+
+      background:
+
+        radial-gradient(
+          circle at top right,
+          rgba(22, 125, 87, 0.10),
+          transparent 30%
+        ),
+
+        radial-gradient(
+          circle at 10% 40%,
+          rgba(20, 170, 120, 0.06),
+          transparent 30%
+        ),
+
+        var(--bg);
+
+      color:
+        var(--text);
+
+      font-family:
+
+        Inter,
+        Arial,
+        sans-serif;
+
+      min-height:
+        100vh;
+
+      line-height:
+        1.5;
+
     }
+
+
+    /* ==========================================
+       HEADER
+    ========================================== */
 
     header {
-      background: var(--header);
-      border-bottom: 1px solid var(--border);
+
+      position:
+        sticky;
+
+      top:
+        0;
+
+      z-index:
+        100;
+
+      background:
+        var(--header);
+
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
+
+      border-bottom:
+        1px solid var(--border);
+
     }
+
 
     .nav-container {
-      max-width: 1250px;
-      margin: auto;
-      padding: 20px 28px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
+
+      max-width:
+        1250px;
+
+      margin:
+        auto;
+
+      padding:
+        18px 28px;
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      align-items:
+        center;
+
+      gap:
+        25px;
+
     }
+
+
+    /* ==========================================
+       LOGO
+    ========================================== */
 
     .logo {
-      color: var(--text);
-      text-decoration: none;
-      font-size: 24px;
-      font-weight: 800;
+
+      color:
+        var(--text);
+
+      text-decoration:
+        none;
+
+      font-size:
+        25px;
+
+      font-weight:
+        800;
+
+      letter-spacing:
+        3px;
+
+      white-space:
+        nowrap;
+
     }
 
-    .logo span {
-      color: var(--accent);
+
+    .logo-alpha {
+
+      background:
+        linear-gradient(
+          90deg,
+          #8c5cff,
+          #29d5a2
+        );
+
+      -webkit-background-clip:
+        text;
+
+      background-clip:
+        text;
+
+      color:
+        transparent;
+
     }
+
+
+    .logo-host {
+
+      color:
+        var(--accent-bright);
+
+    }
+
+
+    /* ==========================================
+       NAV
+    ========================================== */
 
     nav {
-      display: flex;
-      gap: 10px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        10px;
+
     }
+
 
     .nav-button {
-      padding: 13px 18px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text);
-      cursor: pointer;
-      font-weight: bold;
+
+      padding:
+        12px 18px;
+
+      border-radius:
+        12px;
+
+      border:
+        1px solid var(--border);
+
+      background:
+        rgba(255, 255, 255, 0.01);
+
+      color:
+        var(--text);
+
+      cursor:
+        pointer;
+
+      font-size:
+        14px;
+
+      font-weight:
+        700;
+
+      transition:
+        0.25s ease;
+
     }
+
+
+    .nav-button:hover {
+
+      border-color:
+        var(--accent);
+
+      color:
+        var(--accent-bright);
+
+      background:
+        rgba(32, 201, 151, 0.06);
+
+    }
+
 
     .logout-button {
-      border-color: var(--danger);
-      color: var(--danger);
+
+      color:
+        var(--danger);
+
+      border-color:
+        rgba(255, 114, 114, 0.35);
+
     }
+
+
+    .logout-button:hover {
+
+      border-color:
+        var(--danger);
+
+      background:
+        rgba(255, 114, 114, 0.06);
+
+      color:
+        var(--danger);
+
+    }
+
+
+    /* ==========================================
+       MAIN CONTAINER
+    ========================================== */
 
     .container {
-      max-width: 1250px;
-      margin: auto;
-      padding: 45px 28px 80px;
+
+      max-width:
+        1250px;
+
+      margin:
+        auto;
+
+      padding:
+        55px 28px 90px;
+
     }
+
+
+    /* ==========================================
+       HERO
+    ========================================== */
 
     .hero {
-      margin-bottom: 35px;
+
+      margin-bottom:
+        40px;
+
     }
+
+
+    .hero-badge {
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      gap:
+        8px;
+
+      padding:
+        8px 14px;
+
+      margin-bottom:
+        18px;
+
+      border:
+        1px solid var(--border-strong);
+
+      border-radius:
+        999px;
+
+      background:
+        rgba(32, 201, 151, 0.06);
+
+      color:
+        var(--accent-bright);
+
+      font-size:
+        12px;
+
+      font-weight:
+        800;
+
+      letter-spacing:
+        1px;
+
+    }
+
 
     .hero h1 {
-      font-size: clamp(38px, 6vw, 58px);
-      margin-bottom: 12px;
+
+      font-size:
+        clamp(38px, 6vw, 62px);
+
+      line-height:
+        1.1;
+
+      letter-spacing:
+        -1.5px;
+
+      margin-bottom:
+        16px;
+
     }
+
+
+    .hero h1 span {
+
+      color:
+        var(--accent);
+
+    }
+
 
     .hero p {
-      color: var(--muted);
-      font-size: 18px;
+
+      max-width:
+        650px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        18px;
+
+      line-height:
+        1.7;
+
     }
+
+
+    /* ==========================================
+       STATS
+    ========================================== */
 
     .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-      margin-bottom: 30px;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap:
+        18px;
+
+      margin-bottom:
+        32px;
+
     }
+
 
     .stat-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 25px;
+
+      position:
+        relative;
+
+      overflow:
+        hidden;
+
+      background:
+
+        linear-gradient(
+          145deg,
+          rgba(12, 34, 25, 0.95),
+          rgba(6, 19, 14, 0.98)
+        );
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        20px;
+
+      padding:
+        24px;
+
+      transition:
+        transform 0.25s ease,
+        border-color 0.25s ease;
+
     }
+
+
+    .stat-card:hover {
+
+      transform:
+        translateY(-4px);
+
+      border-color:
+        var(--border-strong);
+
+    }
+
+
+    .stat-card::before {
+
+      content:
+        "";
+
+      position:
+        absolute;
+
+      top:
+        0;
+
+      left:
+        0;
+
+      width:
+        100%;
+
+      height:
+        2px;
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          var(--accent),
+          transparent
+        );
+
+      opacity:
+        0.8;
+
+    }
+
+
+    .stat-icon {
+
+      width:
+        42px;
+
+      height:
+        42px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      border-radius:
+        12px;
+
+      background:
+        rgba(32, 201, 151, 0.08);
+
+      border:
+        1px solid rgba(32, 201, 151, 0.18);
+
+      font-size:
+        20px;
+
+      margin-bottom:
+        18px;
+
+    }
+
 
     .stat-number {
-      color: var(--accent);
-      font-size: 40px;
-      font-weight: bold;
+
+      color:
+        var(--accent-bright);
+
+      font-size:
+        40px;
+
+      line-height:
+        1;
+
+      font-weight:
+        800;
+
+      letter-spacing:
+        -1px;
+
     }
+
 
     .stat-label {
-      color: var(--muted);
-      margin-top: 8px;
+
+      color:
+        var(--muted);
+
+      margin-top:
+        10px;
+
+      font-size:
+        14px;
+
+      font-weight:
+        600;
+
     }
+
+
+    /* ==========================================
+       SECTIONS
+    ========================================== */
 
     .section {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 25px;
-      margin-bottom: 28px;
+
+      background:
+
+        linear-gradient(
+          145deg,
+          rgba(9, 27, 20, 0.92),
+          rgba(5, 17, 12, 0.96)
+        );
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        24px;
+
+      padding:
+        28px;
+
+      margin-bottom:
+        25px;
+
+      box-shadow:
+        0 20px 60px
+        rgba(0, 0, 0, 0.15);
+
     }
+
 
     .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 22px;
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      align-items:
+        center;
+
+      gap:
+        20px;
+
+      margin-bottom:
+        25px;
+
+      padding-bottom:
+        20px;
+
+      border-bottom:
+        1px solid var(--border);
+
     }
+
+
+    .section-heading {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        14px;
+
+    }
+
+
+    .section-icon {
+
+      width:
+        42px;
+
+      height:
+        42px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      border-radius:
+        12px;
+
+      background:
+        rgba(32, 201, 151, 0.08);
+
+      border:
+        1px solid rgba(32, 201, 151, 0.15);
+
+      font-size:
+        19px;
+
+    }
+
 
     .section-header h2 {
-      font-size: 27px;
+
+      font-size:
+        25px;
+
+      letter-spacing:
+        -0.4px;
+
     }
+
+
+    .section-header p {
+
+      color:
+        var(--muted);
+
+      font-size:
+        13px;
+
+      margin-top:
+        2px;
+
+    }
+
+
+    /* ==========================================
+       BUTTONS
+    ========================================== */
 
     .refresh-button {
-      padding: 12px 18px;
-      border: 1px solid var(--accent);
-      background: transparent;
-      color: var(--accent);
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: bold;
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      gap:
+        8px;
+
+      padding:
+        12px 18px;
+
+      border:
+        1px solid var(--border-strong);
+
+      background:
+        rgba(32, 201, 151, 0.05);
+
+      color:
+        var(--accent-bright);
+
+      border-radius:
+        12px;
+
+      cursor:
+        pointer;
+
+      font-size:
+        14px;
+
+      font-weight:
+        700;
+
+      text-decoration:
+        none;
+
+      transition:
+        0.25s ease;
+
     }
+
+
+    .refresh-button:hover {
+
+      background:
+        rgba(32, 201, 151, 0.12);
+
+      border-color:
+        var(--accent);
+
+      transform:
+        translateY(-2px);
+
+    }
+
+
+    /* ==========================================
+       LIST
+    ========================================== */
 
     .list {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap:
+        18px;
+
     }
+
+
+    /* ==========================================
+       CARD
+    ========================================== */
 
     .card {
-      background: var(--card-dark);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 20px;
+
+      background:
+
+        linear-gradient(
+          145deg,
+          rgba(10, 29, 21, 0.95),
+          rgba(5, 17, 12, 0.98)
+        );
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        18px;
+
+      padding:
+        22px;
+
+      transition:
+        0.25s ease;
+
     }
+
+
+    .card:hover {
+
+      border-color:
+        rgba(32, 201, 151, 0.40);
+
+      transform:
+        translateY(-3px);
+
+      background:
+        var(--card-hover);
+
+    }
+
 
     .card h3 {
-      font-size: 20px;
-      margin-bottom: 8px;
+
+      font-size:
+        20px;
+
+      margin:
+        5px 0 10px;
+
+      overflow-wrap:
+        anywhere;
+
     }
+
 
     .muted {
-      color: var(--muted);
-      margin-bottom: 8px;
-      overflow-wrap: anywhere;
+
+      color:
+        var(--muted);
+
+      margin-bottom:
+        9px;
+
+      overflow-wrap:
+        anywhere;
+
+      font-size:
+        14px;
+
     }
+
+
+    /* ==========================================
+       BADGES
+    ========================================== */
 
     .badge {
-      display: inline-block;
-      padding: 6px 11px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: bold;
-      border: 1px solid var(--border);
-      margin-bottom: 12px;
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      padding:
+        6px 11px;
+
+      border-radius:
+        999px;
+
+      font-size:
+        11px;
+
+      font-weight:
+        800;
+
+      letter-spacing:
+        0.5px;
+
+      border:
+        1px solid var(--border);
+
+      text-transform:
+        uppercase;
+
+      margin-bottom:
+        10px;
+
     }
 
+
     .pending {
-      color: var(--warning);
-      border-color: var(--warning);
+
+      color:
+        var(--warning);
+
+      border-color:
+        rgba(255, 196, 91, 0.50);
+
+      background:
+        rgba(255, 196, 91, 0.06);
+
     }
+
 
     .approved,
     .active {
-      color: var(--accent);
-      border-color: var(--accent);
+
+      color:
+        var(--accent-bright);
+
+      border-color:
+        rgba(32, 201, 151, 0.45);
+
+      background:
+        rgba(32, 201, 151, 0.06);
+
     }
+
 
     .rejected,
     .revoked {
-      color: var(--danger);
-      border-color: var(--danger);
+
+      color:
+        var(--danger);
+
+      border-color:
+        rgba(255, 114, 114, 0.45);
+
+      background:
+        rgba(255, 114, 114, 0.06);
+
     }
 
+
+    /* ==========================================
+       ACTIONS
+    ========================================== */
+
     .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 15px;
+
+      display:
+        flex;
+
+      flex-wrap:
+        wrap;
+
+      gap:
+        10px;
+
+      margin-top:
+        18px;
+
     }
+
 
     .approve-button,
     .generate-button,
     .copy-button {
-      padding: 11px 16px;
-      border: none;
-      border-radius: 10px;
-      background: var(--accent);
-      color: #10201f;
-      font-weight: bold;
-      cursor: pointer;
+
+      padding:
+        11px 16px;
+
+      border:
+        none;
+
+      border-radius:
+        10px;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--accent-bright),
+          var(--accent-dark)
+        );
+
+      color:
+        #03130d;
+
+      font-weight:
+        800;
+
+      cursor:
+        pointer;
+
+      transition:
+        0.25s ease;
+
     }
+
+
+    .approve-button:hover,
+    .generate-button:hover,
+    .copy-button:hover {
+
+      transform:
+        translateY(-2px);
+
+      box-shadow:
+        0 8px 25px
+        rgba(32, 201, 151, 0.20);
+
+    }
+
 
     .reject-button,
     .revoke-button {
-      padding: 11px 16px;
-      border: 1px solid var(--danger);
-      border-radius: 10px;
-      background: transparent;
-      color: var(--danger);
-      font-weight: bold;
-      cursor: pointer;
+
+      padding:
+        11px 16px;
+
+      border:
+        1px solid rgba(255, 114, 114, 0.55);
+
+      border-radius:
+        10px;
+
+      background:
+        transparent;
+
+      color:
+        var(--danger);
+
+      font-weight:
+        700;
+
+      cursor:
+        pointer;
+
+      transition:
+        0.25s ease;
+
     }
+
+
+    .reject-button:hover,
+    .revoke-button:hover {
+
+      background:
+        rgba(255, 114, 114, 0.08);
+
+    }
+
+
+    /* ==========================================
+       STATUS / EMPTY
+    ========================================== */
 
     .status-message,
     .empty-state {
-      padding: 30px;
-      text-align: center;
-      background: var(--card-dark);
-      border: 1px dashed var(--border);
-      border-radius: 16px;
-      color: var(--muted);
+
+      padding:
+        35px 25px;
+
+      text-align:
+        center;
+
+      background:
+        rgba(4, 15, 11, 0.55);
+
+      border:
+        1px dashed var(--border);
+
+      border-radius:
+        16px;
+
+      color:
+        var(--muted);
+
     }
+
 
     .error {
-      color: #ffc1c1;
-      border-color: var(--danger);
+
+      color:
+        #ffc1c1;
+
+      border-color:
+        var(--danger);
+
     }
+
+
+    /* ==========================================
+       LICENSE KEY
+    ========================================== */
 
     .license-key {
-      font-family: monospace;
-      color: var(--accent);
-      background: #101824;
-      border: 1px solid var(--border);
-      padding: 12px;
-      border-radius: 10px;
-      margin: 12px 0;
-      word-break: break-all;
-      font-size: 15px;
+
+      font-family:
+        "Courier New",
+        monospace;
+
+      color:
+        var(--accent-bright);
+
+      background:
+        #030d09;
+
+      border:
+        1px solid rgba(32, 201, 151, 0.20);
+
+      padding:
+        14px;
+
+      border-radius:
+        10px;
+
+      margin:
+        14px 0;
+
+      word-break:
+        break-all;
+
+      font-size:
+        14px;
+
     }
 
-    @media (max-width: 850px) {
+
+    /* ==========================================
+       MOBILE
+    ========================================== */
+
+    @media (
+      max-width: 950px
+    ) {
 
       .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
 
-      .list {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+          repeat(2, 1fr);
+
       }
 
     }
 
-    @media (max-width: 600px) {
+
+    @media (
+      max-width: 700px
+    ) {
 
       .nav-container {
-        flex-direction: column;
-        align-items: stretch;
+
+        padding:
+          16px 18px;
+
+        flex-direction:
+          column;
+
+        align-items:
+          stretch;
+
       }
+
+
+      .logo {
+
+        text-align:
+          center;
+
+        font-size:
+          21px;
+
+      }
+
 
       nav {
-        width: 100%;
+
+        width:
+          100%;
+
       }
+
 
       .nav-button {
-        flex: 1;
+
+        flex:
+          1;
+
       }
+
 
       .container {
-        padding: 30px 18px 60px;
+
+        padding:
+          35px 18px 70px;
+
       }
+
+
+      .hero {
+
+        margin-bottom:
+          30px;
+
+      }
+
+
+      .hero p {
+
+        font-size:
+          16px;
+
+      }
+
 
       .stats-grid {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+          1fr;
+
       }
+
+
+      .list {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+
+      .section {
+
+        padding:
+          20px;
+
+        border-radius:
+          20px;
+
+      }
+
 
       .section-header {
-        flex-direction: column;
-        align-items: stretch;
+
+        flex-direction:
+          column;
+
+        align-items:
+          stretch;
+
       }
 
+
+      .section-heading {
+
+        align-items:
+          flex-start;
+
+      }
+
+
       .refresh-button {
-        width: 100%;
+
+        width:
+          100%;
+
+      }
+
+    }
+
+
+    @media (
+      max-width: 430px
+    ) {
+
+      .logo {
+
+        font-size:
+          18px;
+
+        letter-spacing:
+          2px;
+
+      }
+
+
+      .hero h1 {
+
+        font-size:
+          40px;
+
+      }
+
+
+      .actions {
+
+        flex-direction:
+          column;
+
+      }
+
+
+      .approve-button,
+      .generate-button,
+      .copy-button,
+      .reject-button,
+      .revoke-button {
+
+        width:
+          100%;
+
       }
 
     }
 
   </style>
+
 </head>
 
+
 <body>
+
+
+<!-- ==========================================
+     HEADER
+========================================== -->
 
 <header>
 
   <div class="nav-container">
 
-    <a href="index.html" class="logo">
-      ALPHA <span>TRADERS HOST</span>
+    <a
+      href="index.html"
+      class="logo"
+    >
+
+      <span class="logo-alpha">
+        ALPHA
+      </span>
+
+      <span class="logo-host">
+        TRADERS HOST
+      </span>
+
     </a>
+
 
     <nav>
 
@@ -339,6 +1394,7 @@
       >
         ↻ Refresh
       </button>
+
 
       <button
         type="button"
@@ -355,28 +1411,52 @@
 </header>
 
 
+<!-- ==========================================
+     MAIN
+========================================== -->
+
 <main>
 
   <div class="container">
 
+
+    <!-- HERO -->
+
     <section class="hero">
 
+      <div class="hero-badge">
+        ● MENTOR PORTAL
+      </div>
+
+
       <h1 id="welcomeTitle">
-        Mentor Dashboard
+        Mentor <span>Dashboard</span>
       </h1>
 
+
       <p>
-        Manage your clients, Expert Advisors and license keys.
+        Manage your clients, mentorship requests,
+        Expert Advisors and license keys from one
+        secure workspace.
       </p>
 
     </section>
 
 
-    <!-- STATS -->
+
+    <!-- ======================================
+         STATS
+    ======================================= -->
 
     <section class="stats-grid">
 
+
       <div class="stat-card">
+
+        <div class="stat-icon">
+          👥
+        </div>
+
         <div
           class="stat-number"
           id="totalClients"
@@ -387,10 +1467,17 @@
         <div class="stat-label">
           Approved Clients
         </div>
+
       </div>
 
 
+
       <div class="stat-card">
+
+        <div class="stat-icon">
+          🔑
+        </div>
+
         <div
           class="stat-number"
           id="totalKeys"
@@ -401,10 +1488,17 @@
         <div class="stat-label">
           License Keys
         </div>
+
       </div>
 
 
+
       <div class="stat-card">
+
+        <div class="stat-icon">
+          ✓
+        </div>
+
         <div
           class="stat-number"
           id="activeKeys"
@@ -415,10 +1509,17 @@
         <div class="stat-label">
           Active Keys
         </div>
+
       </div>
 
 
+
       <div class="stat-card">
+
+        <div class="stat-icon">
+          🤖
+        </div>
+
         <div
           class="stat-number"
           id="totalEAs"
@@ -429,41 +1530,85 @@
         <div class="stat-label">
           My EAs
         </div>
+
       </div>
+
 
     </section>
 
 
-    <!-- CLIENT REQUESTS -->
+
+    <!-- ======================================
+         CLIENT REQUESTS
+    ======================================= -->
 
     <section class="section">
 
       <div class="section-header">
 
-        <h2>
-          Client Requests
-        </h2>
+        <div class="section-heading">
+
+          <div class="section-icon">
+            📩
+          </div>
+
+          <div>
+
+            <h2>
+              Client Requests
+            </h2>
+
+            <p>
+              Review mentorship requests from clients.
+            </p>
+
+          </div>
+
+        </div>
 
       </div>
 
+
       <div id="requestsContent">
+
         <div class="status-message">
           Loading requests...
         </div>
+
       </div>
 
     </section>
 
 
-    <!-- APPROVED CLIENTS -->
+
+    <!-- ======================================
+         APPROVED CLIENTS
+    ======================================= -->
 
     <section class="section">
 
       <div class="section-header">
 
-        <h2>
-          Approved Clients
-        </h2>
+        <div class="section-heading">
+
+          <div class="section-icon">
+            👥
+          </div>
+
+          <div>
+
+            <h2>
+              Approved Clients
+            </h2>
+
+            <p>
+              Manage clients currently assigned to you.
+            </p>
+
+          </div>
+
+        </div>
+
 
         <button
           type="button"
@@ -475,24 +1620,47 @@
 
       </div>
 
+
       <div id="clientsContent">
+
         <div class="status-message">
           Loading clients...
         </div>
+
       </div>
 
     </section>
 
 
-    <!-- LICENSE KEYS -->
+
+    <!-- ======================================
+         LICENSE KEYS
+    ======================================= -->
 
     <section class="section">
 
       <div class="section-header">
 
-        <h2>
-          Generated License Keys
-        </h2>
+        <div class="section-heading">
+
+          <div class="section-icon">
+            🔑
+          </div>
+
+          <div>
+
+            <h2>
+              Generated License Keys
+            </h2>
+
+            <p>
+              Manage active and revoked client licenses.
+            </p>
+
+          </div>
+
+        </div>
+
 
         <button
           type="button"
@@ -504,56 +1672,92 @@
 
       </div>
 
+
       <div id="keysContent">
+
         <div class="status-message">
           Loading license keys...
         </div>
+
       </div>
 
     </section>
 
 
-    <!-- EAs -->
+
+    <!-- ======================================
+         EAs
+    ======================================= -->
 
     <section class="section">
 
       <div class="section-header">
 
-        <h2>
-          My Expert Advisors
-        </h2>
+        <div class="section-heading">
+
+          <div class="section-icon">
+            🤖
+          </div>
+
+          <div>
+
+            <h2>
+              My Expert Advisors
+            </h2>
+
+            <p>
+              Create and manage your trading robots.
+            </p>
+
+          </div>
+
+        </div>
+
 
         <a
           href="create-ea.html"
           class="refresh-button"
-          style="text-decoration:none;text-align:center;"
         >
           + Create EA
         </a>
 
       </div>
 
+
       <div id="easContent">
+
         <div class="status-message">
           Loading EAs...
         </div>
+
       </div>
 
     </section>
+
 
   </div>
 
 </main>
 
 
+
 <script>
 
+
+/* ==========================================
+   VARIABLES
+========================================== */
+
 let currentUser = null;
+
 let currentProfile = null;
 
 let approvedClients = [];
+
 let mentorRequests = [];
+
 let licenseKeys = [];
+
 
 
 /* ==========================================
@@ -565,55 +1769,66 @@ const welcomeTitle =
     "welcomeTitle"
   );
 
+
 const totalClientsElement =
   document.getElementById(
     "totalClients"
   );
+
 
 const totalKeysElement =
   document.getElementById(
     "totalKeys"
   );
 
+
 const activeKeysElement =
   document.getElementById(
     "activeKeys"
   );
+
 
 const totalEAsElement =
   document.getElementById(
     "totalEAs"
   );
 
+
 const requestsContent =
   document.getElementById(
     "requestsContent"
   );
+
 
 const clientsContent =
   document.getElementById(
     "clientsContent"
   );
 
+
 const keysContent =
   document.getElementById(
     "keysContent"
   );
+
 
 const easContent =
   document.getElementById(
     "easContent"
   );
 
+
 const logoutButton =
   document.getElementById(
     "logoutButton"
   );
 
+
 const refreshAllButton =
   document.getElementById(
     "refreshAllButton"
   );
+
 
 
 /* ==========================================
@@ -627,6 +1842,7 @@ function getSupabaseClient() {
 }
 
 
+
 /* ==========================================
    ESCAPE HTML
 ========================================== */
@@ -637,17 +1853,41 @@ function escapeHTML(value) {
     value === null ||
     value === undefined
   ) {
+
     return "";
+
   }
 
+
   return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
+
 
 
 /* ==========================================
@@ -657,23 +1897,31 @@ function escapeHTML(value) {
 function formatDate(value) {
 
   if (!value) {
+
     return "Unknown";
+
   }
+
 
   const date =
     new Date(value);
+
 
   if (
     Number.isNaN(
       date.getTime()
     )
   ) {
+
     return "Unknown";
+
   }
+
 
   return date.toLocaleDateString();
 
 }
+
 
 
 /* ==========================================
@@ -812,9 +2060,10 @@ async function checkMentorAccess() {
 
   if (firstName) {
 
-    welcomeTitle.textContent =
-      "Welcome, " +
-      firstName;
+    welcomeTitle.innerHTML =
+      "Welcome, <span>" +
+      escapeHTML(firstName) +
+      "</span>";
 
   }
 
@@ -822,6 +2071,7 @@ async function checkMentorAccess() {
   return true;
 
 }
+
 
 
 /* ==========================================
@@ -835,7 +2085,11 @@ async function loadMentorRequests() {
 
 
   requestsContent.innerHTML =
-    '<div class="status-message">Loading requests...</div>';
+    `
+      <div class="status-message">
+        Loading requests...
+      </div>
+    `;
 
 
   const {
@@ -860,7 +2114,9 @@ async function loadMentorRequests() {
 
 
   if (error) {
+
     throw error;
+
   }
 
 
@@ -873,12 +2129,16 @@ async function loadMentorRequests() {
   const clientIds =
     [
       ...new Set(
+
         mentorRequests
+
           .map(
             request =>
               request.client_id
           )
+
           .filter(Boolean)
+
       )
     ];
 
@@ -906,20 +2166,23 @@ async function loadMentorRequests() {
 
 
     if (clientsError) {
+
       throw clientsError;
+
     }
 
 
-    (clients || []).forEach(
-      client => {
+    (clients || [])
+      .forEach(
+        client => {
 
-        clientMap[
-          client.id
-        ] =
-          client;
+          clientMap[
+            client.id
+          ] =
+            client;
 
-      }
-    );
+        }
+      );
 
   }
 
@@ -945,6 +2208,7 @@ async function loadMentorRequests() {
 }
 
 
+
 /* ==========================================
    RENDER REQUESTS
 ========================================== */
@@ -956,7 +2220,11 @@ function renderRequests() {
   ) {
 
     requestsContent.innerHTML =
-      '<div class="empty-state">No client requests yet.</div>';
+      `
+        <div class="empty-state">
+          No client requests yet.
+        </div>
+      `;
 
     return;
 
@@ -972,6 +2240,7 @@ function renderRequests() {
 
       const client =
         request.client || {};
+
 
       const status =
         String(
@@ -991,6 +2260,7 @@ function renderRequests() {
             ${escapeHTML(status)}
           </span>
 
+
           <h3>
             ${escapeHTML(
               client.full_name ||
@@ -998,25 +2268,33 @@ function renderRequests() {
             )}
           </h3>
 
+
           <div class="muted">
+
             ${escapeHTML(
               client.email ||
               "Email unavailable"
             )}
+
           </div>
 
+
           <div class="muted">
+
             Requested:
+
             ${escapeHTML(
               formatDate(
                 request.created_at
               )
             )}
+
           </div>
 
 
           ${
             status === "pending"
+
               ? `
 
                 <div class="actions">
@@ -1033,6 +2311,7 @@ function renderRequests() {
                     ✓ Accept
                   </button>
 
+
                   <button
                     class="reject-button"
                     onclick="
@@ -1048,7 +2327,9 @@ function renderRequests() {
                 </div>
 
               `
+
               : ""
+
           }
 
         </article>
@@ -1069,6 +2350,7 @@ function renderRequests() {
 }
 
 
+
 /* ==========================================
    UPDATE REQUEST STATUS
 ========================================== */
@@ -1087,7 +2369,9 @@ async function updateRequestStatus(
 
 
   if (!confirmed) {
+
     return;
+
   }
 
 
@@ -1116,12 +2400,13 @@ async function updateRequestStatus(
 
 
     if (error) {
+
       throw error;
+
     }
 
 
     await refreshAll();
-
 
   }
   catch (error) {
@@ -1136,6 +2421,7 @@ async function updateRequestStatus(
 }
 
 
+
 /* ==========================================
    LOAD APPROVED CLIENTS
 ========================================== */
@@ -1147,7 +2433,11 @@ async function loadApprovedClients() {
 
 
   clientsContent.innerHTML =
-    '<div class="status-message">Loading clients...</div>';
+    `
+      <div class="status-message">
+        Loading clients...
+      </div>
+    `;
 
 
   const {
@@ -1170,19 +2460,25 @@ async function loadApprovedClients() {
 
 
   if (error) {
+
     throw error;
+
   }
 
 
   const clientIds =
     [
       ...new Set(
+
         (requests || [])
+
           .map(
             request =>
               request.client_id
           )
+
           .filter(Boolean)
+
       )
     ];
 
@@ -1218,7 +2514,9 @@ async function loadApprovedClients() {
 
 
   if (clientsError) {
+
     throw clientsError;
+
   }
 
 
@@ -1231,6 +2529,7 @@ async function loadApprovedClients() {
   renderApprovedClients();
 
 }
+
 
 
 /* ==========================================
@@ -1248,7 +2547,11 @@ function renderApprovedClients() {
   ) {
 
     clientsContent.innerHTML =
-      '<div class="empty-state">No approved clients yet.</div>';
+      `
+        <div class="empty-state">
+          No approved clients yet.
+        </div>
+      `;
 
     return;
 
@@ -1270,19 +2573,26 @@ function renderApprovedClients() {
             APPROVED CLIENT
           </span>
 
+
           <h3>
+
             ${escapeHTML(
               client.full_name ||
               "Client"
             )}
+
           </h3>
 
+
           <div class="muted">
+
             ${escapeHTML(
               client.email ||
               "Email unavailable"
             )}
+
           </div>
+
 
           <div class="actions">
 
@@ -1317,6 +2627,7 @@ function renderApprovedClients() {
 }
 
 
+
 /* ==========================================
    GENERATE LICENSE KEY
 ========================================== */
@@ -1332,7 +2643,9 @@ async function generateLicenseKey(
 
 
   if (!confirmed) {
+
     return;
+
   }
 
 
@@ -1359,7 +2672,9 @@ async function generateLicenseKey(
 
 
     if (error) {
+
       throw error;
+
     }
 
 
@@ -1379,6 +2694,7 @@ async function generateLicenseKey(
 
     console.error(error);
 
+
     alert(
       "Could not generate license key: " +
       error.message
@@ -1387,6 +2703,7 @@ async function generateLicenseKey(
   }
 
 }
+
 
 
 /* ==========================================
@@ -1400,7 +2717,11 @@ async function loadLicenseKeys() {
 
 
   keysContent.innerHTML =
-    '<div class="status-message">Loading license keys...</div>';
+    `
+      <div class="status-message">
+        Loading license keys...
+      </div>
+    `;
 
 
   const {
@@ -1425,7 +2746,9 @@ async function loadLicenseKeys() {
 
 
   if (error) {
+
     throw error;
+
   }
 
 
@@ -1438,12 +2761,16 @@ async function loadLicenseKeys() {
   const clientIds =
     [
       ...new Set(
+
         licenseKeys
+
           .map(
             key =>
               key.client_id
           )
+
           .filter(Boolean)
+
       )
     ];
 
@@ -1471,20 +2798,23 @@ async function loadLicenseKeys() {
 
 
     if (clientsError) {
+
       throw clientsError;
+
     }
 
 
-    (clients || []).forEach(
-      client => {
+    (clients || [])
+      .forEach(
+        client => {
 
-        clientMap[
-          client.id
-        ] =
-          client;
+          clientMap[
+            client.id
+          ] =
+            client;
 
-      }
-    );
+        }
+      );
 
   }
 
@@ -1510,6 +2840,7 @@ async function loadLicenseKeys() {
 }
 
 
+
 /* ==========================================
    RENDER LICENSE KEYS
 ========================================== */
@@ -1523,11 +2854,13 @@ function renderLicenseKeys() {
   activeKeysElement.textContent =
     licenseKeys.filter(
       key =>
+
         String(
           key.status || ""
         )
         .toLowerCase() ===
         "active"
+
     ).length;
 
 
@@ -1536,7 +2869,11 @@ function renderLicenseKeys() {
   ) {
 
     keysContent.innerHTML =
-      '<div class="empty-state">No license keys generated yet.</div>';
+      `
+        <div class="empty-state">
+          No license keys generated yet.
+        </div>
+      `;
 
     return;
 
@@ -1568,34 +2905,48 @@ function renderLicenseKeys() {
             ${escapeHTML(status)}
           </span>
 
+
           <h3>
+
             ${escapeHTML(
               key.client?.full_name ||
               "Client"
             )}
+
           </h3>
 
+
           <div class="muted">
+
             ${escapeHTML(
               key.client?.email ||
               ""
             )}
+
           </div>
 
+
           <div class="license-key">
+
             ${escapeHTML(
               key.license_key
             )}
+
           </div>
 
+
           <div class="muted">
+
             Created:
+
             ${escapeHTML(
               formatDate(
                 key.created_at
               )
             )}
+
           </div>
+
 
           <div class="actions">
 
@@ -1615,6 +2966,7 @@ function renderLicenseKeys() {
 
             ${
               status === "active"
+
                 ? `
 
                   <button
@@ -1629,7 +2981,9 @@ function renderLicenseKeys() {
                   </button>
 
                 `
+
                 : ""
+
             }
 
           </div>
@@ -1652,6 +3006,7 @@ function renderLicenseKeys() {
 }
 
 
+
 /* ==========================================
    COPY LICENSE KEY
 ========================================== */
@@ -1665,6 +3020,7 @@ async function copyLicenseKey(
     await navigator.clipboard.writeText(
       key
     );
+
 
     alert(
       "License key copied!"
@@ -1682,6 +3038,7 @@ async function copyLicenseKey(
 }
 
 
+
 /* ==========================================
    REVOKE LICENSE KEY
 ========================================== */
@@ -1697,7 +3054,9 @@ async function revokeLicenseKey(
 
 
   if (!confirmed) {
+
     return;
+
   }
 
 
@@ -1733,7 +3092,9 @@ async function revokeLicenseKey(
 
 
     if (error) {
+
       throw error;
+
     }
 
 
@@ -1752,6 +3113,7 @@ async function revokeLicenseKey(
 }
 
 
+
 /* ==========================================
    LOAD EAs
 ========================================== */
@@ -1763,7 +3125,11 @@ async function loadEAs() {
 
 
   easContent.innerHTML =
-    '<div class="status-message">Loading EAs...</div>';
+    `
+      <div class="status-message">
+        Loading EAs...
+      </div>
+    `;
 
 
   const {
@@ -1788,7 +3154,9 @@ async function loadEAs() {
 
 
   if (error) {
+
     throw error;
+
   }
 
 
@@ -1807,7 +3175,11 @@ async function loadEAs() {
   ) {
 
     easContent.innerHTML =
-      '<div class="empty-state">No Expert Advisors created yet.</div>';
+      `
+        <div class="empty-state">
+          No Expert Advisors created yet.
+        </div>
+      `;
 
     return;
 
@@ -1825,26 +3197,40 @@ async function loadEAs() {
 
         <article class="card">
 
+          <span class="badge active">
+            EXPERT ADVISOR
+          </span>
+
+
           <h3>
+
             ${escapeHTML(
               ea.name ||
               "Unnamed EA"
             )}
+
           </h3>
 
+
           <div class="muted">
+
             Platform:
+
             ${escapeHTML(
               ea.platform ||
               "Not specified"
             )}
+
           </div>
 
+
           <div class="muted">
+
             ${escapeHTML(
               ea.description ||
               "No description"
             )}
+
           </div>
 
         </article>
@@ -1865,6 +3251,7 @@ async function loadEAs() {
 }
 
 
+
 /* ==========================================
    REFRESH ALL
 ========================================== */
@@ -1875,6 +3262,7 @@ async function refreshAll() {
 
     refreshAllButton.disabled =
       true;
+
 
     refreshAllButton.textContent =
       "Loading...";
@@ -1895,9 +3283,8 @@ async function refreshAll() {
   }
   catch (error) {
 
-    console.error(
-      error
-    );
+    console.error(error);
+
 
     alert(
       "Could not refresh dashboard: " +
@@ -1910,12 +3297,14 @@ async function refreshAll() {
     refreshAllButton.disabled =
       false;
 
+
     refreshAllButton.textContent =
       "↻ Refresh";
 
   }
 
 }
+
 
 
 /* ==========================================
@@ -1946,6 +3335,7 @@ logoutButton.addEventListener(
 );
 
 
+
 /* ==========================================
    INITIALIZE
 ========================================== */
@@ -1961,7 +3351,9 @@ document.addEventListener(
 
 
       if (!allowed) {
+
         return;
+
       }
 
 
@@ -1970,9 +3362,7 @@ document.addEventListener(
     }
     catch (error) {
 
-      console.error(
-        error
-      );
+      console.error(error);
 
 
       alert(
@@ -1986,6 +3376,7 @@ document.addEventListener(
 );
 
 
+
 /* ==========================================
    REFRESH BUTTON
 ========================================== */
@@ -1995,7 +3386,9 @@ refreshAllButton.addEventListener(
   refreshAll
 );
 
+
 </script>
+
 
 </body>
 </html>
