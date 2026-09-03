@@ -1,2004 +1,409 @@
-<!DOCTYPE html>
+<script>
 
-<html lang="en">
+  /* ==========================================
+     ELEMENTS
+  ========================================== */
 
-<head>
+  const loginForm =
+    document.getElementById("loginForm");
 
-  <meta charset="UTF-8">
+  const emailInput =
+    document.getElementById("email");
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  const passwordInput =
+    document.getElementById("password");
 
-  <title>Login | Alpha Traders Host</title>
+  const message =
+    document.getElementById("message");
 
-  <meta
-    name="theme-color"
-    content="#050806"
-  >
+  const loginButton =
+    document.getElementById("loginButton");
 
+  const resendButton =
+    document.getElementById("resendButton");
 
-  <style>
+  const selectedRoleElement =
+    document.getElementById("selectedRole");
 
 
-    /* =========================
-       RESET
-    ========================== */
+  /* ==========================================
+     GET SELECTED ROLE FROM URL
+  ========================================== */
 
-    * {
-
-      box-sizing:
-        border-box;
-
-      margin:
-        0;
-
-      padding:
-        0;
-
-    }
-
-
-    body {
-
-      font-family:
-        Arial,
-        sans-serif;
-
-      background:
-        #050806;
-
-      color:
-        #ffffff;
-
-      min-height:
-        100vh;
-
-      overflow-x:
-        hidden;
-
-    }
-
-
-    a {
-
-      text-decoration:
-        none;
-
-    }
-
-
-
-    /* =========================
-       BACKGROUND
-    ========================== */
-
-    .glow {
-
-      position:
-        fixed;
-
-      width:
-        500px;
-
-      height:
-        500px;
-
-      border-radius:
-        50%;
-
-      background:
-        rgba(0, 208, 132, 0.10);
-
-      filter:
-        blur(130px);
-
-      pointer-events:
-        none;
-
-      z-index:
-        -1;
-
-    }
-
-
-    .glow-one {
-
-      top:
-        -250px;
-
-      left:
-        -250px;
-
-    }
-
-
-    .glow-two {
-
-      right:
-        -250px;
-
-      bottom:
-        -250px;
-
-    }
-
-
-
-    /* =========================
-       PAGE
-    ========================== */
-
-    .login-page {
-
-      min-height:
-        100vh;
-
-      display:
-        grid;
-
-      grid-template-columns:
-        1fr 1fr;
-
-    }
-
-
-
-    /* =========================
-       LEFT SIDE
-    ========================== */
-
-    .welcome-side {
-
-      padding:
-        50px 8%;
-
-      border-right:
-        1px solid rgba(255,255,255,0.07);
-
-      display:
-        flex;
-
-      flex-direction:
-        column;
-
-      justify-content:
-        space-between;
-
-      min-height:
-        100vh;
-
-    }
-
-
-    /* =========================
-       BRAND
-    ========================== */
-
-    .brand {
-
-      display:
-        inline-flex;
-
-      align-items:
-        center;
-
-      gap:
-        12px;
-
-      color:
-        white;
-
-      width:
-        fit-content;
-
-    }
-
-
-    .brand-icon {
-
-      width:
-        48px;
-
-      height:
-        48px;
-
-      border-radius:
-        14px;
-
-      overflow:
-        hidden;
-
-      display:
-        flex;
-
-      align-items:
-        center;
-
-      justify-content:
-        center;
-
-      border:
-        1px solid rgba(0,208,132,0.40);
-
-      background:
-        #07120e;
-
-    }
-
-
-    .brand-icon img {
-
-      width:
-        100%;
-
-      height:
-        100%;
-
-      object-fit:
-        cover;
-
-    }
-
-
-    .brand-text {
-
-      font-size:
-        20px;
-
-      font-weight:
-        bold;
-
-      letter-spacing:
-        1px;
-
-    }
-
-
-    .brand-text span {
-
-      color:
-        #00d084;
-
-    }
-
-
-
-    /* =========================
-       WELCOME CONTENT
-    ========================== */
-
-    .welcome-content {
-
-      max-width:
-        540px;
-
-      margin:
-        auto 0;
-
-      padding:
-        70px 0;
-
-    }
-
-
-    .welcome-badge {
-
-      display:
-        inline-flex;
-
-      align-items:
-        center;
-
-      gap:
-        8px;
-
-      padding:
-        10px 16px;
-
-      border-radius:
-        30px;
-
-      color:
-        #7bf0be;
-
-      background:
-        rgba(0,208,132,0.07);
-
-      border:
-        1px solid rgba(0,208,132,0.20);
-
-      font-size:
-        13px;
-
-      font-weight:
-        bold;
-
-      letter-spacing:
-        0.5px;
-
-      margin-bottom:
-        25px;
-
-    }
-
-
-    .status-dot {
-
-      width:
-        8px;
-
-      height:
-        8px;
-
-      border-radius:
-        50%;
-
-      background:
-        #00d084;
-
-      box-shadow:
-        0 0 12px #00d084;
-
-    }
-
-
-    .welcome-content h1 {
-
-      font-size:
-        clamp(42px, 5vw, 68px);
-
-      line-height:
-        1.05;
-
-      letter-spacing:
-        -2px;
-
-      margin-bottom:
-        25px;
-
-    }
-
-
-    .welcome-content h1 span {
-
-      color:
-        #00d084;
-
-    }
-
-
-    .welcome-content p {
-
-      color:
-        #929c96;
-
-      font-size:
-        18px;
-
-      line-height:
-        1.7;
-
-      max-width:
-        500px;
-
-    }
-
-
-
-    /* =========================
-       PLATFORM FEATURES
-    ========================== */
-
-    .platform-list {
-
-      margin-top:
-        45px;
-
-      max-width:
-        500px;
-
-    }
-
-
-    .platform-item {
-
-      display:
-        flex;
-
-      align-items:
-        center;
-
-      gap:
-        18px;
-
-      padding:
-        18px 0;
-
-      border-bottom:
-        1px solid rgba(255,255,255,0.07);
-
-    }
-
-
-    .platform-check {
-
-      width:
-        30px;
-
-      height:
-        30px;
-
-      border-radius:
-        50%;
-
-      display:
-        flex;
-
-      align-items:
-        center;
-
-      justify-content:
-        center;
-
-      background:
-        rgba(0,208,132,0.10);
-
-      color:
-        #00d084;
-
-      font-weight:
-        bold;
-
-      flex-shrink:
-        0;
-
-    }
-
-
-    .platform-item span {
-
-      color:
-        #c4cbc7;
-
-      font-size:
-        16px;
-
-    }
-
-
-
-    /* =========================
-       FOOTER TEXT
-    ========================== */
-
-    .welcome-footer {
-
-      color:
-        #5f6b64;
-
-      font-size:
-        13px;
-
-    }
-
-
-
-    /* =========================
-       RIGHT LOGIN SIDE
-    ========================== */
-
-    .form-side {
-
-      display:
-        flex;
-
-      align-items:
-        center;
-
-      justify-content:
-        center;
-
-      padding:
-        40px;
-
-      min-height:
-        100vh;
-
-    }
-
-
-    .login-box {
-
-      width:
-        100%;
-
-      max-width:
-        500px;
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(18,28,22,0.95),
-          rgba(7,12,9,0.95)
-        );
-
-      border:
-        1px solid rgba(255,255,255,0.09);
-
-      border-radius:
-        24px;
-
-      padding:
-        45px 40px;
-
-      box-shadow:
-        0 30px 80px rgba(0,0,0,0.45);
-
-      position:
-        relative;
-
-    }
-
-
-    .login-box::before {
-
-      content:
-        "";
-
-      position:
-        absolute;
-
-      top:
-        0;
-
-      left:
-        10%;
-
-      right:
-        10%;
-
-      height:
-        1px;
-
-      background:
-        linear-gradient(
-          to right,
-          transparent,
-          rgba(0,208,132,0.8),
-          transparent
-        );
-
-    }
-
-
-
-    /* =========================
-       MOBILE BRAND
-    ========================== */
-
-    .mobile-brand {
-
-      display:
-        none;
-
-      justify-content:
-        center;
-
-      margin-bottom:
-        35px;
-
-    }
-
-
-
-    /* =========================
-       FORM HEADER
-    ========================== */
-
-    .form-header {
-
-      margin-bottom:
-        35px;
-
-    }
-
-
-    .form-header h2 {
-
-      font-size:
-        34px;
-
-      margin-bottom:
-        12px;
-
-    }
-
-
-    .subtitle {
-
-      color:
-        #8e9892;
-
-      font-size:
-        16px;
-
-      line-height:
-        1.6;
-
-    }
-
-
-    .selected-role {
-
-      display:
-        inline-flex;
-
-      align-items:
-        center;
-
-      margin-top:
-        18px;
-
-      padding:
-        9px 14px;
-
-      border-radius:
-        20px;
-
-      color:
-        #00d084;
-
-      background:
-        rgba(0,208,132,0.08);
-
-      border:
-        1px solid rgba(0,208,132,0.16);
-
-      font-size:
-        14px;
-
-      font-weight:
-        bold;
-
-    }
-
-
-
-    /* =========================
-       FORM
-    ========================== */
-
-    form {
-
-      display:
-        flex;
-
-      flex-direction:
-        column;
-
-    }
-
-
-    label {
-
-      font-size:
-        14px;
-
-      font-weight:
-        bold;
-
-      color:
-        #d8dedb;
-
-      margin-bottom:
-        9px;
-
-    }
-
-
-    .input-group {
-
-      position:
-        relative;
-
-      margin-bottom:
-        22px;
-
-    }
-
-
-    input {
-
-      width:
-        100%;
-
-      padding:
-        16px 17px;
-
-      border-radius:
-        12px;
-
-      border:
-        1px solid rgba(255,255,255,0.12);
-
-      background:
-        #080d0a;
-
-      color:
-        white;
-
-      font-size:
-        16px;
-
-      outline:
-        none;
-
-      transition:
-        0.2s;
-
-    }
-
-
-    input::placeholder {
-
-      color:
-        #59635d;
-
-    }
-
-
-    input:focus {
-
-      border-color:
-        #00d084;
-
-      box-shadow:
-        0 0 0 3px rgba(0,208,132,0.08);
-
-    }
-
-
-
-    /* =========================
-       BUTTONS
-    ========================== */
-
-    button {
-
-      width:
-        100%;
-
-      padding:
-        16px;
-
-      background:
-        #00d084;
-
-      color:
-        #031008;
-
-      border:
-        none;
-
-      border-radius:
-        12px;
-
-      font-size:
-        16px;
-
-      font-weight:
-        bold;
-
-      cursor:
-        pointer;
-
-      transition:
-        0.2s;
-
-    }
-
-
-    button:hover {
-
-      transform:
-        translateY(-2px);
-
-      box-shadow:
-        0 10px 25px rgba(0,208,132,0.18);
-
-    }
-
-
-    button:disabled {
-
-      opacity:
-        0.6;
-
-      cursor:
-        not-allowed;
-
-      transform:
-        none;
-
-      box-shadow:
-        none;
-
-    }
-
-
-    .resend-button {
-
-      margin-top:
-        12px;
-
-      background:
-        transparent;
-
-      color:
-        #9da7a1;
-
-      border:
-        1px solid rgba(255,255,255,0.12);
-
-      font-size:
-        14px;
-
-    }
-
-
-    .resend-button:hover {
-
-      color:
-        #00d084;
-
-      border-color:
-        rgba(0,208,132,0.45);
-
-      background:
-        rgba(0,208,132,0.04);
-
-      box-shadow:
-        none;
-
-    }
-
-
-
-    /* =========================
-       MESSAGE
-    ========================== */
-
-    .message {
-
-      margin-top:
-        20px;
-
-      text-align:
-        center;
-
-      color:
-        #aeb7b2;
-
-      font-size:
-        14px;
-
-      min-height:
-        24px;
-
-      line-height:
-        1.6;
-
-    }
-
-
-    .error {
-
-      color:
-        #ff9b9b;
-
-    }
-
-
-    .success {
-
-      color:
-        #00d084;
-
-    }
-
-
-
-    /* =========================
-       LINKS
-    ========================== */
-
-    .links {
-
-      text-align:
-        center;
-
-      margin-top:
-        30px;
-
-      padding-top:
-        28px;
-
-      border-top:
-        1px solid rgba(255,255,255,0.07);
-
-      color:
-        #89938d;
-
-      font-size:
-        14px;
-
-    }
-
-
-    .create-account {
-
-      display:
-        inline-block;
-
-      margin-top:
-        10px;
-
-      color:
-        #00d084;
-
-      font-weight:
-        bold;
-
-    }
-
-
-    .create-account:hover {
-
-      text-decoration:
-        underline;
-
-    }
-
-
-
-    /* =========================
-       ROLE LINKS
-    ========================== */
-
-    .role-title {
-
-      margin-top:
-        28px;
-
-      margin-bottom:
-        14px;
-
-      color:
-        #69736d;
-
-      font-size:
-        12px;
-
-      text-transform:
-        uppercase;
-
-      letter-spacing:
-        1px;
-
-    }
-
-
-    .role-links {
-
-      display:
-        grid;
-
-      grid-template-columns:
-        repeat(3, 1fr);
-
-      gap:
-        8px;
-
-    }
-
-
-    .role-links a {
-
-      color:
-        #aeb7b2;
-
-      font-size:
-        12px;
-
-      text-decoration:
-        none;
-
-      padding:
-        12px 6px;
-
-      border:
-        1px solid rgba(255,255,255,0.09);
-
-      border-radius:
-        10px;
-
-      transition:
-        0.2s;
-
-    }
-
-
-    .role-links a:hover {
-
-      color:
-        #00d084;
-
-      border-color:
-        rgba(0,208,132,0.40);
-
-      background:
-        rgba(0,208,132,0.05);
-
-    }
-
-
-
-    /* =========================
-       BACK TO HOME
-    ========================== */
-
-    .back-home {
-
-      display:
-        inline-block;
-
-      margin-top:
-        28px;
-
-      color:
-        #66716a;
-
-      font-size:
-        13px;
-
-    }
-
-
-    .back-home:hover {
-
-      color:
-        #00d084;
-
-    }
-
-
-
-    /* =========================
-       MOBILE
-    ========================== */
-
-    @media (
-      max-width: 900px
-    ) {
-
-      .login-page {
-
-        grid-template-columns:
-          1fr;
-
-      }
-
-
-      .welcome-side {
-
-        display:
-          none;
-
-      }
-
-
-      .form-side {
-
-        min-height:
-          100vh;
-
-      }
-
-
-      .mobile-brand {
-
-        display:
-          flex;
-
-      }
-
-    }
-
-
-    @media (
-      max-width: 550px
-    ) {
-
-      .form-side {
-
-        padding:
-          20px;
-
-      }
-
-
-      .login-box {
-
-        padding:
-          35px 22px;
-
-        border-radius:
-          20px;
-
-      }
-
-
-      .form-header h2 {
-
-        font-size:
-          29px;
-
-      }
-
-
-      .role-links {
-
-        grid-template-columns:
-          1fr;
-
-      }
-
-
-      .brand-text {
-
-        font-size:
-          17px;
-
-      }
-
-
-      .brand-icon {
-
-        width:
-          42px;
-
-        height:
-          42px;
-
-      }
-
-    }
-
-
-  </style>
-
-</head>
-
-
-<body>
-
-
-  <!-- =========================
-       BACKGROUND GLOWS
-  ========================== -->
-
-  <div
-    class="glow glow-one"
-  ></div>
-
-
-  <div
-    class="glow glow-two"
-  ></div>
-
-
-
-  <!-- =========================
-       LOGIN PAGE
-  ========================== -->
-
-  <main class="login-page">
-
-
-
-    <!-- =========================
-         LEFT WELCOME SECTION
-    ========================== -->
-
-    <section class="welcome-side">
-
-
-      <!-- BRAND -->
-
-      <a
-        href="index.html"
-        class="brand"
-      >
-
-
-        <div class="brand-icon">
-
-          <img
-            src="./icons/icon-192.png"
-            alt="Alpha Traders Host"
-          >
-
-        </div>
-
-
-        <div class="brand-text">
-
-          ALPHA
-          <span>
-            TRADERS HOST
-          </span>
-
-        </div>
-
-
-      </a>
-
-
-
-      <!-- WELCOME CONTENT -->
-
-      <div class="welcome-content">
-
-
-        <div class="welcome-badge">
-
-          <span class="status-dot"></span>
-
-          SECURE PLATFORM ACCESS
-
-        </div>
-
-
-        <h1>
-
-          Your trading
-          <span>
-            workspace.
-          </span>
-
-        </h1>
-
-
-        <p>
-
-          Sign in to access your Alpha Traders Host
-          dashboard and manage your platform activity
-          from anywhere.
-
-        </p>
-
-
-
-        <!-- FEATURES -->
-
-        <div class="platform-list">
-
-
-          <div class="platform-item">
-
-            <div class="platform-check">
-
-              ✓
-
-            </div>
-
-            <span>
-
-              Access your personal dashboard
-
-            </span>
-
-          </div>
-
-
-          <div class="platform-item">
-
-            <div class="platform-check">
-
-              ✓
-
-            </div>
-
-            <span>
-
-              Manage mentorship and platform activity
-
-            </span>
-
-          </div>
-
-
-          <div class="platform-item">
-
-            <div class="platform-check">
-
-              ✓
-
-            </div>
-
-            <span>
-
-              Secure role-based access
-
-            </span>
-
-          </div>
-
-
-        </div>
-
-
-      </div>
-
-
-
-      <!-- FOOTER -->
-
-      <div class="welcome-footer">
-
-        © 2026 Alpha Traders Host
-
-      </div>
-
-
-    </section>
-
-
-
-    <!-- =========================
-         RIGHT LOGIN SECTION
-    ========================== -->
-
-    <section class="form-side">
-
-
-      <div class="login-box">
-
-
-        <!-- MOBILE BRAND -->
-
-        <div class="mobile-brand">
-
-
-          <a
-            href="index.html"
-            class="brand"
-          >
-
-
-            <div class="brand-icon">
-
-              <img
-                src="./icons/icon-192.png"
-                alt="Alpha Traders Host"
-              >
-
-            </div>
-
-
-            <div class="brand-text">
-
-              ALPHA
-              <span>
-                TRADERS HOST
-              </span>
-
-            </div>
-
-
-          </a>
-
-
-        </div>
-
-
-
-        <!-- FORM HEADER -->
-
-        <div class="form-header">
-
-
-          <h2>
-
-            Welcome back
-
-          </h2>
-
-
-          <p class="subtitle">
-
-            Sign in to continue to your account.
-
-          </p>
-
-
-          <div
-            id="selectedRole"
-            class="selected-role"
-          >
-
-            Account Login
-
-          </div>
-
-
-        </div>
-
-
-
-        <!-- =========================
-             LOGIN FORM
-        ========================== -->
-
-        <form id="loginForm">
-
-
-          <!-- EMAIL -->
-
-          <label for="email">
-
-            Email address
-
-          </label>
-
-
-          <div class="input-group">
-
-
-            <input
-
-              type="email"
-
-              id="email"
-
-              placeholder="you@example.com"
-
-              autocomplete="email"
-
-              required
-
-            >
-
-
-          </div>
-
-
-
-          <!-- PASSWORD -->
-
-          <label for="password">
-
-            Password
-
-          </label>
-
-
-          <div class="input-group">
-
-
-            <input
-
-              type="password"
-
-              id="password"
-
-              placeholder="Enter your password"
-
-              autocomplete="current-password"
-
-              required
-
-            >
-
-
-          </div>
-
-
-
-          <!-- SIGN IN -->
-
-          <button
-            type="submit"
-            id="loginButton"
-          >
-
-            Sign In →
-
-          </button>
-
-
-
-          <!-- RESEND EMAIL -->
-
-          <button
-            type="button"
-            id="resendButton"
-            class="resend-button"
-          >
-
-            Resend Confirmation Email
-
-          </button>
-
-
-        </form>
-
-
-
-        <!-- MESSAGE -->
-
-        <div
-          id="message"
-          class="message"
-        >
-        </div>
-
-
-
-        <!-- =========================
-             ACCOUNT LINKS
-        ========================== -->
-
-        <div class="links">
-
-
-          <p>
-
-            Don't have an account?
-
-          </p>
-
-
-          <a
-            href="register.html"
-            class="create-account"
-          >
-
-            Create your account →
-
-          </a>
-
-
-
-          <div class="role-title">
-
-            Choose login type
-
-          </div>
-
-
-
-          <!-- ROLE LINKS -->
-
-          <div class="role-links">
-
-
-            <a href="login.html?role=admin">
-
-              👑 Admin
-
-            </a>
-
-
-            <a href="login.html?role=mentor">
-
-              🎓 Mentor
-
-            </a>
-
-
-            <a href="login.html?role=client">
-
-              👤 Client
-
-            </a>
-
-
-          </div>
-
-
-
-          <!-- BACK HOME -->
-
-          <a
-            href="index.html"
-            class="back-home"
-          >
-
-            ← Back to home
-
-          </a>
-
-
-        </div>
-
-
-      </div>
-
-
-    </section>
-
-
-  </main>
-
-
-
-  <!-- =========================
-       SUPABASE
-  ========================== -->
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <script src="supabase-config.js"></script>
-
-
-
-  <script>
-
-
-    /* ==========================================
-       ELEMENTS
-    ========================================== */
-
-    const loginForm =
-      document.getElementById(
-        "loginForm"
-      );
-
-
-    const emailInput =
-      document.getElementById(
-        "email"
-      );
-
-
-    const passwordInput =
-      document.getElementById(
-        "password"
-      );
-
-
-    const message =
-      document.getElementById(
-        "message"
-      );
-
-
-    const loginButton =
-      document.getElementById(
-        "loginButton"
-      );
-
-
-    const resendButton =
-      document.getElementById(
-        "resendButton"
-      );
-
-
-    const selectedRoleElement =
-      document.getElementById(
-        "selectedRole"
-      );
-
-
-
-    /* ==========================================
-       GET SELECTED ROLE FROM URL
-    ========================================== */
-
-    const urlParams =
-      new URLSearchParams(
-        window.location.search
-      );
-
-
-    const requestedRole =
-      String(
-        urlParams.get("role") || ""
-      )
-      .toLowerCase()
-      .trim();
-
-
-
-    /* ==========================================
-       DISPLAY LOGIN TYPE
-    ========================================== */
-
-    if (
-      requestedRole === "admin"
-    ) {
-
-      selectedRoleElement.textContent =
-        "👑 Admin Login";
-
-    }
-
-    else if (
-      requestedRole === "mentor"
-    ) {
-
-      selectedRoleElement.textContent =
-        "🎓 Mentor Login";
-
-    }
-
-    else if (
-      requestedRole === "client"
-    ) {
-
-      selectedRoleElement.textContent =
-        "👤 Client Login";
-
-    }
-
-    else {
-
-      selectedRoleElement.textContent =
-        "Account Login";
-
-    }
-
-
-
-    /* ==========================================
-       GET SUPABASE CLIENT
-    ========================================== */
-
-    function getSupabaseClient() {
-
-      if (
-        typeof window.supabaseClient !==
-        "undefined"
-      ) {
-
-        return window.supabaseClient;
-
-      }
-
-
-      return null;
-
-    }
-
-
-
-    /* ==========================================
-       RESET LOGIN BUTTON
-    ========================================== */
-
-    function resetLoginButton() {
-
-      loginButton.disabled =
-        false;
-
-
-      loginButton.textContent =
-        "Sign In →";
-
-    }
-
-
-
-    /* ==========================================
-       SHOW ERROR
-    ========================================== */
-
-    function showError(text) {
-
-      message.textContent =
-        text;
-
-
-      message.className =
-        "message error";
-
-
-      resetLoginButton();
-
-    }
-
-
-
-    /* ==========================================
-       SHOW SUCCESS
-    ========================================== */
-
-    function showSuccess(text) {
-
-      message.textContent =
-        text;
-
-
-      message.className =
-        "message success";
-
-    }
-
-
-
-    /* ==========================================
-       RESEND CONFIRMATION EMAIL
-    ========================================== */
-
-    resendButton.addEventListener(
-      "click",
-      async function() {
-
-
-        const supabaseClient =
-          getSupabaseClient();
-
-
-        if (
-          !supabaseClient
-        ) {
-
-          showError(
-            "Supabase is not connected. Please check supabase-config.js"
-          );
-
-          return;
-
-        }
-
-
-        const email =
-          emailInput.value
-            .trim();
-
-
-        if (
-          !email
-        ) {
-
-          showError(
-            "Please enter your email address first."
-          );
-
-          return;
-
-        }
-
-
-        message.textContent =
-          "";
-
-
-        message.className =
-          "message";
-
-
-        resendButton.disabled =
-          true;
-
-
-        resendButton.textContent =
-          "Sending Email...";
-
-
-        try {
-
-
-          const {
-            error
-          } =
-            await supabaseClient
-              .auth
-              .resend({
-
-                type:
-                  "signup",
-
-                email:
-                  email,
-
-                options: {
-
-                  emailRedirectTo:
-                    "https://juniorligman9-dot.github.io/alpha-traders-host/"
-
-                }
-
-              });
-
-
-          if (
-            error
-          ) {
-
-            throw error;
-
-          }
-
-
-          showSuccess(
-            "Confirmation email sent! Please check your inbox and spam folder."
-          );
-
-
-        }
-
-
-        catch (
-          error
-        ) {
-
-
-          console.error(
-            "Resend email error:",
-            error
-          );
-
-
-          showError(
-            error.message ||
-            "Could not send the confirmation email. Please try again later."
-          );
-
-
-        }
-
-
-        finally {
-
-
-          resendButton.disabled =
-            false;
-
-
-          resendButton.textContent =
-            "Resend Confirmation Email";
-
-
-        }
-
-
-      }
+  const urlParams =
+    new URLSearchParams(
+      window.location.search
     );
 
 
-
-    /* ==========================================
-       LOGIN FORM
-    ========================================== */
-
-    loginForm.addEventListener(
-      "submit",
-      async function(event) {
+  const requestedRole =
+    String(
+      urlParams.get("role") || ""
+    )
+    .toLowerCase()
+    .trim();
 
 
-        event.preventDefault();
+  /* ==========================================
+     DISPLAY LOGIN TYPE
+  ========================================== */
+
+  if (requestedRole === "admin") {
+
+    selectedRoleElement.textContent =
+      "👑 Admin Login";
+
+  }
+
+  else if (requestedRole === "mentor") {
+
+    selectedRoleElement.textContent =
+      "🎓 Mentor Login";
+
+  }
+
+  else if (requestedRole === "client") {
+
+    selectedRoleElement.textContent =
+      "👤 Client Login";
+
+  }
+
+  else {
+
+    selectedRoleElement.textContent =
+      "Account Login";
+
+  }
 
 
-        const supabaseClient =
-          getSupabaseClient();
+  /* ==========================================
+     GET SUPABASE CLIENT
+  ========================================== */
+
+  function getSupabaseClient() {
+
+    if (
+      typeof window.supabaseClient !==
+      "undefined"
+    ) {
+
+      return window.supabaseClient;
+
+    }
+
+    return null;
+
+  }
 
 
+  /* ==========================================
+     RESET LOGIN BUTTON
+  ========================================== */
 
-        /* ----------------------------------------
-           CHECK SUPABASE
-        ---------------------------------------- */
+  function resetLoginButton() {
 
-        if (
-          !supabaseClient
-        ) {
+    loginButton.disabled =
+      false;
+
+    loginButton.textContent =
+      "Sign In →";
+
+  }
+
+
+  /* ==========================================
+     SHOW ERROR
+  ========================================== */
+
+  function showError(text) {
+
+    message.textContent =
+      text;
+
+    message.className =
+      "message error";
+
+    resetLoginButton();
+
+  }
+
+
+  /* ==========================================
+     SHOW SUCCESS
+  ========================================== */
+
+  function showSuccess(text) {
+
+    message.textContent =
+      text;
+
+    message.className =
+      "message success";
+
+  }
+
+
+  /* ==========================================
+     REDIRECT AFTER LOGIN
+  ========================================== */
+
+  function redirectToDashboard(role) {
+
+    if (role === "admin") {
+
+      window.location.href =
+        "admin-dashboard.html";
+
+      return;
+
+    }
+
+
+    if (role === "mentor") {
+
+      window.location.href =
+        "mentor-dashboard.html";
+
+      return;
+
+    }
+
+
+    if (role === "client") {
+
+      window.location.href =
+        "client-dashboard.html";
+
+      return;
+
+    }
+
+
+    window.location.href =
+      "index.html";
+
+  }
+
+
+  /* ==========================================
+     RESEND CONFIRMATION EMAIL
+  ========================================== */
+
+  resendButton.addEventListener(
+    "click",
+    async function() {
+
+
+      const supabaseClient =
+        getSupabaseClient();
+
+
+      if (!supabaseClient) {
+
+        showError(
+          "Supabase is not connected. Please check supabase-config.js"
+        );
+
+        return;
+
+      }
+
+
+      const email =
+        emailInput.value.trim();
+
+
+      if (!email) {
+
+        showError(
+          "Please enter your email address first."
+        );
+
+        emailInput.focus();
+
+        return;
+
+      }
+
+
+      message.textContent =
+        "";
+
+      message.className =
+        "message";
+
+
+      resendButton.disabled =
+        true;
+
+      resendButton.textContent =
+        "Sending Email...";
+
+
+      try {
+
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .auth
+            .resend({
+
+              type:
+                "signup",
+
+              email:
+                email,
+
+              options: {
+
+                emailRedirectTo:
+                  "https://juniorligman9-dot.github.io/alpha-traders-host/login.html"
+
+              }
+
+            });
+
+
+        if (error) {
+
+          throw error;
+
+        }
+
+
+        showSuccess(
+          "Confirmation email sent! Please check your inbox and spam folder."
+        );
+
+
+      }
+
+      catch (error) {
+
+
+        console.error(
+          "Resend email error:",
+          error
+        );
+
+
+        showError(
+          error.message ||
+          "Could not send the confirmation email. Please try again later."
+        );
+
+
+      }
+
+      finally {
+
+
+        resendButton.disabled =
+          false;
+
+        resendButton.textContent =
+          "Resend Confirmation Email";
+
+      }
+
+
+    }
+  );
+
+
+  /* ==========================================
+     LOGIN FORM
+  ========================================== */
+
+  loginForm.addEventListener(
+    "submit",
+    async function(event) {
+
+
+      event.preventDefault();
+
+
+      const supabaseClient =
+        getSupabaseClient();
+
+
+      /* ----------------------------------------
+         CHECK SUPABASE
+      ---------------------------------------- */
+
+      if (!supabaseClient) {
+
+        showError(
+          "Supabase is not connected. Please check supabase-config.js"
+        );
+
+        return;
+
+      }
+
+
+      /* ----------------------------------------
+         GET VALUES
+      ---------------------------------------- */
+
+      const email =
+        emailInput.value.trim();
+
+
+      const password =
+        passwordInput.value;
+
+
+      /* ----------------------------------------
+         CLEAR MESSAGE
+      ---------------------------------------- */
+
+      message.textContent =
+        "";
+
+      message.className =
+        "message";
+
+
+      loginButton.disabled =
+        true;
+
+      loginButton.textContent =
+        "Signing In...";
+
+
+      try {
+
+
+        /* ======================================
+           SIGN IN USER
+        ====================================== */
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .auth
+            .signInWithPassword({
+
+              email:
+                email,
+
+              password:
+                password
+
+            });
+
+
+        if (error) {
 
           showError(
-            "Supabase is not connected. Please check supabase-config.js"
+            "Login failed: " +
+            error.message
           );
 
           return;
@@ -2006,384 +411,27 @@
         }
 
 
+        if (
+          !data ||
+          !data.user
+        ) {
 
-        /* ----------------------------------------
-           GET VALUES
-        ---------------------------------------- */
+          showError(
+            "Unable to sign in. Please try again."
+          );
 
-        const email =
-          emailInput.value
-            .trim();
+          return;
 
+        }
 
-        const password =
-          passwordInput.value;
 
+        /* ======================================
+           CHECK EMAIL VERIFICATION
+        ====================================== */
 
-
-        /* ----------------------------------------
-           CLEAR MESSAGE
-        ---------------------------------------- */
-
-        message.textContent =
-          "";
-
-
-        message.className =
-          "message";
-
-
-        loginButton.disabled =
-          true;
-
-
-        loginButton.textContent =
-          "Signing In...";
-
-
-
-        try {
-
-
-          /* ======================================
-             SIGN IN USER
-          ====================================== */
-
-          const {
-            data,
-            error
-          } =
-            await supabaseClient
-              .auth
-              .signInWithPassword({
-
-                email:
-                  email,
-
-                password:
-                  password
-
-              });
-
-
-
-          if (
-            error
-          ) {
-
-            showError(
-              "Login failed: " +
-              error.message
-            );
-
-            return;
-
-          }
-
-
-
-          if (
-            !data ||
-            !data.user
-          ) {
-
-            showError(
-              "Unable to sign in. Please try again."
-            );
-
-            return;
-
-          }
-
-
-
-          /* ======================================
-             GET USER PROFILE
-          ====================================== */
-
-          const {
-            data: profile,
-            error: profileError
-          } =
-            await supabaseClient
-              .from("profiles")
-              .select(
-                `
-                  id,
-                  full_name,
-                  email,
-                  role,
-                  approval_status
-                `
-              )
-              .eq(
-                "id",
-                data.user.id
-              )
-              .single();
-
-
-
-          if (
-            profileError ||
-            !profile
-          ) {
-
-
-            console.error(
-              "Profile error:",
-              profileError
-            );
-
-
-            await supabaseClient
-              .auth
-              .signOut();
-
-
-            showError(
-              "Your account profile could not be found. Please contact support."
-            );
-
-            return;
-
-          }
-
-
-
-          /* ======================================
-             NORMALIZE ROLE
-          ====================================== */
-
-          const role =
-            String(
-              profile.role || ""
-            )
-            .toLowerCase()
-            .trim();
-
-
-
-          const approvalStatus =
-            String(
-              profile.approval_status || ""
-            )
-            .toLowerCase()
-            .trim();
-
-
-
-          /* ======================================
-             CHECK WRONG LOGIN TYPE
-          ====================================== */
-
-          if (
-            requestedRole &&
-            requestedRole !== role
-          ) {
-
-            await supabaseClient
-              .auth
-              .signOut();
-
-
-            showError(
-              "This account is registered as a " +
-              role +
-              ". Please choose the correct login type."
-            );
-
-            return;
-
-          }
-
-
-
-          /* ======================================
-             ADMIN LOGIN
-          ====================================== */
-
-          if (
-            role === "admin"
-          ) {
-
-
-            showSuccess(
-              "Admin login successful! Redirecting..."
-            );
-
-
-            setTimeout(
-              function() {
-
-                window.location.href =
-                  "admin-dashboard.html";
-
-              },
-              700
-            );
-
-
-            return;
-
-          }
-
-
-
-          /* ======================================
-             CLIENT LOGIN
-          ====================================== */
-
-          if (
-            role === "client"
-          ) {
-
-
-            if (
-              approvalStatus === "rejected"
-            ) {
-
-              await supabaseClient
-                .auth
-                .signOut();
-
-
-              showError(
-                "Your account has been rejected. Please contact support."
-              );
-
-              return;
-
-            }
-
-
-            if (
-              approvalStatus === "pending"
-            ) {
-
-              await supabaseClient
-                .auth
-                .signOut();
-
-
-              showError(
-                "Your client account is waiting for approval."
-              );
-
-              return;
-
-            }
-
-
-            showSuccess(
-              "Login successful! Redirecting..."
-            );
-
-
-            setTimeout(
-              function() {
-
-                window.location.href =
-                  "client-dashboard.html";
-
-              },
-              700
-            );
-
-
-            return;
-
-          }
-
-
-
-          /* ======================================
-             MENTOR PENDING
-          ====================================== */
-
-          if (
-            role === "mentor" &&
-            approvalStatus === "pending"
-          ) {
-
-
-            await supabaseClient
-              .auth
-              .signOut();
-
-
-            showError(
-              "Your mentor account is waiting for admin approval."
-            );
-
-
-            return;
-
-          }
-
-
-
-          /* ======================================
-             MENTOR REJECTED
-          ====================================== */
-
-          if (
-            role === "mentor" &&
-            approvalStatus === "rejected"
-          ) {
-
-
-            await supabaseClient
-              .auth
-              .signOut();
-
-
-            showError(
-              "Your mentor application has been rejected. Please contact support."
-            );
-
-
-            return;
-
-          }
-
-
-
-          /* ======================================
-             MENTOR APPROVED
-          ====================================== */
-
-          if (
-            role === "mentor" &&
-            approvalStatus === "approved"
-          ) {
-
-
-            showSuccess(
-              "Login successful! Redirecting to mentor dashboard..."
-            );
-
-
-            setTimeout(
-              function() {
-
-                window.location.href =
-                  "mentor-dashboard.html";
-
-              },
-              700
-            );
-
-
-            return;
-
-          }
-
-
-
-          /* ======================================
-             UNKNOWN ROLE OR STATUS
-          ====================================== */
+        if (
+          !data.user.email_confirmed_at
+        ) {
 
           await supabaseClient
             .auth
@@ -2391,43 +439,351 @@
 
 
           showError(
-            "Your account is not configured correctly. Please contact support."
+            "Your email address has not been confirmed yet. Please check your inbox and spam folder, or click 'Resend Confirmation Email' below."
           );
 
+
+          resendButton.focus();
+
+
+          return;
 
         }
 
 
-        catch (
-          error
+        /* ======================================
+           GET USER PROFILE
+        ====================================== */
+
+        const {
+          data: profile,
+          error: profileError
+        } =
+          await supabaseClient
+            .from("profiles")
+            .select(
+              `
+                id,
+                full_name,
+                email,
+                role,
+                approval_status
+              `
+            )
+            .eq(
+              "id",
+              data.user.id
+            )
+            .single();
+
+
+        if (
+          profileError ||
+          !profile
         ) {
 
 
           console.error(
-            "Login error:",
-            error
+            "Profile error:",
+            profileError
           );
+
+
+          await supabaseClient
+            .auth
+            .signOut();
 
 
           showError(
-            "Connection error: " +
-            (
-              error.message ||
-              "Please try again."
-            )
+            "Your account profile could not be found. Please contact support."
           );
 
+
+          return;
 
         }
 
 
+        /* ======================================
+           NORMALIZE ROLE
+        ====================================== */
+
+        const role =
+          String(
+            profile.role || ""
+          )
+          .toLowerCase()
+          .trim();
+
+
+        const approvalStatus =
+          String(
+            profile.approval_status || ""
+          )
+          .toLowerCase()
+          .trim();
+
+
+        /* ======================================
+           CHECK WRONG LOGIN TYPE
+        ====================================== */
+
+        if (
+          requestedRole &&
+          requestedRole !== role
+        ) {
+
+          await supabaseClient
+            .auth
+            .signOut();
+
+
+          showError(
+            "This account is registered as a " +
+            role +
+            ". Please choose the correct login type."
+          );
+
+
+          return;
+
+        }
+
+
+        /* ======================================
+           ADMIN LOGIN
+        ====================================== */
+
+        if (role === "admin") {
+
+
+          showSuccess(
+            "Admin login successful! Redirecting..."
+          );
+
+
+          setTimeout(
+            function() {
+
+              redirectToDashboard(
+                "admin"
+              );
+
+            },
+            700
+          );
+
+
+          return;
+
+        }
+
+
+        /* ======================================
+           CLIENT LOGIN
+        ====================================== */
+
+        if (role === "client") {
+
+
+          if (
+            approvalStatus === "rejected"
+          ) {
+
+            await supabaseClient
+              .auth
+              .signOut();
+
+
+            showError(
+              "Your account has been rejected. Please contact support."
+            );
+
+
+            return;
+
+          }
+
+
+          if (
+            approvalStatus === "pending"
+          ) {
+
+            await supabaseClient
+              .auth
+              .signOut();
+
+
+            showError(
+              "Your client account is waiting for approval."
+            );
+
+
+            return;
+
+          }
+
+
+          if (
+            approvalStatus !== "approved"
+          ) {
+
+            await supabaseClient
+              .auth
+              .signOut();
+
+
+            showError(
+              "Your client account is not approved yet."
+            );
+
+
+            return;
+
+          }
+
+
+          showSuccess(
+            "Login successful! Redirecting..."
+          );
+
+
+          setTimeout(
+            function() {
+
+              redirectToDashboard(
+                "client"
+              );
+
+            },
+            700
+          );
+
+
+          return;
+
+        }
+
+
+        /* ======================================
+           MENTOR PENDING
+        ====================================== */
+
+        if (
+          role === "mentor" &&
+          approvalStatus === "pending"
+        ) {
+
+          await supabaseClient
+            .auth
+            .signOut();
+
+
+          showError(
+            "Your mentor account is waiting for admin approval."
+          );
+
+
+          return;
+
+        }
+
+
+        /* ======================================
+           MENTOR REJECTED
+        ====================================== */
+
+        if (
+          role === "mentor" &&
+          approvalStatus === "rejected"
+        ) {
+
+          await supabaseClient
+            .auth
+            .signOut();
+
+
+          showError(
+            "Your mentor application has been rejected. Please contact support."
+          );
+
+
+          return;
+
+        }
+
+
+        /* ======================================
+           MENTOR APPROVED
+        ====================================== */
+
+        if (
+          role === "mentor" &&
+          approvalStatus === "approved"
+        ) {
+
+
+          showSuccess(
+            "Login successful! Redirecting to mentor dashboard..."
+          );
+
+
+          setTimeout(
+            function() {
+
+              redirectToDashboard(
+                "mentor"
+              );
+
+            },
+            700
+          );
+
+
+          return;
+
+        }
+
+
+        /* ======================================
+           UNKNOWN ROLE OR STATUS
+        ====================================== */
+
+        await supabaseClient
+          .auth
+          .signOut();
+
+
+        showError(
+          "Your account is not configured correctly. Please contact support."
+        );
+
+
       }
-    );
+
+      catch (error) {
 
 
-  </script>
+        console.error(
+          "Login error:",
+          error
+        );
 
 
-</body>
+        showError(
+          "Connection error: " +
+          (
+            error.message ||
+            "Please try again."
+          )
+        );
 
-</html>
+
+      }
+
+
+    }
+  );
+
+
+</script>
