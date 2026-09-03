@@ -2,39 +2,74 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
   <title>Expert Advisor Builder | Alpha Traders Host</title>
 
   <style>
+
+    /* =====================================================
+       ALPHA TRADERS HOST - EA BUILDER
+    ====================================================== */
+
     :root {
-      --bg: #111927;
-      --bg-soft: #182233;
-      --card: #222d40;
-      --card-dark: #172131;
-      --border: #34445d;
-      --text: #e8ebf0;
-      --muted: #b5becd;
-      --primary: #42c5a9;
-      --primary-dark: #31aa91;
+      --bg: #020c09;
+      --bg-soft: #061410;
+      --card: #091512;
+      --card-dark: #050e0b;
+
+      --border: #1b4035;
+      --border-soft: #16342c;
+
+      --text: #f1f5f4;
+      --muted: #aeb8b5;
+
+      --primary: #20c997;
+      --primary-dark: #16a87d;
+
+      --purple: #8b5cf6;
+
       --danger: #ef6262;
       --warning: #e5ad50;
       --info: #4d90e8;
     }
 
+
+    /* =====================================================
+       GLOBAL
+    ====================================================== */
+
     * {
       box-sizing: border-box;
     }
+
 
     html {
       scroll-behavior: smooth;
     }
 
+
     body {
       margin: 0;
       min-height: 100vh;
-      background: var(--bg);
+
+      background:
+        radial-gradient(
+          circle at top center,
+          rgba(20, 120, 85, 0.10),
+          transparent 35%
+        ),
+        linear-gradient(
+          180deg,
+          #020c09 0%,
+          #030d0a 100%
+        );
+
       color: var(--text);
+
       font-family:
         Inter,
         system-ui,
@@ -44,446 +79,931 @@
         sans-serif;
     }
 
-    /* =========================
+
+    /* =====================================================
        HEADER
-    ========================== */
+    ====================================================== */
 
     header {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(17, 25, 39, 0.98);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(12px);
+
+      background:
+        rgba(2, 12, 9, 0.96);
+
+      border-bottom:
+        1px solid var(--border);
+
+      backdrop-filter:
+        blur(14px);
     }
+
 
     .nav {
       max-width: 1250px;
       margin: 0 auto;
-      min-height: 105px;
-      padding: 18px 30px;
+
+      min-height: 90px;
+
+      padding:
+        15px 30px;
 
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       gap: 20px;
     }
 
+
     .brand {
-      color: var(--text);
-      font-weight: 800;
-      font-size: clamp(1.3rem, 3vw, 2rem);
-      letter-spacing: 0.08em;
+      font-weight: 900;
+
+      font-size:
+        clamp(
+          1.15rem,
+          3vw,
+          1.75rem
+        );
+
+      letter-spacing:
+        0.08em;
+
       text-decoration: none;
+
       white-space: nowrap;
+
+      background:
+        linear-gradient(
+          90deg,
+          #8b5cf6,
+          #20c997
+        );
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+
+      background-clip: text;
     }
 
+
     .brand span {
-      color: var(--primary);
+      color: inherit;
     }
+
 
     .nav-link {
       display: inline-flex;
       align-items: center;
       justify-content: center;
 
-      min-height: 70px;
-      padding: 0 30px;
+      min-height: 58px;
 
-      border: 1px solid var(--border);
-      border-radius: 20px;
+      padding:
+        0 25px;
 
-      color: var(--text);
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        18px;
+
+      background:
+        rgba(6, 20, 16, 0.6);
+
+      color:
+        var(--text);
+
       text-decoration: none;
-      font-size: 1.2rem;
 
-      transition: 0.2s ease;
+      font-size:
+        1rem;
+
+      font-weight:
+        700;
+
+      transition:
+        0.2s ease;
     }
+
 
     .nav-link:hover {
-      border-color: var(--primary);
-      color: var(--primary);
+      border-color:
+        var(--primary);
+
+      color:
+        var(--primary);
+
+      transform:
+        translateY(-1px);
     }
 
-    /* =========================
-       MAIN
-    ========================== */
+
+    /* =====================================================
+       MAIN CONTAINER
+    ====================================================== */
 
     .container {
       max-width: 1180px;
-      margin: 0 auto;
-      padding: 65px 30px 100px;
+
+      margin:
+        0 auto;
+
+      padding:
+        65px 30px 100px;
     }
+
+
+    /* =====================================================
+       HERO
+    ====================================================== */
 
     .hero {
-      margin-bottom: 45px;
+      margin-bottom:
+        45px;
     }
+
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+
+      gap:
+        10px;
+
+      margin-bottom:
+        20px;
+
+      padding:
+        10px 16px;
+
+      background:
+        rgba(32, 201, 151, 0.08);
+
+      border:
+        1px solid rgba(32, 201, 151, 0.25);
+
+      border-radius:
+        999px;
+
+      color:
+        var(--primary);
+
+      font-size:
+        0.9rem;
+
+      font-weight:
+        800;
+
+      letter-spacing:
+        0.04em;
+    }
+
 
     .hero h1 {
-      margin: 0 0 20px;
-      font-size: clamp(2.5rem, 6vw, 4.8rem);
-      line-height: 1.05;
-      letter-spacing: -0.04em;
+      margin:
+        0 0 20px;
+
+      font-size:
+        clamp(
+          2.5rem,
+          6vw,
+          4.8rem
+        );
+
+      line-height:
+        1.05;
+
+      letter-spacing:
+        -0.04em;
     }
+
+
+    .hero h1 span {
+      color:
+        var(--primary);
+    }
+
 
     .hero p {
-      max-width: 850px;
-      margin: 0;
-      color: var(--muted);
-      font-size: clamp(1.2rem, 3vw, 1.8rem);
-      line-height: 1.6;
+      max-width:
+        850px;
+
+      margin:
+        0;
+
+      color:
+        var(--muted);
+
+      font-size:
+        clamp(
+          1.1rem,
+          2.5vw,
+          1.4rem
+        );
+
+      line-height:
+        1.6;
     }
 
-    /* =========================
-       STATUS
-    ========================== */
+
+    /* =====================================================
+       STATUS MESSAGE
+    ====================================================== */
 
     .message {
       display: none;
-      margin: 0 0 35px;
-      padding: 22px 28px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
 
-      font-size: 1.05rem;
-      line-height: 1.5;
+      margin:
+        0 0 30px;
+
+      padding:
+        20px 24px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        18px;
+
+      font-size:
+        1rem;
+
+      line-height:
+        1.5;
     }
+
 
     .message.show {
       display: block;
     }
 
+
     .message.info {
-      color: #c8dcff;
-      background: rgba(50, 100, 170, 0.16);
-      border-color: rgba(77, 144, 232, 0.7);
+      color:
+        #c8dcff;
+
+      background:
+        rgba(50, 100, 170, 0.12);
+
+      border-color:
+        rgba(77, 144, 232, 0.55);
     }
+
 
     .message.success {
-      color: #bdf3e6;
-      background: rgba(66, 197, 169, 0.1);
-      border-color: rgba(66, 197, 169, 0.55);
+      color:
+        #bdf3e6;
+
+      background:
+        rgba(32, 201, 151, 0.08);
+
+      border-color:
+        rgba(32, 201, 151, 0.45);
     }
+
 
     .message.error {
-      color: #ffd0d0;
-      background: rgba(239, 98, 98, 0.1);
-      border-color: rgba(239, 98, 98, 0.75);
+      color:
+        #ffd0d0;
+
+      background:
+        rgba(239, 98, 98, 0.08);
+
+      border-color:
+        rgba(239, 98, 98, 0.6);
     }
+
 
     .message.warning {
-      color: #ffe2af;
-      background: rgba(229, 173, 80, 0.1);
-      border-color: rgba(229, 173, 80, 0.7);
+      color:
+        #ffe2af;
+
+      background:
+        rgba(229, 173, 80, 0.08);
+
+      border-color:
+        rgba(229, 173, 80, 0.55);
     }
 
-    /* =========================
+
+    /* =====================================================
        CARDS
-    ========================== */
+    ====================================================== */
 
     .card {
-      margin-bottom: 40px;
-      padding: 38px;
+      margin-bottom:
+        35px;
 
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 35px;
+      padding:
+        38px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(9, 24, 19, 0.98),
+          rgba(5, 15, 12, 0.98)
+        );
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        30px;
 
       box-shadow:
-        0 10px 40px rgba(0, 0, 0, 0.12);
+        0 0 30px rgba(32, 201, 151, 0.03),
+        0 15px 50px rgba(0, 0, 0, 0.35);
     }
+
 
     .card h2 {
-      margin: 0 0 12px;
-      font-size: clamp(2rem, 4vw, 3rem);
+      margin:
+        0 0 12px;
+
+      font-size:
+        clamp(
+          1.8rem,
+          4vw,
+          2.6rem
+        );
     }
+
 
     .card > p {
-      margin: 0 0 35px;
-      color: var(--muted);
-      font-size: 1.2rem;
-      line-height: 1.6;
+      margin:
+        0 0 35px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        1.1rem;
+
+      line-height:
+        1.6;
     }
 
-    /* =========================
+
+    /* =====================================================
        EDIT MODE
-    ========================== */
+    ====================================================== */
 
     .edit-banner {
       display: none;
 
-      margin-bottom: 30px;
-      padding: 22px 25px;
+      margin-bottom:
+        30px;
 
-      background: rgba(77, 144, 232, 0.12);
-      border: 1px solid rgba(77, 144, 232, 0.7);
-      border-radius: 20px;
+      padding:
+        20px 24px;
 
-      color: #c9dcff;
-      font-size: 1.05rem;
-      line-height: 1.5;
+      background:
+        rgba(77, 144, 232, 0.10);
+
+      border:
+        1px solid rgba(77, 144, 232, 0.55);
+
+      border-radius:
+        18px;
+
+      color:
+        #c9dcff;
+
+      font-size:
+        1rem;
+
+      line-height:
+        1.5;
     }
+
 
     .edit-banner.show {
       display: block;
     }
 
+
     .edit-banner strong {
-      color: white;
+      color:
+        white;
     }
 
-    /* =========================
+
+    /* =====================================================
        FORM
-    ========================== */
+    ====================================================== */
 
     .form-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 26px;
+
+      grid-template-columns:
+        repeat(
+          2,
+          minmax(0, 1fr)
+        );
+
+      gap:
+        24px;
     }
 
+
     .full-width {
-      grid-column: 1 / -1;
+      grid-column:
+        1 / -1;
     }
+
 
     .field {
       display: flex;
-      flex-direction: column;
-      gap: 11px;
+
+      flex-direction:
+        column;
+
+      gap:
+        10px;
     }
 
+
     label {
-      color: var(--text);
-      font-size: 1.1rem;
-      font-weight: 700;
+      color:
+        var(--text);
+
+      font-size:
+        1rem;
+
+      font-weight:
+        750;
     }
+
 
     input,
     select,
     textarea {
-      width: 100%;
-      padding: 19px 22px;
+      width:
+        100%;
 
-      background: var(--card-dark);
-      border: 1px solid var(--border);
-      border-radius: 18px;
+      padding:
+        18px 20px;
 
-      color: var(--text);
-      outline: none;
+      background:
+        var(--card-dark);
 
-      font-family: inherit;
-      font-size: 1.05rem;
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        16px;
+
+      color:
+        var(--text);
+
+      outline:
+        none;
+
+      font-family:
+        inherit;
+
+      font-size:
+        1rem;
 
       transition:
         border-color 0.2s ease,
         box-shadow 0.2s ease;
     }
 
+
     textarea {
-      min-height: 130px;
-      resize: vertical;
-      line-height: 1.5;
+      min-height:
+        140px;
+
+      resize:
+        vertical;
+
+      line-height:
+        1.5;
     }
+
+
+    input::placeholder,
+    textarea::placeholder {
+      color:
+        #6e7c78;
+    }
+
 
     input:focus,
     select:focus,
     textarea:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(66, 197, 169, 0.12);
+      border-color:
+        var(--primary);
+
+      box-shadow:
+        0 0 0 3px
+        rgba(
+          32,
+          201,
+          151,
+          0.10
+        );
     }
+
 
     select {
-      cursor: pointer;
+      cursor:
+        pointer;
     }
 
-    /* =========================
-       FEATURES
-    ========================== */
+
+    /* =====================================================
+       SECTION TITLE
+    ====================================================== */
 
     .section-title {
-      margin: 45px 0 20px;
-      padding-top: 35px;
-      border-top: 1px solid var(--border);
+      margin:
+        45px 0 20px;
 
-      font-size: 1.6rem;
+      padding-top:
+        35px;
+
+      border-top:
+        1px solid var(--border);
+
+      font-size:
+        1.45rem;
     }
+
+
+    /* =====================================================
+       FEATURES
+    ====================================================== */
 
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
+
+      grid-template-columns:
+        repeat(
+          2,
+          minmax(0, 1fr)
+        );
+
+      gap:
+        16px;
     }
+
 
     .feature-toggle {
-      min-height: 88px;
-      padding: 20px 25px;
+      min-height:
+        82px;
 
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
+      padding:
+        18px 22px;
 
-      background: var(--card-dark);
-      border: 1px solid var(--border);
-      border-radius: 20px;
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        20px;
+
+      background:
+        #06110d;
+
+      border:
+        1px solid var(--border-soft);
+
+      border-radius:
+        18px;
+
+      transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
     }
+
+
+    .feature-toggle:hover {
+      border-color:
+        var(--primary);
+
+      transform:
+        translateY(-1px);
+    }
+
 
     .feature-toggle span {
-      font-size: 1.1rem;
-      font-weight: 600;
+      font-size:
+        1rem;
+
+      font-weight:
+        650;
     }
+
+
+    /* =====================================================
+       SWITCH
+    ====================================================== */
 
     .switch {
-      position: relative;
-      display: inline-block;
-      width: 65px;
-      height: 36px;
-      flex-shrink: 0;
+      position:
+        relative;
+
+      display:
+        inline-block;
+
+      width:
+        62px;
+
+      height:
+        34px;
+
+      flex-shrink:
+        0;
     }
+
 
     .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
+      opacity:
+        0;
+
+      width:
+        0;
+
+      height:
+        0;
     }
+
 
     .slider {
-      position: absolute;
-      inset: 0;
+      position:
+        absolute;
 
-      background: #566276;
-      border-radius: 50px;
+      inset:
+        0;
 
-      cursor: pointer;
-      transition: 0.25s ease;
+      background:
+        #3b4a46;
+
+      border-radius:
+        50px;
+
+      cursor:
+        pointer;
+
+      transition:
+        0.25s ease;
     }
+
 
     .slider::before {
-      content: "";
+      content:
+        "";
 
-      position: absolute;
-      width: 28px;
-      height: 28px;
+      position:
+        absolute;
 
-      left: 4px;
-      top: 4px;
+      width:
+        26px;
 
-      background: #f5f5f5;
-      border-radius: 50%;
+      height:
+        26px;
 
-      transition: 0.25s ease;
+      left:
+        4px;
+
+      top:
+        4px;
+
+      background:
+        #f5f5f5;
+
+      border-radius:
+        50%;
+
+      transition:
+        0.25s ease;
     }
+
 
     .switch input:checked + .slider {
-      background: var(--primary);
+      background:
+        var(--primary);
+
+      box-shadow:
+        0 0 15px
+        rgba(
+          32,
+          201,
+          151,
+          0.25
+        );
     }
+
 
     .switch input:checked + .slider::before {
-      transform: translateX(29px);
+      transform:
+        translateX(28px);
     }
 
-    /* =========================
+
+    /* =====================================================
        BUTTONS
-    ========================== */
+    ====================================================== */
 
     .actions {
-      margin-top: 38px;
+      margin-top:
+        38px;
 
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
+      display:
+        flex;
+
+      flex-wrap:
+        wrap;
+
+      gap:
+        14px;
     }
+
 
     button {
-      min-height: 64px;
-      padding: 0 28px;
+      min-height:
+        58px;
 
-      border: 1px solid var(--border);
-      border-radius: 18px;
+      padding:
+        0 25px;
 
-      background: #2c394d;
-      color: var(--text);
+      border:
+        1px solid var(--border);
 
-      font-family: inherit;
-      font-size: 1.05rem;
-      font-weight: 700;
+      border-radius:
+        16px;
 
-      cursor: pointer;
+      background:
+        #0b1915;
+
+      color:
+        var(--text);
+
+      font-family:
+        inherit;
+
+      font-size:
+        1rem;
+
+      font-weight:
+        750;
+
+      cursor:
+        pointer;
+
       transition:
         transform 0.15s ease,
-        opacity 0.15s ease,
-        border-color 0.15s ease;
+        border-color 0.15s ease,
+        background 0.15s ease;
     }
+
 
     button:hover:not(:disabled) {
-      transform: translateY(-1px);
-      border-color: var(--primary);
+      transform:
+        translateY(-2px);
+
+      border-color:
+        var(--primary);
     }
+
 
     button:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
+      opacity:
+        0.55;
+
+      cursor:
+        not-allowed;
     }
+
 
     .btn-primary {
-      background: var(--primary);
-      border-color: var(--primary);
-      color: #0d1a1b;
+      background:
+        linear-gradient(
+          135deg,
+          #20c997,
+          #16b887
+        );
+
+      border-color:
+        var(--primary);
+
+      color:
+        #03110c;
+
+      box-shadow:
+        0 8px 25px
+        rgba(
+          32,
+          201,
+          151,
+          0.15
+        );
     }
+
 
     .btn-primary:hover:not(:disabled) {
-      background: var(--primary-dark);
+      background:
+        var(--primary-dark);
     }
+
 
     .btn-update {
-      display: none;
+      display:
+        none;
 
-      background: #4d90e8;
-      border-color: #4d90e8;
-      color: white;
+      background:
+        #246fc8;
+
+      border-color:
+        #4d90e8;
+
+      color:
+        white;
     }
+
 
     .btn-update.show {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
     }
+
 
     .btn-cancel {
-      display: none;
+      display:
+        none;
     }
+
 
     .btn-cancel.show {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
     }
 
-    /* =========================
-       GENERATED CONFIG
-    ========================== */
+
+    /* =====================================================
+       GENERATED CONFIGURATION
+    ====================================================== */
 
     .config-output {
-      display: none;
-      margin-top: 35px;
+      display:
+        none;
+
+      margin-top:
+        35px;
     }
+
 
     .config-output.show {
-      display: block;
+      display:
+        block;
     }
 
+
     .config-box {
-      max-height: 500px;
-      overflow: auto;
+      max-height:
+        500px;
 
-      margin-top: 18px;
-      padding: 25px;
+      overflow:
+        auto;
 
-      background: #0c1420;
-      border: 1px solid var(--border);
-      border-radius: 20px;
+      margin-top:
+        18px;
 
-      color: #bfe8df;
+      padding:
+        24px;
+
+      background:
+        #020906;
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        18px;
+
+      color:
+        #8ee8d0;
 
       font-family:
         "SFMono-Regular",
@@ -491,221 +1011,426 @@
         "Liberation Mono",
         monospace;
 
-      font-size: 0.9rem;
-      line-height: 1.65;
+      font-size:
+        0.9rem;
 
-      white-space: pre-wrap;
-      word-break: break-word;
+      line-height:
+        1.65;
+
+      white-space:
+        pre-wrap;
+
+      word-break:
+        break-word;
     }
 
-    /* =========================
+
+    /* =====================================================
        SAVED EAS
-    ========================== */
+    ====================================================== */
 
     .saved-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        20px;
+
+      flex-wrap:
+        wrap;
     }
+
 
     .saved-header h2 {
-      margin-bottom: 0;
+      margin-bottom:
+        0;
     }
+
 
     .saved-list {
-      margin-top: 35px;
+      margin-top:
+        32px;
 
-      display: grid;
-      gap: 20px;
+      display:
+        grid;
+
+      gap:
+        18px;
     }
+
 
     .empty-state {
-      padding: 40px 20px;
+      padding:
+        40px 20px;
 
-      color: var(--muted);
-      text-align: center;
+      color:
+        var(--muted);
 
-      background: var(--card-dark);
-      border: 1px dashed var(--border);
-      border-radius: 20px;
+      text-align:
+        center;
 
-      font-size: 1.1rem;
+      background:
+        #06110d;
+
+      border:
+        1px dashed var(--border);
+
+      border-radius:
+        18px;
+
+      font-size:
+        1rem;
     }
+
 
     .ea-item {
-      padding: 28px;
+      padding:
+        26px;
 
-      background: var(--card-dark);
-      border: 1px solid var(--border);
-      border-radius: 25px;
+      background:
+        linear-gradient(
+          145deg,
+          #07120f,
+          #050d0a
+        );
+
+      border:
+        1px solid var(--border-soft);
+
+      border-radius:
+        22px;
+
+      transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
     }
+
+
+    .ea-item:hover {
+      border-color:
+        rgba(
+          32,
+          201,
+          151,
+          0.55
+        );
+
+      transform:
+        translateY(-2px);
+    }
+
 
     .ea-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 20px;
-      flex-wrap: wrap;
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      align-items:
+        flex-start;
+
+      gap:
+        20px;
+
+      flex-wrap:
+        wrap;
     }
+
 
     .ea-name {
-      margin: 0 0 8px;
-      font-size: 1.5rem;
+      margin:
+        0 0 8px;
+
+      font-size:
+        1.45rem;
     }
+
 
     .ea-meta {
-      margin: 0;
-      color: var(--muted);
-      font-size: 1rem;
-      line-height: 1.5;
+      margin:
+        0;
+
+      color:
+        var(--muted);
+
+      font-size:
+        0.95rem;
+
+      line-height:
+        1.5;
     }
+
 
     .badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      display:
+        inline-flex;
 
-      padding: 8px 15px;
+      align-items:
+        center;
 
-      border: 1px solid var(--primary);
-      border-radius: 999px;
+      justify-content:
+        center;
 
-      color: var(--primary);
-      font-size: 0.9rem;
-      font-weight: 800;
+      padding:
+        7px 13px;
+
+      border:
+        1px solid var(--primary);
+
+      border-radius:
+        999px;
+
+      color:
+        var(--primary);
+
+      background:
+        rgba(
+          32,
+          201,
+          151,
+          0.05
+        );
+
+      font-size:
+        0.82rem;
+
+      font-weight:
+        800;
     }
+
 
     .ea-description {
-      margin: 18px 0 0;
-      color: var(--muted);
-      line-height: 1.6;
+      margin:
+        18px 0 0;
+
+      color:
+        var(--muted);
+
+      line-height:
+        1.6;
     }
+
 
     .ea-actions {
-      margin-top: 22px;
+      margin-top:
+        22px;
 
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
+      display:
+        flex;
+
+      flex-wrap:
+        wrap;
+
+      gap:
+        12px;
     }
+
 
     .ea-actions button {
-      min-height: 52px;
+      min-height:
+        48px;
     }
+
 
     .small-danger {
-      border-color: rgba(239, 98, 98, 0.7);
-      color: #ffb8b8;
+      border-color:
+        rgba(
+          239,
+          98,
+          98,
+          0.5
+        );
+
+      color:
+        #ffb8b8;
     }
 
-    /* =========================
-       RESPONSIVE
-    ========================== */
 
-    @media (max-width: 760px) {
+    .small-danger:hover:not(:disabled) {
+      border-color:
+        var(--danger);
+
+      color:
+        #ffd0d0;
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+    ====================================================== */
+
+    @media (
+      max-width: 760px
+    ) {
+
       .nav {
-        min-height: 90px;
-        padding: 15px 20px;
+        min-height:
+          80px;
+
+        padding:
+          14px 20px;
       }
+
 
       .nav-link {
-        min-height: 58px;
-        padding: 0 20px;
-        border-radius: 16px;
+        min-height:
+          52px;
+
+        padding:
+          0 18px;
+
+        border-radius:
+          15px;
       }
+
 
       .container {
-        padding: 45px 28px 80px;
+        padding:
+          42px 20px 80px;
       }
 
+
       .card {
-        padding: 38px;
-        border-radius: 30px;
+        padding:
+          28px;
+
+        border-radius:
+          25px;
       }
+
 
       .form-grid,
       .features-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+          1fr;
       }
+
     }
 
-    @media (max-width: 520px) {
-      .nav {
-        align-items: center;
-      }
+
+    @media (
+      max-width: 520px
+    ) {
 
       .brand {
-        font-size: 1.1rem;
+        font-size:
+          0.9rem;
+
+        letter-spacing:
+          0.04em;
       }
+
 
       .nav-link {
-        font-size: 0.95rem;
-        padding: 0 15px;
+        font-size:
+          0.85rem;
+
+        padding:
+          0 14px;
       }
 
-      .container {
-        padding-left: 20px;
-        padding-right: 20px;
-      }
-
-      .card {
-        padding: 28px;
-      }
 
       .hero h1 {
-        font-size: 2.8rem;
+        font-size:
+          2.6rem;
       }
+
+
+      .card {
+        padding:
+          22px;
+      }
+
 
       button {
-        width: 100%;
+        width:
+          100%;
       }
 
+
       .actions {
-        flex-direction: column;
+        flex-direction:
+          column;
       }
+
 
       .btn-update.show,
       .btn-cancel.show {
-        width: 100%;
+        width:
+          100%;
       }
+
     }
+
   </style>
 </head>
 
+
 <body>
 
-  <!-- =========================
+
+  <!-- =====================================================
        HEADER
-  ========================== -->
+  ====================================================== -->
 
   <header>
+
     <nav class="nav">
-      <a href="index.html" class="brand">
+
+      <a
+        href="index.html"
+        class="brand"
+      >
         ALPHA <span>TRADERS HOST</span>
       </a>
 
-      <a href="dashboard.html" class="nav-link">
+
+      <a
+        href="dashboard.html"
+        class="nav-link"
+      >
         Dashboard
       </a>
+
     </nav>
+
   </header>
 
 
-  <!-- =========================
+  <!-- =====================================================
        MAIN
-  ========================== -->
+  ====================================================== -->
 
   <main class="container">
 
+
+    <!-- HERO -->
+
     <section class="hero">
-      <h1>Expert Advisor<br />Builder</h1>
+
+      <div class="hero-badge">
+        ⚡ ALPHA TRADERS HOST
+      </div>
+
+
+      <h1>
+        Expert Advisor<br />
+        <span>Builder</span>
+      </h1>
+
 
       <p>
-        Build, save and manage your MT4 or MT5 Expert Advisor
-        configuration.
+        Build, save and manage your MT4 or MT5
+        Expert Advisor configuration.
       </p>
+
     </section>
 
 
@@ -731,24 +1456,31 @@
     </div>
 
 
-    <!-- =========================
+    <!-- =====================================================
          EA INFORMATION
-    ========================== -->
+    ====================================================== -->
 
     <section class="card">
 
-      <h2>EA Information</h2>
+
+      <h2>
+        EA Information
+      </h2>
+
 
       <p>
-        Give your Expert Advisor a name and configure its settings.
+        Give your Expert Advisor a name and
+        configure its settings.
       </p>
 
 
       <div class="form-grid">
 
+
         <!-- EA NAME -->
 
         <div class="field">
+
           <label for="eaName">
             EA Name *
           </label>
@@ -759,12 +1491,14 @@
             placeholder="Example: Alpha Trend EA"
             autocomplete="off"
           />
+
         </div>
 
 
         <!-- VERSION -->
 
         <div class="field">
+
           <label for="version">
             Version
           </label>
@@ -775,17 +1509,20 @@
             value="1.0"
             placeholder="1.0"
           />
+
         </div>
 
 
         <!-- PLATFORM -->
 
         <div class="field">
+
           <label for="platform">
             Platform *
           </label>
 
           <select id="platform">
+
             <option value="MT5">
               MT5
             </option>
@@ -793,18 +1530,22 @@
             <option value="MT4">
               MT4
             </option>
+
           </select>
+
         </div>
 
 
         <!-- STRATEGY -->
 
         <div class="field">
+
           <label for="strategy">
             Strategy
           </label>
 
           <select id="strategy">
+
             <option value="">
               Select strategy
             </option>
@@ -836,42 +1577,56 @@
             <option value="Custom">
               Custom
             </option>
+
           </select>
+
         </div>
 
 
         <!-- RISK LEVEL -->
 
         <div class="field">
+
           <label for="riskLevel">
             Risk Level
           </label>
 
           <select id="riskLevel">
+
             <option value="Low">
               Low
             </option>
 
-            <option value="Medium" selected>
+            <option
+              value="Medium"
+              selected
+            >
               Medium
             </option>
 
             <option value="High">
               High
             </option>
+
           </select>
+
         </div>
 
 
         <!-- STATUS -->
 
         <div class="field">
+
           <label for="status">
             Status
           </label>
 
           <select id="status">
-            <option value="draft" selected>
+
+            <option
+              value="draft"
+              selected
+            >
               Draft
             </option>
 
@@ -886,13 +1641,18 @@
             <option value="archived">
               Archived
             </option>
+
           </select>
+
         </div>
 
 
         <!-- DESCRIPTION -->
 
-        <div class="field full-width">
+        <div
+          class="field full-width"
+        >
+
           <label for="description">
             Description
           </label>
@@ -901,14 +1661,15 @@
             id="description"
             placeholder="Describe what this Expert Advisor does..."
           ></textarea>
+
         </div>
 
       </div>
 
 
-      <!-- =========================
+      <!-- =====================================================
            FEATURES
-      ========================== -->
+      ====================================================== -->
 
       <h3 class="section-title">
         EA Features
@@ -917,14 +1678,17 @@
 
       <div class="features-grid">
 
+
         <!-- AUTOMATIC LOT SIZE -->
 
         <div class="feature-toggle">
+
           <span>
             Automatic Lot Size
           </span>
 
           <label class="switch">
+
             <input
               type="checkbox"
               id="automaticLotSize"
@@ -932,77 +1696,92 @@
             />
 
             <span class="slider"></span>
+
           </label>
+
         </div>
 
 
         <!-- TRAILING STOP -->
 
         <div class="feature-toggle">
+
           <span>
             Trailing Stop
           </span>
 
           <label class="switch">
+
             <input
               type="checkbox"
               id="trailingStop"
             />
 
             <span class="slider"></span>
+
           </label>
+
         </div>
 
 
         <!-- BREAK EVEN -->
 
         <div class="feature-toggle">
+
           <span>
             Break Even
           </span>
 
           <label class="switch">
+
             <input
               type="checkbox"
               id="breakEven"
             />
 
             <span class="slider"></span>
+
           </label>
+
         </div>
 
 
         <!-- NEWS FILTER -->
 
         <div class="feature-toggle">
+
           <span>
             News Filter
           </span>
 
           <label class="switch">
+
             <input
               type="checkbox"
               id="newsFilter"
             />
 
             <span class="slider"></span>
+
           </label>
+
         </div>
 
       </div>
 
 
-      <!-- =========================
-           BUTTONS
-      ========================== -->
+      <!-- =====================================================
+           ACTIONS
+      ====================================================== -->
 
       <div class="actions">
+
 
         <button
           type="button"
           id="generateButton"
         >
-          Generate Configuration
+          ⚙ Generate Configuration
         </button>
 
 
@@ -1046,6 +1825,7 @@
           Generated Configuration
         </h3>
 
+
         <div
           id="configBox"
           class="config-box"
@@ -1056,22 +1836,33 @@
     </section>
 
 
-    <!-- =========================
-         MY SAVED EAS
-    ========================== -->
+    <!-- =====================================================
+         SAVED EAS
+    ====================================================== -->
 
     <section class="card">
 
+
       <div class="saved-header">
 
+
         <div>
-          <h2>My Saved EAs</h2>
+
+          <h2>
+            My Saved EAs
+          </h2>
 
           <p
-            style="margin: 12px 0 0;"
+            style="
+              margin: 12px 0 0;
+              color: var(--muted);
+              line-height: 1.6;
+            "
           >
-            Your Expert Advisor configurations saved to your account.
+            Your Expert Advisor configurations
+            saved to your account.
           </p>
+
         </div>
 
 
@@ -1079,7 +1870,7 @@
           type="button"
           id="refreshButton"
         >
-          Refresh
+          ↻ Refresh
         </button>
 
       </div>
@@ -1098,6 +1889,7 @@
 
     </section>
 
+
   </main>
 
 
@@ -1105,12 +1897,8 @@
        SUPABASE
   ====================================================== -->
 
-  <!-- Supabase JavaScript Library -->
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
-  <!-- Your Supabase configuration file -->
 
   <script src="supabase-config.js"></script>
 
@@ -1120,6 +1908,7 @@
   ====================================================== -->
 
   <script>
+
 
     /* =====================================================
        GLOBAL VARIABLES
@@ -1135,67 +1924,129 @@
     ====================================================== */
 
     const accountMessage =
-      document.getElementById("accountMessage");
+      document.getElementById(
+        "accountMessage"
+      );
+
 
     const editBanner =
-      document.getElementById("editBanner");
+      document.getElementById(
+        "editBanner"
+      );
+
 
     const eaName =
-      document.getElementById("eaName");
+      document.getElementById(
+        "eaName"
+      );
+
 
     const version =
-      document.getElementById("version");
+      document.getElementById(
+        "version"
+      );
+
 
     const platform =
-      document.getElementById("platform");
+      document.getElementById(
+        "platform"
+      );
+
 
     const strategy =
-      document.getElementById("strategy");
+      document.getElementById(
+        "strategy"
+      );
+
 
     const riskLevel =
-      document.getElementById("riskLevel");
+      document.getElementById(
+        "riskLevel"
+      );
+
 
     const status =
-      document.getElementById("status");
+      document.getElementById(
+        "status"
+      );
+
 
     const description =
-      document.getElementById("description");
+      document.getElementById(
+        "description"
+      );
+
 
     const automaticLotSize =
-      document.getElementById("automaticLotSize");
+      document.getElementById(
+        "automaticLotSize"
+      );
+
 
     const trailingStop =
-      document.getElementById("trailingStop");
+      document.getElementById(
+        "trailingStop"
+      );
+
 
     const breakEven =
-      document.getElementById("breakEven");
+      document.getElementById(
+        "breakEven"
+      );
+
 
     const newsFilter =
-      document.getElementById("newsFilter");
+      document.getElementById(
+        "newsFilter"
+      );
+
 
     const generateButton =
-      document.getElementById("generateButton");
+      document.getElementById(
+        "generateButton"
+      );
+
 
     const saveButton =
-      document.getElementById("saveButton");
+      document.getElementById(
+        "saveButton"
+      );
+
 
     const updateButton =
-      document.getElementById("updateButton");
+      document.getElementById(
+        "updateButton"
+      );
+
 
     const cancelEditButton =
-      document.getElementById("cancelEditButton");
+      document.getElementById(
+        "cancelEditButton"
+      );
+
 
     const refreshButton =
-      document.getElementById("refreshButton");
+      document.getElementById(
+        "refreshButton"
+      );
+
 
     const configOutput =
-      document.getElementById("configOutput");
+      document.getElementById(
+        "configOutput"
+      );
+
 
     const configBox =
-      document.getElementById("configBox");
+      document.getElementById(
+        "configBox"
+      );
+
 
     const savedEAs =
-      document.getElementById("savedEAs");
+      document.getElementById(
+        "savedEAs"
+      );
 
 
     /* =====================================================
@@ -1204,13 +2055,16 @@
 
     function getSupabaseClient() {
 
-      if (!window.supabaseClient) {
+      if (
+        !window.supabaseClient
+      ) {
 
         throw new Error(
           "Supabase client was not found. Check that supabase-config.js is in the same folder as create-ea.html."
         );
 
       }
+
 
       return window.supabaseClient;
 
@@ -1226,7 +2080,9 @@
       type = "info"
     ) {
 
-      accountMessage.textContent = message;
+      accountMessage.textContent =
+        message;
+
 
       accountMessage.className =
         "message show " + type;
@@ -1244,14 +2100,21 @@
         value === null ||
         value === undefined
       ) {
+
         return "";
+
       }
 
+
       const div =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       div.textContent =
         String(value);
+
 
       return div.innerHTML;
 
@@ -1260,7 +2123,6 @@
 
     /* =====================================================
        GET FEATURES
-       EXACT JSONB DATA
     ====================================================== */
 
     function getFeatures() {
@@ -1286,8 +2148,6 @@
 
     /* =====================================================
        GET FORM DATA
-
-       MATCHES ea_robots TABLE
     ====================================================== */
 
     function getFormData() {
@@ -1295,11 +2155,14 @@
       const cleanName =
         eaName.value.trim();
 
+
       const cleanDescription =
         description.value.trim();
 
+
       const cleanStrategy =
         strategy.value.trim();
+
 
       const cleanVersion =
         version.value.trim();
@@ -1307,74 +2170,37 @@
 
       return {
 
-        /*
-          mentor_id is the logged-in
-          Supabase Auth user's UUID.
-        */
-
         mentor_id:
           currentUser.id,
 
-
-        /*
-          REQUIRED
-        */
 
         name:
           cleanName,
 
 
-        /*
-          OPTIONAL
-        */
-
         description:
           cleanDescription || null,
 
-
-        /*
-          REQUIRED
-        */
 
         platform:
           platform.value,
 
 
-        /*
-          OPTIONAL
-        */
-
         strategy:
           cleanStrategy || null,
 
-
-        /*
-          OPTIONAL
-        */
 
         risk_level:
           riskLevel.value || null,
 
 
-        /*
-          OPTIONAL
-        */
-
         version:
           cleanVersion || null,
 
 
-        /*
-          OPTIONAL
-        */
-
         status:
           status.value || "draft",
 
-
-        /*
-          JSONB
-        */
 
         features:
           getFeatures()
@@ -1390,7 +2216,9 @@
 
     function validateForm() {
 
-      if (!currentUser) {
+      if (
+        !currentUser
+      ) {
 
         showMessage(
           "You must be logged in before saving an EA.",
@@ -1507,7 +2335,7 @@
 
 
       showMessage(
-        "Configuration generated successfully.",
+        "✅ Configuration generated successfully.",
         "success"
       );
 
@@ -1529,7 +2357,9 @@
       if (
         !validateForm()
       ) {
+
         return;
+
       }
 
 
@@ -1549,7 +2379,9 @@
 
       try {
 
-        saveButton.disabled = true;
+        saveButton.disabled =
+          true;
+
 
         saveButton.textContent =
           "Saving EA...";
@@ -1569,15 +2401,13 @@
           getFormData();
 
 
-        /*
-          INSERT INTO ea_robots
-        */
-
         const {
           data: insertedEA,
           error
         } = await db
-          .from("ea_robots")
+          .from(
+            "ea_robots"
+          )
           .insert([
             data
           ])
@@ -1600,17 +2430,8 @@
         );
 
 
-        /*
-          Reload the saved EA list
-        */
-
         await loadSavedEAs();
 
-
-        /*
-          If Supabase returned the ID,
-          enter edit mode automatically.
-        */
 
         if (
           insertedEA &&
@@ -1623,8 +2444,9 @@
 
         }
 
-
-      } catch (error) {
+      } catch (
+        error
+      ) {
 
         console.error(
           "Error saving EA:",
@@ -1634,13 +2456,18 @@
 
         showMessage(
           "Error saving EA: " +
-          (error.message || "Unknown error"),
+          (
+            error.message ||
+            "Unknown error"
+          ),
           "error"
         );
 
       } finally {
 
-        saveButton.disabled = false;
+        saveButton.disabled =
+          false;
+
 
         saveButton.innerHTML =
           "💾 Save EA";
@@ -1684,16 +2511,16 @@
           getSupabaseClient();
 
 
-        /*
-          Load ONLY this user's EAs.
-        */
-
         const {
           data,
           error
         } = await db
-          .from("ea_robots")
-          .select("*")
+          .from(
+            "ea_robots"
+          )
+          .select(
+            "*"
+          )
           .eq(
             "mentor_id",
             currentUser.id
@@ -1723,6 +2550,8 @@
           savedEAs.innerHTML = `
             <div class="empty-state">
               You have not saved any EAs yet.
+              <br /><br />
+              Create your first Expert Advisor above.
             </div>
           `;
 
@@ -1735,8 +2564,9 @@
           data
         );
 
-
-      } catch (error) {
+      } catch (
+        error
+      ) {
 
         console.error(
           "Error loading EAs:",
@@ -1768,178 +2598,180 @@
     ) {
 
       savedEAs.innerHTML =
-        eas.map(function(ea) {
+        eas.map(
+          function(ea) {
 
 
-          const safeName =
-            escapeHTML(
-              ea.name ||
-              "Unnamed EA"
-            );
+            const safeName =
+              escapeHTML(
+                ea.name ||
+                "Unnamed EA"
+              );
 
 
-          const safeDescription =
-            escapeHTML(
-              ea.description ||
-              "No description provided."
-            );
+            const safeDescription =
+              escapeHTML(
+                ea.description ||
+                "No description provided."
+              );
 
 
-          const safePlatform =
-            escapeHTML(
-              ea.platform ||
-              "MT5"
-            );
+            const safePlatform =
+              escapeHTML(
+                ea.platform ||
+                "MT5"
+              );
 
 
-          const safeStrategy =
-            escapeHTML(
-              ea.strategy ||
-              "No strategy selected"
-            );
+            const safeStrategy =
+              escapeHTML(
+                ea.strategy ||
+                "No strategy selected"
+              );
 
 
-          const safeRisk =
-            escapeHTML(
-              ea.risk_level ||
-              "Not specified"
-            );
+            const safeRisk =
+              escapeHTML(
+                ea.risk_level ||
+                "Not specified"
+              );
 
 
-          const safeStatus =
-            escapeHTML(
-              ea.status ||
-              "draft"
-            );
+            const safeStatus =
+              escapeHTML(
+                ea.status ||
+                "draft"
+              );
 
 
-          return `
+            return `
 
-            <article
-              class="ea-item"
-            >
+              <article
+                class="ea-item"
+              >
 
-              <div class="ea-top">
+                <div class="ea-top">
 
-                <div>
+                  <div>
 
-                  <h3 class="ea-name">
-                    ${safeName}
-                  </h3>
+                    <h3 class="ea-name">
+                      ${safeName}
+                    </h3>
 
-                  <p class="ea-meta">
-                    Strategy:
-                    ${safeStrategy}
-                    •
-                    Risk:
-                    ${safeRisk}
-                  </p>
+
+                    <p class="ea-meta">
+                      Strategy:
+                      ${safeStrategy}
+                      •
+                      Risk:
+                      ${safeRisk}
+                    </p>
+
+                  </div>
+
+
+                  <div>
+
+                    <span class="badge">
+                      ${safePlatform}
+                    </span>
+
+
+                    <span
+                      class="badge"
+                      style="
+                        margin-left: 6px;
+                        border-color: #64748b;
+                        color: #cbd5e1;
+                      "
+                    >
+                      ${safeStatus}
+                    </span>
+
+                  </div>
 
                 </div>
 
 
-                <div>
+                <p class="ea-description">
+                  ${safeDescription}
+                </p>
 
-                  <span class="badge">
-                    ${safePlatform}
-                  </span>
 
-                  <span
-                    class="badge"
-                    style="
-                      margin-left: 6px;
-                      border-color: #64748b;
-                      color: #cbd5e1;
-                    "
+                <div class="ea-actions">
+
+                  <button
+                    type="button"
+                    class="load-ea-button"
+                    data-id="${escapeHTML(ea.id)}"
                   >
-                    ${safeStatus}
-                  </span>
+                    ✏️ Load & Edit
+                  </button>
+
+
+                  <button
+                    type="button"
+                    class="delete-ea-button small-danger"
+                    data-id="${escapeHTML(ea.id)}"
+                  >
+                    🗑 Delete
+                  </button>
 
                 </div>
 
-              </div>
+              </article>
 
+            `;
 
-              <p class="ea-description">
-                ${safeDescription}
-              </p>
+          }
+        ).join(
+          ""
+        );
 
-
-              <div class="ea-actions">
-
-                <button
-                  type="button"
-                  class="load-ea-button"
-                  data-id="${escapeHTML(ea.id)}"
-                >
-                  Load
-                </button>
-
-
-                <button
-                  type="button"
-                  class="delete-ea-button small-danger"
-                  data-id="${escapeHTML(ea.id)}"
-                >
-                  Delete
-                </button>
-
-              </div>
-
-            </article>
-
-          `;
-
-        }).join("");
-
-
-      /*
-        Add Load button events
-      */
 
       document
         .querySelectorAll(
           ".load-ea-button"
         )
-        .forEach(function(button) {
+        .forEach(
+          function(button) {
 
-          button.addEventListener(
-            "click",
-            function() {
+            button.addEventListener(
+              "click",
+              function() {
 
-              loadEAIntoForm(
-                button.dataset.id,
-                eas
-              );
+                loadEAIntoForm(
+                  button.dataset.id,
+                  eas
+                );
 
-            }
-          );
+              }
+            );
 
-        });
+          }
+        );
 
-
-      /*
-        Add Delete button events
-      */
 
       document
         .querySelectorAll(
           ".delete-ea-button"
         )
-        .forEach(function(button) {
+        .forEach(
+          function(button) {
 
-          button.addEventListener(
-            "click",
-            function() {
+            button.addEventListener(
+              "click",
+              function() {
 
-              deleteEA(
-                button.dataset.id
-              );
+                deleteEA(
+                  button.dataset.id
+                );
 
-            }
-          );
+              }
+            );
 
-        });
+          }
+        );
 
     }
 
@@ -1954,11 +2786,13 @@
     ) {
 
       const ea =
-        eas.find(function(item) {
+        eas.find(
+          function(item) {
 
-          return item.id === eaId;
+            return item.id === eaId;
 
-        });
+          }
+        );
 
 
       if (
@@ -1975,35 +2809,33 @@
       }
 
 
-      /*
-        Load normal fields
-      */
-
       eaName.value =
         ea.name || "";
+
 
       description.value =
         ea.description || "";
 
+
       platform.value =
         ea.platform || "MT5";
+
 
       strategy.value =
         ea.strategy || "";
 
+
       riskLevel.value =
         ea.risk_level || "Medium";
+
 
       version.value =
         ea.version || "1.0";
 
+
       status.value =
         ea.status || "draft";
 
-
-      /*
-        Load JSONB features safely
-      */
 
       const features =
         ea.features || {};
@@ -2025,25 +2857,13 @@
         features.news_filter === true;
 
 
-      /*
-        Enter edit mode
-      */
-
       startEditMode(
         ea
       );
 
 
-      /*
-        Generate preview
-      */
-
       generateConfiguration();
 
-
-      /*
-        Scroll to form
-      */
 
       window.scrollTo({
         top: 0,
@@ -2052,7 +2872,7 @@
 
 
       showMessage(
-        "EA loaded successfully. You can now edit it and press Update EA.",
+        "✅ EA loaded successfully. You can now edit it and press Update EA.",
         "success"
       );
 
@@ -2098,7 +2918,8 @@
 
     function stopEditMode() {
 
-      editingEAId = null;
+      editingEAId =
+        null;
 
 
       editBanner.classList.remove(
@@ -2145,13 +2966,17 @@
       if (
         !validateForm()
       ) {
+
         return;
+
       }
 
 
       try {
 
-        updateButton.disabled = true;
+        updateButton.disabled =
+          true;
+
 
         updateButton.textContent =
           "Updating EA...";
@@ -2171,23 +2996,8 @@
           getFormData();
 
 
-        /*
-          Do not update:
-          - id
-          - mentor_id
-          - created_at
-
-          mentor_id is removed because the
-          owner should not be changed during
-          a normal update.
-        */
-
         delete updateData.mentor_id;
 
-
-        /*
-          updated_at matches your table.
-        */
 
         updateData.updated_at =
           new Date().toISOString();
@@ -2197,7 +3007,9 @@
           data,
           error
         } = await db
-          .from("ea_robots")
+          .from(
+            "ea_robots"
+          )
           .update(
             updateData
           )
@@ -2240,8 +3052,9 @@
 
         }
 
-
-      } catch (error) {
+      } catch (
+        error
+      ) {
 
         console.error(
           "Error updating EA:",
@@ -2251,13 +3064,18 @@
 
         showMessage(
           "Error updating EA: " +
-          (error.message || "Unknown error"),
+          (
+            error.message ||
+            "Unknown error"
+          ),
           "error"
         );
 
       } finally {
 
-        updateButton.disabled = false;
+        updateButton.disabled =
+          false;
+
 
         updateButton.innerHTML =
           "✏️ Update EA";
@@ -2284,7 +3102,9 @@
       if (
         !confirmed
       ) {
+
         return;
+
       }
 
 
@@ -2297,7 +3117,9 @@
         const {
           error
         } = await db
-          .from("ea_robots")
+          .from(
+            "ea_robots"
+          )
           .delete()
           .eq(
             "id",
@@ -2318,11 +3140,6 @@
         }
 
 
-        /*
-          If deleting the EA being edited,
-          leave edit mode.
-        */
-
         if (
           editingEAId === eaId
         ) {
@@ -2340,8 +3157,9 @@
 
         await loadSavedEAs();
 
-
-      } catch (error) {
+      } catch (
+        error
+      ) {
 
         console.error(
           "Error deleting EA:",
@@ -2351,7 +3169,10 @@
 
         showMessage(
           "Error deleting EA: " +
-          (error.message || "Unknown error"),
+          (
+            error.message ||
+            "Unknown error"
+          ),
           "error"
         );
 
@@ -2366,28 +3187,48 @@
 
     function resetForm() {
 
-      eaName.value = "";
-
-      description.value = "";
-
-      platform.value = "MT5";
-
-      strategy.value = "";
-
-      riskLevel.value = "Medium";
-
-      version.value = "1.0";
-
-      status.value = "draft";
+      eaName.value =
+        "";
 
 
-      automaticLotSize.checked = true;
+      description.value =
+        "";
 
-      trailingStop.checked = false;
 
-      breakEven.checked = false;
+      platform.value =
+        "MT5";
 
-      newsFilter.checked = false;
+
+      strategy.value =
+        "";
+
+
+      riskLevel.value =
+        "Medium";
+
+
+      version.value =
+        "1.0";
+
+
+      status.value =
+        "draft";
+
+
+      automaticLotSize.checked =
+        true;
+
+
+      trailingStop.checked =
+        false;
+
+
+      breakEven.checked =
+        false;
+
+
+      newsFilter.checked =
+        false;
 
 
       configOutput.classList.remove(
@@ -2395,7 +3236,8 @@
       );
 
 
-      configBox.textContent = "";
+      configBox.textContent =
+        "";
 
 
       stopEditMode();
@@ -2444,7 +3286,8 @@
           !data.user
         ) {
 
-          currentUser = null;
+          currentUser =
+            null;
 
 
           showMessage(
@@ -2465,10 +3308,6 @@
         }
 
 
-        /*
-          Logged-in user
-        */
-
         currentUser =
           data.user;
 
@@ -2479,14 +3318,11 @@
         );
 
 
-        /*
-          Load this user's saved EAs
-        */
-
         await loadSavedEAs();
 
-
-      } catch (error) {
+      } catch (
+        error
+      ) {
 
         console.error(
           "Account check error:",
@@ -2494,12 +3330,16 @@
         );
 
 
-        currentUser = null;
+        currentUser =
+          null;
 
 
         showMessage(
           "Connection error: " +
-          (error.message || "Could not connect to Supabase."),
+          (
+            error.message ||
+            "Could not connect to Supabase."
+          ),
           "error"
         );
 
@@ -2544,8 +3384,9 @@
           }
         );
 
-
-      } catch (error) {
+      } catch (
+        error
+      ) {
 
         console.warn(
           "Could not listen for auth changes:",
@@ -2611,7 +3452,9 @@
       "click",
       async function() {
 
-        refreshButton.disabled = true;
+        refreshButton.disabled =
+          true;
+
 
         refreshButton.textContent =
           "Refreshing...";
@@ -2620,10 +3463,12 @@
         await loadSavedEAs();
 
 
-        refreshButton.disabled = false;
+        refreshButton.disabled =
+          false;
 
-        refreshButton.textContent =
-          "Refresh";
+
+        refreshButton.innerHTML =
+          "↻ Refresh";
 
       }
     );
@@ -2639,28 +3484,17 @@
 
         try {
 
-          /*
-            Check that configuration exists.
-          */
-
           getSupabaseClient();
 
-
-          /*
-            Listen for login/logout changes.
-          */
 
           listenForAuthChanges();
 
 
-          /*
-            Check current user.
-          */
-
           await checkAccount();
 
-
-        } catch (error) {
+        } catch (
+          error
+        ) {
 
           console.error(
             "Initialization error:",
@@ -2670,7 +3504,10 @@
 
           showMessage(
             "Supabase configuration error: " +
-            (error.message || "Unknown error"),
+            (
+              error.message ||
+              "Unknown error"
+            ),
             "error"
           );
 
@@ -2686,7 +3523,9 @@
       }
     );
 
+
   </script>
+
 
 </body>
 </html>
