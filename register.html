@@ -10,6 +10,11 @@
     content="width=device-width, initial-scale=1.0"
   >
 
+  <meta
+    name="theme-color"
+    content="#050806"
+  >
+
   <title>Create Account | Alpha Traders Host</title>
 
 
@@ -44,15 +49,6 @@
       --card:
         #0b120f;
 
-      --card-light:
-        #101a15;
-
-      --border:
-        rgba(255,255,255,0.10);
-
-      --border-green:
-        rgba(0,208,132,0.35);
-
       --text:
         #f5f7f6;
 
@@ -61,9 +57,6 @@
 
       --accent:
         #00d084;
-
-      --accent-dark:
-        #007a4e;
 
       --danger:
         #ff7777;
@@ -105,7 +98,7 @@
 
 
     /* =========================
-       BACKGROUND GLOWS
+       BACKGROUND
     ========================== */
 
     .glow {
@@ -123,7 +116,7 @@
         50%;
 
       background:
-        rgba(0,208,132,0.10);
+        rgba(0, 208, 132, 0.10);
 
       filter:
         blur(130px);
@@ -224,15 +217,6 @@
       overflow:
         hidden;
 
-      display:
-        flex;
-
-      align-items:
-        center;
-
-      justify-content:
-        center;
-
       background:
         #07120e;
 
@@ -314,7 +298,7 @@
 
 
     /* =========================
-       PAGE LAYOUT
+       PAGE
     ========================== */
 
     .page {
@@ -351,7 +335,7 @@
 
 
     /* =========================
-       LEFT SIDE
+       INTRO
     ========================== */
 
     .intro {
@@ -545,37 +529,6 @@
       box-shadow:
         0 30px 80px rgba(0,0,0,0.45);
 
-      position:
-        relative;
-
-    }
-
-
-    .register-card::before {
-
-      content:
-        "";
-
-      position:
-        absolute;
-
-      inset:
-        -1px;
-
-      border-radius:
-        24px;
-
-      background:
-        linear-gradient(
-          130deg,
-          rgba(0,208,132,0.30),
-          transparent 40%,
-          transparent
-        );
-
-      z-index:
-        -1;
-
     }
 
 
@@ -706,14 +659,6 @@
     }
 
 
-    select {
-
-      cursor:
-        pointer;
-
-    }
-
-
     select option {
 
       background:
@@ -799,9 +744,6 @@
       transition:
         0.2s;
 
-      box-shadow:
-        0 10px 30px rgba(0,208,132,0.14);
-
     }
 
 
@@ -856,17 +798,6 @@
 
       border:
         1px solid rgba(0,208,132,0.50);
-
-      box-shadow:
-        none;
-
-    }
-
-
-    .resend-button:hover {
-
-      background:
-        rgba(0,208,132,0.06);
 
     }
 
@@ -975,9 +906,7 @@
        MOBILE
     ========================== */
 
-    @media (
-      max-width: 900px
-    ) {
+    @media (max-width: 900px) {
 
       .page {
 
@@ -1008,9 +937,7 @@
     }
 
 
-    @media (
-      max-width: 600px
-    ) {
+    @media (max-width: 600px) {
 
       nav {
 
@@ -1061,14 +988,6 @@
       }
 
 
-      .intro h1 {
-
-        letter-spacing:
-          -1px;
-
-      }
-
-
       .register-card {
 
         padding:
@@ -1079,14 +998,6 @@
 
       }
 
-
-      .card-header h2 {
-
-        font-size:
-          26px;
-
-      }
-
     }
 
   </style>
@@ -1094,19 +1005,14 @@
 </head>
 
 
-
 <body>
 
 
   <!-- BACKGROUND -->
 
-  <div
-    class="glow glow-one"
-  ></div>
+  <div class="glow glow-one"></div>
 
-  <div
-    class="glow glow-two"
-  ></div>
+  <div class="glow glow-two"></div>
 
 
 
@@ -1119,7 +1025,6 @@
       href="index.html"
       class="brand"
     >
-
 
       <div class="brand-icon">
 
@@ -1134,15 +1039,11 @@
       <div class="brand-text">
 
         ALPHA
-        <span>
-          TRADERS HOST
-        </span>
+        <span>TRADERS HOST</span>
 
       </div>
 
-
     </a>
-
 
 
     <a
@@ -1159,12 +1060,12 @@
 
 
 
-  <!-- MAIN PAGE -->
+  <!-- MAIN -->
 
   <main class="page">
 
 
-    <!-- LEFT SIDE -->
+    <!-- INTRO -->
 
     <section class="intro">
 
@@ -1178,26 +1079,20 @@
       </div>
 
 
-
       <h1>
 
         Start your
-        <span>
-          trading journey.
-        </span>
+        <span>trading journey.</span>
 
       </h1>
-
 
 
       <p class="intro-text">
 
         Create your Alpha Traders Host account and access
-        a platform designed to connect traders, mentors
-        and automated trading tools.
+        a platform designed to connect traders and mentors.
 
       </p>
-
 
 
       <ul class="benefits">
@@ -1205,9 +1100,7 @@
 
         <li>
 
-          <span class="check">
-            ✓
-          </span>
+          <span class="check">✓</span>
 
           Create your account securely
 
@@ -1216,9 +1109,7 @@
 
         <li>
 
-          <span class="check">
-            ✓
-          </span>
+          <span class="check">✓</span>
 
           Access your role-based dashboard
 
@@ -1227,9 +1118,7 @@
 
         <li>
 
-          <span class="check">
-            ✓
-          </span>
+          <span class="check">✓</span>
 
           Connect with approved mentors
 
@@ -1238,9 +1127,7 @@
 
         <li>
 
-          <span class="check">
-            ✓
-          </span>
+          <span class="check">✓</span>
 
           Manage your trading journey from anywhere
 
@@ -1261,19 +1148,11 @@
 
       <div class="card-header">
 
-        <h2>
-
-          Create Account
-
-        </h2>
-
+        <h2>Create Account</h2>
 
         <p>
-
           Enter your details to join Alpha Traders Host.
-
         </p>
-
 
       </div>
 
@@ -1282,7 +1161,7 @@
       <form id="registerForm">
 
 
-        <!-- FULL NAME -->
+        <!-- NAME -->
 
         <div class="field">
 
@@ -1292,19 +1171,12 @@
 
           </label>
 
-
           <input
-
             type="text"
-
             id="name"
-
             placeholder="Your full name"
-
             autocomplete="name"
-
             required
-
           >
 
         </div>
@@ -1321,19 +1193,12 @@
 
           </label>
 
-
           <input
-
             type="email"
-
             id="email"
-
             placeholder="you@example.com"
-
             autocomplete="email"
-
             required
-
           >
 
         </div>
@@ -1350,7 +1215,6 @@
 
           </label>
 
-
           <select
             id="role"
             required
@@ -1362,13 +1226,11 @@
 
             </option>
 
-
             <option value="mentor">
 
               Mentor
 
             </option>
-
 
           </select>
 
@@ -1397,21 +1259,13 @@
 
           </label>
 
-
           <input
-
             type="password"
-
             id="password"
-
             placeholder="Create a password"
-
             minlength="8"
-
             autocomplete="new-password"
-
             required
-
           >
 
         </div>
@@ -1428,21 +1282,13 @@
 
           </label>
 
-
           <input
-
             type="password"
-
             id="confirm"
-
             placeholder="Confirm your password"
-
             minlength="8"
-
             autocomplete="new-password"
-
             required
-
           >
 
         </div>
@@ -1493,7 +1339,7 @@
 
 
 
-      <!-- LOGIN LINK -->
+      <!-- LOGIN -->
 
       <div class="links">
 
@@ -1503,13 +1349,11 @@
 
         </p>
 
-
         <a href="login.html">
 
           Sign In →
 
         </a>
-
 
       </div>
 
@@ -1521,7 +1365,9 @@
 
 
 
-  <!-- SUPABASE -->
+  <!-- =========================
+       SUPABASE
+  ========================== -->
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -1604,11 +1450,37 @@
 
 
     /* ==========================================
-       WEBSITE URL
+       GITHUB PAGES URLS
     ========================================== */
 
     const SITE_URL =
       "https://juniorligman9-dot.github.io/alpha-traders-host/";
+
+
+    const LOGIN_URL =
+      "https://juniorligman9-dot.github.io/alpha-traders-host/login.html";
+
+
+
+    /* ==========================================
+       GET SUPABASE CLIENT
+    ========================================== */
+
+    function getSupabaseClient() {
+
+      if (
+        typeof window.supabaseClient !==
+        "undefined"
+      ) {
+
+        return window.supabaseClient;
+
+      }
+
+
+      return null;
+
+    }
 
 
 
@@ -1618,7 +1490,7 @@
 
     function showMessage(
       text,
-      type
+      type = ""
     ) {
 
       message.textContent =
@@ -1626,16 +1498,71 @@
 
 
       message.className =
-        "message " +
-        type;
+        "message";
+
+
+      if (
+        type
+      ) {
+
+        message.classList.add(
+          type
+        );
+
+      }
 
     }
 
 
 
     /* ==========================================
-       HIDE RESEND
+       ROLE INFORMATION
     ========================================== */
+
+    function updateRoleInfo() {
+
+      if (
+        roleSelect.value ===
+        "mentor"
+      ) {
+
+        roleInfo.textContent =
+          "Mentor accounts require administrator approval after email confirmation.";
+
+      }
+
+      else {
+
+        roleInfo.textContent =
+          "Client accounts are approved automatically after registration.";
+
+      }
+
+    }
+
+
+    roleSelect.addEventListener(
+      "change",
+      updateRoleInfo
+    );
+
+
+    updateRoleInfo();
+
+
+
+    /* ==========================================
+       SHOW / HIDE RESEND
+    ========================================== */
+
+    function showResend() {
+
+      resendBox.classList.add(
+        "show"
+      );
+
+    }
+
 
     function hideResend() {
 
@@ -1648,58 +1575,16 @@
 
 
     /* ==========================================
-       SHOW RESEND
-    ========================================== */
-
-    function showResend() {
-
-      resendBox.classList.add(
-        "show"
-      );
-
-    }
-
-
-
-    /* ==========================================
-       UPDATE ROLE INFORMATION
-    ========================================== */
-
-    roleSelect.addEventListener(
-      "change",
-      function() {
-
-
-        if (
-          roleSelect.value ===
-          "mentor"
-        ) {
-
-          roleInfo.textContent =
-            "Mentor accounts require administrator approval before accessing the mentor dashboard.";
-
-        }
-
-        else {
-
-          roleInfo.textContent =
-            "Client accounts are approved automatically.";
-
-        }
-
-
-      }
-    );
-
-
-
-    /* ==========================================
        RESEND CONFIRMATION EMAIL
     ========================================== */
 
     resendButton.addEventListener(
       "click",
       async function() {
+
+
+        const supabaseClient =
+          getSupabaseClient();
 
 
         const email =
@@ -1709,11 +1594,11 @@
 
 
         if (
-          !email
+          !supabaseClient
         ) {
 
           showMessage(
-            "Please enter your email address first.",
+            "Supabase is not connected. Please check supabase-config.js.",
             "error"
           );
 
@@ -1724,11 +1609,11 @@
 
 
         if (
-          !window.supabaseClient
+          !email
         ) {
 
           showMessage(
-            "Supabase is not connected. Check supabase-config.js.",
+            "Please enter your email address first.",
             "error"
           );
 
@@ -1753,7 +1638,7 @@
           const {
             error
           } =
-            await window.supabaseClient
+            await supabaseClient
               .auth
               .resend({
 
@@ -1766,7 +1651,7 @@
                 options: {
 
                   emailRedirectTo:
-                    SITE_URL
+                    LOGIN_URL
 
                 }
 
@@ -1785,7 +1670,7 @@
 
 
           showMessage(
-            "Confirmation email sent! Please check your inbox and spam folder.",
+            "Confirmation email sent! Check your inbox and spam folder.",
             "success"
           );
 
@@ -1839,19 +1724,26 @@
 
     registerForm.addEventListener(
       "submit",
-      async function(e) {
+      async function(event) {
 
 
-        e.preventDefault();
+        event.preventDefault();
+
+
+
+        const supabaseClient =
+          getSupabaseClient();
 
 
 
         const fullName =
-          nameInput.value.trim();
+          nameInput.value
+            .trim();
 
 
         const email =
-          emailInput.value.trim();
+          emailInput.value
+            .trim();
 
 
         const role =
@@ -1867,19 +1759,50 @@
 
 
 
+        /* CLEAR */
+
         hideResend();
 
 
-        message.textContent =
-          "";
-
-
-        message.className =
-          "message";
+        showMessage(
+          ""
+        );
 
 
 
-        /* PASSWORD CHECK */
+        /* VALIDATE NAME */
+
+        if (
+          !fullName
+        ) {
+
+          showMessage(
+            "Please enter your full name.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+
+        /* VALIDATE PASSWORD */
+
+        if (
+          password.length < 8
+        ) {
+
+          showMessage(
+            "Your password must be at least 8 characters long.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
 
         if (
           password !== confirm
@@ -1899,11 +1822,11 @@
         /* CHECK SUPABASE */
 
         if (
-          !window.supabaseClient
+          !supabaseClient
         ) {
 
           showMessage(
-            "Supabase is not connected. Check supabase-config.js.",
+            "Supabase is not connected. Please check supabase-config.js.",
             "error"
           );
 
@@ -1924,8 +1847,7 @@
 
 
         showMessage(
-          "Creating your account...",
-          ""
+          "Creating your account..."
         );
 
 
@@ -1933,13 +1855,15 @@
         try {
 
 
-          /* SIGN UP */
+          /* ======================================
+             CREATE AUTH ACCOUNT
+          ====================================== */
 
           const {
             data,
             error
           } =
-            await window.supabaseClient
+            await supabaseClient
               .auth
               .signUp({
 
@@ -1952,7 +1876,7 @@
                 options: {
 
                   emailRedirectTo:
-                    SITE_URL,
+                    LOGIN_URL,
 
                   data: {
 
@@ -1974,40 +1898,6 @@
             error
           ) {
 
-
-            const errorText =
-              String(
-                error.message || ""
-              )
-              .toLowerCase();
-
-
-
-            if (
-              errorText.includes(
-                "already registered"
-              ) ||
-              errorText.includes(
-                "already exists"
-              ) ||
-              errorText.includes(
-                "user already"
-              )
-            ) {
-
-              showMessage(
-                "This email already has an account. If you have not verified your email yet, resend the confirmation email below.",
-                "warning"
-              );
-
-
-              showResend();
-
-              return;
-
-            }
-
-
             throw error;
 
           }
@@ -2015,6 +1905,7 @@
 
 
           if (
+            !data ||
             !data.user
           ) {
 
@@ -2026,7 +1917,9 @@
 
 
 
-          /* CHECK EXISTING ACCOUNT */
+          /* ======================================
+             CHECK EXISTING USER
+          ====================================== */
 
           const identities =
             data.user.identities;
@@ -2040,7 +1933,7 @@
           ) {
 
             showMessage(
-              "This email may already have an account. If you have not confirmed your email yet, resend the confirmation email below.",
+              "This email may already have an account. If it is not confirmed, you can resend the confirmation email below.",
               "warning"
             );
 
@@ -2053,15 +1946,16 @@
 
 
 
-          /* SUCCESS */
+          /* ======================================
+             SUCCESS
+          ====================================== */
 
           if (
-            role ===
-            "mentor"
+            role === "mentor"
           ) {
 
             showMessage(
-              "Account created! Check your email to confirm your account. After confirmation, your mentor account will require administrator approval.",
+              "Account created! Check your email to confirm your account. After confirmation, your mentor account will wait for administrator approval.",
               "success"
             );
 
@@ -2070,13 +1964,15 @@
           else {
 
             showMessage(
-              "Account created! Please check your inbox and spam folder to confirm your email.",
+              "Account created! Check your email and confirm your account before logging in.",
               "success"
             );
 
           }
 
 
+
+          /* KEEP EMAIL FOR RESEND */
 
           nameInput.value =
             "";
@@ -2121,11 +2017,14 @@
             ) ||
             errorText.includes(
               "already exists"
+            ) ||
+            errorText.includes(
+              "user already"
             )
           ) {
 
             showMessage(
-              "This email already has an account. If it is not verified, click below to resend the confirmation email.",
+              "This email already has an account. If you have not verified it yet, resend the confirmation email below.",
               "warning"
             );
 
@@ -2137,11 +2036,8 @@
           else {
 
             showMessage(
-              "Error: " +
-              (
-                error.message ||
-                "Could not create account."
-              ),
+              error.message ||
+              "Could not create your account. Please try again.",
               "error"
             );
 
