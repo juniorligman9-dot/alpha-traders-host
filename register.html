@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
 <title>Create Account | Alpha Traders Host</title>
 
@@ -21,6 +25,7 @@
   --muted: #929bad;
   --accent: #00d084;
   --danger: #ff6b6b;
+  --warning: #f5b942;
 }
 
 body {
@@ -135,6 +140,38 @@ button:disabled {
   color: var(--accent);
 }
 
+.message.warning {
+  color: var(--warning);
+}
+
+.resend-box {
+  display: none;
+  margin-top: 15px;
+}
+
+.resend-box.show {
+  display: block;
+}
+
+.resend-button {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  font-size: 15px;
+}
+
+.role-info {
+  background: rgba(0, 208, 132, 0.08);
+  border: 1px solid rgba(0, 208, 132, 0.25);
+  color: var(--muted);
+  border-radius: 10px;
+  padding: 13px;
+  margin-top: -8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
 .links {
   text-align: center;
   margin-top: 24px;
@@ -151,18 +188,6 @@ button:disabled {
 
 .links a:hover {
   text-decoration: underline;
-}
-
-.role-info {
-  background: rgba(0, 208, 132, 0.08);
-  border: 1px solid rgba(0, 208, 132, 0.25);
-  color: var(--muted);
-  border-radius: 10px;
-  padding: 13px;
-  margin-top: -8px;
-  margin-bottom: 20px;
-  font-size: 14px;
-  line-height: 1.5;
 }
 
 @media (max-width: 500px) {
@@ -220,6 +245,7 @@ button:disabled {
       type="email"
       id="email"
       placeholder="you@example.com"
+      autocomplete="email"
       required
     >
 
@@ -259,6 +285,7 @@ button:disabled {
       id="password"
       placeholder="Create a password"
       minlength="8"
+      autocomplete="new-password"
       required
     >
 
@@ -272,6 +299,7 @@ button:disabled {
       id="confirm"
       placeholder="Confirm your password"
       minlength="8"
+      autocomplete="new-password"
       required
     >
 
@@ -290,6 +318,24 @@ button:disabled {
     id="message"
     class="message"
   ></div>
+
+
+  <!-- RESEND CONFIRMATION -->
+
+  <div
+    id="resendBox"
+    class="resend-box"
+  >
+
+    <button
+      type="button"
+      id="resendButton"
+      class="resend-button"
+    >
+      Resend Confirmation Email
+    </button>
+
+  </div>
 
 
   <div class="links">
@@ -361,6 +407,69 @@ const registerButton =
     "registerButton"
   );
 
+const resendBox =
+  document.getElementById(
+    "resendBox"
+  );
+
+const resendButton =
+  document.getElementById(
+    "resendButton"
+  );
+
+
+/* ==========================================
+   WEBSITE URL
+========================================== */
+
+const SITE_URL =
+  "https://juniorligman9-dot.github.io/alpha-traders-host/";
+
+
+/* ==========================================
+   SHOW MESSAGE
+========================================== */
+
+function showMessage(
+  text,
+  type
+) {
+
+  message.textContent =
+    text;
+
+  message.className =
+    "message " +
+    type;
+
+}
+
+
+/* ==========================================
+   HIDE RESEND BUTTON
+========================================== */
+
+function hideResend() {
+
+  resendBox.classList.remove(
+    "show"
+  );
+
+}
+
+
+/* ==========================================
+   SHOW RESEND BUTTON
+========================================== */
+
+function showResend() {
+
+  resendBox.classList.add(
+    "show"
+  );
+
+}
+
 
 /* ==========================================
    UPDATE ROLE INFORMATION
@@ -384,6 +493,126 @@ roleSelect.addEventListener(
 
       roleInfo.textContent =
         "Client accounts are approved automatically.";
+
+    }
+
+  }
+);
+
+
+/* ==========================================
+   RESEND CONFIRMATION EMAIL
+========================================== */
+
+resendButton.addEventListener(
+  "click",
+  async function() {
+
+    const email =
+      emailInput.value
+        .trim();
+
+
+    if (
+      !email
+    ) {
+
+      showMessage(
+        "Please enter your email address first.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if (
+      !window.supabaseClient
+    ) {
+
+      showMessage(
+        "Supabase is not connected. Check supabase-config.js.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    resendButton.disabled =
+      true;
+
+    resendButton.textContent =
+      "Sending...";
+
+
+    try {
+
+      const {
+        error
+      } =
+        await window.supabaseClient
+          .auth
+          .resend({
+
+            type:
+              "signup",
+
+            email:
+              email,
+
+            options: {
+
+              emailRedirectTo:
+                SITE_URL
+
+            }
+
+          });
+
+
+      if (
+        error
+      ) {
+
+        throw error;
+
+      }
+
+
+      showMessage(
+        "Confirmation email sent! Please check your inbox and spam folder.",
+        "success"
+      );
+
+
+    }
+    catch (
+      error
+    ) {
+
+      console.error(
+        "Resend error:",
+        error
+      );
+
+
+      showMessage(
+        error.message ||
+        "Could not resend the confirmation email.",
+        "error"
+      );
+
+    }
+    finally {
+
+      resendButton.disabled =
+        false;
+
+      resendButton.textContent =
+        "Resend Confirmation Email";
 
     }
 
@@ -418,6 +647,9 @@ registerForm.addEventListener(
       confirmInput.value;
 
 
+    hideResend();
+
+
     message.textContent =
       "";
 
@@ -431,10 +663,8 @@ registerForm.addEventListener(
       password !== confirm
     ) {
 
-      message.textContent =
-        "Passwords do not match.";
-
-      message.classList.add(
+      showMessage(
+        "Passwords do not match.",
         "error"
       );
 
@@ -449,10 +679,8 @@ registerForm.addEventListener(
       !window.supabaseClient
     ) {
 
-      message.textContent =
-        "Supabase is not connected. Check supabase-config.js.";
-
-      message.classList.add(
+      showMessage(
+        "Supabase is not connected. Check supabase-config.js.",
         "error"
       );
 
@@ -470,8 +698,10 @@ registerForm.addEventListener(
       "Creating Account...";
 
 
-    message.textContent =
-      "Creating your account...";
+    showMessage(
+      "Creating your account...",
+      ""
+    );
 
 
     try {
@@ -497,6 +727,9 @@ registerForm.addEventListener(
 
             options: {
 
+              emailRedirectTo:
+                SITE_URL,
+
               data: {
 
                 full_name:
@@ -516,6 +749,42 @@ registerForm.addEventListener(
         error
       ) {
 
+        /*
+          If Supabase explicitly reports that
+          the user already exists, show resend.
+        */
+
+        const errorText =
+          String(
+            error.message || ""
+          )
+          .toLowerCase();
+
+
+        if (
+          errorText.includes(
+            "already registered"
+          ) ||
+          errorText.includes(
+            "already exists"
+          ) ||
+          errorText.includes(
+            "user already"
+          )
+        ) {
+
+          showMessage(
+            "This email already has an account. If you have not verified your email yet, resend the confirmation email below.",
+            "warning"
+          );
+
+          showResend();
+
+          return;
+
+        }
+
+
         throw error;
 
       }
@@ -532,33 +801,83 @@ registerForm.addEventListener(
       }
 
 
+      /*
+        IMPORTANT:
+
+        Supabase may intentionally return a
+        user object even when the email is
+        already registered, to prevent
+        email enumeration.
+
+        An empty identities array can indicate
+        that no new user was created.
+      */
+
+      const identities =
+        data.user.identities;
+
+
+      if (
+        Array.isArray(
+          identities
+        ) &&
+        identities.length === 0
+      ) {
+
+        showMessage(
+          "This email may already have an account. If you have not confirmed your email yet, resend the confirmation email below.",
+          "warning"
+        );
+
+        showResend();
+
+        return;
+
+      }
+
+
       /* ======================================
          SUCCESS MESSAGE
       ====================================== */
-
-      message.className =
-        "message success";
-
 
       if (
         role ===
         "mentor"
       ) {
 
-        message.textContent =
-          "Mentor account created successfully! Please confirm your email. Your account will require administrator approval.";
+        showMessage(
+          "Account created! A confirmation email has been sent. After confirming your email, your mentor account will require administrator approval.",
+          "success"
+        );
 
       }
 
       else {
 
-        message.textContent =
-          "Client account created successfully! Please confirm your email before signing in.";
+        showMessage(
+          "Account created! A confirmation email has been sent. Please check your inbox and spam folder.",
+          "success"
+        );
 
       }
 
 
-      registerForm.reset();
+      /*
+        Keep the email visible so the user
+        can resend confirmation if necessary.
+      */
+
+      nameInput.value =
+        "";
+
+      passwordInput.value =
+        "";
+
+      confirmInput.value =
+        "";
+
+
+      showResend();
 
 
     }
@@ -572,16 +891,48 @@ registerForm.addEventListener(
       );
 
 
-      message.className =
-        "message error";
+      const errorText =
+        String(
+          error.message || ""
+        )
+        .toLowerCase();
 
 
-      message.textContent =
-        "Error: " +
-        (
-          error.message ||
-          "Could not create account."
+      /*
+        SHOW RESEND FOR POSSIBLE
+        EXISTING ACCOUNT ERRORS
+      */
+
+      if (
+        errorText.includes(
+          "already registered"
+        ) ||
+        errorText.includes(
+          "already exists"
+        )
+      ) {
+
+        showMessage(
+          "This email already has an account. If it is not verified, click the button below to resend the confirmation email.",
+          "warning"
         );
+
+        showResend();
+
+      }
+
+      else {
+
+        showMessage(
+          "Error: " +
+          (
+            error.message ||
+            "Could not create account."
+          ),
+          "error"
+        );
+
+      }
 
     }
     finally {
