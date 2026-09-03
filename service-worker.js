@@ -5,29 +5,29 @@ const FILES_TO_CACHE = [
   "./index.html",
   "./login.html",
   "./register.html",
-  "./admin-dashboard.html",
-  "./mentor-dashboard.html",
+  "./dashboard.html",
   "./client-dashboard.html",
-  "./create-ea.html",
-  "./manifest.json"
+  "./mentor-dashboard.html",
+  "./admin-dashboard.html",
+  "./manifest.json",
+  "./icons/icon-192.png",
+  "./icons/icon-512.png"
 ];
 
 
 self.addEventListener(
   "install",
-  function(event) {
+  function (event) {
 
     event.waitUntil(
       caches.open(CACHE_NAME)
-        .then(
-          function(cache) {
+        .then(function (cache) {
 
-            return cache.addAll(
-              FILES_TO_CACHE
-            );
+          return cache.addAll(
+            FILES_TO_CACHE
+          );
 
-          }
-        )
+        })
     );
 
     self.skipWaiting();
@@ -38,37 +38,33 @@ self.addEventListener(
 
 self.addEventListener(
   "activate",
-  function(event) {
+  function (event) {
 
     event.waitUntil(
-
       caches.keys()
-        .then(
-          function(cacheNames) {
+        .then(function (cacheNames) {
 
-            return Promise.all(
+          return Promise.all(
 
-              cacheNames.map(
-                function(cacheName) {
+            cacheNames.map(
+              function (cacheName) {
 
-                  if (
-                    cacheName !== CACHE_NAME
-                  ) {
+                if (
+                  cacheName !== CACHE_NAME
+                ) {
 
-                    return caches.delete(
-                      cacheName
-                    );
-
-                  }
+                  return caches.delete(
+                    cacheName
+                  );
 
                 }
-              )
 
-            );
+              }
+            )
 
-          }
-        )
+          );
 
+        })
     );
 
     self.clients.claim();
@@ -79,20 +75,38 @@ self.addEventListener(
 
 self.addEventListener(
   "fetch",
-  function(event) {
+  function (event) {
+
+    if (
+      event.request.method !== "GET"
+    ) {
+
+      return;
+
+    }
+
 
     event.respondWith(
 
-      fetch(event.request)
-        .catch(
-          function() {
+      caches.match(
+        event.request
+      )
+      .then(function (cachedResponse) {
 
-            return caches.match(
-              event.request
-            );
+        if (
+          cachedResponse
+        ) {
 
-          }
-        )
+          return cachedResponse;
+
+        }
+
+
+        return fetch(
+          event.request
+        );
+
+      })
 
     );
 
