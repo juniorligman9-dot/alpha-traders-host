@@ -1,22 +1,43 @@
 {
   "name": "Alpha Traders Host",
   "short_name": "Alpha Traders",
-  "description": "Alpha Traders Host trading platform",
-  "start_url": "./",
+  "description": "A professional trading mentorship and client platform.",
+  "id": "./index.html",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0b0f19",
-  "theme_color": "#00d084",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "background_color": "#020d0a",
+  "theme_color": "#020d0a",
+  "orientation": "portrait-primary",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": [
+    "business",
+    "finance",
+    "productivity"
+  ],
   "icons": [
     {
-      "src": "./icons/icon-192.png",
+      "src": "icons/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "./icons/icon-512.png",
+      "src": "icons/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
