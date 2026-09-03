@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -11,588 +10,1169 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Login | Alpha Traders Host</title>
-
   <meta
     name="theme-color"
-    content="#050806"
+    content="#03100c"
   >
+
+  <meta
+    name="description"
+    content="Sign in to Alpha Traders Host."
+  >
+
+  <meta
+    name="mobile-web-app-capable"
+    content="yes"
+  >
+
+  <meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+  >
+
+  <meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="black-translucent"
+  >
+
+  <meta
+    name="apple-mobile-web-app-title"
+    content="Alpha Traders"
+  >
+
+  <link
+    rel="manifest"
+    href="./manifest.json"
+  >
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="./icons/icon-192.png"
+  >
+
+  <link
+    rel="apple-touch-icon"
+    href="./icons/icon-192.png"
+  >
+
+  <title>Login | Alpha Traders Host</title>
 
 
   <style>
 
-    /* =========================
+    /* ==================================================
        RESET
-    ========================== */
+    ================================================== */
 
-    * {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
 
+    :root {
+
+      --bg:
+        #03100c;
+
+      --bg-deep:
+        #020907;
+
+      --card:
+        #081a13;
+
+      --card-inner:
+        #05120d;
+
+      --border:
+        rgba(145, 175, 161, 0.17);
+
+      --border-green:
+        rgba(32, 201, 151, 0.38);
+
+      --text:
+        #f1f6f3;
+
+      --muted:
+        #a2b0aa;
+
+      --muted-dark:
+        #718079;
+
+      --accent:
+        #20c997;
+
+      --accent-light:
+        #39e2ad;
+
+      --accent-dark:
+        #10976d;
+
+      --purple:
+        #9d72e5;
+
+      --danger:
+        #ff7171;
+
+      --warning:
+        #ffc45b;
+
+    }
+
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+
     body {
-      font-family: Arial, sans-serif;
-      background: #050806;
-      color: #ffffff;
+
       min-height: 100vh;
+
       overflow-x: hidden;
+
+      background:
+
+        radial-gradient(
+          circle at 5% 0%,
+          rgba(32, 201, 151, 0.10),
+          transparent 30%
+        ),
+
+        radial-gradient(
+          circle at 95% 100%,
+          rgba(20, 115, 81, 0.08),
+          transparent 30%
+        ),
+
+        linear-gradient(
+          180deg,
+          #04110d 0%,
+          var(--bg) 48%,
+          var(--bg-deep) 100%
+        );
+
+      color: var(--text);
+
+      font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
     }
 
 
     a {
+      color: inherit;
       text-decoration: none;
     }
 
 
-    /* =========================
-       BACKGROUND
-    ========================== */
-
-    .glow {
-      position: fixed;
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-      background: rgba(0, 208, 132, 0.10);
-      filter: blur(130px);
-      pointer-events: none;
-      z-index: -1;
+    button,
+    input {
+      font: inherit;
     }
 
 
-    .glow-one {
-      top: -250px;
-      left: -250px;
-    }
-
-
-    .glow-two {
-      right: -250px;
-      bottom: -250px;
-    }
-
-
-    /* =========================
+    /* ==================================================
        PAGE
-    ========================== */
+    ================================================== */
 
-    .login-page {
+    .page {
+
       min-height: 100vh;
+
       display: grid;
-      grid-template-columns: 1fr 1fr;
+
+      grid-template-columns:
+        minmax(0, 1fr)
+        minmax(420px, 560px);
+
     }
 
 
-    /* =========================
-       LEFT SIDE
-    ========================== */
+    /* ==================================================
+       LEFT PANEL
+    ================================================== */
 
-    .welcome-side {
-      padding: 50px 8%;
-      border-right: 1px solid rgba(255,255,255,0.07);
+    .left {
+
       display: flex;
+
       flex-direction: column;
+
       justify-content: space-between;
-      min-height: 100vh;
+
+      padding:
+        36px clamp(25px, 5vw, 75px);
+
+      border-right:
+        1px solid rgba(255,255,255,0.06);
+
     }
 
 
-    /* =========================
+    /* ==================================================
        BRAND
-    ========================== */
+    ================================================== */
 
     .brand {
+
       display: inline-flex;
+
       align-items: center;
+
       gap: 12px;
-      color: white;
+
       width: fit-content;
+
     }
 
 
     .brand-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
+
+      width: 45px;
+
+      height: 45px;
+
+      flex: 0 0 45px;
+
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(0,208,132,0.40);
-      background: #07120e;
+
+      border-radius: 13px;
+
+      border:
+        1px solid var(--border-green);
+
+      background:
+        #06140e;
+
+      box-shadow:
+        0 0 25px
+        rgba(32,201,151,0.08);
+
     }
 
 
     .brand-icon img {
+
+      display: block;
+
       width: 100%;
+
       height: 100%;
+
       object-fit: cover;
+
     }
 
 
     .brand-text {
-      font-size: 20px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
 
-
-    .brand-text span {
-      color: #00d084;
-    }
-
-
-    /* =========================
-       WELCOME
-    ========================== */
-
-    .welcome-content {
-      max-width: 540px;
-      margin: auto 0;
-      padding: 70px 0;
-    }
-
-
-    .welcome-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 16px;
-      border-radius: 30px;
-      color: #7bf0be;
-      background: rgba(0,208,132,0.07);
-      border: 1px solid rgba(0,208,132,0.20);
-      font-size: 13px;
-      font-weight: bold;
-      letter-spacing: 0.5px;
-      margin-bottom: 25px;
-    }
-
-
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #00d084;
-      box-shadow: 0 0 12px #00d084;
-    }
-
-
-    .welcome-content h1 {
-      font-size: clamp(42px, 5vw, 68px);
-      line-height: 1.05;
-      letter-spacing: -2px;
-      margin-bottom: 25px;
-    }
-
-
-    .welcome-content h1 span {
-      color: #00d084;
-    }
-
-
-    .welcome-content p {
-      color: #929c96;
       font-size: 18px;
-      line-height: 1.7;
-      max-width: 500px;
+
+      font-weight: 900;
+
+      letter-spacing: 1.2px;
+
+      white-space: nowrap;
+
     }
 
 
-    /* =========================
-       FEATURES
-    ========================== */
+    .brand-alpha {
 
-    .platform-list {
-      margin-top: 45px;
-      max-width: 500px;
+      color:
+        var(--purple);
+
     }
 
 
-    .platform-item {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      padding: 18px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+    .brand-traders {
+
+      color:
+        var(--accent);
+
     }
 
 
-    .platform-check {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,208,132,0.10);
-      color: #00d084;
-      font-weight: bold;
-      flex-shrink: 0;
-    }
+    /* ==================================================
+       LEFT CONTENT
+    ================================================== */
 
+    .left-content {
 
-    .platform-item span {
-      color: #c4cbc7;
-      font-size: 16px;
-    }
-
-
-    .welcome-footer {
-      color: #5f6b64;
-      font-size: 13px;
-    }
-
-
-    /* =========================
-       FORM SIDE
-    ========================== */
-
-    .form-side {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px;
-      min-height: 100vh;
-    }
-
-
-    .login-box {
       width: 100%;
-      max-width: 500px;
+
+      max-width: 610px;
+
+      margin: auto 0;
+
+      padding:
+        70px 0;
+
+    }
+
+
+    .eyebrow {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      margin-bottom: 22px;
+
+      padding:
+        8px 13px;
+
+      border:
+        1px solid rgba(32,201,151,0.24);
+
+      border-radius:
+        999px;
 
       background:
-        linear-gradient(
-          145deg,
-          rgba(18,28,22,0.95),
-          rgba(7,12,9,0.95)
-        );
+        rgba(32,201,151,0.05);
 
-      border: 1px solid rgba(255,255,255,0.09);
-      border-radius: 24px;
-      padding: 45px 40px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.45);
-      position: relative;
+      color:
+        #78eabd;
+
+      font-size: 11px;
+
+      font-weight: 900;
+
+      letter-spacing: 1.2px;
+
     }
 
 
-    .login-box::before {
+    .eyebrow-dot {
+
+      width: 7px;
+
+      height: 7px;
+
+      border-radius: 50%;
+
+      background:
+        var(--accent);
+
+      box-shadow:
+        0 0 14px
+        var(--accent);
+
+    }
+
+
+    .left-content h1 {
+
+      max-width: 650px;
+
+      font-size:
+        clamp(42px, 5vw, 70px);
+
+      line-height: 1.02;
+
+      letter-spacing: -2.5px;
+
+      margin-bottom: 21px;
+
+    }
+
+
+    .left-content h1 span {
+
+      color:
+        var(--accent);
+
+      text-shadow:
+        0 0 35px
+        rgba(32,201,151,0.15);
+
+    }
+
+
+    .left-content > p {
+
+      max-width: 560px;
+
+      color: var(--muted);
+
+      font-size: 17px;
+
+      line-height: 1.75;
+
+    }
+
+
+    /* ==================================================
+       BENEFITS
+    ================================================== */
+
+    .benefits {
+
+      max-width: 560px;
+
+      margin-top: 38px;
+
+      display: grid;
+
+      gap: 0;
+
+    }
+
+
+    .benefit {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 14px;
+
+      padding:
+        16px 0;
+
+      border-bottom:
+        1px solid rgba(255,255,255,0.055);
+
+      color:
+        #cad4cf;
+
+      font-size: 14px;
+
+    }
+
+
+    .benefit:first-child {
+
+      border-top:
+        1px solid rgba(255,255,255,0.055);
+
+    }
+
+
+    .benefit-check {
+
+      width: 28px;
+
+      height: 28px;
+
+      flex: 0 0 28px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      border-radius: 50%;
+
+      color: var(--accent);
+
+      background:
+        rgba(32,201,151,0.08);
+
+      border:
+        1px solid rgba(32,201,151,0.18);
+
+      font-weight: 900;
+
+    }
+
+
+    /* ==================================================
+       LEFT FOOTER
+    ================================================== */
+
+    .left-footer {
+
+      color:
+        var(--muted-dark);
+
+      font-size: 11px;
+
+    }
+
+
+    /* ==================================================
+       RIGHT PANEL
+    ================================================== */
+
+    .right {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 35px;
+
+    }
+
+
+    .login-card {
+
+      position: relative;
+
+      width: 100%;
+
+      max-width: 500px;
+
+      padding: 36px;
+
+      border:
+        1px solid rgba(255,255,255,0.09);
+
+      border-radius: 24px;
+
+      background:
+
+        linear-gradient(
+          145deg,
+          rgba(11,31,23,0.97),
+          rgba(4,14,10,0.99)
+        );
+
+      box-shadow:
+        0 35px 90px
+        rgba(0,0,0,0.38);
+
+      overflow: hidden;
+
+    }
+
+
+    .login-card::before {
+
       content: "";
+
       position: absolute;
+
       top: 0;
-      left: 10%;
-      right: 10%;
+
+      left: 8%;
+
+      right: 8%;
+
       height: 1px;
 
       background:
         linear-gradient(
-          to right,
+          90deg,
           transparent,
-          rgba(0,208,132,0.8),
+          rgba(32,201,151,0.75),
           transparent
         );
+
     }
 
 
-    /* =========================
+    .login-card::after {
+
+      content: "";
+
+      position: absolute;
+
+      width: 180px;
+
+      height: 180px;
+
+      top: -110px;
+
+      right: -80px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(32,201,151,0.08);
+
+      filter: blur(35px);
+
+      pointer-events: none;
+
+    }
+
+
+    /* ==================================================
        MOBILE BRAND
-    ========================== */
+    ================================================== */
 
     .mobile-brand {
+
       display: none;
+
       justify-content: center;
-      margin-bottom: 35px;
+
+      margin-bottom: 28px;
+
     }
 
 
-    /* =========================
-       FORM HEADER
-    ========================== */
+    /* ==================================================
+       CARD HEADER
+    ================================================== */
 
-    .form-header {
-      margin-bottom: 35px;
+    .card-header {
+
+      margin-bottom: 29px;
+
     }
 
 
-    .form-header h2 {
-      font-size: 34px;
-      margin-bottom: 12px;
+    .card-header h2 {
+
+      font-size: 32px;
+
+      line-height: 1.1;
+
+      margin-bottom: 10px;
+
     }
 
 
-    .subtitle {
-      color: #8e9892;
-      font-size: 16px;
-      line-height: 1.6;
-    }
+    .card-header p {
 
+      color:
+        var(--muted);
 
-    .selected-role {
-      display: inline-flex;
-      align-items: center;
-      margin-top: 18px;
-      padding: 9px 14px;
-      border-radius: 20px;
-      color: #00d084;
-      background: rgba(0,208,132,0.08);
-      border: 1px solid rgba(0,208,132,0.16);
       font-size: 14px;
-      font-weight: bold;
+
+      line-height: 1.6;
+
     }
 
 
-    /* =========================
+    .role-pill {
+
+      display: inline-flex;
+
+      margin-top: 17px;
+
+      padding:
+        8px 12px;
+
+      border-radius:
+        999px;
+
+      border:
+        1px solid rgba(32,201,151,0.20);
+
+      background:
+        rgba(32,201,151,0.06);
+
+      color:
+        var(--accent-light);
+
+      font-size: 12px;
+
+      font-weight: 900;
+
+    }
+
+
+    /* ==================================================
        FORM
-    ========================== */
+    ================================================== */
 
     form {
-      display: flex;
-      flex-direction: column;
+
+      display: grid;
+
+      gap: 0;
+
+    }
+
+
+    .field {
+
+      margin-bottom: 19px;
+
     }
 
 
     label {
-      font-size: 14px;
-      font-weight: bold;
-      color: #d8dedb;
-      margin-bottom: 9px;
-    }
 
+      display: block;
 
-    .input-group {
-      position: relative;
-      margin-bottom: 22px;
+      margin-bottom: 8px;
+
+      color:
+        #dce5e0;
+
+      font-size: 13px;
+
+      font-weight: 800;
+
     }
 
 
     input {
+
       width: 100%;
-      padding: 16px 17px;
+
+      min-height: 50px;
+
+      padding:
+        0 15px;
+
+      border:
+        1px solid rgba(255,255,255,0.11);
+
       border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: #080d0a;
-      color: white;
-      font-size: 16px;
+
       outline: none;
-      transition: 0.2s;
+
+      background:
+        #05100b;
+
+      color:
+        white;
+
+      font-size: 15px;
+
+      transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+
     }
 
 
     input::placeholder {
-      color: #59635d;
+
+      color:
+        #56635c;
+
     }
 
 
     input:focus {
-      border-color: #00d084;
-      box-shadow: 0 0 0 3px rgba(0,208,132,0.08);
+
+      border-color:
+        rgba(32,201,151,0.70);
+
+      box-shadow:
+        0 0 0 3px
+        rgba(32,201,151,0.08);
+
     }
 
 
-    /* =========================
-       BUTTONS
-    ========================== */
+    /* ==================================================
+       PRIMARY BUTTON
+    ================================================== */
 
-    button {
+    .submit-button {
+
       width: 100%;
-      padding: 16px;
-      background: #00d084;
-      color: #031008;
+
+      min-height: 52px;
+
       border: none;
+
       border-radius: 12px;
-      font-size: 16px;
-      font-weight: bold;
+
+      background:
+
+        linear-gradient(
+          135deg,
+          var(--accent-light),
+          var(--accent-dark)
+        );
+
+      color:
+        #03130d;
+
+      font-size: 15px;
+
+      font-weight: 900;
+
       cursor: pointer;
-      transition: 0.2s;
+
+      box-shadow:
+        0 12px 30px
+        rgba(32,201,151,0.13);
+
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        opacity .2s ease;
+
     }
 
 
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(0,208,132,0.18);
+    .submit-button:hover:not(:disabled) {
+
+      transform:
+        translateY(-2px);
+
+      box-shadow:
+        0 15px 35px
+        rgba(32,201,151,0.20);
+
     }
 
 
-    button:disabled {
-      opacity: 0.6;
+    .submit-button:disabled {
+
+      opacity: .55;
+
       cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
+
     }
 
+
+    /* ==================================================
+       RESEND
+    ================================================== */
 
     .resend-button {
-      margin-top: 12px;
-      background: transparent;
-      color: #9da7a1;
-      border: 1px solid rgba(255,255,255,0.12);
-      font-size: 14px;
+
+      width: 100%;
+
+      min-height: 48px;
+
+      margin-top: 10px;
+
+      border:
+        1px solid rgba(255,255,255,0.12);
+
+      border-radius: 12px;
+
+      background:
+        rgba(255,255,255,0.02);
+
+      color:
+        var(--muted);
+
+      font-size: 13px;
+
+      font-weight: 800;
+
+      cursor: pointer;
+
+      transition:
+        .2s ease;
+
     }
 
 
-    .resend-button:hover {
-      color: #00d084;
-      border-color: rgba(0,208,132,0.45);
-      background: rgba(0,208,132,0.04);
-      box-shadow: none;
+    .resend-button:hover:not(:disabled) {
+
+      color:
+        var(--accent-light);
+
+      border-color:
+        rgba(32,201,151,0.40);
+
+      background:
+        rgba(32,201,151,0.04);
+
     }
 
 
-    /* =========================
+    .resend-button:disabled {
+
+      opacity: .55;
+
+      cursor: not-allowed;
+
+    }
+
+
+    /* ==================================================
        MESSAGE
-    ========================== */
+    ================================================== */
 
     .message {
-      margin-top: 20px;
-      text-align: center;
-      color: #aeb7b2;
-      font-size: 14px;
+
       min-height: 24px;
-      line-height: 1.6;
+
+      margin-top: 17px;
+
+      text-align: center;
+
+      color:
+        var(--muted);
+
+      font-size: 13px;
+
+      line-height: 1.55;
+
     }
 
 
-    .error {
-      color: #ff9b9b;
+    .message.error {
+
+      color:
+        #ff9b9b;
+
     }
 
 
-    .success {
-      color: #00d084;
+    .message.success {
+
+      color:
+        var(--accent-light);
+
     }
 
 
-    /* =========================
-       LINKS
-    ========================== */
+    .message.warning {
+
+      color:
+        var(--warning);
+
+    }
+
+
+    /* ==================================================
+       ACCOUNT LINKS
+    ================================================== */
 
     .links {
+
+      margin-top: 25px;
+
+      padding-top: 23px;
+
+      border-top:
+        1px solid rgba(255,255,255,0.06);
+
       text-align: center;
-      margin-top: 30px;
-      padding-top: 28px;
-      border-top: 1px solid rgba(255,255,255,0.07);
-      color: #89938d;
-      font-size: 14px;
+
+      color:
+        var(--muted);
+
+      font-size: 13px;
+
     }
 
 
-    .create-account {
+    .create-link {
+
       display: inline-block;
-      margin-top: 10px;
-      color: #00d084;
-      font-weight: bold;
+
+      margin-top: 8px;
+
+      color:
+        var(--accent-light);
+
+      font-weight: 900;
+
     }
 
 
-    .create-account:hover {
+    .create-link:hover {
+
       text-decoration: underline;
+
     }
 
 
-    /* =========================
-       ROLE LINKS
-    ========================== */
+    .login-types {
 
-    .role-title {
-      margin-top: 28px;
-      margin-bottom: 14px;
-      color: #69736d;
-      font-size: 12px;
+      margin-top: 24px;
+
+    }
+
+
+    .login-types-title {
+
+      margin-bottom: 10px;
+
+      color:
+        var(--muted-dark);
+
+      font-size: 10px;
+
+      font-weight: 900;
+
+      letter-spacing: 1.2px;
+
       text-transform: uppercase;
-      letter-spacing: 1px;
+
     }
 
 
     .role-links {
+
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
       gap: 8px;
+
     }
 
 
-    .role-links a {
-      color: #aeb7b2;
-      font-size: 12px;
-      padding: 12px 6px;
-      border: 1px solid rgba(255,255,255,0.09);
+    .role-link {
+
+      min-height: 42px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      border:
+        1px solid rgba(255,255,255,0.08);
+
       border-radius: 10px;
-      transition: 0.2s;
+
+      color:
+        var(--muted);
+
+      font-size: 11px;
+
+      font-weight: 800;
+
+      transition: .2s ease;
+
     }
 
 
-    .role-links a:hover {
-      color: #00d084;
-      border-color: rgba(0,208,132,0.40);
-      background: rgba(0,208,132,0.05);
+    .role-link:hover {
+
+      color:
+        var(--accent-light);
+
+      border-color:
+        rgba(32,201,151,0.35);
+
+      background:
+        rgba(32,201,151,0.04);
+
     }
 
 
-    .back-home {
+    .home-link {
+
       display: inline-block;
-      margin-top: 28px;
-      color: #66716a;
-      font-size: 13px;
+
+      margin-top: 21px;
+
+      color:
+        var(--muted-dark);
+
+      font-size: 11px;
+
     }
 
 
-    .back-home:hover {
-      color: #00d084;
+    .home-link:hover {
+
+      color:
+        var(--accent);
+
     }
 
 
-    /* =========================
-       MOBILE
-    ========================== */
+    /* ==================================================
+       RESPONSIVE
+    ================================================== */
 
-    @media (max-width: 900px) {
+    @media (max-width: 950px) {
 
-      .login-page {
+      .page {
+
         grid-template-columns: 1fr;
+
       }
 
-      .welcome-side {
+
+      .left {
+
         display: none;
+
       }
 
-      .form-side {
+
+      .right {
+
         min-height: 100vh;
+
+        padding:
+          25px 20px;
+
       }
+
 
       .mobile-brand {
+
         display: flex;
+
       }
 
     }
 
 
-    @media (max-width: 550px) {
+    @media (max-width: 520px) {
 
-      .form-side {
-        padding: 20px;
+      .right {
+
+        padding:
+          16px;
+
       }
 
-      .login-box {
-        padding: 35px 22px;
-        border-radius: 20px;
+
+      .login-card {
+
+        padding:
+          28px 20px;
+
+        border-radius:
+          20px;
+
       }
 
-      .form-header h2 {
-        font-size: 29px;
+
+      .mobile-brand .brand-text {
+
+        font-size:
+          15px;
+
       }
+
+
+      .mobile-brand .brand-icon {
+
+        width: 39px;
+
+        height: 39px;
+
+        flex-basis: 39px;
+
+      }
+
+
+      .card-header h2 {
+
+        font-size:
+          28px;
+
+      }
+
 
       .role-links {
-        grid-template-columns: 1fr;
-      }
 
-      .brand-text {
-        font-size: 17px;
-      }
+        grid-template-columns:
+          1fr;
 
-      .brand-icon {
-        width: 42px;
-        height: 42px;
       }
 
     }
@@ -605,26 +1185,18 @@
 <body>
 
 
-  <!-- BACKGROUND -->
-
-  <div class="glow glow-one"></div>
-
-  <div class="glow glow-two"></div>
+  <main class="page">
 
 
+    <!-- ==================================================
+         LEFT
+    ================================================== -->
 
-  <!-- PAGE -->
-
-  <main class="login-page">
-
-
-    <!-- LEFT SIDE -->
-
-    <section class="welcome-side">
+    <section class="left">
 
 
       <a
-        href="index.html"
+        href="./index.html"
         class="brand"
       >
 
@@ -640,8 +1212,13 @@
 
         <div class="brand-text">
 
-          ALPHA
-          <span>TRADERS HOST</span>
+          <span class="brand-alpha">
+            ALPHA
+          </span>
+
+          <span class="brand-traders">
+            TRADERS HOST
+          </span>
 
         </div>
 
@@ -649,12 +1226,12 @@
 
 
 
-      <div class="welcome-content">
+      <div class="left-content">
 
 
-        <div class="welcome-badge">
+        <div class="eyebrow">
 
-          <span class="status-dot"></span>
+          <span class="eyebrow-dot"></span>
 
           SECURE PLATFORM ACCESS
 
@@ -663,8 +1240,13 @@
 
         <h1>
 
+          Welcome back.
+          <br>
+
           Your trading
-          <span>workspace.</span>
+          <span>
+            workspace.
+          </span>
 
         </h1>
 
@@ -672,44 +1254,44 @@
         <p>
 
           Sign in to access your Alpha Traders Host
-          dashboard and manage your platform activity
-          from anywhere.
+          dashboard, mentorship tools and Expert Advisor
+          workspace.
 
         </p>
 
 
-        <div class="platform-list">
+        <div class="benefits">
 
 
-          <div class="platform-item">
+          <div class="benefit">
 
-            <div class="platform-check">✓</div>
-
-            <span>
-              Access your personal dashboard
+            <span class="benefit-check">
+              ✓
             </span>
+
+            Secure role-based dashboard access
 
           </div>
 
 
-          <div class="platform-item">
+          <div class="benefit">
 
-            <div class="platform-check">✓</div>
-
-            <span>
-              Manage mentorship and platform activity
+            <span class="benefit-check">
+              ✓
             </span>
+
+            Manage mentorship and trading activity
 
           </div>
 
 
-          <div class="platform-item">
+          <div class="benefit">
 
-            <div class="platform-check">✓</div>
-
-            <span>
-              Secure role-based access
+            <span class="benefit-check">
+              ✓
             </span>
+
+            Access from desktop or mobile
 
           </div>
 
@@ -720,7 +1302,7 @@
       </div>
 
 
-      <div class="welcome-footer">
+      <div class="left-footer">
 
         © 2026 Alpha Traders Host
 
@@ -731,21 +1313,22 @@
 
 
 
-    <!-- RIGHT SIDE -->
+    <!-- ==================================================
+         RIGHT
+    ================================================== -->
 
-    <section class="form-side">
+    <section class="right">
 
 
-      <div class="login-box">
+      <div class="login-card">
 
 
         <!-- MOBILE BRAND -->
 
         <div class="mobile-brand">
 
-
           <a
-            href="index.html"
+            href="./index.html"
             class="brand"
           >
 
@@ -761,14 +1344,17 @@
 
             <div class="brand-text">
 
-              ALPHA
-              <span>TRADERS HOST</span>
+              <span class="brand-alpha">
+                ALPHA
+              </span>
+
+              <span class="brand-traders">
+                TRADERS HOST
+              </span>
 
             </div>
 
-
           </a>
-
 
         </div>
 
@@ -776,32 +1362,22 @@
 
         <!-- HEADER -->
 
-        <div class="form-header">
-
+        <div class="card-header">
 
           <h2>
-
-            Welcome back
-
+            Sign in
           </h2>
 
-
-          <p class="subtitle">
-
-            Sign in to continue to your account.
-
+          <p>
+            Enter your account details to continue.
           </p>
-
 
           <div
             id="selectedRole"
-            class="selected-role"
+            class="role-pill"
           >
-
             Account Login
-
           </div>
-
 
         </div>
 
@@ -812,14 +1388,11 @@
         <form id="loginForm">
 
 
-          <label for="email">
+          <div class="field">
 
-            Email address
-
-          </label>
-
-
-          <div class="input-group">
+            <label for="email">
+              Email address
+            </label>
 
             <input
               type="email"
@@ -832,15 +1405,11 @@
           </div>
 
 
+          <div class="field">
 
-          <label for="password">
-
-            Password
-
-          </label>
-
-
-          <div class="input-group">
+            <label for="password">
+              Password
+            </label>
 
             <input
               type="password"
@@ -853,16 +1422,13 @@
           </div>
 
 
-
           <button
             type="submit"
             id="loginButton"
+            class="submit-button"
           >
-
             Sign In →
-
           </button>
-
 
 
           <button
@@ -870,9 +1436,7 @@
             id="resendButton"
             class="resend-button"
           >
-
-            Resend Confirmation Email
-
+            Resend Verification Email
           </button>
 
 
@@ -885,6 +1449,7 @@
         <div
           id="message"
           class="message"
+          aria-live="polite"
         ></div>
 
 
@@ -893,67 +1458,63 @@
 
         <div class="links">
 
-
           <p>
-
             Don't have an account?
-
           </p>
 
 
           <a
-            href="register.html"
-            class="create-account"
+            href="./register.html"
+            class="create-link"
           >
-
             Create your account →
-
           </a>
 
 
+          <div class="login-types">
 
-          <div class="role-title">
+            <div class="login-types-title">
+              Choose login type
+            </div>
 
-            Choose login type
+
+            <div class="role-links">
+
+
+              <a
+                href="./login.html?role=admin"
+                class="role-link"
+              >
+                👑 Admin
+              </a>
+
+
+              <a
+                href="./login.html?role=mentor"
+                class="role-link"
+              >
+                🎓 Mentor
+              </a>
+
+
+              <a
+                href="./login.html?role=client"
+                class="role-link"
+              >
+                👤 Client
+              </a>
+
+
+            </div>
 
           </div>
-
-
-          <div class="role-links">
-
-
-            <a href="login.html?role=admin">
-
-              👑 Admin
-
-            </a>
-
-
-            <a href="login.html?role=mentor">
-
-              🎓 Mentor
-
-            </a>
-
-
-            <a href="login.html?role=client">
-
-              👤 Client
-
-            </a>
-
-
-          </div>
-
 
 
           <a
-            href="index.html"
-            class="back-home"
+            href="./index.html"
+            class="home-link"
           >
-
             ← Back to home
-
           </a>
 
 
@@ -970,74 +1531,63 @@
 
 
 
-  <!-- =========================================
-       SUPABASE - ONLY INCLUDED ONCE
-  ========================================== -->
+  <!-- ==================================================
+       SUPABASE
+  ================================================== -->
+
+  <!-- ONLY ONE SUPABASE SCRIPT -->
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <script src="supabase-config.js"></script>
+  <!-- YOUR CONFIG -->
+
+  <script src="./supabase-config.js"></script>
 
 
-
-  <!-- =========================================
-       LOGIN SCRIPT
-  ========================================== -->
 
   <script>
 
-
-    /* ==========================================
-       CONFIG
-    ========================================== */
+    /* ==================================================
+       CONSTANTS
+    ================================================== */
 
     const SITE_URL =
       "https://juniorligman9-dot.github.io/alpha-traders-host/";
 
 
-    const LOGIN_URL =
-      "https://juniorligman9-dot.github.io/alpha-traders-host/login.html";
 
-
-
-    /* ==========================================
+    /* ==================================================
        ELEMENTS
-    ========================================== */
+    ================================================== */
 
     const loginForm =
       document.getElementById("loginForm");
 
-
     const emailInput =
       document.getElementById("email");
-
 
     const passwordInput =
       document.getElementById("password");
 
-
-    const message =
-      document.getElementById("message");
-
-
     const loginButton =
       document.getElementById("loginButton");
-
 
     const resendButton =
       document.getElementById("resendButton");
 
+    const message =
+      document.getElementById("message");
 
-    const selectedRoleElement =
+    const selectedRole =
       document.getElementById("selectedRole");
 
 
 
-    /* ==========================================
-       GET ROLE FROM URL
-    ========================================== */
+    /* ==================================================
+       ROLE FROM URL
+    ================================================== */
 
-    const urlParams =
+    const params =
       new URLSearchParams(
         window.location.search
       );
@@ -1045,62 +1595,62 @@
 
     const requestedRole =
       String(
-        urlParams.get("role") || ""
+        params.get("role") || ""
       )
       .toLowerCase()
       .trim();
 
 
 
-    /* ==========================================
-       DISPLAY SELECTED ROLE
-    ========================================== */
+    if (
+      requestedRole === "admin"
+    ) {
 
-    if (requestedRole === "admin") {
-
-      selectedRoleElement.textContent =
+      selectedRole.textContent =
         "👑 Admin Login";
 
     }
 
-    else if (requestedRole === "mentor") {
+    else if (
+      requestedRole === "mentor"
+    ) {
 
-      selectedRoleElement.textContent =
+      selectedRole.textContent =
         "🎓 Mentor Login";
 
     }
 
-    else if (requestedRole === "client") {
+    else if (
+      requestedRole === "client"
+    ) {
 
-      selectedRoleElement.textContent =
+      selectedRole.textContent =
         "👤 Client Login";
 
     }
 
     else {
 
-      selectedRoleElement.textContent =
+      selectedRole.textContent =
         "Account Login";
 
     }
 
 
 
-    /* ==========================================
-       GET SUPABASE CLIENT
-    ========================================== */
+    /* ==================================================
+       SUPABASE CLIENT
+    ================================================== */
 
     function getSupabaseClient() {
 
       if (
-        typeof window.supabaseClient !==
-        "undefined"
+        window.supabaseClient
       ) {
 
         return window.supabaseClient;
 
       }
-
 
       return null;
 
@@ -1108,194 +1658,62 @@
 
 
 
-    /* ==========================================
-       RESET LOGIN BUTTON
-    ========================================== */
+    /* ==================================================
+       MESSAGE HELPERS
+    ================================================== */
 
-    function resetLoginButton() {
-
-      loginButton.disabled = false;
-
-      loginButton.textContent =
-        "Sign In →";
-
-    }
-
-
-
-    /* ==========================================
-       SHOW ERROR
-    ========================================== */
-
-    function showError(text) {
-
-      message.textContent = text;
-
-      message.className =
-        "message error";
-
-      resetLoginButton();
-
-    }
-
-
-
-    /* ==========================================
-       SHOW SUCCESS
-    ========================================== */
-
-    function showSuccess(text) {
-
-      message.textContent = text;
-
-      message.className =
-        "message success";
-
-    }
-
-
-
-    /* ==========================================
-       REDIRECT USER
-    ========================================== */
-
-    function redirectUser(
-      role,
-      approvalStatus
+    function showMessage(
+      text,
+      type = ""
     ) {
 
+      message.textContent =
+        text;
 
-      /* ADMIN */
-
-      if (role === "admin") {
-
-        window.location.href =
-          "admin-dashboard.html";
-
-        return;
-
-      }
-
-
-
-      /* CLIENT */
-
-      if (role === "client") {
-
-        if (
-          approvalStatus === "pending"
-        ) {
-
-          showError(
-            "Your client account is waiting for approval."
-          );
-
-          return;
-
-        }
-
-
-        if (
-          approvalStatus === "rejected"
-        ) {
-
-          showError(
-            "Your account has been rejected. Please contact support."
-          );
-
-          return;
-
-        }
-
-
-        window.location.href =
-          "client-dashboard.html";
-
-        return;
-
-      }
-
-
-
-      /* MENTOR */
-
-      if (role === "mentor") {
-
-        if (
-          approvalStatus === "pending"
-        ) {
-
-          showError(
-            "Your mentor account is waiting for admin approval."
-          );
-
-          return;
-
-        }
-
-
-        if (
-          approvalStatus === "rejected"
-        ) {
-
-          showError(
-            "Your mentor application has been rejected. Please contact support."
-          );
-
-          return;
-
-        }
-
-
-        if (
-          approvalStatus === "approved"
-        ) {
-
-          window.location.href =
-            "mentor-dashboard.html";
-
-          return;
-
-        }
-
-
-        showError(
-          "Your mentor account is not configured correctly."
+      message.className =
+        "message" +
+        (
+          type
+            ? " " + type
+            : ""
         );
 
-        return;
-
-      }
+    }
 
 
+    function setLoginLoading(
+      loading
+    ) {
 
-      /* UNKNOWN ROLE */
+      loginButton.disabled =
+        loading;
 
-      showError(
-        "Your account role is not configured correctly."
-      );
+      loginButton.textContent =
+        loading
+          ? "Signing In..."
+          : "Sign In →";
 
     }
 
 
 
-    /* ==========================================
-       RESEND CONFIRMATION EMAIL
-    ========================================== */
+    /* ==================================================
+       RESEND VERIFICATION EMAIL
+    ================================================== */
 
     resendButton.addEventListener(
       "click",
       async function() {
 
-
-        const supabaseClient =
+        const db =
           getSupabaseClient();
 
 
-        if (!supabaseClient) {
+        if (!db) {
 
-          showError(
-            "Supabase is not connected. Please check supabase-config.js"
+          showMessage(
+            "Supabase is not connected. Check supabase-config.js.",
+            "error"
           );
 
           return;
@@ -1304,129 +1722,126 @@
 
 
         const email =
-          emailInput.value.trim();
+          emailInput.value
+            .trim()
+            .toLowerCase();
 
 
         if (!email) {
 
-          showError(
-            "Please enter your email address first."
+          showMessage(
+            "Enter your email address first.",
+            "warning"
           );
+
+          emailInput.focus();
 
           return;
 
         }
 
 
-        message.textContent = "";
-
-        message.className =
-          "message";
-
-
-        resendButton.disabled = true;
+        resendButton.disabled =
+          true;
 
         resendButton.textContent =
-          "Sending Email...";
+          "Sending...";
+
+
+        showMessage(
+          "Sending a new verification email...",
+          ""
+        );
 
 
         try {
 
+          const result =
+            await db.auth.resend({
 
-          const {
-            error
-          } =
-            await supabaseClient
-              .auth
-              .resend({
+              type:
+                "signup",
 
-                type: "signup",
+              email:
+                email,
 
-                email: email,
+              options: {
 
-                options: {
+                emailRedirectTo:
+                  SITE_URL
 
-                  emailRedirectTo:
-                    LOGIN_URL
+              }
 
-                }
-
-              });
+            });
 
 
-          if (error) {
+          if (
+            result.error
+          ) {
 
-            throw error;
+            throw result.error;
 
           }
 
 
-          showSuccess(
-            "Confirmation email sent! Please check your inbox and spam folder."
+          showMessage(
+            "Verification email sent. Check your inbox and spam folder.",
+            "success"
           );
-
 
         }
 
-
         catch (error) {
 
-
           console.error(
-            "Resend confirmation error:",
+            "Resend verification error:",
             error
           );
 
 
-          showError(
+          showMessage(
             error.message ||
-            "Could not send the confirmation email. Please try again."
+            "Could not send the verification email.",
+            "error"
           );
 
-
         }
-
 
         finally {
 
-
-          resendButton.disabled = false;
+          resendButton.disabled =
+            false;
 
           resendButton.textContent =
-            "Resend Confirmation Email";
-
+            "Resend Verification Email";
 
         }
-
 
       }
     );
 
 
 
-    /* ==========================================
-       LOGIN FORM
-    ========================================== */
+    /* ==================================================
+       LOGIN
+    ================================================== */
 
     loginForm.addEventListener(
       "submit",
       async function(event) {
 
-
         event.preventDefault();
 
 
-
-        /* GET SUPABASE */
-
-        const supabaseClient =
+        const db =
           getSupabaseClient();
 
 
-        if (!supabaseClient) {
+        if (!db) {
 
-          showError(
-            "Supabase is not connected. Please check supabase-config.js"
+          showMessage(
+            "Supabase is not connected. Check supabase-config.js.",
+            "error"
           );
 
           return;
@@ -1434,67 +1849,84 @@
         }
 
 
-
-        /* GET VALUES */
-
         const email =
-          emailInput.value.trim();
+          emailInput.value
+            .trim()
+            .toLowerCase();
 
 
         const password =
           passwordInput.value;
 
 
+        if (!email || !password) {
 
-        /* CLEAR MESSAGE */
+          showMessage(
+            "Enter your email and password.",
+            "warning"
+          );
 
-        message.textContent = "";
+          return;
 
-        message.className =
-          "message";
+        }
 
 
-        loginButton.disabled = true;
+        setLoginLoading(
+          true
+        );
 
-        loginButton.textContent =
-          "Signing In...";
 
+        showMessage(
+          "Signing in...",
+          ""
+        );
 
 
         try {
 
 
-          /* ======================================
+          /* ==================================================
              SIGN IN
-          ====================================== */
+          ================================================== */
 
           const {
             data,
             error
           } =
-            await supabaseClient
-              .auth
-              .signInWithPassword({
+            await db.auth.signInWithPassword({
 
-                email: email,
+              email:
+                email,
 
-                password: password
+              password:
+                password
 
-              });
-
+            });
 
 
           if (error) {
 
+            const errorText =
+              String(
+                error.message || ""
+              )
+              .toLowerCase();
+
+
+            /*
+              Detect common unverified-email errors.
+            */
 
             if (
-              String(error.message)
-                .toLowerCase()
-                .includes("email not confirmed")
+              errorText.includes("email not confirmed") ||
+              errorText.includes("email_not_confirmed") ||
+              errorText.includes("confirm your email") ||
+              errorText.includes("not confirmed")
             ) {
 
-              showError(
-                "Your email has not been confirmed yet. Enter your email above and click Resend Confirmation Email."
+              showMessage(
+                "Your email has not been verified yet. Click “Resend Verification Email” below.",
+                "warning"
               );
 
               return;
@@ -1502,24 +1934,41 @@
             }
 
 
-            showError(
-              error.message ||
-              "Login failed. Please check your email and password."
-            );
-
-            return;
+            throw error;
 
           }
 
 
+          const user =
+            data?.user;
+
+
+          if (!user) {
+
+            throw new Error(
+              "No authenticated user was returned."
+            );
+
+          }
+
+
+          /*
+            Extra safety check.
+
+            Supabase exposes email_confirmed_at
+            for the authenticated user.
+          */
 
           if (
-            !data ||
-            !data.user
+            !user.email_confirmed_at
           ) {
 
-            showError(
-              "Unable to sign in. Please try again."
+            await db.auth.signOut();
+
+
+            showMessage(
+              "Please verify your email before signing in. A new verification email can be sent below.",
+              "warning"
             );
 
             return;
@@ -1528,98 +1977,57 @@
 
 
 
-          /* ======================================
-             CHECK EMAIL CONFIRMATION
-          ====================================== */
-
-          if (
-            !data.user.email_confirmed_at
-          ) {
-
-
-            await supabaseClient
-              .auth
-              .signOut();
-
-
-            showError(
-              "Your email has not been confirmed. Please click Resend Confirmation Email."
-            );
-
-            return;
-
-          }
-
-
-
-          /* ======================================
-             GET PROFILE
-          ====================================== */
+          /* ==================================================
+             LOAD PROFILE
+          ================================================== */
 
           const {
             data: profile,
             error: profileError
           } =
-            await supabaseClient
+            await db
               .from("profiles")
               .select(
-                "id, full_name, email, role, approval_status"
+                `
+                  id,
+                  full_name,
+                  email,
+                  role,
+                  approval_status
+                `
               )
               .eq(
                 "id",
-                data.user.id
+                user.id
               )
-              .maybeSingle();
-
+              .single();
 
 
           if (
-            profileError
+            profileError ||
+            !profile
           ) {
 
-
             console.error(
-              "Profile error:",
+              "Profile loading error:",
               profileError
             );
 
 
-            await supabaseClient
-              .auth
-              .signOut();
+            await db.auth.signOut();
 
 
-            showError(
-              "Unable to load your account profile. Please contact support."
-            );
-
-            return;
-
-          }
-
-
-
-          if (!profile) {
-
-
-            await supabaseClient
-              .auth
-              .signOut();
-
-
-            showError(
+            throw new Error(
               "Your account profile could not be found. Please contact support."
             );
 
-            return;
-
           }
 
 
 
-          /* ======================================
-             NORMALIZE ROLE
-          ====================================== */
+          /* ==================================================
+             NORMALIZE
+          ================================================== */
 
           const role =
             String(
@@ -1627,7 +2035,6 @@
             )
             .toLowerCase()
             .trim();
-
 
 
           const approvalStatus =
@@ -1639,25 +2046,23 @@
 
 
 
-          /* ======================================
-             CHECK LOGIN TYPE
-          ====================================== */
+          /* ==================================================
+             ROLE MISMATCH
+          ================================================== */
 
           if (
             requestedRole &&
             requestedRole !== role
           ) {
 
-
-            await supabaseClient
-              .auth
-              .signOut();
+            await db.auth.signOut();
 
 
-            showError(
+            showMessage(
               "This account is registered as a " +
               role +
-              ". Please choose the correct login type."
+              ". Please choose the correct login type.",
+              "error"
             );
 
             return;
@@ -1666,57 +2071,210 @@
 
 
 
-          /* ======================================
-             SUCCESS MESSAGE
-          ====================================== */
+          /* ==================================================
+             ADMIN
+          ================================================== */
 
-          showSuccess(
-            "Login successful! Redirecting..."
-          );
+          if (
+            role === "admin"
+          ) {
 
-
-
-          /* ======================================
-             REDIRECT
-          ====================================== */
-
-          setTimeout(
-            async function() {
+            showMessage(
+              "Admin login successful. Redirecting...",
+              "success"
+            );
 
 
-              /*
-                If the user is pending or rejected,
-                sign them out before showing the message.
-              */
+            window.setTimeout(
+              function() {
 
-              if (
-                approvalStatus === "pending" ||
-                approvalStatus === "rejected"
-              ) {
+                window.location.replace(
+                  "./admin-dashboard.html"
+                );
 
-                await supabaseClient
-                  .auth
-                  .signOut();
-
-              }
+              },
+              500
+            );
 
 
-              redirectUser(
-                role,
-                approvalStatus
+            return;
+
+          }
+
+
+
+          /* ==================================================
+             CLIENT
+          ================================================== */
+
+          if (
+            role === "client"
+          ) {
+
+
+            if (
+              approvalStatus === "rejected"
+            ) {
+
+              await db.auth.signOut();
+
+
+              showMessage(
+                "Your client account has been rejected. Please contact support.",
+                "error"
               );
 
+              return;
 
-            },
-            700
+            }
+
+
+            /*
+              Keep this check in case your
+              database uses approval for clients.
+            */
+
+            if (
+              approvalStatus &&
+              approvalStatus !== "approved"
+            ) {
+
+              await db.auth.signOut();
+
+
+              showMessage(
+                "Your client account is waiting for approval.",
+                "warning"
+              );
+
+              return;
+
+            }
+
+
+            showMessage(
+              "Login successful. Redirecting...",
+              "success"
+            );
+
+
+            window.setTimeout(
+              function() {
+
+                window.location.replace(
+                  "./client-dashboard.html"
+                );
+
+              },
+              500
+            );
+
+
+            return;
+
+          }
+
+
+
+          /* ==================================================
+             MENTOR
+          ================================================== */
+
+          if (
+            role === "mentor"
+          ) {
+
+
+            if (
+              approvalStatus === "pending"
+            ) {
+
+              await db.auth.signOut();
+
+
+              showMessage(
+                "Your email is verified, but your mentor account is waiting for administrator approval.",
+                "warning"
+              );
+
+              return;
+
+            }
+
+
+            if (
+              approvalStatus === "rejected"
+            ) {
+
+              await db.auth.signOut();
+
+
+              showMessage(
+                "Your mentor application has been rejected. Please contact support.",
+                "error"
+              );
+
+              return;
+
+            }
+
+
+            if (
+              approvalStatus !== "approved"
+            ) {
+
+              await db.auth.signOut();
+
+
+              showMessage(
+                "Your mentor account is not yet approved.",
+                "warning"
+              );
+
+              return;
+
+            }
+
+
+            showMessage(
+              "Mentor login successful. Redirecting...",
+              "success"
+            );
+
+
+            window.setTimeout(
+              function() {
+
+                window.location.replace(
+                  "./mentor-dashboard.html"
+                );
+
+              },
+              500
+            );
+
+
+            return;
+
+          }
+
+
+
+          /* ==================================================
+             UNKNOWN ROLE
+          ================================================== */
+
+          await db.auth.signOut();
+
+
+          showMessage(
+            "Your account role is not configured correctly. Please contact support.",
+            "error"
           );
-
 
         }
 
-
         catch (error) {
-
 
           console.error(
             "Login error:",
@@ -1724,21 +2282,60 @@
           );
 
 
-          showError(
-            "Connection error: " +
-            (
-              error.message ||
-              "Please try again."
-            )
+          showMessage(
+            error.message ||
+            "Login failed. Please try again.",
+            "error"
           );
-
 
         }
 
+        finally {
+
+          setLoginLoading(
+            false
+          );
+
+        }
 
       }
     );
 
+
+
+    /* ==================================================
+       SERVICE WORKER
+    ================================================== */
+
+    if (
+      "serviceWorker" in navigator
+    ) {
+
+      window.addEventListener(
+        "load",
+        async function() {
+
+          try {
+
+            await navigator.serviceWorker.register(
+              "./service-worker.js"
+            );
+
+          }
+
+          catch (error) {
+
+            console.warn(
+              "Service worker registration failed:",
+              error
+            );
+
+          }
+
+        }
+      );
+
+    }
 
   </script>
 
