@@ -1,954 +1,2177 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+  <meta charset="UTF-8">
 
-<title>Create Account | Alpha Traders Host</title>
-
-<style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-:root {
-  --bg: #0b0f19;
-  --card: #121827;
-  --border: #30394d;
-  --text: #ffffff;
-  --muted: #929bad;
-  --accent: #00d084;
-  --danger: #ff6b6b;
-  --warning: #f5b942;
-}
-
-body {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Arial, sans-serif;
-  padding: 20px;
-}
-
-.box {
-  width: 100%;
-  max-width: 500px;
-  background: var(--card);
-  border: 1px solid #20283a;
-  border-radius: 18px;
-  padding: 38px;
-}
-
-.logo {
-  text-align: center;
-  font-size: 27px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.logo span {
-  color: var(--accent);
-}
-
-.subtitle {
-  text-align: center;
-  color: var(--muted);
-  margin-bottom: 30px;
-  font-size: 16px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-input,
-select {
-  width: 100%;
-  padding: 15px;
-  margin-bottom: 20px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  color: white;
-  font-size: 16px;
-  outline: none;
-}
-
-input:focus,
-select:focus {
-  border-color: var(--accent);
-}
-
-select {
-  cursor: pointer;
-}
-
-button {
-  width: 100%;
-  padding: 16px;
-  background: var(--accent);
-  color: #07110f;
-  border: none;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 17px;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-button:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.message {
-  text-align: center;
-  margin-top: 18px;
-  color: var(--muted);
-  min-height: 24px;
-  line-height: 1.5;
-}
-
-.message.error {
-  color: var(--danger);
-}
-
-.message.success {
-  color: var(--accent);
-}
-
-.message.warning {
-  color: var(--warning);
-}
-
-.resend-box {
-  display: none;
-  margin-top: 15px;
-}
-
-.resend-box.show {
-  display: block;
-}
-
-.resend-button {
-  background: transparent;
-  color: var(--accent);
-  border: 1px solid var(--accent);
-  font-size: 15px;
-}
-
-.role-info {
-  background: rgba(0, 208, 132, 0.08);
-  border: 1px solid rgba(0, 208, 132, 0.25);
-  color: var(--muted);
-  border-radius: 10px;
-  padding: 13px;
-  margin-top: -8px;
-  margin-bottom: 20px;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.links {
-  text-align: center;
-  margin-top: 24px;
-  color: var(--muted);
-}
-
-.links a {
-  display: inline-block;
-  margin-top: 10px;
-  color: var(--accent);
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.links a:hover {
-  text-decoration: underline;
-}
-
-@media (max-width: 500px) {
-
-  body {
-    padding: 15px;
-    align-items: flex-start;
-  }
-
-  .box {
-    margin-top: 20px;
-    padding: 30px 22px;
-  }
-
-  .logo {
-    font-size: 23px;
-  }
-
-}
-</style>
-</head>
-
-<body>
-
-<div class="box">
-
-  <div class="logo">
-    ALPHA <span>TRADERS HOST</span>
-  </div>
-
-  <p class="subtitle">
-    Create your account
-  </p>
-
-
-  <form id="registerForm">
-
-    <label for="name">
-      Full Name
-    </label>
-
-    <input
-      type="text"
-      id="name"
-      placeholder="Your full name"
-      required
-    >
-
-
-    <label for="email">
-      Email
-    </label>
-
-    <input
-      type="email"
-      id="email"
-      placeholder="you@example.com"
-      autocomplete="email"
-      required
-    >
-
-
-    <label for="role">
-      Account Type
-    </label>
-
-    <select
-      id="role"
-      required
-    >
-      <option value="client">
-        Client
-      </option>
-
-      <option value="mentor">
-        Mentor
-      </option>
-    </select>
-
-
-    <div
-      class="role-info"
-      id="roleInfo"
-    >
-      Client accounts are approved automatically.
-    </div>
-
-
-    <label for="password">
-      Password
-    </label>
-
-    <input
-      type="password"
-      id="password"
-      placeholder="Create a password"
-      minlength="8"
-      autocomplete="new-password"
-      required
-    >
-
-
-    <label for="confirm">
-      Confirm Password
-    </label>
-
-    <input
-      type="password"
-      id="confirm"
-      placeholder="Confirm your password"
-      minlength="8"
-      autocomplete="new-password"
-      required
-    >
-
-
-    <button
-      type="submit"
-      id="registerButton"
-    >
-      Create Account
-    </button>
-
-  </form>
-
-
-  <div
-    id="message"
-    class="message"
-  ></div>
-
-
-  <!-- RESEND CONFIRMATION -->
-
-  <div
-    id="resendBox"
-    class="resend-box"
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
   >
 
-    <button
-      type="button"
-      id="resendButton"
-      class="resend-button"
-    >
-      Resend Confirmation Email
-    </button>
-
-  </div>
+  <title>Create Account | Alpha Traders Host</title>
 
 
-  <div class="links">
+  <style>
 
-    <p>
-      Already have an account?
-    </p>
+    /* =========================
+       RESET
+    ========================== */
 
-    <a href="login.html">
-      Sign In
-    </a>
+    * {
 
-  </div>
+      box-sizing:
+        border-box;
 
-</div>
+      margin:
+        0;
 
+      padding:
+        0;
 
-<!-- SUPABASE -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="supabase-config.js"></script>
+    }
 
 
-<script>
+    :root {
 
-const registerForm =
-  document.getElementById(
-    "registerForm"
-  );
+      --bg:
+        #050806;
 
-const nameInput =
-  document.getElementById(
-    "name"
-  );
+      --bg-soft:
+        #08110d;
 
-const emailInput =
-  document.getElementById(
-    "email"
-  );
+      --card:
+        #0b120f;
 
-const roleSelect =
-  document.getElementById(
-    "role"
-  );
+      --card-light:
+        #101a15;
 
-const roleInfo =
-  document.getElementById(
-    "roleInfo"
-  );
+      --border:
+        rgba(255,255,255,0.10);
 
-const passwordInput =
-  document.getElementById(
-    "password"
-  );
+      --border-green:
+        rgba(0,208,132,0.35);
 
-const confirmInput =
-  document.getElementById(
-    "confirm"
-  );
+      --text:
+        #f5f7f6;
 
-const message =
-  document.getElementById(
-    "message"
-  );
+      --muted:
+        #98a39d;
 
-const registerButton =
-  document.getElementById(
-    "registerButton"
-  );
+      --accent:
+        #00d084;
 
-const resendBox =
-  document.getElementById(
-    "resendBox"
-  );
+      --accent-dark:
+        #007a4e;
 
-const resendButton =
-  document.getElementById(
-    "resendButton"
-  );
+      --danger:
+        #ff7777;
+
+      --warning:
+        #f5c451;
+
+    }
 
 
-/* ==========================================
-   WEBSITE URL
-========================================== */
+    body {
 
-const SITE_URL =
-  "https://juniorligman9-dot.github.io/alpha-traders-host/";
+      min-height:
+        100vh;
 
+      background:
+        var(--bg);
 
-/* ==========================================
-   SHOW MESSAGE
-========================================== */
+      color:
+        var(--text);
 
-function showMessage(
-  text,
-  type
-) {
+      font-family:
+        Arial,
+        sans-serif;
 
-  message.textContent =
-    text;
+      overflow-x:
+        hidden;
 
-  message.className =
-    "message " +
-    type;
-
-}
+    }
 
 
-/* ==========================================
-   HIDE RESEND BUTTON
-========================================== */
+    a {
 
-function hideResend() {
+      text-decoration:
+        none;
 
-  resendBox.classList.remove(
-    "show"
-  );
-
-}
+    }
 
 
-/* ==========================================
-   SHOW RESEND BUTTON
-========================================== */
 
-function showResend() {
+    /* =========================
+       BACKGROUND GLOWS
+    ========================== */
 
-  resendBox.classList.add(
-    "show"
-  );
+    .glow {
 
-}
+      position:
+        fixed;
+
+      width:
+        500px;
+
+      height:
+        500px;
+
+      border-radius:
+        50%;
+
+      background:
+        rgba(0,208,132,0.10);
+
+      filter:
+        blur(130px);
+
+      pointer-events:
+        none;
+
+      z-index:
+        -1;
+
+    }
 
 
-/* ==========================================
-   UPDATE ROLE INFORMATION
-========================================== */
+    .glow-one {
 
-roleSelect.addEventListener(
-  "change",
-  function () {
+      top:
+        -250px;
 
-    if (
-      roleSelect.value ===
-      "mentor"
+      left:
+        -220px;
+
+    }
+
+
+    .glow-two {
+
+      right:
+        -250px;
+
+      bottom:
+        -250px;
+
+    }
+
+
+
+    /* =========================
+       NAVIGATION
+    ========================== */
+
+    nav {
+
+      width:
+        100%;
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      align-items:
+        center;
+
+      padding:
+        18px 7%;
+
+      border-bottom:
+        1px solid rgba(255,255,255,0.08);
+
+      background:
+        rgba(5,8,6,0.85);
+
+      backdrop-filter:
+        blur(15px);
+
+    }
+
+
+    .brand {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        12px;
+
+      color:
+        white;
+
+    }
+
+
+    .brand-icon {
+
+      width:
+        42px;
+
+      height:
+        42px;
+
+      border-radius:
+        12px;
+
+      overflow:
+        hidden;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      background:
+        #07120e;
+
+      border:
+        1px solid rgba(0,208,132,0.45);
+
+    }
+
+
+    .brand-icon img {
+
+      width:
+        100%;
+
+      height:
+        100%;
+
+      object-fit:
+        cover;
+
+    }
+
+
+    .brand-text {
+
+      font-size:
+        20px;
+
+      font-weight:
+        bold;
+
+      letter-spacing:
+        1px;
+
+    }
+
+
+    .brand-text span {
+
+      color:
+        var(--accent);
+
+    }
+
+
+    .nav-login {
+
+      color:
+        white;
+
+      padding:
+        11px 20px;
+
+      border:
+        1px solid rgba(255,255,255,0.16);
+
+      border-radius:
+        10px;
+
+      font-weight:
+        bold;
+
+      transition:
+        0.2s;
+
+    }
+
+
+    .nav-login:hover {
+
+      color:
+        var(--accent);
+
+      border-color:
+        var(--accent);
+
+    }
+
+
+
+    /* =========================
+       PAGE LAYOUT
+    ========================== */
+
+    .page {
+
+      width:
+        100%;
+
+      max-width:
+        1200px;
+
+      margin:
+        auto;
+
+      min-height:
+        calc(100vh - 79px);
+
+      display:
+        grid;
+
+      grid-template-columns:
+        0.9fr 1.1fr;
+
+      gap:
+        70px;
+
+      align-items:
+        center;
+
+      padding:
+        70px 7%;
+
+    }
+
+
+
+    /* =========================
+       LEFT SIDE
+    ========================== */
+
+    .intro {
+
+      max-width:
+        500px;
+
+    }
+
+
+    .eyebrow {
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      gap:
+        9px;
+
+      color:
+        #78efba;
+
+      background:
+        rgba(0,208,132,0.07);
+
+      border:
+        1px solid rgba(0,208,132,0.20);
+
+      border-radius:
+        30px;
+
+      padding:
+        10px 15px;
+
+      font-size:
+        13px;
+
+      margin-bottom:
+        25px;
+
+    }
+
+
+    .dot {
+
+      width:
+        8px;
+
+      height:
+        8px;
+
+      background:
+        var(--accent);
+
+      border-radius:
+        50%;
+
+      box-shadow:
+        0 0 15px var(--accent);
+
+    }
+
+
+    .intro h1 {
+
+      font-size:
+        clamp(42px, 5vw, 65px);
+
+      line-height:
+        1.08;
+
+      letter-spacing:
+        -2px;
+
+      margin-bottom:
+        22px;
+
+    }
+
+
+    .intro h1 span {
+
+      color:
+        var(--accent);
+
+    }
+
+
+    .intro-text {
+
+      color:
+        var(--muted);
+
+      font-size:
+        17px;
+
+      line-height:
+        1.7;
+
+      margin-bottom:
+        35px;
+
+    }
+
+
+    .benefits {
+
+      list-style:
+        none;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      gap:
+        18px;
+
+    }
+
+
+    .benefits li {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        14px;
+
+      color:
+        #c4ccc7;
+
+      padding-bottom:
+        18px;
+
+      border-bottom:
+        1px solid rgba(255,255,255,0.06);
+
+      font-size:
+        16px;
+
+    }
+
+
+    .check {
+
+      color:
+        var(--accent);
+
+      font-size:
+        22px;
+
+      font-weight:
+        bold;
+
+    }
+
+
+
+    /* =========================
+       REGISTER CARD
+    ========================== */
+
+    .register-card {
+
+      width:
+        100%;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(15,25,20,0.98),
+          rgba(7,12,9,0.98)
+        );
+
+      border:
+        1px solid rgba(255,255,255,0.10);
+
+      border-radius:
+        24px;
+
+      padding:
+        38px;
+
+      box-shadow:
+        0 30px 80px rgba(0,0,0,0.45);
+
+      position:
+        relative;
+
+    }
+
+
+    .register-card::before {
+
+      content:
+        "";
+
+      position:
+        absolute;
+
+      inset:
+        -1px;
+
+      border-radius:
+        24px;
+
+      background:
+        linear-gradient(
+          130deg,
+          rgba(0,208,132,0.30),
+          transparent 40%,
+          transparent
+        );
+
+      z-index:
+        -1;
+
+    }
+
+
+    .card-header {
+
+      margin-bottom:
+        30px;
+
+    }
+
+
+    .card-header h2 {
+
+      font-size:
+        30px;
+
+      margin-bottom:
+        10px;
+
+    }
+
+
+    .card-header p {
+
+      color:
+        var(--muted);
+
+      line-height:
+        1.5;
+
+    }
+
+
+
+    /* =========================
+       FORM
+    ========================== */
+
+    form {
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+    }
+
+
+    .field {
+
+      margin-bottom:
+        19px;
+
+    }
+
+
+    label {
+
+      display:
+        block;
+
+      margin-bottom:
+        9px;
+
+      font-size:
+        14px;
+
+      font-weight:
+        bold;
+
+      color:
+        #dce2df;
+
+    }
+
+
+    input,
+    select {
+
+      width:
+        100%;
+
+      padding:
+        15px 16px;
+
+      background:
+        #080e0b;
+
+      border:
+        1px solid rgba(255,255,255,0.12);
+
+      border-radius:
+        12px;
+
+      color:
+        white;
+
+      font-size:
+        16px;
+
+      outline:
+        none;
+
+      transition:
+        0.2s;
+
+    }
+
+
+    input::placeholder {
+
+      color:
+        #59635e;
+
+    }
+
+
+    input:focus,
+    select:focus {
+
+      border-color:
+        var(--accent);
+
+      box-shadow:
+        0 0 0 3px rgba(0,208,132,0.08);
+
+    }
+
+
+    select {
+
+      cursor:
+        pointer;
+
+    }
+
+
+    select option {
+
+      background:
+        #0b120f;
+
+      color:
+        white;
+
+    }
+
+
+
+    /* =========================
+       ROLE INFO
+    ========================== */
+
+    .role-info {
+
+      background:
+        rgba(0,208,132,0.06);
+
+      border:
+        1px solid rgba(0,208,132,0.18);
+
+      border-radius:
+        12px;
+
+      padding:
+        13px 15px;
+
+      margin-top:
+        -4px;
+
+      margin-bottom:
+        20px;
+
+      color:
+        #aab5ae;
+
+      font-size:
+        13px;
+
+      line-height:
+        1.55;
+
+    }
+
+
+
+    /* =========================
+       BUTTONS
+    ========================== */
+
+    button {
+
+      width:
+        100%;
+
+      padding:
+        16px;
+
+      background:
+        var(--accent);
+
+      color:
+        #031008;
+
+      border:
+        none;
+
+      border-radius:
+        12px;
+
+      font-size:
+        16px;
+
+      font-weight:
+        bold;
+
+      cursor:
+        pointer;
+
+      transition:
+        0.2s;
+
+      box-shadow:
+        0 10px 30px rgba(0,208,132,0.14);
+
+    }
+
+
+    button:hover {
+
+      transform:
+        translateY(-2px);
+
+    }
+
+
+    button:disabled {
+
+      opacity:
+        0.6;
+
+      cursor:
+        not-allowed;
+
+      transform:
+        none;
+
+    }
+
+
+    .resend-box {
+
+      display:
+        none;
+
+      margin-top:
+        14px;
+
+    }
+
+
+    .resend-box.show {
+
+      display:
+        block;
+
+    }
+
+
+    .resend-button {
+
+      background:
+        transparent;
+
+      color:
+        var(--accent);
+
+      border:
+        1px solid rgba(0,208,132,0.50);
+
+      box-shadow:
+        none;
+
+    }
+
+
+    .resend-button:hover {
+
+      background:
+        rgba(0,208,132,0.06);
+
+    }
+
+
+
+    /* =========================
+       MESSAGE
+    ========================== */
+
+    .message {
+
+      text-align:
+        center;
+
+      margin-top:
+        18px;
+
+      min-height:
+        24px;
+
+      color:
+        var(--muted);
+
+      line-height:
+        1.5;
+
+      font-size:
+        14px;
+
+    }
+
+
+    .message.error {
+
+      color:
+        var(--danger);
+
+    }
+
+
+    .message.success {
+
+      color:
+        var(--accent);
+
+    }
+
+
+    .message.warning {
+
+      color:
+        var(--warning);
+
+    }
+
+
+
+    /* =========================
+       LINKS
+    ========================== */
+
+    .links {
+
+      text-align:
+        center;
+
+      margin-top:
+        25px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        14px;
+
+    }
+
+
+    .links a {
+
+      display:
+        inline-block;
+
+      margin-top:
+        9px;
+
+      color:
+        var(--accent);
+
+      font-weight:
+        bold;
+
+    }
+
+
+    .links a:hover {
+
+      text-decoration:
+        underline;
+
+    }
+
+
+
+    /* =========================
+       MOBILE
+    ========================== */
+
+    @media (
+      max-width: 900px
     ) {
 
-      roleInfo.textContent =
-        "Mentor accounts require approval from an administrator before accessing the mentor dashboard.";
+      .page {
 
-    }
+        grid-template-columns:
+          1fr;
 
-    else {
-
-      roleInfo.textContent =
-        "Client accounts are approved automatically.";
-
-    }
-
-  }
-);
-
-
-/* ==========================================
-   RESEND CONFIRMATION EMAIL
-========================================== */
-
-resendButton.addEventListener(
-  "click",
-  async function() {
-
-    const email =
-      emailInput.value
-        .trim();
-
-
-    if (
-      !email
-    ) {
-
-      showMessage(
-        "Please enter your email address first.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    if (
-      !window.supabaseClient
-    ) {
-
-      showMessage(
-        "Supabase is not connected. Check supabase-config.js.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    resendButton.disabled =
-      true;
-
-    resendButton.textContent =
-      "Sending...";
-
-
-    try {
-
-      const {
-        error
-      } =
-        await window.supabaseClient
-          .auth
-          .resend({
-
-            type:
-              "signup",
-
-            email:
-              email,
-
-            options: {
-
-              emailRedirectTo:
-                SITE_URL
-
-            }
-
-          });
-
-
-      if (
-        error
-      ) {
-
-        throw error;
+        gap:
+          50px;
 
       }
 
 
-      showMessage(
-        "Confirmation email sent! Please check your inbox and spam folder.",
-        "success"
-      );
+      .intro {
 
+        max-width:
+          650px;
+
+      }
+
+
+      .register-card {
+
+        max-width:
+          600px;
+
+      }
 
     }
-    catch (
-      error
+
+
+    @media (
+      max-width: 600px
     ) {
 
-      console.error(
-        "Resend error:",
-        error
+      nav {
+
+        padding:
+          15px 5%;
+
+      }
+
+
+      .brand-text {
+
+        font-size:
+          15px;
+
+      }
+
+
+      .brand-icon {
+
+        width:
+          38px;
+
+        height:
+          38px;
+
+      }
+
+
+      .nav-login {
+
+        padding:
+          9px 15px;
+
+        font-size:
+          14px;
+
+      }
+
+
+      .page {
+
+        padding:
+          50px 5%;
+
+        gap:
+          45px;
+
+      }
+
+
+      .intro h1 {
+
+        letter-spacing:
+          -1px;
+
+      }
+
+
+      .register-card {
+
+        padding:
+          28px 20px;
+
+        border-radius:
+          20px;
+
+      }
+
+
+      .card-header h2 {
+
+        font-size:
+          26px;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+
+<body>
+
+
+  <!-- BACKGROUND -->
+
+  <div
+    class="glow glow-one"
+  ></div>
+
+  <div
+    class="glow glow-two"
+  ></div>
+
+
+
+  <!-- NAVIGATION -->
+
+  <nav>
+
+
+    <a
+      href="index.html"
+      class="brand"
+    >
+
+
+      <div class="brand-icon">
+
+        <img
+          src="./icons/icon-192.png"
+          alt="Alpha Traders Host"
+        >
+
+      </div>
+
+
+      <div class="brand-text">
+
+        ALPHA
+        <span>
+          TRADERS HOST
+        </span>
+
+      </div>
+
+
+    </a>
+
+
+
+    <a
+      href="login.html"
+      class="nav-login"
+    >
+
+      Login
+
+    </a>
+
+
+  </nav>
+
+
+
+  <!-- MAIN PAGE -->
+
+  <main class="page">
+
+
+    <!-- LEFT SIDE -->
+
+    <section class="intro">
+
+
+      <div class="eyebrow">
+
+        <span class="dot"></span>
+
+        JOIN THE PLATFORM
+
+      </div>
+
+
+
+      <h1>
+
+        Start your
+        <span>
+          trading journey.
+        </span>
+
+      </h1>
+
+
+
+      <p class="intro-text">
+
+        Create your Alpha Traders Host account and access
+        a platform designed to connect traders, mentors
+        and automated trading tools.
+
+      </p>
+
+
+
+      <ul class="benefits">
+
+
+        <li>
+
+          <span class="check">
+            ✓
+          </span>
+
+          Create your account securely
+
+        </li>
+
+
+        <li>
+
+          <span class="check">
+            ✓
+          </span>
+
+          Access your role-based dashboard
+
+        </li>
+
+
+        <li>
+
+          <span class="check">
+            ✓
+          </span>
+
+          Connect with approved mentors
+
+        </li>
+
+
+        <li>
+
+          <span class="check">
+            ✓
+          </span>
+
+          Manage your trading journey from anywhere
+
+        </li>
+
+
+      </ul>
+
+
+    </section>
+
+
+
+    <!-- REGISTER CARD -->
+
+    <section class="register-card">
+
+
+      <div class="card-header">
+
+        <h2>
+
+          Create Account
+
+        </h2>
+
+
+        <p>
+
+          Enter your details to join Alpha Traders Host.
+
+        </p>
+
+
+      </div>
+
+
+
+      <form id="registerForm">
+
+
+        <!-- FULL NAME -->
+
+        <div class="field">
+
+          <label for="name">
+
+            Full Name
+
+          </label>
+
+
+          <input
+
+            type="text"
+
+            id="name"
+
+            placeholder="Your full name"
+
+            autocomplete="name"
+
+            required
+
+          >
+
+        </div>
+
+
+
+        <!-- EMAIL -->
+
+        <div class="field">
+
+          <label for="email">
+
+            Email Address
+
+          </label>
+
+
+          <input
+
+            type="email"
+
+            id="email"
+
+            placeholder="you@example.com"
+
+            autocomplete="email"
+
+            required
+
+          >
+
+        </div>
+
+
+
+        <!-- ROLE -->
+
+        <div class="field">
+
+          <label for="role">
+
+            Account Type
+
+          </label>
+
+
+          <select
+            id="role"
+            required
+          >
+
+            <option value="client">
+
+              Client
+
+            </option>
+
+
+            <option value="mentor">
+
+              Mentor
+
+            </option>
+
+
+          </select>
+
+        </div>
+
+
+
+        <div
+          class="role-info"
+          id="roleInfo"
+        >
+
+          Client accounts are approved automatically.
+
+        </div>
+
+
+
+        <!-- PASSWORD -->
+
+        <div class="field">
+
+          <label for="password">
+
+            Password
+
+          </label>
+
+
+          <input
+
+            type="password"
+
+            id="password"
+
+            placeholder="Create a password"
+
+            minlength="8"
+
+            autocomplete="new-password"
+
+            required
+
+          >
+
+        </div>
+
+
+
+        <!-- CONFIRM PASSWORD -->
+
+        <div class="field">
+
+          <label for="confirm">
+
+            Confirm Password
+
+          </label>
+
+
+          <input
+
+            type="password"
+
+            id="confirm"
+
+            placeholder="Confirm your password"
+
+            minlength="8"
+
+            autocomplete="new-password"
+
+            required
+
+          >
+
+        </div>
+
+
+
+        <button
+          type="submit"
+          id="registerButton"
+        >
+
+          Create Account →
+
+        </button>
+
+
+      </form>
+
+
+
+      <!-- MESSAGE -->
+
+      <div
+        id="message"
+        class="message"
+      ></div>
+
+
+
+      <!-- RESEND -->
+
+      <div
+        id="resendBox"
+        class="resend-box"
+      >
+
+        <button
+          type="button"
+          id="resendButton"
+          class="resend-button"
+        >
+
+          Resend Confirmation Email
+
+        </button>
+
+      </div>
+
+
+
+      <!-- LOGIN LINK -->
+
+      <div class="links">
+
+        <p>
+
+          Already have an account?
+
+        </p>
+
+
+        <a href="login.html">
+
+          Sign In →
+
+        </a>
+
+
+      </div>
+
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- SUPABASE -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="supabase-config.js"></script>
+
+
+
+  <script>
+
+
+    /* ==========================================
+       ELEMENTS
+    ========================================== */
+
+    const registerForm =
+      document.getElementById(
+        "registerForm"
       );
 
 
-      showMessage(
-        error.message ||
-        "Could not resend the confirmation email.",
-        "error"
+    const nameInput =
+      document.getElementById(
+        "name"
       );
 
-    }
-    finally {
 
-      resendButton.disabled =
-        false;
-
-      resendButton.textContent =
-        "Resend Confirmation Email";
-
-    }
-
-  }
-);
+    const emailInput =
+      document.getElementById(
+        "email"
+      );
 
 
-/* ==========================================
-   REGISTER USER
-========================================== */
-
-registerForm.addEventListener(
-  "submit",
-  async function (e) {
-
-    e.preventDefault();
+    const roleSelect =
+      document.getElementById(
+        "role"
+      );
 
 
-    const fullName =
-      nameInput.value.trim();
-
-    const email =
-      emailInput.value.trim();
-
-    const role =
-      roleSelect.value;
-
-    const password =
-      passwordInput.value;
-
-    const confirm =
-      confirmInput.value;
+    const roleInfo =
+      document.getElementById(
+        "roleInfo"
+      );
 
 
-    hideResend();
+    const passwordInput =
+      document.getElementById(
+        "password"
+      );
 
 
-    message.textContent =
-      "";
+    const confirmInput =
+      document.getElementById(
+        "confirm"
+      );
 
-    message.className =
-      "message";
+
+    const message =
+      document.getElementById(
+        "message"
+      );
 
 
-    /* PASSWORD CHECK */
+    const registerButton =
+      document.getElementById(
+        "registerButton"
+      );
 
-    if (
-      password !== confirm
+
+    const resendBox =
+      document.getElementById(
+        "resendBox"
+      );
+
+
+    const resendButton =
+      document.getElementById(
+        "resendButton"
+      );
+
+
+
+    /* ==========================================
+       WEBSITE URL
+    ========================================== */
+
+    const SITE_URL =
+      "https://juniorligman9-dot.github.io/alpha-traders-host/";
+
+
+
+    /* ==========================================
+       SHOW MESSAGE
+    ========================================== */
+
+    function showMessage(
+      text,
+      type
     ) {
 
-      showMessage(
-        "Passwords do not match.",
-        "error"
-      );
-
-      return;
-
-    }
+      message.textContent =
+        text;
 
 
-    /* CHECK SUPABASE */
-
-    if (
-      !window.supabaseClient
-    ) {
-
-      showMessage(
-        "Supabase is not connected. Check supabase-config.js.",
-        "error"
-      );
-
-      return;
+      message.className =
+        "message " +
+        type;
 
     }
 
 
-    /* LOADING */
 
-    registerButton.disabled =
-      true;
+    /* ==========================================
+       HIDE RESEND
+    ========================================== */
 
-    registerButton.textContent =
-      "Creating Account...";
+    function hideResend() {
 
+      resendBox.classList.remove(
+        "show"
+      );
 
-    showMessage(
-      "Creating your account...",
-      ""
-    );
-
-
-    try {
+    }
 
 
-      /* ======================================
-         SUPABASE SIGN UP
-      ====================================== */
 
-      const {
-        data,
-        error
-      } =
-        await window.supabaseClient
-          .auth
-          .signUp({
+    /* ==========================================
+       SHOW RESEND
+    ========================================== */
 
-            email:
-              email,
+    function showResend() {
 
-            password:
-              password,
+      resendBox.classList.add(
+        "show"
+      );
 
-            options: {
-
-              emailRedirectTo:
-                SITE_URL,
-
-              data: {
-
-                full_name:
-                  fullName,
-
-                role:
-                  role
-
-              }
-
-            }
-
-          });
+    }
 
 
-      if (
-        error
-      ) {
 
-        /*
-          If Supabase explicitly reports that
-          the user already exists, show resend.
-        */
+    /* ==========================================
+       UPDATE ROLE INFORMATION
+    ========================================== */
 
-        const errorText =
-          String(
-            error.message || ""
-          )
-          .toLowerCase();
+    roleSelect.addEventListener(
+      "change",
+      function() {
 
 
         if (
-          errorText.includes(
-            "already registered"
-          ) ||
-          errorText.includes(
-            "already exists"
-          ) ||
-          errorText.includes(
-            "user already"
-          )
+          roleSelect.value ===
+          "mentor"
+        ) {
+
+          roleInfo.textContent =
+            "Mentor accounts require administrator approval before accessing the mentor dashboard.";
+
+        }
+
+        else {
+
+          roleInfo.textContent =
+            "Client accounts are approved automatically.";
+
+        }
+
+
+      }
+    );
+
+
+
+    /* ==========================================
+       RESEND CONFIRMATION EMAIL
+    ========================================== */
+
+    resendButton.addEventListener(
+      "click",
+      async function() {
+
+
+        const email =
+          emailInput.value
+            .trim();
+
+
+
+        if (
+          !email
         ) {
 
           showMessage(
-            "This email already has an account. If you have not verified your email yet, resend the confirmation email below.",
-            "warning"
+            "Please enter your email address first.",
+            "error"
           );
-
-          showResend();
 
           return;
 
         }
 
 
-        throw error;
 
-      }
+        if (
+          !window.supabaseClient
+        ) {
 
+          showMessage(
+            "Supabase is not connected. Check supabase-config.js.",
+            "error"
+          );
 
-      if (
-        !data.user
-      ) {
+          return;
 
-        throw new Error(
-          "Account could not be created."
-        );
-
-      }
-
-
-      /*
-        IMPORTANT:
-
-        Supabase may intentionally return a
-        user object even when the email is
-        already registered, to prevent
-        email enumeration.
-
-        An empty identities array can indicate
-        that no new user was created.
-      */
-
-      const identities =
-        data.user.identities;
+        }
 
 
-      if (
-        Array.isArray(
-          identities
-        ) &&
-        identities.length === 0
-      ) {
 
-        showMessage(
-          "This email may already have an account. If you have not confirmed your email yet, resend the confirmation email below.",
-          "warning"
-        );
-
-        showResend();
-
-        return;
-
-      }
+        resendButton.disabled =
+          true;
 
 
-      /* ======================================
-         SUCCESS MESSAGE
-      ====================================== */
-
-      if (
-        role ===
-        "mentor"
-      ) {
-
-        showMessage(
-          "Account created! A confirmation email has been sent. After confirming your email, your mentor account will require administrator approval.",
-          "success"
-        );
-
-      }
-
-      else {
-
-        showMessage(
-          "Account created! A confirmation email has been sent. Please check your inbox and spam folder.",
-          "success"
-        );
-
-      }
+        resendButton.textContent =
+          "Sending...";
 
 
-      /*
-        Keep the email visible so the user
-        can resend confirmation if necessary.
-      */
 
-      nameInput.value =
-        "";
-
-      passwordInput.value =
-        "";
-
-      confirmInput.value =
-        "";
+        try {
 
 
-      showResend();
+          const {
+            error
+          } =
+            await window.supabaseClient
+              .auth
+              .resend({
+
+                type:
+                  "signup",
+
+                email:
+                  email,
+
+                options: {
+
+                  emailRedirectTo:
+                    SITE_URL
+
+                }
+
+              });
 
 
-    }
-    catch (
-      error
-    ) {
 
-      console.error(
-        "Registration error:",
-        error
-      );
+          if (
+            error
+          ) {
 
+            throw error;
 
-      const errorText =
-        String(
-          error.message || ""
-        )
-        .toLowerCase();
+          }
 
 
-      /*
-        SHOW RESEND FOR POSSIBLE
-        EXISTING ACCOUNT ERRORS
-      */
 
-      if (
-        errorText.includes(
-          "already registered"
-        ) ||
-        errorText.includes(
-          "already exists"
-        )
-      ) {
+          showMessage(
+            "Confirmation email sent! Please check your inbox and spam folder.",
+            "success"
+          );
 
-        showMessage(
-          "This email already has an account. If it is not verified, click the button below to resend the confirmation email.",
-          "warning"
-        );
 
-        showResend();
+        }
 
-      }
 
-      else {
+        catch (
+          error
+        ) {
 
-        showMessage(
-          "Error: " +
-          (
+
+          console.error(
+            "Resend error:",
+            error
+          );
+
+
+          showMessage(
             error.message ||
-            "Could not create account."
-          ),
-          "error"
-        );
+            "Could not resend the confirmation email.",
+            "error"
+          );
+
+
+        }
+
+
+        finally {
+
+
+          resendButton.disabled =
+            false;
+
+
+          resendButton.textContent =
+            "Resend Confirmation Email";
+
+
+        }
+
 
       }
+    );
 
-    }
-    finally {
 
-      registerButton.disabled =
-        false;
 
-      registerButton.textContent =
-        "Create Account";
+    /* ==========================================
+       REGISTER USER
+    ========================================== */
 
-    }
+    registerForm.addEventListener(
+      "submit",
+      async function(e) {
 
-  }
-);
 
-</script>
+        e.preventDefault();
+
+
+
+        const fullName =
+          nameInput.value.trim();
+
+
+        const email =
+          emailInput.value.trim();
+
+
+        const role =
+          roleSelect.value;
+
+
+        const password =
+          passwordInput.value;
+
+
+        const confirm =
+          confirmInput.value;
+
+
+
+        hideResend();
+
+
+        message.textContent =
+          "";
+
+
+        message.className =
+          "message";
+
+
+
+        /* PASSWORD CHECK */
+
+        if (
+          password !== confirm
+        ) {
+
+          showMessage(
+            "Passwords do not match.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+
+        /* CHECK SUPABASE */
+
+        if (
+          !window.supabaseClient
+        ) {
+
+          showMessage(
+            "Supabase is not connected. Check supabase-config.js.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+
+        /* LOADING */
+
+        registerButton.disabled =
+          true;
+
+
+        registerButton.textContent =
+          "Creating Account...";
+
+
+        showMessage(
+          "Creating your account...",
+          ""
+        );
+
+
+
+        try {
+
+
+          /* SIGN UP */
+
+          const {
+            data,
+            error
+          } =
+            await window.supabaseClient
+              .auth
+              .signUp({
+
+                email:
+                  email,
+
+                password:
+                  password,
+
+                options: {
+
+                  emailRedirectTo:
+                    SITE_URL,
+
+                  data: {
+
+                    full_name:
+                      fullName,
+
+                    role:
+                      role
+
+                  }
+
+                }
+
+              });
+
+
+
+          if (
+            error
+          ) {
+
+
+            const errorText =
+              String(
+                error.message || ""
+              )
+              .toLowerCase();
+
+
+
+            if (
+              errorText.includes(
+                "already registered"
+              ) ||
+              errorText.includes(
+                "already exists"
+              ) ||
+              errorText.includes(
+                "user already"
+              )
+            ) {
+
+              showMessage(
+                "This email already has an account. If you have not verified your email yet, resend the confirmation email below.",
+                "warning"
+              );
+
+
+              showResend();
+
+              return;
+
+            }
+
+
+            throw error;
+
+          }
+
+
+
+          if (
+            !data.user
+          ) {
+
+            throw new Error(
+              "Account could not be created."
+            );
+
+          }
+
+
+
+          /* CHECK EXISTING ACCOUNT */
+
+          const identities =
+            data.user.identities;
+
+
+          if (
+            Array.isArray(
+              identities
+            ) &&
+            identities.length === 0
+          ) {
+
+            showMessage(
+              "This email may already have an account. If you have not confirmed your email yet, resend the confirmation email below.",
+              "warning"
+            );
+
+
+            showResend();
+
+            return;
+
+          }
+
+
+
+          /* SUCCESS */
+
+          if (
+            role ===
+            "mentor"
+          ) {
+
+            showMessage(
+              "Account created! Check your email to confirm your account. After confirmation, your mentor account will require administrator approval.",
+              "success"
+            );
+
+          }
+
+          else {
+
+            showMessage(
+              "Account created! Please check your inbox and spam folder to confirm your email.",
+              "success"
+            );
+
+          }
+
+
+
+          nameInput.value =
+            "";
+
+
+          passwordInput.value =
+            "";
+
+
+          confirmInput.value =
+            "";
+
+
+          showResend();
+
+
+        }
+
+
+        catch (
+          error
+        ) {
+
+
+          console.error(
+            "Registration error:",
+            error
+          );
+
+
+          const errorText =
+            String(
+              error.message || ""
+            )
+            .toLowerCase();
+
+
+
+          if (
+            errorText.includes(
+              "already registered"
+            ) ||
+            errorText.includes(
+              "already exists"
+            )
+          ) {
+
+            showMessage(
+              "This email already has an account. If it is not verified, click below to resend the confirmation email.",
+              "warning"
+            );
+
+
+            showResend();
+
+          }
+
+          else {
+
+            showMessage(
+              "Error: " +
+              (
+                error.message ||
+                "Could not create account."
+              ),
+              "error"
+            );
+
+          }
+
+
+        }
+
+
+        finally {
+
+
+          registerButton.disabled =
+            false;
+
+
+          registerButton.textContent =
+            "Create Account →";
+
+
+        }
+
+
+      }
+    );
+
+
+  </script>
+
 
 </body>
+
 </html>
