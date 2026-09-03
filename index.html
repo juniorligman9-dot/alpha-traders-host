@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
   <meta charset="UTF-8">
@@ -10,26 +9,14 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Alpha Traders Host | Automated Trading</title>
+  <meta
+    name="theme-color"
+    content="#03100c"
+  >
 
   <meta
     name="description"
-    content="Alpha Traders Host - Manage mentors, trading accounts and automated trading from one platform."
-  >
-
-
-  <!-- =========================
-       PWA SETTINGS
-  ========================== -->
-
-  <link
-    rel="manifest"
-    href="./manifest.json"
-  >
-
-  <meta
-    name="theme-color"
-    content="#07120e"
+    content="Alpha Traders Host — trading mentorship, Expert Advisor management and automated trading tools."
   >
 
   <meta
@@ -53,410 +40,544 @@
   >
 
   <link
+    rel="manifest"
+    href="./manifest.json"
+  >
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="./icons/icon-192.png"
+  >
+
+  <link
     rel="apple-touch-icon"
     href="./icons/icon-192.png"
   >
 
+  <title>Alpha Traders Host | Automated Trading Platform</title>
+
 
   <style>
 
-
-    /* =========================
+    /* ==================================================
        RESET
-    ========================== */
+    ================================================== */
 
-    * {
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-      box-sizing:
-        border-box;
 
-      margin:
-        0;
+    :root {
 
-      padding:
-        0;
+      --bg:
+        #03100c;
+
+      --bg-deep:
+        #020907;
+
+      --bg-soft:
+        #061711;
+
+      --card:
+        #081a13;
+
+      --card-hover:
+        #0b2118;
+
+      --card-inner:
+        #06120d;
+
+      --border:
+        rgba(145, 175, 161, 0.17);
+
+      --border-green:
+        rgba(32, 201, 151, 0.38);
+
+      --text:
+        #f1f6f3;
+
+      --muted:
+        #a2b0aa;
+
+      --muted-dark:
+        #718079;
+
+      --accent:
+        #20c997;
+
+      --accent-light:
+        #39e2ad;
+
+      --accent-dark:
+        #10976d;
+
+      --purple:
+        #8c5cff;
+
+      --danger:
+        #ff7171;
 
     }
 
 
     html {
-
-      scroll-behavior:
-        smooth;
-
+      scroll-behavior: smooth;
     }
 
 
     body {
 
+      min-height: 100vh;
+
+      overflow-x: hidden;
+
+      background:
+
+        radial-gradient(
+          circle at 8% 0%,
+          rgba(32, 201, 151, 0.10),
+          transparent 30%
+        ),
+
+        radial-gradient(
+          circle at 95% 25%,
+          rgba(18, 130, 91, 0.08),
+          transparent 28%
+        ),
+
+        linear-gradient(
+          180deg,
+          #04110d 0%,
+          var(--bg) 45%,
+          var(--bg-deep) 100%
+        );
+
+      color: var(--text);
+
       font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
         Arial,
         sans-serif;
 
-      background:
-        #050806;
+      line-height: 1.5;
 
-      color:
-        #ffffff;
+    }
 
-      overflow-x:
-        hidden;
+
+    body::before {
+
+      content: "";
+
+      position: fixed;
+
+      inset: 0;
+
+      pointer-events: none;
+
+      background-image:
+        linear-gradient(
+          rgba(255,255,255,0.015) 1px,
+          transparent 1px
+        );
+
+      background-size:
+        100% 80px;
+
+      opacity: 0.12;
+
+      z-index: -1;
 
     }
 
 
     a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-      text-decoration:
-        none;
+
+    button {
+      font: inherit;
+    }
+
+
+    .container {
+
+      width: min(
+        1240px,
+        calc(100% - 40px)
+      );
+
+      margin-inline: auto;
 
     }
 
 
-
-    /* =========================
-       BACKGROUND EFFECTS
-    ========================== */
-
-    .glow {
-
-      position:
-        fixed;
-
-      width:
-        500px;
-
-      height:
-        500px;
-
-      border-radius:
-        50%;
-
-      background:
-        rgba(0, 208, 132, 0.10);
-
-      filter:
-        blur(120px);
-
-      z-index:
-        -1;
-
-      pointer-events:
-        none;
-
-    }
-
-
-    .glow-one {
-
-      top:
-        -200px;
-
-      left:
-        -200px;
-
-    }
-
-
-    .glow-two {
-
-      right:
-        -200px;
-
-      top:
-        500px;
-
-    }
-
-
-
-    /* =========================
+    /* ==================================================
        NAVIGATION
-    ========================== */
+    ================================================== */
 
-    nav {
+    header {
 
-      width:
-        100%;
+      position: sticky;
 
-      display:
-        flex;
+      top: 0;
 
-      justify-content:
-        space-between;
-
-      align-items:
-        center;
-
-      padding:
-        20px 7%;
+      z-index: 1000;
 
       border-bottom:
-        1px solid rgba(255,255,255,0.08);
+        1px solid rgba(255,255,255,0.07);
 
       background:
-        rgba(5,8,6,0.85);
+        rgba(3, 16, 12, 0.84);
 
       backdrop-filter:
-        blur(15px);
+        blur(18px);
 
-      position:
-        sticky;
+      -webkit-backdrop-filter:
+        blur(18px);
 
-      top:
-        0;
+    }
 
-      z-index:
-        100;
+
+    .nav {
+
+      min-height: 76px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 20px;
 
     }
 
 
     .brand {
 
-      display:
-        flex;
+      display: inline-flex;
 
-      align-items:
-        center;
+      align-items: center;
 
-      gap:
-        12px;
+      gap: 12px;
+
+      min-width: 0;
 
     }
 
 
     .brand-icon {
 
-      width:
-        42px;
+      width: 44px;
 
-      height:
-        42px;
+      height: 44px;
 
-      border-radius:
-        12px;
+      flex: 0 0 44px;
 
-      overflow:
-        hidden;
+      overflow: hidden;
+
+      border-radius: 13px;
+
+      background: #06140e;
 
       border:
-        1px solid rgba(0,208,132,0.5);
+        1px solid var(--border-green);
 
-      background:
-        #07120e;
-
-      display:
-        flex;
-
-      align-items:
-        center;
-
-      justify-content:
-        center;
+      box-shadow:
+        0 0 25px rgba(32, 201, 151, 0.08);
 
     }
 
 
     .brand-icon img {
 
-      width:
-        100%;
+      display: block;
 
-      height:
-        100%;
+      width: 100%;
 
-      object-fit:
-        cover;
+      height: 100%;
+
+      object-fit: cover;
 
     }
 
 
     .brand-text {
 
-      font-size:
-        20px;
+      font-size: 19px;
 
-      font-weight:
-        bold;
+      font-weight: 900;
 
-      letter-spacing:
-        1px;
+      letter-spacing: 1.5px;
+
+      white-space: nowrap;
 
     }
 
 
-    .brand-text span {
+    .brand-alpha {
 
-      color:
-        #00d084;
+      color: #a173ed;
+
+    }
+
+
+    .brand-traders {
+
+      color: var(--accent);
 
     }
 
 
     .nav-links {
 
-      display:
-        flex;
+      display: flex;
 
-      align-items:
-        center;
+      align-items: center;
 
-      gap:
-        25px;
+      gap: 27px;
 
     }
 
 
     .nav-links a {
 
-      color:
-        #aeb7b2;
+      color: var(--muted);
 
-      font-size:
-        15px;
+      font-size: 14px;
+
+      font-weight: 600;
+
+      transition: 0.2s ease;
 
     }
 
 
     .nav-links a:hover {
 
-      color:
-        #00d084;
+      color: var(--accent-light);
 
     }
 
 
     .nav-login {
 
-      color:
-        #ffffff;
+      display: inline-flex;
 
-      padding:
-        11px 20px;
+      align-items: center;
+
+      justify-content: center;
+
+      min-height: 44px;
+
+      padding: 0 18px;
 
       border:
-        1px solid rgba(255,255,255,0.15);
+        1px solid rgba(255,255,255,0.14);
 
-      border-radius:
-        10px;
+      border-radius: 12px;
 
-      font-weight:
-        bold;
+      font-size: 14px;
+
+      font-weight: 800;
+
+      transition:
+        0.2s ease;
 
     }
 
 
     .nav-login:hover {
 
-      border-color:
-        #00d084;
+      border-color: var(--accent);
 
-      color:
-        #00d084;
+      color: var(--accent-light);
+
+      background:
+        rgba(32, 201, 151, 0.05);
 
     }
 
 
+    /* ==================================================
+       MOBILE MENU
+    ================================================== */
 
-    /* =========================
+    .menu-button {
+
+      display: none;
+
+      width: 44px;
+
+      height: 44px;
+
+      border:
+        1px solid rgba(255,255,255,0.12);
+
+      border-radius: 12px;
+
+      background:
+        rgba(255,255,255,0.02);
+
+      color: var(--text);
+
+      cursor: pointer;
+
+    }
+
+
+    .mobile-menu {
+
+      display: none;
+
+      padding: 0 0 16px;
+
+    }
+
+
+    .mobile-menu.open {
+
+      display: grid;
+
+      gap: 8px;
+
+    }
+
+
+    .mobile-menu a {
+
+      padding: 13px 14px;
+
+      border:
+        1px solid rgba(255,255,255,0.07);
+
+      border-radius: 10px;
+
+      color: var(--muted);
+
+      background:
+        rgba(255,255,255,0.02);
+
+    }
+
+
+    /* ==================================================
        HERO
-    ========================== */
+    ================================================== */
 
     .hero {
 
+      position: relative;
+
       min-height:
-        90vh;
+        calc(100vh - 76px);
+
+      display: grid;
+
+      grid-template-columns:
+        minmax(0, 1.05fr)
+        minmax(360px, 0.95fr);
+
+      align-items: center;
+
+      gap: 70px;
 
       padding:
-        90px 7% 70px;
-
-      display:
-        flex;
-
-      align-items:
-        center;
-
-      justify-content:
-        center;
+        80px 0 95px;
 
     }
 
 
-    .hero-container {
+    .hero::after {
 
-      width:
-        100%;
+      content: "";
 
-      max-width:
-        1200px;
+      position: absolute;
 
-      display:
-        grid;
+      width: 420px;
 
-      grid-template-columns:
-        1.1fr 0.9fr;
+      height: 420px;
 
-      gap:
-        60px;
+      right: -170px;
 
-      align-items:
-        center;
+      top: 90px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(32, 201, 151, 0.08);
+
+      filter: blur(110px);
+
+      pointer-events: none;
+
+      z-index: -1;
+
+    }
+
+
+    .hero-content {
+
+      max-width: 670px;
 
     }
 
 
     .hero-badge {
 
-      display:
-        inline-flex;
+      display: inline-flex;
 
-      align-items:
-        center;
+      align-items: center;
 
-      gap:
-        8px;
+      gap: 9px;
 
-      padding:
-        10px 16px;
+      margin-bottom: 24px;
+
+      padding: 9px 14px;
 
       border:
-        1px solid rgba(0,208,132,0.25);
+        1px solid rgba(32,201,151,0.25);
 
-      border-radius:
-        30px;
-
-      color:
-        #78f0bb;
+      border-radius: 999px;
 
       background:
-        rgba(0,208,132,0.07);
+        rgba(32,201,151,0.06);
 
-      font-size:
-        14px;
+      color: #79eabd;
 
-      margin-bottom:
-        25px;
+      font-size: 12px;
+
+      font-weight: 900;
+
+      letter-spacing: 1px;
 
     }
 
 
     .status-dot {
 
-      width:
-        8px;
+      width: 8px;
 
-      height:
-        8px;
+      height: 8px;
 
-      background:
-        #00d084;
+      border-radius: 50%;
 
-      border-radius:
-        50%;
+      background: var(--accent);
 
       box-shadow:
-        0 0 15px #00d084;
+        0 0 15px var(--accent);
 
     }
 
@@ -464,566 +585,527 @@
     .hero h1 {
 
       font-size:
-        clamp(45px, 6vw, 76px);
+        clamp(44px, 7vw, 78px);
 
-      line-height:
-        1.05;
+      line-height: 0.99;
 
-      margin-bottom:
-        25px;
+      letter-spacing: -3px;
 
-      letter-spacing:
-        -2px;
+      margin-bottom: 24px;
 
     }
 
 
     .hero h1 span {
 
-      color:
-        #00d084;
+      display: inline;
+
+      color: var(--accent);
 
       text-shadow:
-        0 0 30px rgba(0,208,132,0.35);
+        0 0 35px rgba(32,201,151,0.18);
 
     }
 
 
-    .hero p {
+    .hero-text {
 
-      color:
-        #9fa9a3;
+      max-width: 620px;
 
-      font-size:
-        18px;
+      color: var(--muted);
 
-      line-height:
-        1.7;
+      font-size: 18px;
 
-      max-width:
-        600px;
+      line-height: 1.75;
 
-      margin-bottom:
-        35px;
+      margin-bottom: 32px;
 
     }
 
 
     .hero-buttons {
 
-      display:
-        flex;
+      display: flex;
 
-      flex-wrap:
-        wrap;
+      flex-wrap: wrap;
 
-      gap:
-        15px;
+      gap: 12px;
 
-      margin-bottom:
-        40px;
+      margin-bottom: 36px;
 
     }
 
 
-    .primary-button {
+    .button-primary,
+    .button-secondary {
 
-      display:
-        inline-block;
+      display: inline-flex;
 
-      padding:
-        16px 25px;
+      align-items: center;
 
-      border-radius:
-        12px;
+      justify-content: center;
 
-      background:
-        #00d084;
+      min-height: 52px;
 
-      color:
-        #031008;
+      padding: 0 21px;
 
-      font-weight:
-        bold;
+      border-radius: 13px;
+
+      font-size: 15px;
+
+      font-weight: 900;
 
       transition:
-        0.2s;
-
-      box-shadow:
-        0 10px 30px rgba(0,208,132,0.18);
+        0.2s ease;
 
     }
 
 
-    .primary-button:hover {
+    .button-primary {
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--accent-light),
+          var(--accent-dark)
+        );
+
+      color: #03130d;
+
+      box-shadow:
+        0 12px 35px
+        rgba(32,201,151,0.14);
+
+    }
+
+
+    .button-primary:hover {
 
       transform:
         translateY(-2px);
 
+      box-shadow:
+        0 16px 40px
+        rgba(32,201,151,0.21);
+
     }
 
 
-    .secondary-button {
-
-      display:
-        inline-block;
-
-      padding:
-        16px 25px;
-
-      border-radius:
-        12px;
+    .button-secondary {
 
       border:
-        1px solid rgba(255,255,255,0.15);
+        1px solid rgba(255,255,255,0.13);
 
-      color:
-        #ffffff;
+      color: var(--text);
 
-      font-weight:
-        bold;
+      background:
+        rgba(255,255,255,0.025);
 
     }
 
 
-    .secondary-button:hover {
+    .button-secondary:hover {
+
+      transform:
+        translateY(-2px);
 
       border-color:
-        #00d084;
+        rgba(32,201,151,0.45);
 
-      color:
-        #00d084;
+      color: var(--accent-light);
 
     }
 
 
     .hero-stats {
 
-      display:
-        flex;
+      display: grid;
 
-      gap:
-        30px;
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
 
-      flex-wrap:
-        wrap;
+      max-width: 600px;
 
-    }
+      border-top:
+        1px solid rgba(255,255,255,0.07);
 
+      padding-top: 24px;
 
-    .stat strong {
-
-      display:
-        block;
-
-      font-size:
-        22px;
-
-      color:
-        #ffffff;
-
-      margin-bottom:
-        5px;
+      gap: 20px;
 
     }
 
 
-    .stat span {
+    .hero-stat strong {
 
-      color:
-        #7d8982;
+      display: block;
 
-      font-size:
-        13px;
+      font-size: 18px;
+
+      margin-bottom: 4px;
 
     }
 
 
+    .hero-stat span {
 
-    /* =========================
+      color: var(--muted-dark);
+
+      font-size: 12px;
+
+    }
+
+
+    /* ==================================================
        DASHBOARD PREVIEW
-    ========================== */
+    ================================================== */
 
-    .dashboard {
+    .dashboard-preview {
+
+      position: relative;
+
+      padding: 20px;
+
+      border:
+        1px solid rgba(32,201,151,0.18);
+
+      border-radius: 25px;
 
       background:
         linear-gradient(
           145deg,
-          rgba(22,31,26,0.95),
-          rgba(7,12,9,0.95)
+          rgba(11,31,23,0.96),
+          rgba(4,13,9,0.98)
         );
 
-      border:
-        1px solid rgba(255,255,255,0.10);
-
-      border-radius:
-        24px;
-
-      padding:
-        20px;
-
       box-shadow:
-        0 30px 80px rgba(0,0,0,0.5);
-
-      position:
-        relative;
+        0 35px 90px rgba(0,0,0,0.38);
 
     }
 
 
-    .dashboard::before {
+    .dashboard-preview::before {
 
-      content:
-        "";
+      content: "";
 
-      position:
-        absolute;
+      position: absolute;
 
-      inset:
-        -1px;
+      inset: -1px;
 
-      border-radius:
-        24px;
+      border-radius: 25px;
+
+      pointer-events: none;
 
       background:
         linear-gradient(
-          130deg,
-          rgba(0,208,132,0.35),
-          transparent,
-          transparent
+          140deg,
+          rgba(32,201,151,0.35),
+          transparent 32%,
+          transparent 70%,
+          rgba(32,201,151,0.08)
         );
 
-      z-index:
-        -1;
+      mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
 
-      filter:
-        blur(1px);
+      mask-composite: exclude;
 
-    }
-
-
-    .dash-top {
-
-      display:
-        flex;
-
-      justify-content:
-        space-between;
-
-      align-items:
-        center;
-
-      margin-bottom:
-        25px;
+      padding: 1px;
 
     }
 
 
-    .dash-title {
+    .preview-top {
 
-      font-size:
-        16px;
+      display: flex;
 
-      font-weight:
-        bold;
+      align-items: center;
+
+      justify-content: space-between;
+
+      margin-bottom: 17px;
 
     }
 
 
-    .online {
+    .preview-title {
 
-      color:
-        #00d084;
+      font-size: 14px;
 
-      font-size:
-        12px;
+      font-weight: 900;
 
-      padding:
-        7px 10px;
+    }
+
+
+    .online-status {
+
+      padding: 6px 9px;
+
+      border-radius: 999px;
+
+      color: var(--accent-light);
 
       background:
-        rgba(0,208,132,0.1);
+        rgba(32,201,151,0.07);
 
-      border-radius:
-        20px;
+      font-size: 10px;
+
+      font-weight: 900;
+
+      letter-spacing: 0.6px;
 
     }
 
 
-    .balance-card {
+    .preview-balance {
+
+      padding: 21px;
+
+      border-radius: 17px;
 
       background:
-        #0a100d;
+        #06110c;
 
       border:
-        1px solid rgba(255,255,255,0.08);
+        1px solid rgba(255,255,255,0.07);
 
-      padding:
-        22px;
-
-      border-radius:
-        18px;
-
-      margin-bottom:
-        15px;
+      margin-bottom: 13px;
 
     }
 
 
-    .small-label {
+    .preview-label {
 
-      color:
-        #7f8983;
+      color: var(--muted-dark);
 
-      font-size:
-        12px;
+      font-size: 10px;
 
-      margin-bottom:
-        10px;
+      font-weight: 800;
 
-    }
+      letter-spacing: 1px;
 
-
-    .balance {
-
-      font-size:
-        30px;
-
-      font-weight:
-        bold;
+      margin-bottom: 9px;
 
     }
 
 
-    .profit {
+    .preview-value {
 
-      color:
-        #00d084;
+      font-size: 27px;
 
-      font-size:
-        13px;
+      font-weight: 900;
 
-      margin-top:
-        8px;
+      margin-bottom: 6px;
+
+    }
+
+
+    .preview-change {
+
+      color: var(--accent);
+
+      font-size: 12px;
+
+      font-weight: 700;
 
     }
 
 
     .chart {
 
-      height:
-        170px;
+      height: 155px;
 
-      display:
-        flex;
+      display: flex;
 
-      align-items:
-        flex-end;
+      align-items: flex-end;
 
-      justify-content:
-        space-between;
-
-      gap:
-        8px;
+      gap: 7px;
 
       padding:
-        20px 5px 5px;
+        20px 5px 4px;
+
+      margin-top: 15px;
 
       border-bottom:
-        1px solid rgba(255,255,255,0.08);
+        1px solid rgba(255,255,255,0.06);
 
     }
 
 
     .bar {
 
-      flex:
-        1;
+      flex: 1;
 
-      min-width:
-        8px;
+      min-width: 4px;
+
+      height: var(--height);
+
+      border-radius:
+        5px 5px 2px 2px;
 
       background:
         linear-gradient(
           to top,
-          #006c45,
-          #00d084
+          #075c3f,
+          var(--accent)
         );
 
-      border-radius:
-        5px 5px 0 0;
-
-      opacity:
-        0.9;
+      box-shadow:
+        0 0 12px
+        rgba(32,201,151,0.07);
 
     }
 
 
-    .dash-grid {
+    .preview-grid {
 
-      display:
-        grid;
+      display: grid;
 
       grid-template-columns:
-        repeat(2, 1fr);
+        1fr 1fr;
 
-      gap:
-        12px;
+      gap: 11px;
 
-      margin-top:
-        18px;
+      margin-top: 13px;
 
     }
 
 
-    .dash-item {
+    .preview-item {
 
-      background:
-        #0a100d;
+      padding: 14px;
+
+      border-radius: 14px;
 
       border:
-        1px solid rgba(255,255,255,0.07);
+        1px solid rgba(255,255,255,0.06);
 
-      padding:
-        15px;
-
-      border-radius:
-        14px;
+      background:
+        rgba(255,255,255,0.018);
 
     }
 
 
-    .dash-item strong {
+    .preview-item span {
 
-      display:
-        block;
+      display: block;
 
-      margin-top:
-        6px;
+      color: var(--muted-dark);
+
+      font-size: 10px;
+
+      margin-bottom: 5px;
 
     }
 
 
+    .preview-item strong {
 
-    /* =========================
-       PLATFORM SECTION
-    ========================== */
+      font-size: 13px;
+
+    }
+
+
+    /* ==================================================
+       SECTION
+    ================================================== */
 
     .section {
 
       padding:
-        100px 7%;
-
-      max-width:
-        1400px;
-
-      margin:
-        auto;
+        110px 0;
 
     }
 
 
-    .section-heading {
+    .section-header {
 
-      max-width:
-        750px;
+      max-width: 750px;
 
-      margin-bottom:
-        55px;
+      margin-bottom: 50px;
 
     }
 
 
     .section-tag {
 
-      color:
-        #00d084;
+      color: var(--accent);
 
-      font-size:
-        13px;
+      font-size: 11px;
 
-      font-weight:
-        bold;
+      font-weight: 900;
 
-      text-transform:
-        uppercase;
+      letter-spacing: 2px;
 
-      letter-spacing:
-        2px;
+      text-transform: uppercase;
 
-      margin-bottom:
-        15px;
+      margin-bottom: 14px;
 
     }
 
 
-    .section-heading h2 {
+    .section-header h2 {
 
       font-size:
-        clamp(35px, 5vw, 55px);
+        clamp(34px, 5vw, 54px);
 
-      line-height:
-        1.1;
+      line-height: 1.06;
 
-      margin-bottom:
-        18px;
+      letter-spacing: -1.8px;
+
+      margin-bottom: 16px;
 
     }
 
 
-    .section-heading p {
+    .section-header p {
 
-      color:
-        #929c96;
+      color: var(--muted);
 
-      line-height:
-        1.7;
+      font-size: 16px;
 
-      font-size:
-        17px;
+      line-height: 1.7;
 
     }
 
 
+    /* ==================================================
+       FEATURE CARDS
+    ================================================== */
 
-    /* =========================
-       FEATURES
-    ========================== */
+    .feature-grid {
 
-    .features {
-
-      display:
-        grid;
+      display: grid;
 
       grid-template-columns:
-        repeat(3, 1fr);
+        repeat(3, minmax(0, 1fr));
 
-      gap:
-        20px;
+      gap: 18px;
 
     }
 
 
     .feature-card {
 
+      padding: 27px;
+
+      min-height: 220px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 21px;
+
       background:
         linear-gradient(
           145deg,
-          #0e1511,
-          #080c0a
+          rgba(9,28,20,0.95),
+          rgba(4,15,11,0.98)
         );
 
-      border:
-        1px solid rgba(255,255,255,0.08);
-
-      padding:
-        30px;
-
-      border-radius:
-        20px;
-
       transition:
-        0.25s;
+        0.23s ease;
 
     }
 
@@ -1031,181 +1113,164 @@
     .feature-card:hover {
 
       transform:
-        translateY(-5px);
+        translateY(-4px);
 
       border-color:
-        rgba(0,208,132,0.35);
+        rgba(32,201,151,0.35);
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(11,35,25,0.97),
+          rgba(5,17,12,0.98)
+        );
 
     }
 
 
     .feature-icon {
 
-      width:
-        50px;
+      width: 49px;
 
-      height:
-        50px;
+      height: 49px;
 
-      display:
-        flex;
+      display: flex;
 
-      align-items:
-        center;
+      align-items: center;
 
-      justify-content:
-        center;
+      justify-content: center;
+
+      border-radius: 14px;
 
       background:
-        rgba(0,208,132,0.10);
+        rgba(32,201,151,0.08);
 
       border:
-        1px solid rgba(0,208,132,0.18);
+        1px solid rgba(32,201,151,0.16);
 
-      border-radius:
-        14px;
+      font-size: 21px;
 
-      font-size:
-        22px;
-
-      margin-bottom:
-        22px;
+      margin-bottom: 22px;
 
     }
 
 
     .feature-card h3 {
 
-      font-size:
-        20px;
+      font-size: 19px;
 
-      margin-bottom:
-        12px;
+      margin-bottom: 10px;
 
     }
 
 
     .feature-card p {
 
-      color:
-        #8d9791;
+      color: var(--muted);
 
-      line-height:
-        1.6;
+      font-size: 14px;
 
-      font-size:
-        15px;
+      line-height: 1.65;
 
     }
 
 
-
-    /* =========================
+    /* ==================================================
        HOW IT WORKS
-    ========================== */
+    ================================================== */
 
     .steps {
 
-      display:
-        grid;
+      display: grid;
 
       grid-template-columns:
-        repeat(4, 1fr);
+        repeat(4, minmax(0, 1fr));
 
-      gap:
-        20px;
+      gap: 22px;
 
     }
 
 
     .step {
 
-      position:
-        relative;
+      padding: 25px 0 0;
 
-      padding:
-        28px;
-
-      border-left:
-        1px solid rgba(0,208,132,0.3);
+      border-top:
+        1px solid rgba(32,201,151,0.3);
 
     }
 
 
     .step-number {
 
-      color:
-        #00d084;
+      color: var(--accent);
 
-      font-size:
-        14px;
+      font-size: 11px;
 
-      font-weight:
-        bold;
+      font-weight: 900;
 
-      margin-bottom:
-        25px;
+      letter-spacing: 1.5px;
+
+      margin-bottom: 25px;
 
     }
 
 
     .step h3 {
 
-      font-size:
-        20px;
+      font-size: 19px;
 
-      margin-bottom:
-        12px;
+      margin-bottom: 10px;
 
     }
 
 
     .step p {
 
-      color:
-        #8c9690;
+      color: var(--muted);
 
-      line-height:
-        1.6;
+      font-size: 14px;
 
-      font-size:
-        14px;
+      line-height: 1.65;
 
     }
 
 
-
-    /* =========================
+    /* ==================================================
        ROLES
-    ========================== */
+    ================================================== */
 
-    .roles {
+    .role-grid {
 
-      display:
-        grid;
+      display: grid;
 
       grid-template-columns:
-        repeat(3, 1fr);
+        repeat(3, minmax(0, 1fr));
 
-      gap:
-        20px;
+      gap: 18px;
 
     }
 
 
     .role-card {
 
-      padding:
-        35px;
+      position: relative;
 
-      border-radius:
-        22px;
-
-      background:
-        #0a100d;
+      padding: 30px;
 
       border:
-        1px solid rgba(255,255,255,0.08);
+        1px solid var(--border);
+
+      border-radius: 23px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(7,24,17,0.97),
+          rgba(4,14,10,0.98)
+        );
+
+      overflow: hidden;
 
     }
 
@@ -1213,158 +1278,233 @@
     .role-card.featured {
 
       border-color:
-        rgba(0,208,132,0.5);
+        rgba(32,201,151,0.42);
 
       background:
         linear-gradient(
           145deg,
-          rgba(0,208,132,0.10),
-          #0a100d
+          rgba(11,40,28,0.98),
+          rgba(4,15,11,0.98)
         );
+
+    }
+
+
+    .role-card.featured::before {
+
+      content: "";
+
+      position: absolute;
+
+      top: -120px;
+
+      right: -120px;
+
+      width: 260px;
+
+      height: 260px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(32,201,151,0.10);
+
+      filter: blur(45px);
+
+    }
+
+
+    .role-icon {
+
+      font-size: 28px;
+
+      margin-bottom: 17px;
 
     }
 
 
     .role-card h3 {
 
-      font-size:
-        25px;
+      font-size: 24px;
 
-      margin-bottom:
-        15px;
+      margin-bottom: 11px;
 
     }
 
 
     .role-card p {
 
-      color:
-        #929c96;
+      color: var(--muted);
 
-      line-height:
-        1.6;
+      font-size: 14px;
 
-      margin-bottom:
-        25px;
+      line-height: 1.65;
 
-    }
-
-
-    .role-card ul {
-
-      list-style:
-        none;
-
-      margin-bottom:
-        30px;
+      margin-bottom: 22px;
 
     }
 
 
-    .role-card li {
+    .role-list {
 
-      color:
-        #c5ccc8;
+      list-style: none;
 
-      padding:
-        9px 0;
+      margin-bottom: 25px;
+
+    }
+
+
+    .role-list li {
+
+      padding: 10px 0;
 
       border-bottom:
         1px solid rgba(255,255,255,0.05);
 
-      font-size:
-        14px;
+      color: #ccd5d0;
+
+      font-size: 14px;
 
     }
 
 
-    .role-card li::before {
+    .role-list li::before {
 
-      content:
-        "✓";
+      content: "✓";
 
-      color:
-        #00d084;
+      margin-right: 10px;
 
-      margin-right:
-        10px;
+      color: var(--accent);
+
+      font-weight: 900;
 
     }
 
 
+    .role-button {
 
-    /* =========================
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      min-height: 46px;
+
+      padding: 0 17px;
+
+      border-radius: 12px;
+
+      font-size: 13px;
+
+      font-weight: 900;
+
+    }
+
+
+    .role-button-primary {
+
+      background: var(--accent);
+
+      color: #03130d;
+
+    }
+
+
+    .role-button-secondary {
+
+      border:
+        1px solid rgba(255,255,255,0.13);
+
+      color: var(--text);
+
+    }
+
+
+    .role-button-secondary:hover {
+
+      color: var(--accent);
+
+      border-color:
+        var(--accent);
+
+    }
+
+
+    /* ==================================================
        CTA
-    ========================== */
+    ================================================== */
 
     .cta {
 
+      position: relative;
+
       margin:
-        30px 7% 100px;
-
-      max-width:
-        1250px;
-
-      margin-left:
-        auto;
-
-      margin-right:
-        auto;
+        20px 0 100px;
 
       padding:
         70px 30px;
 
-      text-align:
-        center;
-
-      border-radius:
-        30px;
-
-      background:
-        linear-gradient(
-          135deg,
-          rgba(0,208,132,0.16),
-          rgba(7,12,9,0.95)
-        );
+      text-align: center;
 
       border:
-        1px solid rgba(0,208,132,0.25);
+        1px solid rgba(32,201,151,0.28);
+
+      border-radius: 28px;
+
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(32,201,151,0.13),
+          transparent 55%
+        ),
+        linear-gradient(
+          135deg,
+          rgba(11,38,27,0.95),
+          rgba(4,15,11,0.98)
+        );
+
+      overflow: hidden;
 
     }
 
 
     .cta h2 {
 
-      font-size:
-        clamp(35px, 5vw, 55px);
+      max-width: 720px;
 
-      margin-bottom:
-        18px;
+      margin:
+        0 auto 15px;
+
+      font-size:
+        clamp(34px, 5vw, 52px);
+
+      line-height: 1.05;
+
+      letter-spacing: -1.8px;
 
     }
 
 
     .cta p {
 
-      color:
-        #a1aaa4;
-
-      max-width:
-        650px;
+      max-width: 650px;
 
       margin:
-        0 auto 30px;
+        0 auto 28px;
 
-      line-height:
-        1.7;
+      color: var(--muted);
+
+      line-height: 1.7;
+
+      font-size: 15px;
 
     }
 
 
-
-    /* =========================
+    /* ==================================================
        FOOTER
-    ========================== */
+    ================================================== */
 
     footer {
 
@@ -1372,86 +1512,198 @@
         1px solid rgba(255,255,255,0.07);
 
       padding:
-        40px 7%;
+        30px 0 35px;
 
-      display:
-        flex;
+    }
 
-      justify-content:
-        space-between;
 
-      align-items:
-        center;
+    .footer-row {
 
-      gap:
-        20px;
+      display: flex;
 
-      flex-wrap:
-        wrap;
+      justify-content: space-between;
 
-      color:
-        #66716a;
+      align-items: center;
 
-      font-size:
-        14px;
+      gap: 20px;
+
+      flex-wrap: wrap;
 
     }
 
 
     .footer-brand {
 
-      color:
-        #ffffff;
+      font-size: 15px;
 
-      font-weight:
-        bold;
+      font-weight: 900;
+
+      letter-spacing: 1px;
 
     }
 
 
     .footer-brand span {
 
-      color:
-        #00d084;
+      color: var(--accent);
 
     }
 
 
+    .footer-copy {
 
-    /* =========================
-       MOBILE
-    ========================== */
+      color: var(--muted-dark);
 
-    @media (
-      max-width: 900px
-    ) {
+      font-size: 12px;
 
-      .hero-container {
+    }
 
-        grid-template-columns:
-          1fr;
+
+    /* ==================================================
+       INSTALL BUTTON
+    ================================================== */
+
+    .install-app {
+
+      display: none;
+
+      position: fixed;
+
+      left: 18px;
+
+      right: 18px;
+
+      bottom: 18px;
+
+      z-index: 1200;
+
+      padding: 14px 17px;
+
+      border:
+        1px solid rgba(32,201,151,0.35);
+
+      border-radius: 15px;
+
+      background:
+        rgba(6,20,14,0.96);
+
+      color: var(--text);
+
+      box-shadow:
+        0 20px 50px rgba(0,0,0,0.35);
+
+    }
+
+
+    .install-app.show {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 15px;
+
+    }
+
+
+    .install-text strong {
+
+      display: block;
+
+      font-size: 13px;
+
+      margin-bottom: 2px;
+
+    }
+
+
+    .install-text span {
+
+      color: var(--muted);
+
+      font-size: 11px;
+
+    }
+
+
+    .install-action {
+
+      border: none;
+
+      background: var(--accent);
+
+      color: #03130d;
+
+      border-radius: 10px;
+
+      padding: 10px 13px;
+
+      font-weight: 900;
+
+      cursor: pointer;
+
+      white-space: nowrap;
+
+    }
+
+
+    .install-close {
+
+      border: none;
+
+      background: transparent;
+
+      color: var(--muted);
+
+      cursor: pointer;
+
+      font-size: 17px;
+
+    }
+
+
+    /* ==================================================
+       RESPONSIVE
+    ================================================== */
+
+    @media (max-width: 1000px) {
+
+      .nav-links {
+        display: none;
+      }
+
+
+      .menu-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+
+      .hero {
+
+        grid-template-columns: 1fr;
+
+        gap: 45px;
+
+        padding-top: 65px;
 
       }
 
 
-      .dashboard {
+      .dashboard-preview {
 
-        max-width:
-          600px;
-
-        width:
-          100%;
-
-        margin:
-          auto;
+        max-width: 650px;
 
       }
 
 
-      .features {
+      .feature-grid {
 
         grid-template-columns:
-          repeat(2, 1fr);
+          repeat(2, minmax(0, 1fr));
 
       }
 
@@ -1459,12 +1711,12 @@
       .steps {
 
         grid-template-columns:
-          repeat(2, 1fr);
+          repeat(2, minmax(0, 1fr));
 
       }
 
 
-      .roles {
+      .role-grid {
 
         grid-template-columns:
           1fr;
@@ -1474,60 +1726,121 @@
     }
 
 
-    @media (
-      max-width: 650px
-    ) {
+    @media (max-width: 650px) {
 
-      nav {
+      .container {
 
-        padding:
-          15px 5%;
-
-      }
-
-
-      .nav-links {
-
-        display:
-          none;
+        width:
+          min(
+            100% - 28px,
+            1240px
+          );
 
       }
 
 
-      .brand-text {
+      .nav {
 
-        font-size:
-          16px;
+        min-height: 68px;
 
       }
 
 
       .brand-icon {
 
-        width:
-          38px;
+        width: 38px;
 
-        height:
-          38px;
+        height: 38px;
+
+        flex-basis: 38px;
+
+      }
+
+
+      .brand-text {
+
+        font-size: 14px;
+
+        letter-spacing: 1px;
 
       }
 
 
       .nav-login {
 
-        padding:
-          9px 14px;
+        min-height: 40px;
 
-        font-size:
-          14px;
+        padding: 0 13px;
+
+        font-size: 12px;
 
       }
 
 
       .hero {
 
+        min-height: auto;
+
         padding:
-          65px 5%;
+          55px 0 70px;
+
+      }
+
+
+      .hero h1 {
+
+        font-size: 44px;
+
+        letter-spacing: -1.8px;
+
+      }
+
+
+      .hero-text {
+
+        font-size: 15px;
+
+      }
+
+
+      .hero-buttons {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+      }
+
+
+      .button-primary,
+      .button-secondary {
+
+        width: 100%;
+
+      }
+
+
+      .hero-stats {
+
+        grid-template-columns: 1fr;
+
+        gap: 15px;
+
+      }
+
+
+      .dashboard-preview {
+
+        padding: 15px;
+
+        border-radius: 20px;
+
+      }
+
+
+      .preview-value {
+
+        font-size: 23px;
 
       }
 
@@ -1535,1204 +1848,1275 @@
       .section {
 
         padding:
-          75px 5%;
+          80px 0;
 
       }
 
 
-      .features {
+      .section-header {
 
-        grid-template-columns:
-          1fr;
+        margin-bottom: 32px;
 
       }
 
 
+      .section-header h2 {
+
+        font-size: 35px;
+
+      }
+
+
+      .feature-grid,
       .steps {
 
-        grid-template-columns:
-          1fr;
+        grid-template-columns: 1fr;
 
       }
 
 
-      .hero-stats {
+      .feature-card {
 
-        gap:
-          20px;
-
-      }
-
-
-      .dash-grid {
-
-        grid-template-columns:
-          1fr 1fr;
+        min-height: auto;
 
       }
 
 
-      footer {
+      .role-card {
+
+        padding: 25px;
+
+      }
+
+
+      .cta {
+
+        margin-bottom: 75px;
 
         padding:
-          30px 5%;
+          55px 20px;
 
-        text-align:
-          center;
+        border-radius: 22px;
 
-        justify-content:
-          center;
+      }
+
+
+      .footer-row {
+
+        justify-content: center;
+
+        text-align: center;
 
       }
 
     }
-
 
   </style>
 
 </head>
 
 
-
 <body>
 
 
-  <!-- =========================
-       BACKGROUND GLOWS
-  ========================== -->
+  <!-- ==================================================
+       HEADER
+  ================================================== -->
 
-  <div
-    class="glow glow-one"
-  ></div>
+  <header>
 
+    <div class="container">
 
-  <div
-    class="glow glow-two"
-  ></div>
+      <nav class="nav">
 
 
-
-  <!-- =========================
-       NAVIGATION
-  ========================== -->
-
-  <nav>
-
-
-    <a
-      href="index.html"
-      class="brand"
-    >
-
-
-      <div class="brand-icon">
-
-        <img
-          src="./icons/icon-192.png"
-          alt="Alpha Traders Host"
+        <a
+          href="./index.html"
+          class="brand"
+          aria-label="Alpha Traders Host Home"
         >
 
-      </div>
-
-
-      <div class="brand-text">
-
-        ALPHA
-        <span>
-          TRADERS HOST
-        </span>
-
-      </div>
-
-
-    </a>
-
-
-
-    <div class="nav-links">
-
-      <a href="#platform">
-
-        Platform
-
-      </a>
-
-
-      <a href="#how-it-works">
-
-        How It Works
-
-      </a>
-
-
-      <a href="#roles">
-
-        Dashboards
-
-      </a>
-
-    </div>
-
-
-
-    <a
-      href="login.html"
-      class="nav-login"
-    >
-
-      Login
-
-    </a>
-
-
-  </nav>
-
-
-
-  <!-- =========================
-       HERO
-  ========================== -->
-
-  <section class="hero">
-
-
-    <div class="hero-container">
-
-
-      <!-- LEFT -->
-
-      <div>
-
-
-        <div class="hero-badge">
-
-          <span class="status-dot"></span>
-
-          YOUR TRADING PLATFORM. ALWAYS CONNECTED.
-
-        </div>
-
-
-
-        <h1>
-
-          Trade smarter.
-          <br>
-
-          Stay
-          <span>
-            connected.
-          </span>
-
-        </h1>
-
-
-
-        <p>
-
-          Alpha Traders Host brings mentors and traders together
-          in one powerful platform. Manage mentorship, trading
-          accounts and automated trading from anywhere.
-
-        </p>
-
-
-
-        <div class="hero-buttons">
-
-
-          <a
-            href="register.html"
-            class="primary-button"
-          >
-
-            Get Started →
-
-          </a>
-
-
-
-          <a
-            href="login.html"
-            class="secondary-button"
-          >
-
-            Open Dashboard
-
-          </a>
-
-
-        </div>
-
-
-
-        <div class="hero-stats">
-
-
-          <div class="stat">
-
-            <strong>
-
-              MT4 / MT5
-
-            </strong>
-
-            <span>
-
-              Trading platforms
-
-            </span>
-
-          </div>
-
-
-
-          <div class="stat">
-
-            <strong>
-
-              24/7
-
-            </strong>
-
-            <span>
-
-              Platform access
-
-            </span>
-
-          </div>
-
-
-
-          <div class="stat">
-
-            <strong>
-
-              Mobile
-
-            </strong>
-
-            <span>
-
-              Access anywhere
-
-            </span>
-
-          </div>
-
-
-        </div>
-
-
-      </div>
-
-
-
-      <!-- RIGHT DASHBOARD -->
-
-      <div class="dashboard">
-
-
-        <div class="dash-top">
-
-
-          <div class="dash-title">
-
-            Trading Overview
-
-          </div>
-
-
-          <div class="online">
-
-            ● SYSTEM ONLINE
-
-          </div>
-
-
-        </div>
-
-
-
-        <div class="balance-card">
-
-
-          <div class="small-label">
-
-            ACCOUNT OVERVIEW
-
-          </div>
-
-
-          <div class="balance">
-
-            Your Trading Hub
-
-          </div>
-
-
-          <div class="profit">
-
-            ● Connected & ready
-
-          </div>
-
-
-          <div class="chart">
-
-
-            <div
-              class="bar"
-              style="height:35%;"
-            ></div>
-
-
-            <div
-              class="bar"
-              style="height:55%;"
-            ></div>
-
-
-            <div
-              class="bar"
-              style="height:42%;"
-            ></div>
-
-
-            <div
-              class="bar"
-              style="height:70%;"
-            ></div>
-
-
-            <div
-              class="bar"
-              style="height:58%;"
-            ></div>
-
-
-            <div
-              class="bar"
-              style="height:85%;"
-            ></div>
-
-
-            <div
-              class="bar"
-              style="height:65%;"
-            ></div>
-
-
-            <div
-              class="bar"
-              style="height:100%;"
-            ></div>
-
-
-          </div>
-
-
-        </div>
-
-
-
-        <div class="dash-grid">
-
-
-          <div class="dash-item">
-
-            <div class="small-label">
-
-              PLATFORM
-
-            </div>
-
-            <strong>
-
-              MT4 / MT5
-
-            </strong>
-
-          </div>
-
-
-
-          <div class="dash-item">
-
-            <div class="small-label">
-
-              STATUS
-
-            </div>
-
-            <strong
-              style="color:#00d084;"
+          <div class="brand-icon">
+
+            <img
+              src="./icons/icon-192.png"
+              alt="Alpha Traders Host logo"
             >
 
-              Active
+          </div>
 
-            </strong>
+
+          <div class="brand-text">
+
+            <span class="brand-alpha">
+              ALPHA
+            </span>
+
+            <span class="brand-traders">
+              TRADERS HOST
+            </span>
+
+          </div>
+
+        </a>
+
+
+        <div class="nav-links">
+
+          <a href="#platform">
+            Platform
+          </a>
+
+          <a href="#how-it-works">
+            How It Works
+          </a>
+
+          <a href="#dashboards">
+            Dashboards
+          </a>
+
+        </div>
+
+
+        <div style="display:flex;align-items:center;gap:9px;">
+
+          <a
+            href="./login.html"
+            class="nav-login"
+          >
+            Login
+          </a>
+
+          <button
+            type="button"
+            class="menu-button"
+            id="menuButton"
+            aria-label="Open menu"
+            aria-expanded="false"
+          >
+            ☰
+          </button>
+
+        </div>
+
+      </nav>
+
+
+      <div
+        class="mobile-menu"
+        id="mobileMenu"
+      >
+
+        <a href="#platform">
+          Platform
+        </a>
+
+        <a href="#how-it-works">
+          How It Works
+        </a>
+
+        <a href="#dashboards">
+          Dashboards
+        </a>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- ==================================================
+       MAIN
+  ================================================== -->
+
+  <main>
+
+
+    <!-- ==================================================
+         HERO
+    ================================================== -->
+
+    <section>
+
+      <div class="container">
+
+        <div class="hero">
+
+
+          <div class="hero-content">
+
+
+            <div class="hero-badge">
+
+              <span class="status-dot"></span>
+
+              YOUR TRADING PLATFORM. ALWAYS CONNECTED.
+
+            </div>
+
+
+            <h1>
+
+              Trade smarter.
+              <br>
+
+              Stay
+              <span>
+                connected.
+              </span>
+
+            </h1>
+
+
+            <p class="hero-text">
+
+              Alpha Traders Host brings traders, mentors
+              and automated trading tools together in one
+              powerful platform. Access your workspace from
+              your phone, tablet or computer.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+              <a
+                href="./register.html"
+                class="button-primary"
+              >
+                Get Started →
+              </a>
+
+
+              <a
+                href="./login.html"
+                class="button-secondary"
+              >
+                Open Dashboard
+              </a>
+
+            </div>
+
+
+            <div class="hero-stats">
+
+
+              <div class="hero-stat">
+
+                <strong>
+                  MT4 / MT5
+                </strong>
+
+                <span>
+                  Trading platforms
+                </span>
+
+              </div>
+
+
+              <div class="hero-stat">
+
+                <strong>
+                  24/7
+                </strong>
+
+                <span>
+                  Platform access
+                </span>
+
+              </div>
+
+
+              <div class="hero-stat">
+
+                <strong>
+                  Mobile
+                </strong>
+
+                <span>
+                  Installable experience
+                </span>
+
+              </div>
+
+
+            </div>
+
 
           </div>
 
 
 
-        </div>
+          <!-- ==================================================
+               DASHBOARD PREVIEW
+          ================================================== -->
 
+          <div class="dashboard-preview">
 
-      </div>
 
+            <div class="preview-top">
 
-    </div>
+              <div class="preview-title">
+                Trading Overview
+              </div>
 
+              <div class="online-status">
+                ● SYSTEM ONLINE
+              </div>
 
-  </section>
+            </div>
 
 
+            <div class="preview-balance">
 
-  <!-- =========================
-       PLATFORM
-  ========================== -->
+              <div class="preview-label">
+                ACCOUNT OVERVIEW
+              </div>
 
-  <section
-    class="section"
-    id="platform"
-  >
+              <div class="preview-value">
+                Your Trading Hub
+              </div>
 
+              <div class="preview-change">
+                ● Connected &amp; ready
+              </div>
 
-    <div class="section-heading">
 
+              <div class="chart">
 
-      <div class="section-tag">
+                <div
+                  class="bar"
+                  style="--height:35%;"
+                ></div>
 
-        The Platform
+                <div
+                  class="bar"
+                  style="--height:49%;"
+                ></div>
 
-      </div>
+                <div
+                  class="bar"
+                  style="--height:43%;"
+                ></div>
 
+                <div
+                  class="bar"
+                  style="--height:66%;"
+                ></div>
 
-      <h2>
+                <div
+                  class="bar"
+                  style="--height:57%;"
+                ></div>
 
-        Everything you need.
-        One powerful platform.
+                <div
+                  class="bar"
+                  style="--height:81%;"
+                ></div>
 
-      </h2>
+                <div
+                  class="bar"
+                  style="--height:70%;"
+                ></div>
 
+                <div
+                  class="bar"
+                  style="--height:94%;"
+                ></div>
 
-      <p>
+                <div
+                  class="bar"
+                  style="--height:76%;"
+                ></div>
 
-        Built to make managing trading mentorship and automated
-        trading workflows simpler from your phone or computer.
+                <div
+                  class="bar"
+                  style="--height:100%;"
+                ></div>
 
-      </p>
+              </div>
 
+            </div>
 
-    </div>
 
+            <div class="preview-grid">
 
 
-    <div class="features">
+              <div class="preview-item">
 
+                <span>
+                  PLATFORM
+                </span>
 
-      <div class="feature-card">
+                <strong>
+                  MT4 / MT5
+                </strong>
 
+              </div>
 
-        <div class="feature-icon">
 
-          🤖
+              <div class="preview-item">
 
-        </div>
+                <span>
+                  STATUS
+                </span>
 
+                <strong style="color:var(--accent);">
+                  Active
+                </strong>
 
-        <h3>
+              </div>
 
-          EA Management
 
-        </h3>
+              <div class="preview-item">
 
+                <span>
+                  MENTORSHIP
+                </span>
 
-        <p>
+                <strong>
+                  Connected
+                </strong>
 
-          Manage Expert Advisor information and your automated
-          trading setup from one central platform.
+              </div>
 
-        </p>
 
+              <div class="preview-item">
 
-      </div>
+                <span>
+                  ACCESS
+                </span>
 
+                <strong>
+                  24 / 7
+                </strong>
 
+              </div>
 
-      <div class="feature-card">
 
+            </div>
 
-        <div class="feature-icon">
+          </div>
 
-          📊
-
-        </div>
-
-
-        <h3>
-
-          Trading Dashboard
-
-        </h3>
-
-
-        <p>
-
-          Access your trading information through a clean and
-          easy-to-use dashboard.
-
-        </p>
-
-
-      </div>
-
-
-
-      <div class="feature-card">
-
-
-        <div class="feature-icon">
-
-          🎓
-
-        </div>
-
-
-        <h3>
-
-          Mentor Network
-
-        </h3>
-
-
-        <p>
-
-          Find approved mentors and manage mentorship requests
-          directly from your account.
-
-        </p>
-
-
-      </div>
-
-
-
-      <div class="feature-card">
-
-
-        <div class="feature-icon">
-
-          🔐
-
-        </div>
-
-
-        <h3>
-
-          Secure Accounts
-
-        </h3>
-
-
-        <p>
-
-          Separate access for administrators, mentors and clients
-          with role-based dashboards.
-
-        </p>
-
-
-      </div>
-
-
-
-      <div class="feature-card">
-
-
-        <div class="feature-icon">
-
-          📱
 
         </div>
 
-
-        <h3>
-
-          Mobile Ready
-
-        </h3>
-
-
-        <p>
-
-          Install Alpha Traders Host on your phone and access
-          your platform like a mobile app.
-
-        </p>
-
-
       </div>
 
+    </section>
 
 
-      <div class="feature-card">
 
+    <!-- ==================================================
+         PLATFORM
+    ================================================== -->
 
-        <div class="feature-icon">
-
-          ⚡
-
-        </div>
-
-
-        <h3>
-
-          Built for Speed
-
-        </h3>
-
-
-        <p>
-
-          A lightweight web platform designed for fast access
-          across mobile and desktop devices.
-
-        </p>
-
-
-      </div>
-
-
-    </div>
-
-
-  </section>
-
-
-
-  <!-- =========================
-       HOW IT WORKS
-  ========================== -->
-
-  <section
-    class="section"
-    id="how-it-works"
-  >
-
-
-    <div class="section-heading">
-
-
-      <div class="section-tag">
-
-        Simple Setup
-
-      </div>
-
-
-      <h2>
-
-        Start in a few simple steps.
-
-      </h2>
-
-
-      <p>
-
-        Create your account, choose your role and access the
-        Alpha Traders Host platform.
-
-      </p>
-
-
-    </div>
-
-
-
-    <div class="steps">
-
-
-      <div class="step">
-
-
-        <div class="step-number">
-
-          01
-
-        </div>
-
-
-        <h3>
-
-          Create Account
-
-        </h3>
-
-
-        <p>
-
-          Register securely using your email address.
-
-        </p>
-
-
-      </div>
-
-
-
-      <div class="step">
-
-
-        <div class="step-number">
-
-          02
-
-        </div>
-
-
-        <h3>
-
-          Verify Email
-
-        </h3>
-
-
-        <p>
-
-          Confirm your account and sign in securely.
-
-        </p>
-
-
-      </div>
-
-
-
-      <div class="step">
-
-
-        <div class="step-number">
-
-          03
-
-        </div>
-
-
-        <h3>
-
-          Choose Your Role
-
-        </h3>
-
-
-        <p>
-
-          Access the correct dashboard as a client,
-          mentor or administrator.
-
-        </p>
-
-
-      </div>
-
-
-
-      <div class="step">
-
-
-        <div class="step-number">
-
-          04
-
-        </div>
-
-
-        <h3>
-
-          Start Managing
-
-        </h3>
-
-
-        <p>
-
-          Manage mentorship requests and your trading
-          platform activity.
-
-        </p>
-
-
-      </div>
-
-
-    </div>
-
-
-  </section>
-
-
-
-  <!-- =========================
-       USER ROLES
-  ========================== -->
-
-  <section
-    class="section"
-    id="roles"
-  >
-
-
-    <div class="section-heading">
-
-
-      <div class="section-tag">
-
-        Your Workspace
-
-      </div>
-
-
-      <h2>
-
-        One platform.
-        Different dashboards.
-
-      </h2>
-
-
-      <p>
-
-        Alpha Traders Host provides separate workspaces
-        for each type of user.
-
-      </p>
-
-
-    </div>
-
-
-
-    <div class="roles">
-
-
-      <!-- CLIENT -->
-
-      <div class="role-card">
-
-
-        <h3>
-
-          👤 Client
-
-        </h3>
-
-
-        <p>
-
-          Connect with mentors and manage your
-          mentorship requests.
-
-        </p>
-
-
-        <ul>
-
-          <li>
-
-            Find mentors
-
-          </li>
-
-
-          <li>
-
-            Send requests
-
-          </li>
-
-
-          <li>
-
-            Manage your account
-
-          </li>
-
-        </ul>
-
-
-        <a
-          href="login.html?role=client"
-          class="secondary-button"
-        >
-
-          Client Login
-
-        </a>
-
-
-      </div>
-
-
-
-      <!-- MENTOR -->
-
-      <div class="role-card featured">
-
-
-        <h3>
-
-          🎓 Mentor
-
-        </h3>
-
-
-        <p>
-
-          Manage your clients and build your
-          mentorship network.
-
-        </p>
-
-
-        <ul>
-
-          <li>
-
-            Manage clients
-
-          </li>
-
-
-          <li>
-
-            Review requests
-
-          </li>
-
-
-          <li>
-
-            Access mentor tools
-
-          </li>
-
-        </ul>
-
-
-        <a
-          href="login.html?role=mentor"
-          class="primary-button"
-        >
-
-          Mentor Login
-
-        </a>
-
-
-      </div>
-
-
-
-      <!-- ADMIN -->
-
-      <div class="role-card">
-
-
-        <h3>
-
-          👑 Admin
-
-        </h3>
-
-
-        <p>
-
-          Manage the Alpha Traders Host
-          platform and user approvals.
-
-        </p>
-
-
-        <ul>
-
-          <li>
-
-            Approve mentors
-
-          </li>
-
-
-          <li>
-
-            Manage users
-
-          </li>
-
-
-          <li>
-
-            Platform administration
-
-          </li>
-
-        </ul>
-
-
-        <a
-          href="login.html?role=admin"
-          class="secondary-button"
-        >
-
-          Admin Login
-
-        </a>
-
-
-      </div>
-
-
-    </div>
-
-
-  </section>
-
-
-
-  <!-- =========================
-       CALL TO ACTION
-  ========================== -->
-
-  <section class="cta">
-
-
-    <div class="section-tag">
-
-      Alpha Traders Host
-
-    </div>
-
-
-    <h2>
-
-      Ready to enter the platform?
-
-    </h2>
-
-
-    <p>
-
-      Create your account and access Alpha Traders Host
-      from your phone, tablet or computer.
-
-    </p>
-
-
-    <a
-      href="register.html"
-      class="primary-button"
+    <section
+      class="section"
+      id="platform"
     >
 
-      Create Your Account →
-
-    </a>
+      <div class="container">
 
 
-  </section>
+        <div class="section-header">
+
+          <div class="section-tag">
+            The Platform
+          </div>
+
+          <h2>
+            Everything you need.
+            One powerful workspace.
+          </h2>
+
+          <p>
+            Manage mentorship, Expert Advisors, accounts
+            and platform activity from a clean interface
+            designed for both desktop and mobile.
+          </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+
+          <article class="feature-card">
+
+            <div class="feature-icon">
+              🤖
+            </div>
+
+            <h3>
+              EA Management
+            </h3>
+
+            <p>
+              Create, save and manage your Expert Advisor
+              configurations for MT4 and MT5.
+            </p>
+
+          </article>
+
+
+          <article class="feature-card">
+
+            <div class="feature-icon">
+              📊
+            </div>
+
+            <h3>
+              Trading Dashboard
+            </h3>
+
+            <p>
+              Keep important trading and platform
+              information organized inside your workspace.
+            </p>
+
+          </article>
+
+
+          <article class="feature-card">
+
+            <div class="feature-icon">
+              🎓
+            </div>
+
+            <h3>
+              Mentor Network
+            </h3>
+
+            <p>
+              Discover approved mentors and send mentorship
+              requests directly from your client account.
+            </p>
+
+          </article>
+
+
+          <article class="feature-card">
+
+            <div class="feature-icon">
+              🔐
+            </div>
+
+            <h3>
+              Role-Based Access
+            </h3>
+
+            <p>
+              Clients, mentors and administrators receive
+              their own dedicated dashboards.
+            </p>
+
+          </article>
+
+
+          <article class="feature-card">
+
+            <div class="feature-icon">
+              📱
+            </div>
+
+            <h3>
+              Mobile Ready
+            </h3>
+
+            <p>
+              Use Alpha Traders Host from your phone and
+              install it as a progressive web app.
+            </p>
+
+          </article>
+
+
+          <article class="feature-card">
+
+            <div class="feature-icon">
+              ⚡
+            </div>
+
+            <h3>
+              Fast &amp; Lightweight
+            </h3>
+
+            <p>
+              A lightweight web experience designed for
+              fast access across modern devices.
+            </p>
+
+          </article>
+
+
+        </div>
+
+      </div>
+
+    </section>
 
 
 
-  <!-- =========================
+    <!-- ==================================================
+         HOW IT WORKS
+    ================================================== -->
+
+    <section
+      class="section"
+      id="how-it-works"
+    >
+
+      <div class="container">
+
+
+        <div class="section-header">
+
+          <div class="section-tag">
+            Simple Setup
+          </div>
+
+          <h2>
+            Start in a few simple steps.
+          </h2>
+
+          <p>
+            Create an account, confirm your email,
+            access the correct workspace and start managing
+            your Alpha Traders Host activity.
+          </p>
+
+        </div>
+
+
+        <div class="steps">
+
+
+          <article class="step">
+
+            <div class="step-number">
+              01
+            </div>
+
+            <h3>
+              Create Account
+            </h3>
+
+            <p>
+              Register as a client or mentor using your
+              email address and password.
+            </p>
+
+          </article>
+
+
+          <article class="step">
+
+            <div class="step-number">
+              02
+            </div>
+
+            <h3>
+              Confirm Email
+            </h3>
+
+            <p>
+              Confirm your email address using the
+              verification message sent by the platform.
+            </p>
+
+          </article>
+
+
+          <article class="step">
+
+            <div class="step-number">
+              03
+            </div>
+
+            <h3>
+              Access Your Role
+            </h3>
+
+            <p>
+              Clients go to their client workspace while
+              approved mentors access mentor tools.
+            </p>
+
+          </article>
+
+
+          <article class="step">
+
+            <div class="step-number">
+              04
+            </div>
+
+            <h3>
+              Start Managing
+            </h3>
+
+            <p>
+              Manage mentorship, Expert Advisors and
+              platform activity from one place.
+            </p>
+
+          </article>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ==================================================
+         DASHBOARDS
+    ================================================== -->
+
+    <section
+      class="section"
+      id="dashboards"
+    >
+
+      <div class="container">
+
+
+        <div class="section-header">
+
+          <div class="section-tag">
+            Your Workspace
+          </div>
+
+          <h2>
+            One platform.
+            Different dashboards.
+          </h2>
+
+          <p>
+            Each account type gets the tools and access
+            appropriate to its role.
+          </p>
+
+        </div>
+
+
+        <div class="role-grid">
+
+
+          <!-- CLIENT -->
+
+          <article class="role-card">
+
+            <div class="role-icon">
+              👤
+            </div>
+
+            <h3>
+              Client
+            </h3>
+
+            <p>
+              Find approved mentors and manage your
+              mentorship requests.
+            </p>
+
+            <ul class="role-list">
+
+              <li>
+                Find mentors
+              </li>
+
+              <li>
+                Send requests
+              </li>
+
+              <li>
+                Manage your account
+              </li>
+
+            </ul>
+
+            <a
+              href="./login.html?role=client"
+              class="role-button role-button-secondary"
+            >
+              Client Login
+            </a>
+
+          </article>
+
+
+
+          <!-- MENTOR -->
+
+          <article class="role-card featured">
+
+            <div class="role-icon">
+              🎓
+            </div>
+
+            <h3>
+              Mentor
+            </h3>
+
+            <p>
+              Manage approved clients, Expert Advisors
+              and license keys.
+            </p>
+
+            <ul class="role-list">
+
+              <li>
+                Review client requests
+              </li>
+
+              <li>
+                Manage clients
+              </li>
+
+              <li>
+                Manage EAs and licenses
+              </li>
+
+            </ul>
+
+            <a
+              href="./login.html?role=mentor"
+              class="role-button role-button-primary"
+            >
+              Mentor Login
+            </a>
+
+          </article>
+
+
+
+          <!-- ADMIN -->
+
+          <article class="role-card">
+
+            <div class="role-icon">
+              👑
+            </div>
+
+            <h3>
+              Admin
+            </h3>
+
+            <p>
+              Manage users, mentor applications and
+              platform administration.
+            </p>
+
+            <ul class="role-list">
+
+              <li>
+                Approve mentors
+              </li>
+
+              <li>
+                Manage users
+              </li>
+
+              <li>
+                Platform administration
+              </li>
+
+            </ul>
+
+            <a
+              href="./login.html?role=admin"
+              class="role-button role-button-secondary"
+            >
+              Admin Login
+            </a>
+
+          </article>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ==================================================
+         CTA
+    ================================================== -->
+
+    <section class="container">
+
+      <div class="cta">
+
+        <div class="section-tag">
+          Alpha Traders Host
+        </div>
+
+        <h2>
+          Ready to enter your trading workspace?
+        </h2>
+
+        <p>
+          Create your account and access Alpha Traders Host
+          from your phone, tablet or computer.
+        </p>
+
+        <a
+          href="./register.html"
+          class="button-primary"
+        >
+          Create Your Account →
+        </a>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- ==================================================
        FOOTER
-  ========================== -->
+  ================================================== -->
 
   <footer>
 
+    <div class="container">
 
-    <div class="footer-brand">
+      <div class="footer-row">
 
-      ALPHA
-      <span>
+        <div class="footer-brand">
 
-        TRADERS HOST
+          ALPHA
+          <span>
+            TRADERS HOST
+          </span>
 
-      </span>
+        </div>
+
+
+        <div class="footer-copy">
+
+          © 2026 Alpha Traders Host.
+          All rights reserved.
+
+        </div>
+
+      </div>
 
     </div>
-
-
-    <div>
-
-      © 2026 Alpha Traders Host.
-      All rights reserved.
-
-    </div>
-
 
   </footer>
 
 
 
-  <!-- =========================
-       SERVICE WORKER
-  ========================== -->
+  <!-- ==================================================
+       PWA INSTALL PROMPT
+  ================================================== -->
+
+  <div
+    class="install-app"
+    id="installApp"
+    aria-live="polite"
+  >
+
+    <div class="install-text">
+
+      <strong>
+        Install Alpha Traders Host
+      </strong>
+
+      <span>
+        Add the platform to your phone like an app.
+      </span>
+
+    </div>
+
+
+    <div style="display:flex;align-items:center;gap:7px;">
+
+      <button
+        type="button"
+        class="install-action"
+        id="installButton"
+      >
+        Install
+      </button>
+
+      <button
+        type="button"
+        class="install-close"
+        id="installClose"
+        aria-label="Close install prompt"
+      >
+        ×
+      </button>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- ==================================================
+       JAVASCRIPT
+  ================================================== -->
 
   <script>
 
+    /* ==================================================
+       MOBILE MENU
+    ================================================== */
+
+    const menuButton =
+      document.getElementById(
+        "menuButton"
+      );
+
+    const mobileMenu =
+      document.getElementById(
+        "mobileMenu"
+      );
+
 
     if (
-      "serviceWorker" in navigator
+      menuButton &&
+      mobileMenu
     ) {
 
-
-      window.addEventListener(
-        "load",
+      menuButton.addEventListener(
+        "click",
         function() {
 
-
-          navigator.serviceWorker
-            .register(
-              "./service-worker.js"
-            )
-            .then(
-              function(registration) {
-
-
-                console.log(
-                  "PWA registered:",
-                  registration.scope
-                );
-
-
-              }
-            )
-            .catch(
-              function(error) {
-
-
-                console.error(
-                  "Service worker error:",
-                  error
-                );
-
-
-              }
+          const isOpen =
+            mobileMenu.classList.toggle(
+              "open"
             );
 
+          menuButton.setAttribute(
+            "aria-expanded",
+            String(isOpen)
+          );
+
+          menuButton.textContent =
+            isOpen
+              ? "×"
+              : "☰";
 
         }
       );
 
 
+      mobileMenu
+        .querySelectorAll("a")
+        .forEach(
+          function(link) {
+
+            link.addEventListener(
+              "click",
+              function() {
+
+                mobileMenu.classList.remove(
+                  "open"
+                );
+
+                menuButton.setAttribute(
+                  "aria-expanded",
+                  "false"
+                );
+
+                menuButton.textContent =
+                  "☰";
+
+              }
+            );
+
+          }
+        );
+
     }
 
+
+
+    /* ==================================================
+       SERVICE WORKER
+    ================================================== */
+
+    if (
+      "serviceWorker" in navigator
+    ) {
+
+      window.addEventListener(
+        "load",
+        async function() {
+
+          try {
+
+            const registration =
+              await navigator.serviceWorker.register(
+                "./service-worker.js"
+              );
+
+            console.log(
+              "Alpha Traders Host service worker registered:",
+              registration.scope
+            );
+
+          }
+
+          catch (error) {
+
+            console.error(
+              "Service worker registration failed:",
+              error
+            );
+
+          }
+
+        }
+      );
+
+    }
+
+
+
+    /* ==================================================
+       PWA INSTALL
+    ================================================== */
+
+    let deferredInstallPrompt =
+      null;
+
+
+    const installApp =
+      document.getElementById(
+        "installApp"
+      );
+
+    const installButton =
+      document.getElementById(
+        "installButton"
+      );
+
+    const installClose =
+      document.getElementById(
+        "installClose"
+      );
+
+
+    window.addEventListener(
+      "beforeinstallprompt",
+      function(event) {
+
+        event.preventDefault();
+
+        deferredInstallPrompt =
+          event;
+
+        installApp.classList.add(
+          "show"
+        );
+
+      }
+    );
+
+
+    if (
+      installButton
+    ) {
+
+      installButton.addEventListener(
+        "click",
+        async function() {
+
+          if (
+            !deferredInstallPrompt
+          ) {
+
+            return;
+
+          }
+
+
+          deferredInstallPrompt.prompt();
+
+
+          try {
+
+            await deferredInstallPrompt.userChoice;
+
+          }
+
+          catch (error) {
+
+            console.warn(
+              "Install prompt error:",
+              error
+            );
+
+          }
+
+
+          deferredInstallPrompt =
+            null;
+
+          installApp.classList.remove(
+            "show"
+          );
+
+        }
+      );
+
+    }
+
+
+    if (
+      installClose
+    ) {
+
+      installClose.addEventListener(
+        "click",
+        function() {
+
+          installApp.classList.remove(
+            "show"
+          );
+
+        }
+      );
+
+    }
+
+
+    window.addEventListener(
+      "appinstalled",
+      function() {
+
+        deferredInstallPrompt =
+          null;
+
+        installApp.classList.remove(
+          "show"
+        );
+
+        console.log(
+          "Alpha Traders Host installed."
+        );
+
+      }
+    );
 
   </script>
 
 
 </body>
-
 </html>
